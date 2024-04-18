@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/18 11:44:59 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:57:28 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,48 @@ void	ft_clean_2d_char(char **array)
 		index++;
 	}
 	free(array);
+}
+
+int	ft_isspace(int c)
+{
+	if (c == ' ' || c == '\t' || c == '\n'
+		|| c == '\v' || c == '\f' || c == '\r')
+		return (1);
+	return (0);
+}
+
+static size_t	ft_strlen_modified(char *s)
+{
+	size_t	len;
+
+	len = 0;
+	if (s == 0 || *s == '\0')
+		return (0);
+	else
+	{
+		while (*s != '\0' && !ft_isspace(*s))
+		{
+			++s;
+			++len;
+		}
+		return (len);
+	}
+}
+
+char	*ft_strdup_modified(char *s, char *token)
+{
+	size_t	l;
+	char	*d;
+
+	l = ft_strlen(token);
+	s = s + l + 1;
+	while (*s != '\0' && ft_isspace(*s))
+		++s;
+	l = ft_strlen_modified(s);
+	d = malloc((l + 1) * sizeof (char));
+	if (d == 0)
+		return (0);
+	ft_memcpy (d, s, l);
+	d[l] = '\0';
+	return (d);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/18 14:42:10 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:56:34 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ typedef struct s_file
 
 typedef struct s_cmd
 {
+	int				index; //might need to be deleted
 	char			*raw;
+	char			*current;
 	char			*cmd_error;
 	char			*cmd_name;
 	char			*address;
@@ -41,7 +43,7 @@ typedef struct s_cmd
 	char			**envs;
 	int				exist;
 	int				exec;
-	char			*heredoc;
+	char			*limiter;
 	t_file			*input;
 	t_file			*output;
 	struct s_cmd	*next;
@@ -55,5 +57,9 @@ t_file	*ft_create_file_list(int total_number);
 char	**ft_create_raw_cmd(const char *input);
 int		ft_cmd_count(char **raw_cmd);
 int		ft_fill_raw_cmd_list(t_cmd **cmd, char **raw_cmd);
+void	ft_fill_index_cmd_list(t_cmd **cmd);
+char	*ft_strdup_modified(char *s, char *token);
+int		ft_fill_heredoc_cmd_list(t_cmd **cmd);
+char	*ft_remove(char *str, char *del1, char *del2);
 
 #endif //MINISHELL_H

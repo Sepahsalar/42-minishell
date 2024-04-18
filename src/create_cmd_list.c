@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:07:14 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/18 14:43:03 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:14:34 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ void	ft_clean_cmd_node(t_cmd *node)
 	{
 		if (node->raw)
 			free (node->raw);
+		if (node->current)
+			free (node->current);
 		if (node->cmd_error)
 			free (node->cmd_error);
 		if (node->address)
 			free (node->address);
-		if (node->heredoc)
-			free (node->heredoc);
+		if (node->limiter)
+			free (node->limiter);
 		if (node->args)
 			ft_clean_2d_char(node->args);
 		if (node->input)
