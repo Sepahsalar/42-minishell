@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/04/19 09:22:08 by nnourine         ###   ########.fr        #
+#    Updated: 2024/04/19 09:34:40 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ LIBFT = lib/libft
 # Files
 SRCS =  $(SRCDIR)/main.c \
 		$(SRCDIR)/utility.c \
+		$(SRCDIR)/master_clean.c \
 		$(SRCDIR)/create_cmd_list.c \
 		$(SRCDIR)/create_file_list.c \
 		$(SRCDIR)/create_raw_cmd.c \

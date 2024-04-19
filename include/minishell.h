@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/18 16:56:34 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/04/19 09:34:18 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void	ft_fill_index_cmd_list(t_cmd **cmd);
 char	*ft_strdup_modified(char *s, char *token);
 int		ft_fill_heredoc_cmd_list(t_cmd **cmd);
 char	*ft_remove(char *str, char *del1, char *del2);
+int		ft_master_clean(char **raw_cmd, t_cmd *cmd, int return_value);
 
 #endif //MINISHELL_H
