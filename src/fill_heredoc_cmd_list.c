@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_raw_cmd_list.c                                :+:      :+:    :+:   */
+/*   fill_heredoc_cmd_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 14:35:57 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/19 09:23:14 by nnourine         ###   ########.fr       */
+/*   Created: 2024/04/19 09:16:00 by nnourine          #+#    #+#             */
+/*   Updated: 2024/04/19 09:16:21 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_fill_raw_cmd_list(t_cmd **cmd, char **raw_cmd)
+int	ft_fill_heredoc_cmd_list(t_cmd **cmd)
 {
-	int		index;
 	t_cmd	*temp;
+	char	*heredoc;
 
 	temp = *cmd;
-	index = 0;
-	while (raw_cmd[index])
+	while (temp)
 	{
-		temp->raw = ft_strdup(raw_cmd[index]);
-		temp->current = ft_strdup(raw_cmd[index]);
-		if (!temp->raw || !temp->current)
-			return (1);
+		heredoc = ft_strnstr(temp->current, "<<", ft_strlen(temp->current));
+		if (heredoc)
+		{
+			temp->limiter = ft_strdup_modified(heredoc, "<<");
+			if (!temp->limiter)
+				return (1);
+			temp->current = ft_remove(temp->current, "<<", temp->limiter);
+		}
 		temp = temp->next;
-		index++;
 	}
 	return (0);
 }

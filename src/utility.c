@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/18 16:57:28 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/04/19 09:14:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,31 @@ char	*ft_strdup_modified(char *s, char *token)
 	ft_memcpy (d, s, l);
 	d[l] = '\0';
 	return (d);
+}
+
+char	*ft_remove(char *str, char *del1, char *del2)
+{
+	int		len1;
+	int		len2;
+	char	*part2;
+	char	*temp;
+	char	*result;
+
+	len1 = ft_strnstr(str, del1, ft_strlen(str)) - str;
+	part2 = ft_strnstr(str, del2, ft_strlen(str)) + ft_strlen(del2);
+	temp = part2;
+	len2 = 0;
+	while (*temp)
+	{
+		len2++;
+		temp++;
+	}
+	result = malloc((len1 + len2 + 1) * sizeof(char));
+	if (!result)
+		return (0);
+	ft_memcpy(result, str, len1);
+	ft_memcpy(result + len1, part2, len2);
+	result[len1 + len2] = '\0';
+	free(str);
+	return (result);
 }
