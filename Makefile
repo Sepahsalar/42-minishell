@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/04/19 09:34:40 by nnourine         ###   ########.fr        #
+#    Updated: 2024/04/19 11:11:58 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,10 +30,14 @@ SRCS =  $(SRCDIR)/main.c \
 		$(SRCDIR)/create_cmd_list.c \
 		$(SRCDIR)/create_file_list.c \
 		$(SRCDIR)/create_raw_cmd.c \
+		$(SRCDIR)/fill_cmd_list.c \
 		$(SRCDIR)/fill_raw_cmd_list.c \
 		$(SRCDIR)/fill_index_cmd_list.c \
 		$(SRCDIR)/fill_heredoc_cmd_list.c \
-		$(SRCDIR)/cmd_count.c
+		$(SRCDIR)/char_2d_count.c \
+		$(SRCDIR)/fill_env_list.c \
+		$(SRCDIR)/create_env_list.c \
+		$(SRCDIR)/fill_env_cmd_list.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

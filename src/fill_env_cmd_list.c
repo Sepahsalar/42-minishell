@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_count.c                                        :+:      :+:    :+:   */
+/*   fill_env_cmd_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 13:57:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/18 14:15:10 by nnourine         ###   ########.fr       */
+/*   Created: 2024/04/19 11:09:33 by nnourine          #+#    #+#             */
+/*   Updated: 2024/04/19 11:10:18 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_cmd_count(char **raw_cmd)
+void	ft_fill_env_cmd_list(t_cmd **cmd, t_env *env)
 {
-	int		counter;
+	t_cmd	*temp;
 
-	counter = 0;
-	while (raw_cmd[counter])
-		counter++;
-	return (counter);
+	temp = *cmd;
+	while (temp)
+	{
+		temp->env = env;
+		temp = temp->next;
+	}
 }

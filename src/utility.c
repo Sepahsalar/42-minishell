@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/19 09:14:37 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:06:03 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,29 @@ void	ft_clean_2d_char(char **array)
 		index++;
 	}
 	free(array);
+}
+
+char	**ft_copy_2d_char(char **array)
+{
+	int		index;
+	int		counter;
+	char	**copy;
+
+
+	counter = 0;
+	if (!array)
+		return (NULL);
+	while (array[counter])
+		counter++;
+	copy = (char **)malloc(sizeof(char *) * (counter + 1));
+	copy[counter] = NULL;
+	index = 0;
+	while (index < counter)
+	{
+		copy[index] = ft_strdup(array[index]);
+		index++;
+	}
+	return (copy);
 }
 
 int	ft_isspace(int c)
