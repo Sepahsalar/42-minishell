@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/19 11:54:59 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:58:56 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-typedef struct s_limit
+typedef struct s_heredoc
 {
-	char			*limiter;
-	struct s_limit	*next;
-}					t_limit;
+	char				*str;
+	struct s_heredoc	*next;
+}						t_heredoc;
 
 typedef struct s_cmd
 {
@@ -50,7 +50,7 @@ typedef struct s_cmd
 	char			*raw;
 	char			*current;
 	t_env			*env;
-	t_limit			*limiter;
+	t_heredoc		*limiter;
 	t_file			*input;
 	t_file			*output_trunc;
 	t_file			*output_append;
