@@ -6,17 +6,17 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:40:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 18:06:55 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:07:20 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	error(int status)
-{
-	perror("Error");
-	exit(status);
-}
+// void	error(int status)
+// {
+// 	perror("Error");
+// 	exit(status);
+// }
 
 void	ft_free(char **array)
 {

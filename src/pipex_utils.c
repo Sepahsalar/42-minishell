@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:33 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/22 14:37:15 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:14:20 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static char	*get_path_con(char **total_paths, char *cmd, char *temp)
 		if (!temp)
 		{
 			ft_free(total_paths);
-			error(EXIT_FAILURE);
+			// error(EXIT_FAILURE);
 		}
 		final_path = ft_strjoin(temp, cmd);
 		if (!final_path)
 		{
 			free(temp);
 			ft_free(total_paths);
-			error(EXIT_FAILURE);
+			// error(EXIT_FAILURE);
 		}
 		free(temp);
 		if (access(final_path, F_OK | X_OK) == 0)
@@ -54,11 +54,11 @@ static char	*get_path(char *cmd, char **envp)
 	if (!*envp)
 	{
 		ft_putstr_fd("Error: command not found: \n", STDERR_FILENO);
-		exit(127);
+		// exit(127);
 	}
 	total_paths = ft_split(*envp + 5, ':');
 	if (!total_paths)
-		error(EXIT_FAILURE);
+		error(EXIT_FAILURE); //delete
 	final_path = get_path_con(total_paths, cmd, NULL);
 	if (!final_path)
 	{
@@ -78,7 +78,7 @@ static void	check_space(char *argv)
 	{
 		ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
 		ft_putendl_fd(argv, STDERR_FILENO);
-		exit(127);
+		// exit(127);
 	}
 }
 
@@ -88,10 +88,10 @@ static void	execute_cmd_helper(char **cmd, char *path, char **envp)
 	{
 		if (path != cmd[0])
 			free(path);
-		error(126);
+		// error(126); // or exiit?
 	}
 	if (execve(path, cmd, envp) == -1)
-		error(EXIT_FAILURE);
+		error(EXIT_FAILURE); // delete
 }
 
 void	execute_cmd(char *argv, char **envp)
@@ -115,7 +115,7 @@ void	execute_cmd(char *argv, char **envp)
 		ft_free(cmd);
 		ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
 		ft_putendl_fd(argv, STDERR_FILENO);
-		exit(127);
+		// exit(127);
 	}
 	else
 		execute_cmd_helper(cmd, path, envp);

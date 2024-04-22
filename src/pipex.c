@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/22 15:22:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:15:21 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+//might change error function
 
 static int	status_check(int status)
 {
@@ -28,14 +30,14 @@ static void	first_child_process(int *fd, char **argv, char **envp)
 
 	close(fd[0]);
 	if (access(argv[1], F_OK | R_OK) == -1)
-		error(EXIT_SUCCESS);
+		error(EXIT_SUCCESS); //delete
 	filein = open(argv[1], O_RDONLY);
 	if (filein == -1)
-		error(EXIT_FAILURE);
+		error(EXIT_FAILURE); //delete
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
-		error(EXIT_FAILURE);
+		error(EXIT_FAILURE); //delete
 	if (dup2(filein, STDIN_FILENO) == -1)
-		error(EXIT_FAILURE);
+		error(EXIT_FAILURE); //delete
 	close(fd[1]);
 	close(filein);
 	execute_cmd(argv[2], envp);
@@ -50,19 +52,19 @@ static int	second_child_process(int *fd, char **argv, char **envp)
 	status = 0;
 	close(fd[1]);
 	if (access(argv[4], F_OK) == 0 && access(argv[4], W_OK) == -1)
-		error(EXIT_FAILURE);
+		error(EXIT_FAILURE); //delete
 	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fileout == -1)
-		error(EXIT_FAILURE);
+		error(EXIT_FAILURE); //delete
 	if (dup2(fd[0], STDIN_FILENO) == -1)
-		error(EXIT_FAILURE);
+		error(EXIT_FAILURE); //delete
 	if (dup2(fileout, STDOUT_FILENO) == -1)
-		error(EXIT_FAILURE);
+		error(EXIT_FAILURE); //delete
 	close(fd[0]);
 	close(fileout);
 	pid = fork();
 	if (pid == -1)
-		error(EXIT_FAILURE);
+		error(EXIT_FAILURE); //delete
 	if (pid == 0)
 		execute_cmd(argv[3], envp);
 	else
@@ -70,12 +72,12 @@ static int	second_child_process(int *fd, char **argv, char **envp)
 	return (status_check(status));
 }
 
-static void	args_error(void)
-{
-	ft_putendl_fd("Error: Wrong Arguments!", STDERR_FILENO);
-	ft_putendl_fd("Ex: ./pipex infile cmd1 cmd2 outfile", STDERR_FILENO);
-	exit(EXIT_FAILURE);
-}
+// static void	args_error(void)
+// {
+// 	ft_putendl_fd("Error: Wrong Arguments!", STDERR_FILENO);
+// 	ft_putendl_fd("Ex: ./pipex infile cmd1 cmd2 outfile", STDERR_FILENO);
+// 	exit(EXIT_FAILURE);
+// }
 
 int	pipex_master(int argc, char **argv, char **envp)
 {
@@ -86,14 +88,14 @@ int	pipex_master(int argc, char **argv, char **envp)
 
 	status = 0;
 	if (argc != 5)
-		args_error();
+		args_error(); //delete
 	else
 	{
 		if (pipe(fd) == -1)
-			error(EXIT_FAILURE);
+			error(EXIT_FAILURE); //delete
 		pid = fork();
 		if (pid == -1)
-			error(EXIT_FAILURE);
+			error(EXIT_FAILURE); //delete
 		if (pid == 0)
 			first_child_process(fd, argv, envp);
 		else
