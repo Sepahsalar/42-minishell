@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/04/19 11:11:58 by nnourine         ###   ########.fr        #
+#    Updated: 2024/04/22 15:12:01 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,13 @@ SRCS =  $(SRCDIR)/main.c \
 		$(SRCDIR)/fill_env_list.c \
 		$(SRCDIR)/create_env_list.c \
 		$(SRCDIR)/fill_env_cmd_list.c \
+		$(SRCDIR)/create_heredoc_list.c \
+		$(SRCDIR)/token_count.c \
+		$(SRCDIR)/ft_istoken.c \
+		$(SRCDIR)/fill_files.c \
+		$(SRCDIR)/pipex.c \
+		$(SRCDIR)/pipex_utils.c \
+		$(SRCDIR)/pipex_utils2.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

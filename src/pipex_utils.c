@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils_bonus.c                                :+:      :+:    :+:   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/21 11:05:59 by asohrabi         ###   ########.fr       */
+/*   Created: 2023/12/13 16:22:33 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/04/22 14:37:15 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 static char	*get_path_con(char **total_paths, char *cmd, char *temp)
 {
@@ -69,7 +69,7 @@ static char	*get_path(char *cmd, char **envp)
 	return (final_path);
 }
 
-void	check_space(char *argv)
+static void	check_space(char *argv)
 {
 	char	*temp;
 

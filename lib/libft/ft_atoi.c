@@ -3,96 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/27 17:39:15 by nnourine          #+#    #+#             */
-/*   Updated: 2023/11/08 15:09:23 by nnourine         ###   ########.fr       */
+/*   Created: 2023/10/25 15:03:14 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/01/30 10:57:26 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-static int	ft_rm_space(char *s)
+static int	ft_putnum(const char *str, int sign, int i)
 {
-	int	i;
+	long	a;
 
-	i = 0;
-	while (s[i] != '\0')
+	a = 0;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if ((s[i] < 9 || s[i] > 13) && s[i] != 32)
-			return (i);
+		if (str[i] == '-')
+			sign = sign * -1;
 		i++;
 	}
-	return (0);
-}
-
-static int	ft_check_overflow(char *s)
-{
-	long	digit;
-	long	temp;
-	long	i;
-	long	n;
-
-	i = 0;
-	n = 0;
-	if (s[i] < '0' && s[i] > '9')
-		return (1);
-	while (s[i] >= '0' && s[i] <= '9')
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		digit = s[i] - 48;
-		temp = (LONG_MAX - digit) / 10;
-		if (temp < n)
+		a = a * 10 + (str[i] - '0');
+		if (a < 0 && sign == 1)
+			return (-1);
+		else if (a < 0 && sign == -1)
 			return (0);
-		n = 10 * n + digit;
 		i++;
 	}
-	return (1);
-}
-
-static int	ft_strnbr(char *s)
-{
-	int	digit;
-	int	i;
-	int	n;
-
-	i = 0;
-	n = 0;
-	if (s[i] < '0' && s[i] > '9')
-		return (0);
-	while (s[i] != '\0' && s[i] >= '0' && s[i] <= '9')
-	{
-		digit = s[i] - 48;
-		n = n * 10 + digit;
-		++i;
-	}
-	return (n);
+	return (sign * (int)a);
 }
 
 int	ft_atoi(const char *str)
 {
-	char	*s;
-	int		sign;
+	int	sign;
+	int	i;
 
-	s = (char *)str;
-	s = s + ft_rm_space (s);
-	if (*s == '\0')
-		return (0);
+	i = 0;
+	while ((str[i] == '\t') || (str[i] == '\n') || (str[i] == '\v')
+		|| (str[i] == '\f') || (str[i] == '\r') || (str[i] == ' '))
+		i++;
 	sign = 1;
-	if (*s == '+' || *s == '-' )
-	{
-		if (*s == '+')
-			s++;
-		else if (*s == '-')
-		{
-			sign = -1;
-			s++;
-		}
-	}
-	if (ft_check_overflow(s) == 0)
-	{
-		if (sign > 0)
-			return (-1);
-		return (0);
-	}
-	return (ft_strnbr(s) * sign);
+	return (ft_putnum(str, sign, i));
 }

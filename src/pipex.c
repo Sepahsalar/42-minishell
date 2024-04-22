@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/21 11:38:13 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:22:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	args_error(void)
 	exit(EXIT_FAILURE);
 }
 
-int	main(int argc, char **argv, char **envp)
+int	pipex_master(int argc, char **argv, char **envp)
 {
 	int		fd[2];
 	pid_t	pid;

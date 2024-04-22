@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
+/*   token_count.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 13:54:28 by nnourine          #+#    #+#             */
-/*   Updated: 2023/11/07 14:19:25 by nnourine         ###   ########.fr       */
+/*   Created: 2024/04/22 09:29:47 by nnourine          #+#    #+#             */
+/*   Updated: 2024/04/22 16:03:02 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void*))
+int	ft_token_count(char *str, char *token)
 {
-	if (lst)
+	int		counter;
+	int		index;
+	char	*temp;
+
+	if (!str || *str == '\0')
+		return (0);
+	if (!token || *token == '\0')
+		return (0);
+	counter = 0;
+	index = 0;
+	temp = str;
+	while (temp && *temp)
 	{
-		if (del)
+		temp = ft_strnstr(temp, token, ft_strlen(temp));
+		if (temp)
 		{
-			del (lst->content);
-			free (lst);
+			temp = temp + ft_strlen(token);
+			counter++;
 		}
 	}
+	return (counter);
 }

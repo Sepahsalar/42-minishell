@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 10:55:20 by nnourine          #+#    #+#             */
-/*   Updated: 2023/10/31 11:06:35 by nnourine         ###   ########.fr       */
+/*   Created: 2023/10/26 10:08:20 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/01/30 10:59:41 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,28 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*d;
-	size_t	l1;
-	size_t	l2;
+	char	*str;
+	size_t	i;
+	size_t	j;
 
-	if (s1 == 0 && s2 == 0)
-		return (ft_strdup(""));
-	if (s1 == 0)
-		return (ft_strdup(s2));
-	if (s2 == 0)
-		return (ft_strdup(s1));
-	l1 = ft_strlen (s1);
-	l2 = ft_strlen (s2);
-	d = malloc((l1 + l2 + 1) * sizeof (char));
-	if (d == 0)
+	i = 0;
+	j = 0;
+	if (!s1 || !s2)
 		return (0);
-	ft_memcpy(d, s1, l1);
-	ft_memcpy(d + l1, s2, l2);
-	d[l1 + l2] = '\0';
-	return (d);
+	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!str)
+		return (0);
+	while (s1[i])
+	{
+		str[i] = ((char *)s1)[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		str[i] = ((char *)s2)[j];
+		i++;
+		j++;
+	}
+	str[i] = '\0';
+	return (str);
 }

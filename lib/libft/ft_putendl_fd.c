@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 10:24:29 by nima              #+#    #+#             */
-/*   Updated: 2023/11/07 18:10:49 by nnourine         ###   ########.fr       */
+/*   Created: 2023/10/27 15:54:12 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/01/30 10:59:11 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

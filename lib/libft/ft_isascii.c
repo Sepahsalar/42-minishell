@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 15:51:44 by nnourine          #+#    #+#             */
-/*   Updated: 2023/10/30 12:39:51 by nnourine         ###   ########.fr       */
+/*   Created: 2023/10/23 16:33:06 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/01/30 10:57:53 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isascii(int c)
 {
-	if (c < 0 || c > 127)
-		return (0);
-	return (1);
+	if (c >= 0 && c <= 127)
+		return (1);
+	return (0);
 }

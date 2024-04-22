@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 14:59:17 by nnourine          #+#    #+#             */
-/*   Updated: 2023/11/08 15:01:23 by nnourine         ###   ########.fr       */
+/*   Created: 2023/10/24 15:53:49 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/01/30 10:59:45 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,23 @@
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	size_t	init_len;
-	size_t	src_len;
+	size_t	c;
 	size_t	i;
+	size_t	length;
 
-	src_len = ft_strlen(src);
-	if (dstsize == 0)
-		return (src_len);
-	init_len = ft_strlen(dst);
-	if (init_len > dstsize - 1)
-		return (src_len + dstsize);
-	else
+	if (!dst && dstsize == 0)
+		return (ft_strlen(src));
+	length = ft_strlen(dst) + ft_strlen(src);
+	if (dstsize <= ft_strlen(dst))
+		return (dstsize + ft_strlen(src));
+	c = ft_strlen(dst);
+	i = 0;
+	while (src[i] && c < dstsize - 1)
 	{
-		dst = dst + init_len;
-		i = 0;
-		while (*src != '\0' && i < dstsize - init_len - 1)
-		{
-			*dst = *src;
-			dst++;
-			src++;
-			i++;
-		}
-		*dst = '\0';
-		return (init_len + src_len);
+		dst[c] = src[i];
+		c++;
+		i++;
 	}
+	dst[c] = '\0';
+	return (length);
 }

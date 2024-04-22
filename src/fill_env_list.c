@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:34:31 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/19 10:58:30 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:11:19 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_env	*ft_fill_env_list(char **envp, char **raw_cmd)
 			ft_master_clean(raw_cmd, env, 0, EXIT_FAILURE);
 		temp_env->key = ft_strdup(temp[0]);
 		temp_env->value = ft_strdup(temp[1]);
-		free(temp);
+		ft_clean_2d_char(temp);
 		if (!temp_env->key || !temp_env->value)
 			ft_master_clean(raw_cmd, env, 0, EXIT_FAILURE);
 		temp_env = temp_env->next;

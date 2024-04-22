@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
+/*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 14:22:32 by nnourine          #+#    #+#             */
-/*   Updated: 2023/11/07 15:35:19 by nnourine         ###   ########.fr       */
+/*   Created: 2023/12/13 16:22:49 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/04/22 15:06:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PIPEX_H
+# define PIPEX_H
 
-void	ft_lstclear(t_list **lst, void (*del)(void*))
-{
-	t_list	*buffer;
+# include "../lib/libft/libft.h"
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 
-	if (lst && del)
-	{
-		while (*lst)
-		{
-			buffer = (*lst)->next;
-			del((*lst)->content);
-			free(*lst);
-			*lst = buffer;
-		}
-		lst = 0;
-	}
-}
+void	error(int status);
+void	ft_free(char **array);
+void	execute_cmd(char *argv, char **envp);
+void	clean_cmd(char *str);
+
+#endif

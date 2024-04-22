@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 09:07:04 by nnourine          #+#    #+#             */
-/*   Updated: 2023/11/08 15:04:14 by nnourine         ###   ########.fr       */
+/*   Created: 2023/10/26 08:41:18 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/01/30 11:00:16 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,27 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t			l_start;
-	char			*d;
+	char	*sub;
+	size_t	real_len;
+	size_t	i;
 
-	if (s == 0)
+	i = 0;
+	if (!s)
 		return (0);
-	if (start >= ft_strlen (s))
+	if (start >= ft_strlen(s))
 		return (ft_strdup(""));
-	l_start = ft_strlen (s + start);
-	if (l_start > len)
-	{
-		d = malloc((len + 1) * sizeof (char));
-		if (d == 0)
-			return (0);
-		ft_memcpy (d, s + start, len);
-		d[len] = '\0';
-		return (d);
-	}
+	if (start + len > ft_strlen(s))
+		real_len = ft_strlen(s) - start;
 	else
-		return (ft_strdup (s + start));
+		real_len = len;
+	sub = (char *)malloc((real_len + 1) * sizeof(char));
+	if (!sub)
+		return (0);
+	while (i < real_len)
+	{
+		sub[i] = ((char *)s)[start + i];
+		i++;
+	}
+	sub[i] = '\0';
+	return (sub);
 }

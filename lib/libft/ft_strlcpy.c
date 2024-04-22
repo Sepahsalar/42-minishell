@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 15:50:18 by nnourine          #+#    #+#             */
-/*   Updated: 2023/11/08 15:01:40 by nnourine         ###   ########.fr       */
+/*   Created: 2023/10/24 14:21:47 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/01/30 10:59:49 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
+	size_t	i;
+
+	i = 0;
 	if (dstsize != 0)
 	{
-		if (ft_strlen(src) < dstsize)
+		while (src[i] && i < (dstsize - 1))
 		{
-			ft_memcpy(dst, src, ft_strlen(src));
-			*(dst + ft_strlen(src)) = '\0';
+			dst[i] = src[i];
+			i++;
 		}
-		else
-		{
-			ft_memcpy(dst, src, (dstsize - 1));
-			*(dst + (dstsize - 1)) = '\0';
-		}
+		dst[i] = '\0';
 	}
 	return (ft_strlen(src));
 }

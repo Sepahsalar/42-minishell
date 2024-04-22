@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_istoken.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 15:35:54 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/01/30 10:59:30 by asohrabi         ###   ########.fr       */
+/*   Created: 2024/04/22 10:44:13 by nnourine          #+#    #+#             */
+/*   Updated: 2024/04/22 10:49:43 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-char	*ft_strdup(const char *src)
+int	ft_istoken(int c)
 {
-	char	*p;
-	int		i;
-
-	i = 0;
-	p = (char *)malloc(ft_strlen(src) + 1);
-	if (!p)
-		return (0);
-	while (src[i])
-	{
-		p[i] = ((char *)src)[i];
-		i++;
-	}
-	p[i] = '\0';
-	return (p);
+	if (c == '<' || c == '>' || c == '|' || c == '$')
+		return (1);
+	return (0);
 }

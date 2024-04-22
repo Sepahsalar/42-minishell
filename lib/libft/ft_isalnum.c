@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 15:51:58 by nnourine          #+#    #+#             */
-/*   Updated: 2023/10/30 12:37:50 by nnourine         ###   ########.fr       */
+/*   Created: 2023/10/23 16:07:37 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/01/30 10:57:45 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isalnum(int c)
 {
-	if ((c < 48) || (c > 57 && c < 65))
-		return (0);
-	if ((c > 90 && c < 97) || (c > 122))
-		return (0);
-	return (1);
+	if ((c >= 97 && c <= 122)
+		|| (c >= 65 && c <= 90)
+		|| (c >= 48 && c <= 57))
+		return (1);
+	return (0);
 }

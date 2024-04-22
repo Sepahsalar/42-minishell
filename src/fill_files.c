@@ -6,49 +6,80 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:29:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/19 11:51:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:00:40 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_count_files(char *current, char *token)
+t_file	*ft_set_temp_file(t_cmd **temp, int file_count, int type)
 {
-	int		count;
-	char	*temp;
+	t_file		*temp_file;
 
-	count = 0;
-	temp = current;
-	while (temp)
+	if (type == 0)
 	{
-		temp = ft_strnstr(temp, token, ft_strlen(temp));
-		if (temp)
-		{
-			temp = temp + ft_strlen(token) + 1;
-			count++;
-		}
+		(*temp)->input = ft_create_file_list(file_count);
+		temp_file = (*temp)->input;
 	}
-	return (count);
+	else if (type == 1)
+	{
+		(*temp)->output_trunc = ft_create_file_list(file_count);
+		temp_file = (*temp)->output_trunc;
+	}
+	else
+	{
+		(*temp)->output_append = ft_create_file_list(file_count);
+		temp_file = (*temp)->output_append;
+	}
+	return (temp_file);
 }
 
-
-void    ft_fill_files(char *current, t_cmd **cmd)
+void	ft_update_temp(t_cmd **temp, t_file	**temp_file, char *token)
 {
-	t_file	*file;
+	char		*temp_str;
 
+	temp_str = ft_strnstr((*temp)->current,
+			token, ft_strlen((*temp)->current));
+	(*temp_file)->raw = ft_strdup_modified(temp_str, token);
+	printf("raw file: %s for token %s\n", (*temp_file)->raw, token);
+	printf("current before update: %s\n", (*temp)->current);
+	(*temp)->current = ft_remove((*temp)->current, token, (*temp_file)->raw);
+	printf("current after update: %s\n", (*temp)->current);
+}
+
+int	ft_files_helper(t_cmd *temp, t_file *temp_file, int file_count, char *token)
+{
+	int	file_index;
+
+	file_index = 0;
+	while (file_index < file_count)
+	{
+		ft_update_temp(&temp, &temp_file, token);
+		if (!temp->current || !temp_file->raw)
+			return (1);
+		temp_file = temp_file->next;
+		file_index++;
+	}
+	return (0);
+}
+
+int	ft_fill_files(t_cmd **cmd, char *token, int type)
+{
 	t_cmd	*temp;
-	char	*heredoc;
+	t_file	*temp_file;
+	int		file_count;
 
 	temp = *cmd;
 	while (temp)
 	{
-		heredoc = ft_strnstr(temp->current, ">>", ft_strlen(temp->current));
-		if (heredoc)
+		file_count = ft_token_count(temp->current, token);
+		if (file_count > 0)
 		{
-			temp->limiter = ft_strdup_modified(heredoc, ">>");
-			if (!temp->limiter)
+			temp_file = ft_set_temp_file(&temp, file_count, type);
+			if (!temp_file)
 				return (1);
-			temp->current = ft_remove(temp->current, ">>", temp->limiter);
+			if (ft_files_helper(temp, temp_file, file_count, token))
+				return (1);
 		}
 		temp = temp->next;
 	}

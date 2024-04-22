@@ -3,29 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/28 17:15:24 by nima              #+#    #+#             */
-/*   Updated: 2023/11/08 15:37:17 by nnourine         ###   ########.fr       */
+/*   Created: 2023/10/25 15:42:44 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/01/30 10:57:38 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t count, size_t size)
 {
-	char	*m;
-	size_t	t;
+	void	*p;
+	size_t	max_size;
 
-	t = nmemb * size;
-	if (nmemb && size)
-	{
-		if (size != t / nmemb || t > 4294967295)
-			return (0);
-	}
-	m = malloc(t * sizeof(char));
-	if (m == 0)
-		return (0);
-	ft_bzero(m, t);
-	return ((void *)m);
+	max_size = 4611686014132420608;
+	if (count == 0 || size == 0)
+		return (ft_calloc(1, 1));
+	if (count != 0 && max_size / count < size)
+		return ((void *)0);
+	p = (void *)malloc(count * size * sizeof(void));
+	if (!p)
+		return ((void *)0);
+	ft_bzero(p, count * size);
+	return (p);
 }

@@ -3,102 +3,113 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 07:54:41 by nima              #+#    #+#             */
-/*   Updated: 2023/11/08 15:00:08 by nnourine         ###   ########.fr       */
+/*   Created: 2023/10/26 12:30:45 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/01/30 10:59:23 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_count(char const *s, char c)
+static int	count_occur(char const *s, char c)
 {
-	int	i;
 	int	count;
+	int	in_word;
 
 	count = 0;
-	i = 0;
-	while (s[i] != '\0')
+	in_word = 0;
+	while (*s)
 	{
-		if ((s[i] != c) && (i == 0 || s[i - 1] == c))
-			count++;
-		i++;
+		if (*s == c)
+		{
+			if (in_word == 1)
+			{
+				count++;
+				in_word = 0;
+			}
+		}
+		else
+		{
+			if (in_word == 0)
+				in_word = 1;
+		}
+		s++;
 	}
+	if (in_word == 1)
+		count++;
 	return (count);
 }
 
-static int	ft_len(char const *s, char c)
+static char	**fill_subarr(int index, char **array, char *str, char *word_start)
 {
-	int	j;
-
-	j = 0;
-	while (!(s[j] != c && (s[j + 1] == '\0' || s[j + 1] == c)))
-		j++;
-	return (j + 1);
-}
-
-static char	*ft_dup(char const *s, char c)
-{
-	int		len;
-	char	*m;
 	int		i;
 
-	len = ft_len(s, c);
-	m = malloc ((len + 1) * sizeof(char));
-	if (!m)
-		return (0);
-	m[len] = '\0';
 	i = 0;
-	while (i < len)
+	array[index] = (char *)malloc(((str - word_start) + 1) * sizeof(char));
+	if (!array[index])
 	{
-		m[i] = s[i];
+		while (i < index)
+		{
+			free(array[i]);
+			i++;
+		}
+		free(array);
+		return (0);
+	}
+	i = 0;
+	while (i < (str - word_start))
+	{
+		array[index][i] = word_start[i];
 		i++;
 	}
-	return (m);
+	array[index][str - word_start] = '\0';
+	return (array);
 }
 
-static char	**ft_create(char const *s, char c, int i, int j)
+static t_shorten	first_split(char *str, char c)
 {
-	char	**m;
-	int		k;
+	t_shorten	p;
 
-	m = malloc((ft_count(s, c) + 1) * sizeof (char *));
-	if (m == 0)
-		return (0);
-	m[ft_count(s, c)] = 0;
-	k = 0;
-	while (s[i] != '\0')
+	p = (t_shorten){0, 0, 0, str, 0};
+	p.array = (char **)malloc((count_occur(str, c) + 1) * sizeof(char *));
+	if (!p.array)
+		return (p);
+	while (*p.s)
 	{
-		if ((s[i] != c) && (i == 0 || (i > 0 && s[i - 1] == c)))
+		if (*p.s == c)
 		{
-			m[j] = ft_dup(s + i, c);
-			if (m[j] == 0)
+			if (p.in_word)
 			{
-				while (k < j)
-					free(m[k++]);
-				free (m);
-				return (0);
+				p.array = fill_subarr(p.index, p.array, p.s, p.word_start);
+				p.index++;
+				p.in_word = 0;
 			}
-			j++;
 		}
-		i++;
+		else if (!p.in_word)
+		{
+			p.in_word = 1;
+			p.word_start = p.s;
+		}
+		p.s++;
 	}
-	return (m);
+	return (p);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**m;
+	t_shorten	p;
 
-	if (s == 0 || *s == '\0')
+	if (!s)
+		return (0);
+	p = first_split((char *)s, c);
+	if (!p.array)
+		return (0);
+	if (p.in_word)
 	{
-		m = malloc(1 * sizeof (char *));
-		if (m == 0)
-			return (0);
-		m[0] = 0;
-		return (m);
+		p.array = fill_subarr(p.index, p.array, p.s, p.word_start);
+		p.index++;
 	}
-	m = ft_create (s, c, 0, 0);
-	return (m);
+	p.array[p.index] = 0;
+	return (p.array);
 }

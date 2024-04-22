@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:43:39 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/19 11:00:49 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:50:56 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,16 @@ t_cmd	*ft_fill_cmd_list(char **raw_cmd, t_env *env)
 	ft_fill_index_cmd_list(&cmd);
 	if (ft_fill_raw_cmd_list(&cmd, raw_cmd))
 		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	ft_fill_env_cmd_list(&cmd, env);
 	if (ft_fill_heredoc_cmd_list(&cmd))
+		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	if (ft_fill_files(&cmd, ">>", 2))
+		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	// if (ft_fill_files(&cmd, "<", 0))
+	// 	ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	if (ft_fill_files(&cmd, ">", 1))
+		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	if (ft_fill_files(&cmd, "<", 0))
 		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	return (cmd);
 }

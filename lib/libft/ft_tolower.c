@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 17:10:36 by nnourine          #+#    #+#             */
-/*   Updated: 2023/11/08 15:04:36 by nnourine         ###   ########.fr       */
+/*   Created: 2023/10/24 16:42:52 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/01/30 11:00:24 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_tolower(int c)
 {
-	if (c > 64 && c < 91)
+	if (c >= 65 && c <= 90)
 		return (c + 32);
-	else
-		return (c);
+	return (c);
 }
