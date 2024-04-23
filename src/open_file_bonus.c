@@ -6,11 +6,11 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:56:29 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/23 11:54:39 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:09:23 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../include/pipex_bonus.h"
 
 int	open_file(char *argv, int i)
 {

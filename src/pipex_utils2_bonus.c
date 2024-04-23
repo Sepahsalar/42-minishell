@@ -6,11 +6,11 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:31:40 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/23 11:55:25 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:09:30 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../include/pipex_bonus.h"
 
 size_t	find_max(char *str1, char *str2)
 {

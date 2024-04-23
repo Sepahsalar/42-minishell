@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/23 15:07:20 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:38:29 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_heredoc	*ft_create_heredoc_list(int total_number);
 int			ft_token_count(char *str, char *token);
 int			ft_istoken(int c);
 int			ft_fill_files(t_cmd **cmd, char *token, int type);
-int			master_pipex(int argc, char **argv, char **envp);
+int			master_pipex(t_cmd *cmd);
 char		**ft_split_pipex(char const *s);
 char		**ft_split_all_delimiter(char const *s);
 char		**ft_free_split(char ***m, int j);
@@ -97,12 +97,12 @@ int			ft_len_helper(const char *s);
 int			ft_handle_quote(char ***input);
 char		**ft_create_args(char *str);
 int			ft_fill_name_and_args_cmd_list(t_cmd **cmd);
-void		ft_free_doule_and_single_pointer(char **m, char *s1, char *s2);
 int			ft_accessibility(char *address, char mode);
 int			ft_find_cmd_address(t_cmd *cmd);
 int			ft_fill_address_access(t_cmd **cmd);
 int			ft_create_file_data(t_file *file);
 int			ft_fill_file_data(t_cmd **cmd);
 char		*ft_handle_quote_str(char *input);
+void		execute_cmd(t_cmd *cmd);
 
 #endif //MINISHELL_H
