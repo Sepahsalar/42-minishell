@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils2_bonus.c                               :+:      :+:    :+:   */
+/*   pipex_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:31:40 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/23 16:09:30 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:22:41 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex_bonus.h"
+#include "../include/pipex.h"
 
 size_t	find_max(char *str1, char *str2)
 {

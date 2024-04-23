@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
+#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/04/23 14:46:26 by nnourine         ###   ########.fr        #
+#    Updated: 2024/04/23 17:24:21 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,11 +50,11 @@ SRCS =  $(SRCDIR)/main.c \
 		$(SRCDIR)/fill_address_access_cmd_list.c \
 		$(SRCDIR)/fill_name_and_args_cmd_list.c \
 		$(SRCDIR)/fill_file_data.c \
-		$(SRCDIR)/pipex_bonus.c \
-		$(SRCDIR)/pipex_utils_bonus.c \
-		$(SRCDIR)/pipex_utils2_bonus.c \
-		$(SRCDIR)/open_file_bonus.c \
-		$(SRCDIR)/here_doc_bonus.c \
+		$(SRCDIR)/pipex.c \
+		$(SRCDIR)/pipex_utils.c \
+		$(SRCDIR)/pipex_utils2.c \
+		$(SRCDIR)/open_file.c \
+		$(SRCDIR)/here_doc.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

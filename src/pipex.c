@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/23 16:47:38 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:22:21 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex_bonus.h"
-#include "../include/minishell.h"
+#include "../include/pipex.h"
 
 static void	child_process(t_cmd *cmd)
 {
@@ -67,7 +66,7 @@ static int	status_check(int status)
 // 		i = 2;
 // 		fileout = open_file(argv[argc - 1], 1);
 // 		filein = open_file(argv[1], 0);
-		
+// 
 // 		if (dup2(filein, STDIN_FILENO) == -1)
 // 			error(EXIT_FAILURE);
 // 		close(filein);
@@ -129,7 +128,7 @@ static int	pipex(t_cmd *cmd)
 	{
 		child_process(temp_cmd);
 		temp_cmd = temp_cmd->next;
-        index++;
+		index++;
 	}
 	pid = fork();
 	if (pid == -1)
@@ -169,7 +168,7 @@ static int	pipex(t_cmd *cmd)
 // 	{
 // 		status = pipex(argc, argv, envp);
 // 	}
-		
+// 
 // 	return (status);
 // }
 
@@ -191,7 +190,7 @@ int	master_pipex(t_cmd *cmd)
 	// }
 	// else
 	// {
-		status = pipex(cmd);
+	status = pipex(cmd);
 	// }
 		
 	return (status);

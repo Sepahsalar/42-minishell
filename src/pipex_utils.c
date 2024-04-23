@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils_bonus.c                                :+:      :+:    :+:   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/23 16:40:00 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:23:15 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex_bonus.h"
-#include "../include/minishell.h"
+#include "../include/pipex.h"
 
 // static char	*get_path_con(char **total_paths, char *cmd, char *temp)
 // {
 // 	char	*final_path;
-
+// 
 // 	while (*total_paths)
 // 	{
 // 		temp = ft_strjoin(*total_paths, "/");
@@ -99,7 +98,7 @@ void	execute_cmd(t_cmd *cmd)
 {
 	// char	**cmd;
 	// char	*path;
-
+// 
 	// check_space(argv);
 	// cmd = ft_split(argv, ' ');
 	// if (!cmd)
