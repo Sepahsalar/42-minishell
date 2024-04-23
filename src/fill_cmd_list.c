@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:43:39 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/22 15:50:56 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:43:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,15 @@ t_cmd	*ft_fill_cmd_list(char **raw_cmd, t_env *env)
 		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (ft_fill_files(&cmd, ">>", 2))
 		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
-	// if (ft_fill_files(&cmd, "<", 0))
-	// 	ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (ft_fill_files(&cmd, ">", 1))
 		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (ft_fill_files(&cmd, "<", 0))
+		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	if (ft_fill_name_and_args_cmd_list(&cmd))
+		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	if (ft_fill_address_access(&cmd))
+		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	if (ft_fill_file_data(&cmd))
 		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	return (cmd);
 }

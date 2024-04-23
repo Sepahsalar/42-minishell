@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/04/22 15:12:01 by nnourine         ###   ########.fr        #
+#    Updated: 2024/04/23 14:46:26 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,9 +42,19 @@ SRCS =  $(SRCDIR)/main.c \
 		$(SRCDIR)/token_count.c \
 		$(SRCDIR)/ft_istoken.c \
 		$(SRCDIR)/fill_files.c \
-		$(SRCDIR)/pipex.c \
-		$(SRCDIR)/pipex_utils.c \
-		$(SRCDIR)/pipex_utils2.c \
+		$(SRCDIR)/ft_split_pipex.c \
+		$(SRCDIR)/helper.c \
+		$(SRCDIR)/helper3.c \
+		$(SRCDIR)/create_args.c \
+		$(SRCDIR)/create_cmd_address.c \
+		$(SRCDIR)/fill_address_access_cmd_list.c \
+		$(SRCDIR)/fill_name_and_args_cmd_list.c \
+		$(SRCDIR)/fill_file_data.c \
+		$(SRCDIR)/pipex_bonus.c \
+		$(SRCDIR)/pipex_utils_bonus.c \
+		$(SRCDIR)/pipex_utils2_bonus.c \
+		$(SRCDIR)/open_file_bonus.c \
+		$(SRCDIR)/here_doc_bonus.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/22 15:22:37 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:07:20 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include "../lib/libft/libft.h"
-# include "pipex.h"
-// # include "pipex_bonus.h"
+# include "pipex_bonus.h"
 
 
 typedef struct s_file
@@ -29,8 +28,6 @@ typedef struct s_file
 	int				read;
 	int				write;
 	int				fd;
-	// int				trunc;
-	// int				append;
 	struct s_file	*next;
 }					t_file;
 
@@ -49,7 +46,7 @@ typedef struct s_heredoc
 
 typedef struct s_cmd
 {
-	int				index; //might need to be deleted
+	int				index;
 	char			*raw;
 	char			*current;
 	t_env			*env;
@@ -62,7 +59,7 @@ typedef struct s_cmd
 	char			**args;
 	int				exist;
 	int				exec;
-	char			*cmd_error;
+	int				error;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -91,6 +88,21 @@ t_heredoc	*ft_create_heredoc_list(int total_number);
 int			ft_token_count(char *str, char *token);
 int			ft_istoken(int c);
 int			ft_fill_files(t_cmd **cmd, char *token, int type);
-int			pipex_master(int argc, char **argv, char **envp);
+int			master_pipex(int argc, char **argv, char **envp);
+char		**ft_split_pipex(char const *s);
+char		**ft_split_all_delimiter(char const *s);
+char		**ft_free_split(char ***m, int j);
+int			ft_triger_maker_sp(int triger, char c, char divider);
+int			ft_len_helper(const char *s);
+int			ft_handle_quote(char ***input);
+char		**ft_create_args(char *str);
+int			ft_fill_name_and_args_cmd_list(t_cmd **cmd);
+void		ft_free_doule_and_single_pointer(char **m, char *s1, char *s2);
+int			ft_accessibility(char *address, char mode);
+int			ft_find_cmd_address(t_cmd *cmd);
+int			ft_fill_address_access(t_cmd **cmd);
+int			ft_create_file_data(t_file *file);
+int			ft_fill_file_data(t_cmd **cmd);
+char		*ft_handle_quote_str(char *input);
 
 #endif //MINISHELL_H

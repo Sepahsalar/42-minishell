@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:29:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/22 16:00:40 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/23 14:56:59 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ void	ft_update_temp(t_cmd **temp, t_file	**temp_file, char *token)
 	temp_str = ft_strnstr((*temp)->current,
 			token, ft_strlen((*temp)->current));
 	(*temp_file)->raw = ft_strdup_modified(temp_str, token);
-	printf("raw file: %s for token %s\n", (*temp_file)->raw, token);
-	printf("current before update: %s\n", (*temp)->current);
 	(*temp)->current = ft_remove((*temp)->current, token, (*temp_file)->raw);
-	printf("current after update: %s\n", (*temp)->current);
 }
 
 int	ft_files_helper(t_cmd *temp, t_file *temp_file, int file_count, char *token)

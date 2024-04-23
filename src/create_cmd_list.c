@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:07:14 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/22 12:12:12 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:25:00 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	ft_clean_cmd_node(t_cmd *node)
 			free (node->raw);
 		if (node->current)
 			free (node->current);
-		if (node->cmd_error)
-			free (node->cmd_error);
 		if (node->address)
 			free (node->address);
 		if (node->limiter)

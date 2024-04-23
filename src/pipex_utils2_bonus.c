@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils2.c                                     :+:      :+:    :+:   */
+/*   pipex_utils2_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 15:40:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/22 18:07:20 by asohrabi         ###   ########.fr       */
+/*   Created: 2024/02/20 11:31:40 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/04/23 11:55:25 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-// void	error(int status)
-// {
-// 	perror("Error");
-// 	exit(status);
-// }
+size_t	find_max(char *str1, char *str2)
+{
+	size_t	max;
+
+	if (ft_strlen(str1) > ft_strlen(str2))
+		max = ft_strlen(str1);
+	else
+		max = ft_strlen(str2);
+	return (max);
+}
+
+void	error(int status)
+{
+	perror("Error");
+	(void)status;
+	// exit(status);
+}
 
 void	ft_free(char **array)
 {
