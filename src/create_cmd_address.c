@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:31:28 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/23 15:32:29 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/24 09:11:25 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ char	*ft_find_address(t_cmd *cmd, char mode)
 	char	*temp;
 	int		i;
 
-	if (!cmd->cmd_name)
-		return (NULL);
+	// I think it is handle is ft_find_cmd_address
+	// if (!cmd->cmd_name)
+	// 	return (NULL);
 	if (ft_strchr(cmd->cmd_name, '/'))
 	{
 		if (ft_accessibility(cmd->cmd_name, mode) == 0)

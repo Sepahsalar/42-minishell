@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/23 17:23:15 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:26:04 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,30 +94,115 @@ void	check_space(char *argv)
 // 		error(EXIT_FAILURE);
 // }
 
-void	execute_cmd(t_cmd *cmd)
+void	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 {
-	// char	**cmd;
-	// char	*path;
-// 
-	// check_space(argv);
-	// cmd = ft_split(argv, ' ');
-	// if (!cmd)
-	// 	error(EXIT_FAILURE);
-	// if (!ft_strchr(cmd[0], '/') && (cmd[0][0] != '.' && cmd[0][1] != '/'))
-	// 	path = get_path(cmd[0], envp);
-	// else
-	// {
-	// 	clean_cmd(cmd[0]);
-	// 	path = cmd[0];
-	// }
-	// if (!path)
-	// {
-	// 	ft_free(cmd);
-	// 	ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
-	// 	ft_putendl_fd(argv, STDERR_FILENO);
-	// 	exit(127);
-	// }
-	// else
-	// 	execute_cmd_helper(cmd, path, envp);
-	execve(cmd->address, cmd->args, 0);
+// 	// char	**cmd;
+// 	// char	*path;
+// // 
+// 	// check_space(argv);
+// 	// cmd = ft_split(argv, ' ');
+// 	// if (!cmd)
+// 	// 	error(EXIT_FAILURE);
+// 	// if (!ft_strchr(cmd[0], '/') && (cmd[0][0] != '.' && cmd[0][1] != '/'))
+// 	// 	path = get_path(cmd[0], envp);
+// 	// else
+// 	// {
+// 	// 	clean_cmd(cmd[0]);
+// 	// 	path = cmd[0];
+// 	// }
+// 	// if (!path)
+// 	// {
+// 	// 	ft_free(cmd);
+// 	// 	ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
+// 	// 	ft_putendl_fd(argv, STDERR_FILENO);
+// 	// 	exit(127);
+// 	// }
+// 	// else
+// 	// 	execute_cmd_helper(cmd, path, envp);
+// 	char	*cmd_address;
+// 	char	**cmd_args;
+// 	char	**cmd_env;
+	t_file		*temp_file;
+	t_heredoc	*temp_heredoc;
+
+
+	//////////////////////////////////////////////////////////////// CHECKING
+	temp_heredoc = cmd_execution->limiter;
+	while(temp_heredoc)
+	{
+		
+	}
+	temp_file = cmd_execution->input;
+	while (temp_file)
+	{
+		if (temp_file->read == 0)
+		{
+			if (temp_file->exist == 0)
+			{
+				printf(" %s : No such file or directory\n", temp_file->address);
+				//raw_cmd should be freed before this part, there is no use for it after cmd
+				ft_master_clean(0 , cmd_start->env, cmd_start, 1);
+			}
+			else
+			{
+				// printf(" %s : Per\n", temp_file->address);
+				perror("zsh");
+				ft_master_clean(0 , cmd_start->env, cmd_start, 1);
+			}
+		}
+		temp_file = temp_file->next;
+	}
+	temp_file = cmd_execution->input;
+	while (temp_file)
+	{
+		if (temp_file->read == 0)
+		{
+			if (temp_file->exist == 0)
+			{
+				printf(" %s : No such file or directory\n", temp_file->address);
+				//raw_cmd should be freed before this part, there is no use for it after cmd
+				ft_master_clean(0 , cmd_start->env, cmd_start, 1);
+			}
+			else
+			{
+				// printf(" %s : Per\n", temp_file->address);
+				perror("zsh");
+				ft_master_clean(0 , cmd_start->env, cmd_start, 1);
+			}
+		}
+		temp_file = temp_file->next;
+	}
+	temp_file = cmd_execution->output;
+	while (temp_file)
+	{
+		if (temp_file->write == 0 && temp_file->exist == 1)
+		{
+			{
+				// printf(" %s : Per\n", temp_file->address);
+				perror("zsh");
+				ft_master_clean(0 , cmd_start->env, cmd_start, 1);
+			}
+		}
+		else if (temp_file->trunc == 1)
+			temp_file->fd = open(temp_file->address, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else if (temp_file->append == 1)
+			temp_file->fd = open(temp_file->address, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (temp_file->fd == -1)
+			ft_master_clean(0 , cmd_start->env, cmd_start, 1);
+		temp_file = temp_file->next;
+	}
+
+
+// 	////////////////////////////////////////////////////////////////
+
+// 	ft_execution_package(cmd_execution, cmd_address, cmd_args, cmd_env);
+// 	ft_master_clean(0 , cmd_start->env, cmd_start, -1);
+// 	if (execve(cmd_address, cmd_args, cmd_env) == -1)
+// 	{
+// 		perror("zsh");
+// 		free(cmd_address);
+// 		ft_clean_2d_char(cmd_args);
+// 		ft_clean_2d_char(cmd_env);
+// 	}
 }
+

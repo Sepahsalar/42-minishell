@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/23 17:22:21 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/04/24 12:53:59 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	child_process(t_cmd *cmd)
 	int		fd[2];
 	pid_t	pid;
 
+    (void)cmd; //delete
 	if (pipe(fd) == -1)
 		error(EXIT_FAILURE);
 	pid = fork();
@@ -28,7 +29,7 @@ static void	child_process(t_cmd *cmd)
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			error(EXIT_FAILURE);
 		close(fd[1]);
-		execute_cmd(cmd);
+		// execute_cmd(cmd);
 	}
 	else
 	{
@@ -133,18 +134,18 @@ static int	pipex(t_cmd *cmd)
 	pid = fork();
 	if (pid == -1)
 		error(EXIT_FAILURE);
-	if (pid == 0)
-		execute_cmd(temp_cmd);
-	else
-	{
-		waitpid(pid, &status, 0);
-		index = 1;
-		while (index < cmd_counter)
-		{
-			wait(0);
-			index++;
-		}
-	}
+	// if (pid == 0)
+	// 	// execute_cmd(temp_cmd);
+	// else
+	// {
+	// 	waitpid(pid, &status, 0);
+	// 	index = 1;
+	// 	while (index < cmd_counter)
+	// 	{
+	// 		wait(0);
+	// 		index++;
+	// 	}
+	// }
 	return (status_check(status));
 }
 

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:10:06 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/23 16:01:19 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/24 09:12:38 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*ft_handle_quote_str(char *input)
 	if (input[0] == '\'')
 		temp = ft_strtrim(input, "\'");
 	else
-	    temp = ft_strdup(input);
+		temp = ft_strdup(input);
 	if (!temp)
 		return (0);
 	return (temp);

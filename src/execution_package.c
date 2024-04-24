@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_count.c                                      :+:      :+:    :+:   */
+/*   execution_package.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 09:29:47 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/24 12:31:27 by nnourine         ###   ########.fr       */
+/*   Created: 2024/04/24 09:47:01 by nnourine          #+#    #+#             */
+/*   Updated: 2024/04/24 10:11:44 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_token_count(char *str, char *token)
+void	ft_execution_package(t_cmd *cmd,
+	char *cmd_address, char **cmd_args, char **cmd_env)
 {
-	int		counter;
-	int		index;
-	char	*temp;
-
-	if (!str || *str == '\0')
-		return (0);
-	if (!token || *token == '\0')
-		return (0);
-	counter = 0;
-	index = 0;
-	temp = str;
-	while (temp && *temp)
+	if (cmd)
 	{
-		temp = ft_strnstr(temp, token, ft_strlen(temp));
-		if (temp)
-		{
-			temp = temp + ft_strlen(token);
-			counter++;
-		}
+		cmd_address = ft_strdup(cmd->address);
+		cmd_args = ft_copy_2d_char(cmd->args);
+		cmd_env = ft_recreate_2d_env(cmd->env);
+		if (!cmd_address ||!cmd_args ||!cmd_env)
+			cmd->error = 1;
 	}
-	return (counter);
 }

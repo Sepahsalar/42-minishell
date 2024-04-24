@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:27:08 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/22 12:01:53 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/24 10:24:23 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ void	ft_master_clean(char **raw_cmd, t_env *env, t_cmd *cmd, int exit_value)
 		ft_clean_env_list(env);
 	if (cmd)
 		ft_clean_cmd_list(cmd);
-	exit(exit_value);
+	if (exit_value != -1)
+		exit(exit_value);
 }

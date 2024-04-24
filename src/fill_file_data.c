@@ -31,20 +31,20 @@ int	ft_fill_file_data(t_cmd **cmd)
 				return (1);
 			temp_file = temp_file->next;
 		}
-		temp_file = temp_cmd->output_append;
+		temp_file = temp_cmd->output;
 		while (temp_file)
 		{
 			if (ft_create_file_data(temp_file))
 				return (1);
 			temp_file = temp_file->next;
 		}
-		temp_file = temp_cmd->output_trunc;
-		while (temp_file)
-		{
-			if (ft_create_file_data(temp_file))
-				return (1);
-			temp_file = temp_file->next;
-		}
+		// temp_file = temp_cmd->output_trunc;
+		// while (temp_file)
+		// {
+		// 	if (ft_create_file_data(temp_file))
+		// 		return (1);
+		// 	temp_file = temp_file->next;
+		// }
 		temp_cmd = temp_cmd->next;
 	}
 	return (0);

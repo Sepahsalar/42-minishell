@@ -6,12 +6,12 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:10:21 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/23 15:26:11 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/24 10:03:40 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
+//This split is not handing delimiters other than spaces
 static int	ft_count(char const *s, char c)
 {
 	int	i;
@@ -106,7 +106,7 @@ char	**ft_split_pipex(char const *s)
 {
 	char	**m;
 
-	if (s == 0 || s[0] == '\0')
+	if (s == 0 || s[0] == '\0' || ft_all_space((char *)s))
 	{
 		m = malloc(2 * sizeof (char *));
 		if (m == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/23 17:20:01 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/04/24 12:52:48 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_file
 	char			*address;
 	int				exist;
 	int				read;
+	int				append;
+	int				trunc;
 	int				write;
 	int				fd;
 	struct s_file	*next;
@@ -52,8 +54,7 @@ typedef struct s_cmd
 	t_env			*env;
 	t_heredoc		*limiter;
 	t_file			*input;
-	t_file			*output_trunc;
-	t_file			*output_append;
+	t_file			*output;
 	char			*cmd_name;
 	char			*address;
 	char			**args;
@@ -103,6 +104,12 @@ int			ft_fill_address_access(t_cmd **cmd);
 int			ft_create_file_data(t_file *file);
 int			ft_fill_file_data(t_cmd **cmd);
 char		*ft_handle_quote_str(char *input);
-void		execute_cmd(t_cmd *cmd);
+void    	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution);
+int			ft_isspace(int c);
+char		**ft_recreate_2d_env(t_env *env);
+int			ft_all_space(char *str);
+char		**ft_copy_2d_char(char **src);
+void		ft_execution_package(t_cmd *cmd,
+				char *cmd_address, char **cmd_args, char **cmd_env);
 
 #endif //MINISHELL_H

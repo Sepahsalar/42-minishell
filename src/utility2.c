@@ -1,38 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_count.c                                      :+:      :+:    :+:   */
+/*   utility2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 09:29:47 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/24 12:31:27 by nnourine         ###   ########.fr       */
+/*   Created: 2024/04/24 10:04:15 by nnourine          #+#    #+#             */
+/*   Updated: 2024/04/24 10:07:44 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_token_count(char *str, char *token)
+int	ft_all_space(char *str)
 {
-	int		counter;
-	int		index;
-	char	*temp;
+	int	index;
 
-	if (!str || *str == '\0')
-		return (0);
-	if (!token || *token == '\0')
-		return (0);
-	counter = 0;
 	index = 0;
-	temp = str;
-	while (temp && *temp)
+	while (str[index] != '\0')
 	{
-		temp = ft_strnstr(temp, token, ft_strlen(temp));
-		if (temp)
-		{
-			temp = temp + ft_strlen(token);
-			counter++;
-		}
+		if (!ft_isspace(str[index]))
+			return (0);
+		index++;
 	}
-	return (counter);
+	return (1);
 }
+
+char	**ft_copy_2d_char(char **src)
+{
+	char	**dest;
+	int		i;
+
+	i = 0;
+	dest = (char **)malloc(sizeof(char *) * (ft_char_2d_count(src) + 1));
+	if (!dest)
+		return (0);
+	while (src[i])
+	{
+		dest[i] = ft_strdup(src[i]);
+		if (!dest[i])
+			return (0);
+		i++;
+	}
+	dest[i] = 0;
+	return (dest);
+}
+

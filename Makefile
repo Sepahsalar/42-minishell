@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
+#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/04/23 17:24:21 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/04/24 10:08:49 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,8 @@ SRCS =  $(SRCDIR)/main.c \
 		$(SRCDIR)/pipex_utils2.c \
 		$(SRCDIR)/open_file.c \
 		$(SRCDIR)/here_doc.c \
+		$(SRCDIR)/recreate_2d_env.c \
+		$(SRCDIR)/utility2.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
