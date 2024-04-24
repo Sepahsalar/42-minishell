@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:29:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/24 16:14:16 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:28:39 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@ t_file	*ft_set_temp_file(t_cmd **temp, int file_count, int type)
 		(*temp)->input = ft_create_file_list(file_count);
 		temp_file = (*temp)->input;
 	}
-	// else if (type == 1)
-	// {
-	// 	(*temp)->output_trunc = ft_create_file_list(file_count);
-	// 	temp_file = (*temp)->output_trunc;
-	// }
-	// else
-	// {
-	// 	(*temp)->output_append = ft_create_file_list(file_count);
-	// 	temp_file = (*temp)->output_append;
-	// }
 	else
 	{
 		(*temp)->output = ft_create_file_list(file_count);
@@ -54,9 +44,10 @@ void	ft_update_temp(t_cmd **temp, t_file	**temp_file, char *token)
 		(*temp_file)->trunc = 1;
 	(*temp_file)->raw = ft_strdup_modified(temp_str, token);
 	if (*token == '>' && *(temp_str + 1) == '>')
-	    (*temp)->current = ft_remove((*temp)->current, ">>", (*temp_file)->raw);
+		(*temp)->current = ft_remove((*temp)->current, ">>", (*temp_file)->raw);
 	else
-		(*temp)->current = ft_remove((*temp)->current, token, (*temp_file)->raw);
+		(*temp)->current
+			= ft_remove((*temp)->current, token, (*temp_file)->raw);
 }
 
 int	ft_files_helper(t_cmd *temp, t_file *temp_file, int file_count, char *token)

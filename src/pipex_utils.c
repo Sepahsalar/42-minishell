@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/24 16:26:04 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:30:38 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			{
 				// printf(" %s : Per\n", temp_file->address);
 				perror("zsh");
-				ft_master_clean(0 , cmd_start->env, cmd_start, 1);
+				ft_master_clean(0, cmd_start->env, cmd_start, 1);
 			}
 		}
 		temp_file = temp_file->next;
@@ -180,15 +180,17 @@ void	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			{
 				// printf(" %s : Per\n", temp_file->address);
 				perror("zsh");
-				ft_master_clean(0 , cmd_start->env, cmd_start, 1);
+				ft_master_clean(0, cmd_start->env, cmd_start, 1);
 			}
 		}
 		else if (temp_file->trunc == 1)
-			temp_file->fd = open(temp_file->address, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			temp_file->fd
+				= open(temp_file->address, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (temp_file->append == 1)
-			temp_file->fd = open(temp_file->address, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			temp_file->fd
+				= open(temp_file->address, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (temp_file->fd == -1)
-			ft_master_clean(0 , cmd_start->env, cmd_start, 1);
+			ft_master_clean(0, cmd_start->env, cmd_start, 1);
 		temp_file = temp_file->next;
 	}
 

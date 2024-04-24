@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_pipex.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:10:21 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/24 10:03:40 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:29:20 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
 //This split is not handing delimiters other than spaces
+
 static int	ft_count(char const *s, char c)
 {
 	int	i;

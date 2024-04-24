@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:43:39 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/24 12:26:53 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:27:07 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,8 @@ t_cmd	*ft_fill_cmd_list(char **raw_cmd, t_env *env)
 		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (ft_fill_files(&cmd, "<", 0))
 		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
-	// if (ft_fill_files(&cmd, ">>", 2))
-	// 	ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (ft_fill_files(&cmd, ">", 1))
 		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
-	
 	if (ft_fill_name_and_args_cmd_list(&cmd))
 		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (ft_fill_address_access(&cmd))

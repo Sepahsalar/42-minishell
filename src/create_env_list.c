@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:21:29 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/19 10:23:52 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:26:28 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_env	*ft_clean_env_list(t_env *first)
 
 t_env	*ft_create_env_node(void)
 {
-	t_env			*new;
+	t_env	*new;
 
 	new = malloc(sizeof(t_env));
 	if (!new)
