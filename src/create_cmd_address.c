@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:31:28 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/24 09:11:25 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:32:19 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_accessibility(char *address, char mode)
 {
 	int	result;
 
+	if (!address)
+		return (0);
 	if (mode == 'X')
 		result = access(address, X_OK);
 	else if (mode == 'R')
@@ -24,7 +26,9 @@ int	ft_accessibility(char *address, char mode)
 		result = access(address, W_OK);
 	else
 		result = access(address, F_OK);
-	return (result);
+	if (result == 0)
+	    return (1);
+	return (0);
 }
 
 char	*ft_find_address(t_cmd *cmd, char mode)
@@ -40,7 +44,7 @@ char	*ft_find_address(t_cmd *cmd, char mode)
 	// 	return (NULL);
 	if (ft_strchr(cmd->cmd_name, '/'))
 	{
-		if (ft_accessibility(cmd->cmd_name, mode) == 0)
+		if (ft_accessibility(cmd->cmd_name, mode) == 1)
 		{
 			address = ft_strdup(cmd->cmd_name);
 			if (!address)
@@ -79,7 +83,7 @@ char	*ft_find_address(t_cmd *cmd, char mode)
 			ft_clean_2d_char(all_path);
 			return (NULL);
 		}
-		if (ft_accessibility(address, mode) == 0)
+		if (ft_accessibility(address, mode) == 1)
 		{
 			free(temp);
 			ft_clean_2d_char(all_path);

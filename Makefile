@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/04/24 10:08:49 by nnourine         ###   ########.fr        #
+#    Updated: 2024/04/26 16:31:56 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,10 @@ SRCS =  $(SRCDIR)/main.c \
 		$(SRCDIR)/here_doc.c \
 		$(SRCDIR)/recreate_2d_env.c \
 		$(SRCDIR)/utility2.c \
+		$(SRCDIR)/last_node.c \
+		$(SRCDIR)/execution_package.c \
+		$(SRCDIR)/cmd_count.c \
+		
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

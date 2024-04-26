@@ -1,26 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution_package.c                                :+:      :+:    :+:   */
+/*   last_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 09:47:01 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/26 15:39:14 by nnourine         ###   ########.fr       */
+/*   Created: 2024/04/26 11:39:49 by nnourine          #+#    #+#             */
+/*   Updated: 2024/04/26 13:39:41 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_execution_package(t_cmd *cmd,
-	char **cmd_address, char ***cmd_args, char ***cmd_env)
+t_file	*ft_last_file(t_file *head)
 {
-	if (cmd)
+	t_file	*tmp;
+	t_file	*last;
+
+	tmp = head;
+	last = tmp;
+	while (tmp)
 	{
-		*cmd_address = ft_strdup(cmd->address);
-		*cmd_args = ft_copy_2d_char(cmd->args);
-		*cmd_env = ft_recreate_2d_env(cmd->env);
-		if (!cmd_address ||!cmd_args ||!cmd_env)
-			cmd->error = 1;
+		last = tmp;
+		tmp = tmp->next;
 	}
+	return (last);
+}
+
+t_cmd	*ft_last_cmd(t_cmd *head)
+{
+	t_cmd	*tmp;
+	t_cmd	*last;
+
+	tmp = head;
+	while (tmp)
+	{
+		last = tmp;
+		tmp = tmp->next;
+	}
+	return (last);
 }

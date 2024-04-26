@@ -3,8 +3,8 @@
 int	ft_create_file_data(t_file *file)
 {
 
-	if (!file->raw)
-		file->address = NULL;
+	if (!file->raw || file->limiter)
+		return (0);
 	else
 		file->address = ft_handle_quote_str(file->raw);
 	if (!file->address)

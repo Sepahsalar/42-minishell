@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution_package.c                                :+:      :+:    :+:   */
+/*   cmd_count.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 09:47:01 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/26 15:39:14 by nnourine         ###   ########.fr       */
+/*   Created: 2024/04/26 16:29:49 by nnourine          #+#    #+#             */
+/*   Updated: 2024/04/26 16:31:23 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_execution_package(t_cmd *cmd,
-	char **cmd_address, char ***cmd_args, char ***cmd_env)
+int ft_cmd_count(t_cmd *cmd)
 {
-	if (cmd)
+	int count;
+
+	if (!cmd)
+	    return (0);
+	count = 0;
+	while (cmd)
 	{
-		*cmd_address = ft_strdup(cmd->address);
-		*cmd_args = ft_copy_2d_char(cmd->args);
-		*cmd_env = ft_recreate_2d_env(cmd->env);
-		if (!cmd_address ||!cmd_args ||!cmd_env)
-			cmd->error = 1;
+		count++;
+        cmd = cmd->next;
 	}
+	return (count);
 }

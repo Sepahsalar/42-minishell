@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/24 12:52:48 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:31:41 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_file
 	int				read;
 	int				append;
 	int				trunc;
+	int				input;
+	char			*limiter;
 	int				write;
 	int				fd;
 	struct s_file	*next;
@@ -40,11 +42,11 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-typedef struct s_heredoc
-{
-	char				*str;
-	struct s_heredoc	*next;
-}						t_heredoc;
+// typedef struct s_heredoc
+// {
+// 	char				*str;
+// 	struct s_heredoc	*next;
+// }						t_heredoc;
 
 typedef struct s_cmd
 {
@@ -52,7 +54,7 @@ typedef struct s_cmd
 	char			*raw;
 	char			*current;
 	t_env			*env;
-	t_heredoc		*limiter;
+	// t_heredoc		*limiter;
 	t_file			*input;
 	t_file			*output;
 	char			*cmd_name;
@@ -84,8 +86,8 @@ t_env		*ft_clean_env_list(t_env *first);
 t_env		*ft_create_env_list(int total_number);
 t_env		*ft_fill_env_list(char **envp, char **raw_cmd);
 void		ft_fill_env_cmd_list(t_cmd **cmd, t_env *env);
-t_heredoc	*ft_clean_heredoc_list(t_heredoc *first);
-t_heredoc	*ft_create_heredoc_list(int total_number);
+// t_heredoc	*ft_clean_heredoc_list(t_heredoc *first);
+// t_heredoc	*ft_create_heredoc_list(int total_number);
 int			ft_token_count(char *str, char *token);
 int			ft_istoken(int c);
 int			ft_fill_files(t_cmd **cmd, char *token, int type);
@@ -110,6 +112,8 @@ char		**ft_recreate_2d_env(t_env *env);
 int			ft_all_space(char *str);
 char		**ft_copy_2d_char(char **src);
 void		ft_execution_package(t_cmd *cmd,
-				char *cmd_address, char **cmd_args, char **cmd_env);
-
+				char **cmd_address, char ***cmd_args, char ***cmd_env);
+t_file		*ft_last_file(t_file *head);
+t_cmd		*ft_last_cmd(t_cmd *head);
+int ft_cmd_count(t_cmd *cmd);
 #endif //MINISHELL_H

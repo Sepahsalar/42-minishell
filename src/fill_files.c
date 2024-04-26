@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:29:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/24 16:14:16 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/26 10:47:45 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,26 @@ t_file	*ft_set_temp_file(t_cmd **temp, int file_count, int type)
 	return (temp_file);
 }
 
+// void	ft_update_temp(t_cmd **temp, t_file	**temp_file, char *token)
+// {
+// 	char		*temp_str;
+
+// 	temp_str = ft_strnstr((*temp)->current,
+// 			token, ft_strlen((*temp)->current));
+// 	if (*token == '>' && *(temp_str + 1) == '>')
+// 	{
+// 		temp_str++;
+// 		(*temp_file)->append = 1;
+// 	}
+// 	else if (*token == '>')
+// 		(*temp_file)->trunc = 1;
+// 	(*temp_file)->raw = ft_strdup_modified(temp_str, token);
+// 	if (*token == '>' && *(temp_str + 1) == '>')
+// 	    (*temp)->current = ft_remove((*temp)->current, ">>", (*temp_file)->raw);
+// 	else
+// 		(*temp)->current = ft_remove((*temp)->current, token, (*temp_file)->raw);
+// }
+
 void	ft_update_temp(t_cmd **temp, t_file	**temp_file, char *token)
 {
 	char		*temp_str;
@@ -47,16 +67,39 @@ void	ft_update_temp(t_cmd **temp, t_file	**temp_file, char *token)
 			token, ft_strlen((*temp)->current));
 	if (*token == '>' && *(temp_str + 1) == '>')
 	{
+		// (*temp_file)->raw = ft_strdup_modified(temp_str, token);
 		temp_str++;
 		(*temp_file)->append = 1;
+		// (*temp_file)->raw = ft_strdup_modified(temp_str, token);
 	}
 	else if (*token == '>')
+	{
+		// (*temp_file)->raw = ft_strdup_modified(temp_str, token);
 		(*temp_file)->trunc = 1;
+	}
+	else if (*token == '<' && *(temp_str + 1) == '<')
+	{
+		(*temp_file)->limiter = ft_strdup_modified(temp_str, "<<");
+		temp_str++;
+	}
+	else if (*token == '<')
+	{
+		(*temp_file)->raw = ft_strdup_modified(temp_str, token);
+		(*temp_file)->input = 1;
+	}
 	(*temp_file)->raw = ft_strdup_modified(temp_str, token);
 	if (*token == '>' && *(temp_str + 1) == '>')
 	    (*temp)->current = ft_remove((*temp)->current, ">>", (*temp_file)->raw);
+	else if (*token == '<' && *(temp_str + 1) == '<')
+	    (*temp)->current = ft_remove((*temp)->current, "<<", (*temp_file)->raw);
 	else
 		(*temp)->current = ft_remove((*temp)->current, token, (*temp_file)->raw);
+	// printf("we are in fill files and we are handling one node of file\n");
+	// printf("limiter if any:%s\n", (*temp_file)->limiter);
+	// printf("raw of file:%s\n", (*temp_file)->raw);
+	// printf("for this specific file-> input:%d , trun:%d, append:%d\n", (*temp_file)->input, (*temp_file)->trunc, (*temp_file)->append);
+	// printf("current cmd after the process:%s\n", (*temp)->current);
+	// printf("End of process\n");
 }
 
 int	ft_files_helper(t_cmd *temp, t_file *temp_file, int file_count, char *token)
@@ -88,7 +131,9 @@ int	ft_fill_files(t_cmd **cmd, char *token, int type)
 			file_count = ft_token_count(temp->current, ">")
 				- ft_token_count(temp->current, ">>");
 		else
-			file_count = ft_token_count(temp->current, token);
+			// file_count = ft_token_count(temp->current, token);
+			file_count = ft_token_count(temp->current, "<")
+				- ft_token_count(temp->current, "<<");
 		if (file_count > 0)
 		{
 			temp_file = ft_set_temp_file(&temp, file_count, type);
