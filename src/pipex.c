@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/24 12:53:59 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:06:47 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,9 @@ static int	pipex(t_cmd *cmd)
 	int		cmd_counter;
 	t_cmd	*temp_cmd;
 	int		index;
+	int		stdin_original;
 
+	stdin_original = dup(0);
 	temp_cmd = cmd;
 	cmd_counter = 0;
 	while (temp_cmd)
@@ -146,6 +148,9 @@ static int	pipex(t_cmd *cmd)
 	// 		index++;
 	// 	}
 	// }
+
+	
+	//dup2(0, stdin_original); // maybe not needed
 	return (status_check(status));
 }
 

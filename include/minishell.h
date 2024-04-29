@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/26 16:31:41 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:04:58 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_file
 	char			*limiter;
 	int				write;
 	int				fd;
+	long			fd_operator;
 	struct s_file	*next;
 }					t_file;
 
@@ -57,6 +58,7 @@ typedef struct s_cmd
 	// t_heredoc		*limiter;
 	t_file			*input;
 	t_file			*output;
+	t_file			*std_error;
 	char			*cmd_name;
 	char			*address;
 	char			**args;
@@ -106,7 +108,7 @@ int			ft_fill_address_access(t_cmd **cmd);
 int			ft_create_file_data(t_file *file);
 int			ft_fill_file_data(t_cmd **cmd);
 char		*ft_handle_quote_str(char *input);
-void    	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution);
+int			execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution);
 int			ft_isspace(int c);
 char		**ft_recreate_2d_env(t_env *env);
 int			ft_all_space(char *str);
@@ -115,5 +117,6 @@ void		ft_execution_package(t_cmd *cmd,
 				char **cmd_address, char ***cmd_args, char ***cmd_env);
 t_file		*ft_last_file(t_file *head);
 t_cmd		*ft_last_cmd(t_cmd *head);
-int ft_cmd_count(t_cmd *cmd);
+int 		ft_cmd_count(t_cmd *cmd);
+long		ft_atoi_output(char **input);
 #endif //MINISHELL_H

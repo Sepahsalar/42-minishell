@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/26 15:47:40 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:16:27 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd	*cmd;
 	// t_file	*f;
 	t_cmd	*temp_cmd;
-	// int		i;
+	int		status;
 
 
 	(void)argc;
+	status = 0;
 	raw_cmd = ft_create_raw_cmd(argv[1]);
 	env = ft_fill_env_list(envp, raw_cmd);
 	cmd = ft_fill_cmd_list(raw_cmd, env);
@@ -30,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
-		execute_cmd(cmd, temp_cmd);
+		status = execute_cmd(cmd, temp_cmd);
 		temp_cmd = temp_cmd->next;
 	}
 	// c = cmd;
@@ -85,5 +86,5 @@ int	main(int argc, char **argv, char **envp)
 	// 		printf("outfile:%s\n", (temp->output_trunc)->address);
 	// 	temp = temp->next;
 	// }
-	ft_master_clean(0, env, cmd, EXIT_SUCCESS);
+	ft_master_clean(0, env, cmd, status);
 }
