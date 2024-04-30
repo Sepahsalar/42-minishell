@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/29 15:04:58 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/30 09:17:46 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-// typedef struct s_heredoc
-// {
-// 	char				*str;
-// 	struct s_heredoc	*next;
-// }						t_heredoc;
+typedef struct s_last_file
+{
+	t_file				*file;
+	struct s_last_file	*next;
+}						t_last_file;
 
 typedef struct s_cmd
 {
@@ -55,9 +55,10 @@ typedef struct s_cmd
 	char			*raw;
 	char			*current;
 	t_env			*env;
-	// t_heredoc		*limiter;
 	t_file			*input;
 	t_file			*output;
+	t_last_file		*last_in;
+	t_last_file		*last_out;
 	t_file			*std_error;
 	char			*cmd_name;
 	char			*address;
