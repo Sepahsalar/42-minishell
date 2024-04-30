@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/29 15:23:01 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:40:33 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	t_file	*temp_file;
 	t_file	*last_input;
 	t_file	*last_output;
+	t_last_file	*last;
 	int		fd[2];
 	pid_t	pid;
 	int     status;
@@ -170,21 +171,21 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		}
 	}
 	//Handle here_doc
-	temp_file = cmd_execution->output;
-	//this part is the same as last file but for output
-	while (temp_file)
-	{
-		last_output = temp_file;
-		if (temp_file->next)
-		{
-			if (temp_file->fd > 2)
-			{
-				//close(temp_file->fd);
-				temp_file->fd = -2;
-			}
-		}
-		temp_file = temp_file->next;
-	}
+	// temp_file = cmd_execution->last_out;
+	// //this part is the same as last file but for output
+	// while (temp_file)
+	// {
+	// 	last_output = temp_file;
+	// 	if (temp_file->next)
+	// 	{
+	// 		if (temp_file->fd > 2)
+	// 		{
+	// 			//close(temp_file->fd);
+	// 			temp_file->fd = -2;
+	// 		}
+	// 	}
+	// 	temp_file = temp_file->next;
+	// }
 	if (pipe(fd) == -1)
 		ft_master_clean(0, cmd_start->env, cmd_execution, 1);
 	pid = fork();
@@ -193,10 +194,26 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	if (pid == 0)
 	{
 		//Handle fd overflow before this point
-		if (last_output)
+		last = cmd_execution->last_out;
+		if (last)
 		{
-			if (dup2(last_output->fd, STDOUT_FILENO) == -1)
-				ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+			while (last)
+			{
+				last_output = last->file;
+				if (last_output->trunc)
+					last_output->fd = open(last_output->address,
+							O_RDWR | O_CREAT | O_TRUNC, 0666);
+				else if (last_output->append)
+					last_output->fd = open(last_output->address,
+							O_RDWR | O_CREAT | O_APPEND, 0666);
+				if (last_output->fd == -1)
+					ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+				if (dup2(last_output->fd, last_output->fd_operator) == -1)
+					ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+				close(last_output->fd);
+				last_output->fd = -2;
+				last = last->next;
+			}
 		}
 		else if (ft_cmd_count(cmd_start) > cmd_execution->index)
 		{
@@ -233,8 +250,13 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		close(fd[1]);
 		if (ft_cmd_count(cmd_start) > cmd_execution->index)
 		{
-			if (last_output && last_output->fd > 2)
+			last = cmd_execution->last_out;
+			while (last && last->file->fd_operator != 1)
+				last = last->next;
+			if (last && last->file->fd_operator == 1)
 			{
+				last_output = last->file;
+				last_output->fd = open(last_output->address, O_RDONLY);
 				dup2(last_output->fd, 0);
 				close(last_output->fd);
 				last_output->fd = -2;

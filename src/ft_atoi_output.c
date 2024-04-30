@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:03:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/29 14:59:47 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:17:30 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ long	ft_atoi_output(char **input)
 	a = 0;
 	str = *input;
 	find = ft_strchr(str, '>');
+	
 	temp = find - str;
 	temp--;
 	if (str[temp] == '>')

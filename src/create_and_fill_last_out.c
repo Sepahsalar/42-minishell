@@ -6,70 +6,63 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 09:20:06 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/30 09:43:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:47:53 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_clean_file_nodet_last_file *node)
+t_last_file	*ft_clean_last_out_list(t_last_file *first)
 {
-	if (node)
-	{
-		if (node->raw)
-			free (node->raw);
-		if (node->address)
-			free (node->address);
-		if (node->limiter)
-			free (node->limiter);
-		if (node->fd > 2)
-			close(node->fd);
-		free (node);
-	}
-}
-t_last_file	*ft_clean_file_listt_last_file *first)
-{
-t_last_file	*node;
-t_last_file	*temp;
+	t_last_file	*node;
+	t_last_file	*temp;
 
 	node = first;
 	while (node)
 	{
 		temp = node->next;
-		ft_clean_file_node(node);
+		free (node);
 		node = temp;
 	}
 	return (0);
 }
-t_last_file	*ft_create_file_node(void)
-{
-t_last_file			*new;
 
-	new = malloc(sizeoft_last_file);
+t_last_file	*ft_create_last_out_node(t_file *output, t_file *temp_out)
+{
+	t_last_file			*new;
+	t_file				*temp_file;
+
+	new = malloc(sizeof(t_last_file));
 	if (!new)
 		return (0);
-	ft_memset(new, 0, sizeoft_last_file);
-	new->fd = -2;
+	temp_file = output;
+	while (temp_file)
+	{
+		if (temp_file->fd_operator == temp_out->fd_operator)
+			new->file = temp_file;
+		temp_file = temp_file->next;
+	}
+	new->next = 0;
 	return (new);
 }
 
-int ft_unique(t_last_file	*first, t_file	*temp_out)
+int	ft_unique(t_last_file *first, t_file *temp_out)
 {
-	t_last_file    *node;
+	t_last_file	*node;
 
-    if (!first)
+	if (!first)
 		return (1);
 	node = first;
-    while (node)
-    {
-        if (node->file->fd_operator == temp_out->fd)
-            return (0);
-        node = node->next;
-    }
-    return (1);
+	while (node)
+	{
+		if (node->file->fd_operator == temp_out->fd_operator)
+			return (0);
+		node = node->next;
+	}
+	return (1);
 }
 
-t_last_file	*ft_create_and_fill_last_out(t_file *output)
+t_last_file	*ft_create_last_out_list(t_file *output)
 {
 	t_last_file	*first;
 	t_last_file	*new;
@@ -84,7 +77,7 @@ t_last_file	*ft_create_and_fill_last_out(t_file *output)
 	{
 		if (ft_unique(first, temp_out))
 		{
-			new = ft_create_last_out_node();
+			new = ft_create_last_out_node(output, temp_out);
 			if (first == 0)
 				first = new;
 			else
@@ -96,4 +89,19 @@ t_last_file	*ft_create_and_fill_last_out(t_file *output)
 		temp_out = temp_out->next;
 	}
 	return (first);
+}
+
+int	ft_fill_last_out(t_cmd **cmd)
+{
+	t_cmd	*temp;
+
+	temp = *cmd;
+	while (temp)
+	{
+		temp->last_out = ft_create_last_out_list(temp->output);
+		if (temp->output && !temp->last_out)
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/30 09:17:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/30 11:16:49 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ t_env		*ft_clean_env_list(t_env *first);
 t_env		*ft_create_env_list(int total_number);
 t_env		*ft_fill_env_list(char **envp, char **raw_cmd);
 void		ft_fill_env_cmd_list(t_cmd **cmd, t_env *env);
-// t_heredoc	*ft_clean_heredoc_list(t_heredoc *first);
-// t_heredoc	*ft_create_heredoc_list(int total_number);
 int			ft_token_count(char *str, char *token);
 int			ft_istoken(int c);
 int			ft_fill_files(t_cmd **cmd, char *token, int type);
@@ -120,4 +118,6 @@ t_file		*ft_last_file(t_file *head);
 t_cmd		*ft_last_cmd(t_cmd *head);
 int 		ft_cmd_count(t_cmd *cmd);
 long		ft_atoi_output(char **input);
+t_last_file	*ft_clean_last_out_list(t_last_file *first);
+int			ft_fill_last_out(t_cmd **cmd);
 #endif //MINISHELL_H

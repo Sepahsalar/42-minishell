@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:07:14 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/26 17:03:42 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/30 11:03:04 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,16 @@ void	ft_clean_cmd_node(t_cmd *node)
 			free (node->current);
 		if (node->address)
 			free (node->address);
-		// if (node->limiter)
-		// 	ft_clean_heredoc_list (node->limiter);
 		if (node->args)
 			ft_clean_2d_char(node->args);
-			
-		// if (node->input)
-		// 	ft_clean_file_list(node->input);
-		// if (node->output)
-		// 	ft_clean_file_list(node->output);
-
-			
-		// if (node->output_trunc)
-		// 	ft_clean_file_list(node->output_trunc);
+		if (node->input)
+			ft_clean_file_list(node->input);
+		if (node->output)
+			ft_clean_file_list(node->output);
+		if (node->last_out)
+			ft_clean_last_out_list(node->last_out);
+		// if (node->last_in)
+		// 	ft_clean_last_in_list(node->last_out);
 		free (node);
 	}
 }
