@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:29:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/30 12:22:31 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:08:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ void	ft_update_temp(t_cmd **temp, t_file	**temp_file, char *token)
 	char		*temp_str;
 
 	if ((*token) == '>')
-		(*temp_file)->fd_operator = ft_atoi_output(&((*temp)->current));
+		(*temp_file)->fd_operator = ft_atoi_file(&((*temp)->current), 1);
+	else if ((*token) == '<')
+		(*temp_file)->fd_operator = ft_atoi_file(&((*temp)->current), 0);
 	temp_str = ft_strnstr((*temp)->current,
 			token, ft_strlen((*temp)->current));
 	if (*token == '>' && *(temp_str + 1) == '>')

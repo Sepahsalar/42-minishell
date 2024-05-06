@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/30 11:16:49 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:04:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,9 @@ void		ft_execution_package(t_cmd *cmd,
 t_file		*ft_last_file(t_file *head);
 t_cmd		*ft_last_cmd(t_cmd *head);
 int 		ft_cmd_count(t_cmd *cmd);
-long		ft_atoi_output(char **input);
+long		ft_atoi_file(char **input, int def);
 t_last_file	*ft_clean_last_out_list(t_last_file *first);
 int			ft_fill_last_out(t_cmd **cmd);
+t_last_file	*ft_clean_last_in_list(t_last_file *first);
+int			ft_fill_last_in(t_cmd **cmd);
 #endif //MINISHELL_H

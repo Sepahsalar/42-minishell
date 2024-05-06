@@ -1,45 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi_output.c                                   :+:      :+:    :+:   */
+/*   ft_atoi_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:03:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/30 12:17:30 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:34:16 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-long	ft_atoi_output(char **input)
+long	ft_atoi_file(char **input, int def)
 {
 	long	a;
 	char	*find;
 	int		temp;
-	int len1;
-	int len2;
-	char *part2;
-	char *new;
-	char *str;
-	char *temp_str;
+	int		len1;
+	int		len2;
+	char	*part2;
+	char	*new;
+	char	*str;
+	char	*temp_str;
 
 	a = 0;
 	str = *input;
-	find = ft_strchr(str, '>');
-	
+	if (def == 0)
+		find = ft_strchr(str, '<');
+	else
+		find = ft_strchr(str, '>');
 	temp = find - str;
 	temp--;
-	if (str[temp] == '>')
+	if ((str[temp] == '>' && def == 1) || (str[temp] == '<' && def == 0))
 		temp--;
 	part2 = str + temp + 1;
 	len2 = ft_strlen(part2);
 	if (str[temp] == ' ')
-		return (1);
+		return (def);
 	while (temp >= 0 && str[temp] >= '0' && str[temp] <= '9')
 		temp--;
 	if (temp != -1 && str[temp] != ' ')
-		return (1);
+		return (def);
 	len1 = temp + 1;
 	temp++;
 	while (str[temp] >= '0' && str[temp] <= '9')

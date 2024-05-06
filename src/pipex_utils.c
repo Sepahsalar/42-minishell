@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/06 17:39:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:25:26 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,16 +160,23 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			ft_master_clean(0, cmd_start->env, cmd_execution, 127);
 		}
 	}
-	last_input = ft_last_file(cmd_execution->input);
-	if (last_input && !last_input->limiter)
-	{
-		last_input->fd = open(last_input->address, O_RDONLY);
-		if (last_input->fd == -1)
-		{
-			printf("bash: %s: %s\n", last_input->raw, strerror(errno));
-			ft_master_clean(0, cmd_start->env, cmd_execution, 1);
-		}
-	}
+
+
+	
+	// last_input = ft_last_file(cmd_execution->input);
+	// if (last_input && !last_input->limiter)
+	// {
+	// 	last_input->fd = open(last_input->address, O_RDONLY);
+	// 	if (last_input->fd == -1)
+	// 	{
+	// 		printf("bash: %s: %s\n", last_input->raw, strerror(errno));
+	// 		ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+	// 	}
+	// }
+
+
+
+	
 	//Handle here_doc
 	// temp_file = cmd_execution->last_out;
 	// //this part is the same as last file but for output
@@ -194,14 +201,41 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	if (pid == 0)
 	{
 		
-		if (last_input && !last_input->limiter)
+		// if (last_input && !last_input->limiter)
+		// {
+		// 	if (dup2(last_input->fd, STDIN_FILENO) == -1)
+		// 		ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+		// 	// close(last_input->fd);
+		// 	// last_input->fd = -2;
+		// }
+		// //Handle fd overflow before this point
+
+		last = cmd_execution->last_in;
+		if (last)
 		{
-			if (dup2(last_input->fd, STDIN_FILENO) == -1)
-				ft_master_clean(0, cmd_start->env, cmd_execution, 1);
-			// close(last_input->fd);
-			// last_input->fd = -2;
+			while (last)
+			{
+				last_input = last->file;
+				if (last_input->fd_operator <= 2 && !last_input->limiter)
+				{
+					last_input->fd = open(last_input->address, O_RDONLY);
+					if (last_input->fd == -1)
+						ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+					if (dup2(last_input->fd, last_input->fd_operator) == -1)
+						ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+				}
+				last = last->next;
+			}
+			// last = cmd_execution->last_out;
+			// while (last && last->file->fd_operator != 1)
+			// 	last = last->next;
+			// if (!last || last->file->fd_operator != 1)
+			// {
+			// 	dup2(fd[1], STDOUT_FILENO);
+			// }
 		}
-		//Handle fd overflow before this point
+
+		
 		last = cmd_execution->last_out;
 		
 		if (last)

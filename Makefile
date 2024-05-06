@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/04/30 11:05:12 by nnourine         ###   ########.fr        #
+#    Updated: 2024/05/06 18:03:51 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ SRCS =  $(SRCDIR)/main.c \
 		$(SRCDIR)/execution_package.c \
 		$(SRCDIR)/cmd_count.c \
 		$(SRCDIR)/create_and_fill_last_out.c \
-		$(SRCDIR)/ft_atoi_output.c \
+		$(SRCDIR)/create_and_fill_last_in.c \
+		$(SRCDIR)/ft_atoi_file.c \
 		
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
