@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/06 18:25:26 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/06 19:15:33 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,23 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 						ft_master_clean(0, cmd_start->env, cmd_execution, 1);
 					if (dup2(last_input->fd, last_input->fd_operator) == -1)
 						ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+				}
+				last = last->next;
+			}
+			last_input = cmd_execution->input;
+			while (last_input)
+			{
+				if (last_input->fd_operator <= 2 && last_input->limiter)
+				{
+					here_doc(last_input);
+					//1)gathering info from stdin by creating temp files or using get next line and strjoin
+					//2)int index of heredoc = 1;
+					//3)char *name of file = temp + index of command + index of heredoc; in cleaning process they shuoud be deleted #for example temp_cmd1_1
+					//4)input->fd = open
+					//5)put_str_fd(fd, str)
+					//6) if (dup2(temp_file, last_input->fd_operator) == -1)
+					// 	ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+					//7)index ++;
 				}
 				last = last->next;
 			}

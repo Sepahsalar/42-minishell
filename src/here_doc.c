@@ -3,40 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 21:37:12 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/23 17:21:07 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:59:32 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	here_doc_helper(int *fd, char *limiter)
+void	here_doc_helper(int *fd, t_last_file *last)
 {
 	char	*line;
+	char	*limiter;
 
 	close(fd[0]);
+	limiter = last->file->limiter;
 	while (1)
 	{
-		ft_putstr_fd("pipe heredoc> ", STDOUT_FILENO);
-		line = get_next_line(0);
+		ft_putstr_fd("> ", STDOUT_FILENO);
+		// line = get_next_line(last->file->fd_operator);
+		line = get_next_line(STDIN_FILENO);
 		if (ft_strncmp(line, limiter, find_max(line, limiter)) == 0)
 		{
 			free(line);
-			exit(0);
+			return ;
+			// exit(EXIT_SUCCESS);
 		}
 		ft_putstr_fd(line, fd[1]);
+		// ft_putstr_fd(line, last->file->fd_operator);
 		free(line);
 	}
 	close(fd[1]);
 }
 
-void	here_doc(char *limiter)
+void	here_doc(t_last_file *last)
 {
 	int		fd[2];
 	pid_t	pid;
+	char	*limiter;
 
+	limiter = last->file->limiter;
 	limiter = ft_strjoin(limiter, "\n");
 	if (!limiter)
 		error(EXIT_FAILURE);
@@ -46,7 +53,7 @@ void	here_doc(char *limiter)
 	if (pid == -1)
 		error(EXIT_FAILURE);
 	if (pid == 0)
-		here_doc_helper(fd, limiter);
+		here_doc_helper(fd, last);
 	else
 	{
 		close(fd[1]);
