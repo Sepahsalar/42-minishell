@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/30 12:40:33 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:39:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,10 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	{
 		if (temp_file->trunc)
 			temp_file->fd = open(temp_file->address,
-					O_RDWR | O_CREAT | O_TRUNC, 0666);
+					O_RDWR | O_CREAT | O_TRUNC, 0644);
 		else if (temp_file->append)
 			temp_file->fd = open(temp_file->address,
-					O_RDWR | O_CREAT | O_APPEND, 0666);
+					O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (temp_file->fd == -1)
 			ft_master_clean(0, cmd_start->env, cmd_execution, 1);
 		close(temp_file->fd);
@@ -193,36 +193,48 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		ft_master_clean(0, cmd_start->env, cmd_execution, 1);
 	if (pid == 0)
 	{
+		
+		if (last_input && !last_input->limiter)
+		{
+			if (dup2(last_input->fd, STDIN_FILENO) == -1)
+				ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+			// close(last_input->fd);
+			// last_input->fd = -2;
+		}
 		//Handle fd overflow before this point
 		last = cmd_execution->last_out;
+		
 		if (last)
 		{
 			while (last)
 			{
 				last_output = last->file;
-				if (last_output->trunc)
-					last_output->fd = open(last_output->address,
-							O_RDWR | O_CREAT | O_TRUNC, 0666);
-				else if (last_output->append)
-					last_output->fd = open(last_output->address,
-							O_RDWR | O_CREAT | O_APPEND, 0666);
-				if (last_output->fd == -1)
-					ft_master_clean(0, cmd_start->env, cmd_execution, 1);
-				if (dup2(last_output->fd, last_output->fd_operator) == -1)
-					ft_master_clean(0, cmd_start->env, cmd_execution, 1);
-				close(last_output->fd);
-				last_output->fd = -2;
+				if (last_output->fd_operator <= 2)
+				{
+					if (last_output->trunc)
+						last_output->fd = open(last_output->address,
+								O_RDWR | O_CREAT | O_TRUNC, 0644);
+					else if (last_output->append)
+						last_output->fd = open(last_output->address,
+								O_RDWR | O_CREAT | O_APPEND, 0644);
+					if (last_output->fd == -1)
+						ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+					if (dup2(last_output->fd, last_output->fd_operator) == -1)
+						ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+				}
 				last = last->next;
+			}
+			last = cmd_execution->last_out;
+			while (last && last->file->fd_operator != 1)
+				last = last->next;
+			if (!last || last->file->fd_operator != 1)
+			{
+				dup2(fd[1], STDOUT_FILENO);
 			}
 		}
 		else if (ft_cmd_count(cmd_start) > cmd_execution->index)
 		{
 			if (dup2(fd[1], STDOUT_FILENO) == -1)
-				ft_master_clean(0, cmd_start->env, cmd_execution, 1);
-		}
-		if (last_input && !last_input->limiter)
-		{
-			if (dup2(last_input->fd, STDIN_FILENO) == -1)
 				ft_master_clean(0, cmd_start->env, cmd_execution, 1);
 		}
 		// WE SHOULD HANDLE HEREDOC HERE
@@ -248,22 +260,8 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	else
 	{
 		close(fd[1]);
-		if (ft_cmd_count(cmd_start) > cmd_execution->index)
-		{
-			last = cmd_execution->last_out;
-			while (last && last->file->fd_operator != 1)
-				last = last->next;
-			if (last && last->file->fd_operator == 1)
-			{
-				last_output = last->file;
-				last_output->fd = open(last_output->address, O_RDONLY);
-				dup2(last_output->fd, 0);
-				close(last_output->fd);
-				last_output->fd = -2;
-			}
-			else
-				dup2(fd[0], 0);
-		}
+		if (cmd_execution->index < ft_cmd_count(cmd_start))
+			dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 		if (cmd_execution->index == ft_cmd_count(cmd_start))
 		{

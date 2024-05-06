@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/29 11:16:27 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:26:01 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	main(int argc, char **argv, char **envp)
 	char	**raw_cmd;
 	t_env	*env;
 	t_cmd	*cmd;
-	// t_file	*f;
 	t_cmd	*temp_cmd;
 	int		status;
 
