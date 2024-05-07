@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:07:14 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/30 11:03:04 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:49:15 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	ft_clean_cmd_node(t_cmd *node)
 			ft_clean_file_list(node->output);
 		if (node->last_out)
 			ft_clean_last_out_list(node->last_out);
-		// if (node->last_in)
-		// 	ft_clean_last_in_list(node->last_out);
+		if (node->last_in)
+			ft_clean_last_in_list(node->last_out);
 		free (node);
 	}
 }

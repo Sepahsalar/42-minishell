@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_count.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:29:49 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/26 16:31:23 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:46:54 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int ft_cmd_count(t_cmd *cmd)
+int	ft_cmd_count(t_cmd *cmd)
 {
-	int count;
+	int	count;
 
 	if (!cmd)
-	    return (0);
+		return (0);
 	count = 0;
 	while (cmd)
 	{
 		count++;
-        cmd = cmd->next;
+		cmd = cmd->next;
 	}
 	return (count);
 }

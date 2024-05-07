@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:57:03 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/26 13:51:21 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:54:34 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PIPEX_H
 
 # include "../lib/libft/libft.h"
-# include "../include/minishell.h"
 # include "minishell.h"
 # include <unistd.h>
 # include <stdio.h>

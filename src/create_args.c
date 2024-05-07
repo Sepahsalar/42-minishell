@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:10:06 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/24 09:12:38 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:47:47 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-//ft_handle_quote is based on the assumption that read_line doesn't trim or process anything. just give us the exact input.
+//ft_handle_quote is based on the assumption that read_line doesn't trim or
+//process anything. just give us the exact input.
 int	ft_handle_quote(char ***input)
 {
 	char	**args;
@@ -66,6 +67,6 @@ char	**ft_create_args(char *str)
 
 	args = ft_split_pipex(str);
 	if (ft_handle_quote(&args))
-	    return (NULL);
+		return (NULL);
 	return (args);
 }
