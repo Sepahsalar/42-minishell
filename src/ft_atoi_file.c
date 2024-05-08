@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:03:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/06 18:34:16 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:23:35 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ long	ft_atoi_file(char **input, int def)
 		find = ft_strchr(str, '>');
 	temp = find - str;
 	temp--;
-	if ((str[temp] == '>' && def == 1) || (str[temp] == '<' && def == 0))
+	if ((temp >= 0 && str[temp] == '>' && def == 1) || (str[temp] == '<' && def == 0))
 		temp--;
 	part2 = str + temp + 1;
 	len2 = ft_strlen(part2);

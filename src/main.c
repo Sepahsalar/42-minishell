@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/06 16:26:01 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:15:01 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,49 @@ int	main(int argc, char **argv, char **envp)
 	t_env	*env;
 	t_cmd	*cmd;
 	t_cmd	*temp_cmd;
-	int		status;
+	int		status_last_cmd;
+	int		cmd_count;
+	t_file	*temp_file;
 
 
 	(void)argc;
-	status = 0;
+	status_last_cmd = 0;
 	raw_cmd = ft_create_raw_cmd(argv[1]);
 	env = ft_fill_env_list(envp, raw_cmd);
 	cmd = ft_fill_cmd_list(raw_cmd, env);
 	ft_master_clean(raw_cmd, 0, 0, -1);
+	cmd_count = ft_cmd_count(cmd);
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
-		status = execute_cmd(cmd, temp_cmd);
+		if (temp_cmd->index == cmd_count)
+			status_last_cmd = execute_cmd(cmd, temp_cmd);
+		else
+			execute_cmd(cmd, temp_cmd);
 		temp_cmd = temp_cmd->next;
 	}
+	
+	temp_cmd = cmd;
+	while (temp_cmd)
+	{
+		if (temp_cmd->last_in)
+			temp_file = temp_cmd->last_in->file;
+		else
+			temp_file = NULL;
+		while (temp_file)
+		{
+			if (temp_file->limiter)
+			{
+				close(temp_file->fd); //maybe double close
+				unlink(temp_file->address);
+			}
+			temp_file = temp_file->next;
+		}
+		temp_cmd = temp_cmd->next;
+	}
+
+
+	
 	// c = cmd;
 	// i = 1;
 	// while (c)
@@ -85,5 +113,5 @@ int	main(int argc, char **argv, char **envp)
 	// 		printf("outfile:%s\n", (temp->output_trunc)->address);
 	// 	temp = temp->next;
 	// }
-	ft_master_clean(0, env, cmd, status);
+	ft_master_clean(0, env, cmd, status_last_cmd);
 }

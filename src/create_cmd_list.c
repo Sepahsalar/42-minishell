@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:07:14 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/07 12:49:15 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/08 14:44:32 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	ft_clean_cmd_node(t_cmd *node)
 			ft_clean_last_out_list(node->last_out);
 		if (node->last_in)
 			ft_clean_last_in_list(node->last_out);
+		// commented this part beause we are call this function before execution. We should keep this for the execution
+		// if (node->fd_heredoc > 2)
+		// {
+		// 	close(node->fd_heredoc);
+		// 	unlink(node->fd_heredoc);
+		// }
 		free (node);
 	}
 }

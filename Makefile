@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/05/06 18:03:51 by nnourine         ###   ########.fr        #
+#    Updated: 2024/05/08 11:25:44 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,6 @@ SRCS =  $(SRCDIR)/main.c \
 		$(SRCDIR)/pipex.c \
 		$(SRCDIR)/pipex_utils.c \
 		$(SRCDIR)/pipex_utils2.c \
-		$(SRCDIR)/open_file.c \
 		$(SRCDIR)/here_doc.c \
 		$(SRCDIR)/recreate_2d_env.c \
 		$(SRCDIR)/utility2.c \
@@ -63,6 +62,7 @@ SRCS =  $(SRCDIR)/main.c \
 		$(SRCDIR)/create_and_fill_last_out.c \
 		$(SRCDIR)/create_and_fill_last_in.c \
 		$(SRCDIR)/ft_atoi_file.c \
+		$(SRCDIR)/fd_heredoc.c \
 		
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/07 12:54:05 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/08 14:56:06 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct s_file
 	int				trunc;
 	int				input;
 	char			*limiter;
+	//int				fd_heredoc;
+	//char			*heredoc_file;
 	int				write;
 	int				fd;
 	long			fd_operator;
@@ -49,6 +51,14 @@ typedef struct s_last_file
 	struct s_last_file	*next;
 }						t_last_file;
 
+// typedef struct s_heredoc
+// {
+// 	t_file				*file;
+// 	int					fd_heredoc;
+// 	char				*heredoc_file;
+// 	struct s_heredoc	*next;
+// }						t_heredoc;
+
 typedef struct s_cmd
 {
 	int				index;
@@ -66,6 +76,9 @@ typedef struct s_cmd
 	int				exist;
 	int				exec;
 	int				error;
+	// t_heredoc		*heredoc;
+	// int				fd_heredoc;
+	// char            *heredoc_file;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -122,5 +135,7 @@ t_last_file	*ft_clean_last_out_list(t_last_file *first);
 int			ft_fill_last_out(t_cmd **cmd);
 t_last_file	*ft_clean_last_in_list(t_last_file *first);
 int			ft_fill_last_in(t_cmd **cmd);
+int			ft_fd_heredoc(t_cmd **cmd_address);
+int			ft_fill_fd_heredoc(t_cmd **start_cmd);
 
 #endif //MINISHELL_H

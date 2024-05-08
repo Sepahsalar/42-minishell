@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/06 19:15:33 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:17:13 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,18 @@
 // 	return (final_path);
 // }
 
-void	check_space(char *argv)
-{
-	char	*temp;
+// void	check_space(char *argv)
+// {
+// 	char	*temp;
 
-	temp = ft_strtrim(argv, " ");
-	if (temp[0] == '\0')
-	{
-		ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
-		ft_putendl_fd(argv, STDERR_FILENO);
-		exit(127);
-	}
-}
+// 	temp = ft_strtrim(argv, " ");
+// 	if (temp[0] == '\0')
+// 	{
+// 		ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
+// 		ft_putendl_fd(argv, STDERR_FILENO);
+// 		exit(127);
+// 	}
+// }
 
 // static void	execute_cmd_helper(char **cmd, char *path, char **envp)
 // {
@@ -108,10 +108,30 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	int     status;
 	int		index;
 
+	//check this: <<end 2<<not ./src/main.c cat
 	status = 0;
 	last_input = NULL;
 	last_output = NULL;
-	//Here_doc function
+	//ft_fd_heredoc(&cmd_execution);
+	// //testing heredoc
+	// if (cmd_execution->fd_heredoc != -2)
+	// {
+	// 	close(cmd_execution->fd_heredoc);
+	// 	cmd_execution->fd_heredoc = open(cmd_execution->heredoc_file, O_RDONLY);
+	// 	char *line;
+
+	// 	line = get_next_line(cmd_execution->fd_heredoc);
+	// 	printf("Start of heredoc file:\n");
+	// 	while (line)
+	// 	{
+	// 		printf("1st printf: %s\n", line);
+	// 		free(line);
+	// 		line = get_next_line(cmd_execution->fd_heredoc);
+	// 		printf("loop line: %s\n", line);
+	// 	}
+	// 	printf("End of heredoc file:\n");
+	// }
+	// printf("start of command %s in parent process\n", cmd_execution->raw);
 	temp_file = cmd_execution->input;
 	while (temp_file)
 	{
@@ -121,12 +141,14 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			{
 				printf("bash: %s: No such file or directory\n",
 					temp_file->address);
-				ft_master_clean(0, cmd_start->env, cmd_start, 1);
+				ft_master_clean(0, cmd_start->env, cmd_start, -1);
+				return (1);
 			}
 			else
 			{
 				printf("bash: %s: Permission denied\n", temp_file->address);
-				ft_master_clean(0, cmd_start->env, cmd_start, 1);
+				ft_master_clean(0, cmd_start->env, cmd_start, -1);
+				return (1);
 			}
 		}
 		temp_file = temp_file->next;
@@ -141,7 +163,10 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			temp_file->fd = open(temp_file->address,
 					O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (temp_file->fd == -1)
-			ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+		{
+			ft_master_clean(0, cmd_start->env, cmd_execution, -1);
+			return (1);
+		}
 		close(temp_file->fd);
 		temp_file = temp_file->next;
 	}
@@ -151,13 +176,15 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		{
 			printf("bash: %s: Permission denied\n",
 				cmd_execution->cmd_name);
-			ft_master_clean(0, cmd_start->env, cmd_execution, 126);
+			ft_master_clean(0, cmd_start->env, cmd_execution, -1);
+			return (126);
 		}
 		else
 		{
 			printf("bash: %s: command not found\n",
 				cmd_execution->cmd_name);
-			ft_master_clean(0, cmd_start->env, cmd_execution, 127);
+			ft_master_clean(0, cmd_start->env, cmd_execution, -1);
+			return (127);
 		}
 	}
 
@@ -200,7 +227,7 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		ft_master_clean(0, cmd_start->env, cmd_execution, 1);
 	if (pid == 0)
 	{
-		
+		// printf("start of command %s in child process\n", cmd_execution->raw);
 		// if (last_input && !last_input->limiter)
 		// {
 		// 	if (dup2(last_input->fd, STDIN_FILENO) == -1)
@@ -216,7 +243,8 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			while (last)
 			{
 				last_input = last->file;
-				if (last_input->fd_operator <= 2 && !last_input->limiter)
+				// if (last_input->fd_operator <= 2 && !last_input->limiter)
+				if (last_input->fd_operator <= 2)
 				{
 					last_input->fd = open(last_input->address, O_RDONLY);
 					if (last_input->fd == -1)
@@ -224,25 +252,33 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 					if (dup2(last_input->fd, last_input->fd_operator) == -1)
 						ft_master_clean(0, cmd_start->env, cmd_execution, 1);
 				}
+				// else if (last_input->fd_operator <= 2 && last_input->limiter)
+				// {
+				// 	last_input->fd_heredoc = open(last_input->address, O_RDONLY);
+				// 	if (last_input->fd_heredoc == -1)
+				// 		ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+				// 	if (dup2(last_input->fd, last_input->fd_operator) == -1)
+				// 		ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+				// }
 				last = last->next;
 			}
-			last_input = cmd_execution->input;
-			while (last_input)
-			{
-				if (last_input->fd_operator <= 2 && last_input->limiter)
-				{
-					here_doc(last_input);
-					//1)gathering info from stdin by creating temp files or using get next line and strjoin
-					//2)int index of heredoc = 1;
-					//3)char *name of file = temp + index of command + index of heredoc; in cleaning process they shuoud be deleted #for example temp_cmd1_1
-					//4)input->fd = open
-					//5)put_str_fd(fd, str)
-					//6) if (dup2(temp_file, last_input->fd_operator) == -1)
-					// 	ft_master_clean(0, cmd_start->env, cmd_execution, 1);
-					//7)index ++;
-				}
-				last = last->next;
-			}
+			// last_input = cmd_execution->input;
+			// while (last_input)
+			// {
+			// 	if (last_input->fd_operator <= 2 && last_input->limiter)
+			// 	{
+			// 		here_doc(last_input);
+			// 		//1)gathering info from stdin by creating temp files or using get next line and strjoin
+			// 		//2)int index of heredoc = 1;
+			// 		//3)char *name of file = temp + index of command + index of heredoc; in cleaning process they shuoud be deleted #for example temp_cmd1_1
+			// 		//4)input->fd = open
+			// 		//5)put_str_fd(fd, str)
+			// 		//6) if (dup2(temp_file, last_input->fd_operator) == -1)
+			// 		// 	ft_master_clean(0, cmd_start->env, cmd_execution, 1);
+			// 		//7)index ++;
+			// 	}
+			// 	last = last->next;
+			// }
 			// last = cmd_execution->last_out;
 			// while (last && last->file->fd_operator != 1)
 			// 	last = last->next;
@@ -311,6 +347,24 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	else
 	{
 		close(fd[1]);
+		// if (cmd_execution->fd != -2)
+		// {
+		// 	close(cmd_execution->fd);
+		// 	// unlink(cmd_execution->heredoc_file);
+		// }
+		// if (cmd_execution->last_in)
+		// 	temp_file = cmd_execution->last_in->file;
+		// else
+		// 	temp_file = NULL;
+		// while (temp_file)
+		// {
+		// 	if (temp_file->limiter)
+		// 	{
+		// 		close(temp_file->fd); //maybe double close
+		// 		unlink(temp_file->address);
+		// 	}
+		// 	temp_file = temp_file->next;
+		// }
 		if (cmd_execution->index < ft_cmd_count(cmd_start))
 			dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
@@ -327,6 +381,26 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 				wait(0);
 				index++;
 			}
+			
+			// temp_cmd = cmd_start;
+			// printf("we are in the last command and we are setting the temp_cmd to %s\n", temp_cmd->raw);
+			// while (temp_cmd)
+			// {
+			// 	if (temp_cmd->last_in)
+			// 		temp_file = temp_cmd->last_in->file;
+			// 	else
+			// 		temp_file = NULL;
+			// 	while (temp_file)
+			// 	{
+			// 		if (temp_file->limiter)
+			// 		{
+			// 			close(temp_file->fd); //maybe double close
+			// 			unlink(temp_file->address);
+			// 		}
+			// 		temp_file = temp_file->next;
+			// 	}
+			// 	temp_cmd = temp_cmd->next;
+			// }
 		}
 	}
 	return (status);

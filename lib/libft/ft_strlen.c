@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:42:12 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/01/30 10:59:53 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/08 10:39:12 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
+	//Nima: I added this. Please check it out
+	if (!s)
+		return (0);
 	while (s[i])
 		i++;
 	return (i);

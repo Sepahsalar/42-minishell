@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_and_fill_last_in.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:49:37 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/07 12:48:15 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/08 13:05:57 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_last_file	*ft_create_last_in_list(t_file *input)
 	t_last_file	*old;
 	t_file		*temp_in;
 
+	//i think having heredoc mess up this
 	if (!input)
 		return (0);
 	temp_in = input;
