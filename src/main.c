@@ -6,13 +6,14 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/08 17:15:01 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:19:03 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+
+static int execute(char *raw_line, char **envp)
 {
 	char	**raw_cmd;
 	t_env	*env;
@@ -21,11 +22,9 @@ int	main(int argc, char **argv, char **envp)
 	int		status_last_cmd;
 	int		cmd_count;
 	t_file	*temp_file;
-
-
-	(void)argc;
+	
 	status_last_cmd = 0;
-	raw_cmd = ft_create_raw_cmd(argv[1]);
+	raw_cmd = ft_create_raw_cmd(raw_line);
 	env = ft_fill_env_list(envp, raw_cmd);
 	cmd = ft_fill_cmd_list(raw_cmd, env);
 	ft_master_clean(raw_cmd, 0, 0, -1);
@@ -113,5 +112,26 @@ int	main(int argc, char **argv, char **envp)
 	// 		printf("outfile:%s\n", (temp->output_trunc)->address);
 	// 	temp = temp->next;
 	// }
-	ft_master_clean(0, env, cmd, status_last_cmd);
+	ft_master_clean(0, env, cmd, -1);
+	return (status_last_cmd);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	char	*raw_line;
+	int		exit_code;
+
+
+	(void)argc;
+	(void)argv;
+	while (1)
+	{
+		raw_line = readline("[minishell]$ ");
+		if (ft_strlen(raw_line) > 0)
+		{
+			add_history(raw_line);
+			exit_code = execute(raw_line, envp);
+		}
+		free(raw_line);
+	}
 }

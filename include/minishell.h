@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/08 14:56:06 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:36:17 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include <stdio.h>
 # include <unistd.h>
 # include "../lib/libft/libft.h"
-# include "pipex.h"
+# include "pipex.h" //might not be needed
+# include <readline/readline.h>
+# include <readline/history.h>
 
 
 typedef struct s_file
