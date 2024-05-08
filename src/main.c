@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/08 18:19:03 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:40:56 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static int execute(char *raw_line, char **envp)
 			execute_cmd(cmd, temp_cmd);
 		temp_cmd = temp_cmd->next;
 	}
-	
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
@@ -57,9 +56,6 @@ static int execute(char *raw_line, char **envp)
 		}
 		temp_cmd = temp_cmd->next;
 	}
-
-
-	
 	// c = cmd;
 	// i = 1;
 	// while (c)
@@ -116,22 +112,50 @@ static int execute(char *raw_line, char **envp)
 	return (status_last_cmd);
 }
 
-int	main(int argc, char **argv, char **envp)
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	char	*raw_line;
+// 	int		exit_code;
+
+
+// 	(void)argc;
+// 	(void)argv;
+// 	while (1)
+// 	{
+// 		raw_line = readline("[minishell]$ ");
+// 		if (ft_strlen(raw_line) > 0)
+// 		{
+// 			add_history(raw_line);
+// 			exit_code = execute(raw_line, envp);
+// 		}
+// 		free(raw_line);
+// 	}
+// }
+
+
+int	main(int argc, char *argv[], char *envp[])
 {
 	char	*raw_line;
 	int		exit_code;
-
 
 	(void)argc;
 	(void)argv;
 	while (1)
 	{
-		raw_line = readline("[minishell]$ ");
-		if (ft_strlen(raw_line) > 0)
+		printf(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET);
+		raw_line = readline("$ ");
+		if (raw_line == NULL)
+		{
+			// Handle EOF (Ctrl+D)
+			printf("\n");
+			break ;
+		}
+		if (strlen(raw_line) > 0)
 		{
 			add_history(raw_line);
 			exit_code = execute(raw_line, envp);
 		}
 		free(raw_line);
 	}
+	return (exit_code);
 }

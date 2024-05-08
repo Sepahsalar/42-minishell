@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/08 17:36:17 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:37:04 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,17 @@
 # include <stdio.h>
 # include <unistd.h>
 # include "../lib/libft/libft.h"
-# include "pipex.h" //might not be needed
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <sys/errno.h>
+# include <string.h>
+// # include "pipex.h" //might not be needed
 # include <readline/readline.h>
 # include <readline/history.h>
 
+
+# define ANSI_COLOR_GREEN "\x1b[32m"
+# define ANSI_COLOR_RESET "\x1b[0m"
 
 typedef struct s_file
 {
