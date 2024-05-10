@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/10 16:26:42 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:27:28 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 # include <string.h>
 # include <signal.h>
 # include <termios.h>
-// # include <sys/ioctl.h>
-// # include "pipex.h" //might not be needed
 # include <readline/readline.h>
 # include <readline/history.h>
 
