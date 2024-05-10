@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/10 12:44:22 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:25:23 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 
-static int execute(char *raw_line, char **envp)
+static int	execute(char *raw_line, char **envp)
 {
 	char	**raw_cmd;
 	t_env	*env;
@@ -22,7 +22,7 @@ static int execute(char *raw_line, char **envp)
 	int		status_last_cmd;
 	int		cmd_count;
 	t_file	*temp_file;
-	
+
 	status_last_cmd = 0;
 	raw_cmd = ft_create_raw_cmd(raw_line);
 	env = ft_fill_env_list(envp, raw_cmd);
@@ -112,85 +112,46 @@ static int execute(char *raw_line, char **envp)
 	return (status_last_cmd);
 }
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	char	*raw_line;
-// 	int		exit_code;
-
-
-// 	(void)argc;
-// 	(void)argv;
-// 	while (1)
-// 	{
-// 		raw_line = readline("[minishell]$ ");
-// 		if (ft_strlen(raw_line) > 0)
-// 		{
-// 			add_history(raw_line);
-// 			exit_code = execute(raw_line, envp);
-// 		}
-// 		free(raw_line);
-// 	}
-// }
-
-// void (*signal(int sig, void (*func)(int)))(int);
-
-void	sigint_handler(int sig)
+static void	sigint_handler(int sig)
 {
-	//char    *raw_line;
-
 	if (sig == SIGINT)
 	{
-		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_replace_line(STDIN_FILENO, "");
+		write(STDERR_FILENO, "\n", 1);
+		rl_replace_line("", STDIN_FILENO);
 		rl_on_new_line();
-		// printf(ANSI_COLOR_GREEN "\n[ASAL]" ANSI_COLOR_RESET);
-		// // printf("$");
-		// rl_on_new_line();
-		// raw_line = readline("$ ");
-		// if (ft_strlen(raw_line) > 0)
-		// 	return ;
-		// else
-		// {
-		//     printf(ANSI_COLOR_GREEN "\n[ASAL]" ANSI_COLOR_RESET);
-		// 	rl_redisplay();
-		// 	// raw_line = readline("$ ");
-		// }
-
-		// free(raw_line);
-        // printf("\n");
-        // signal(SIGINT, SIG_DFL);
-    }
-		// printf("Asal is happy");
-	
+		rl_redisplay();
+	}
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*raw_line;
-	int		exit_code;
+	char				*raw_line;
+	int					exit_code;
+	struct sigaction	action;
+	struct termios		term;
 
 	(void)argc;
 	(void)argv;
-	signal(SIGINT, sigint_handler);
+	sigemptyset(&action.sa_mask);
+	action.sa_flags = SA_RESTART;
+	ft_memset(&action, 0, sizeof(action));
+	action.sa_handler = &sigint_handler;
+	sigaction(SIGINT, &action, NULL);
+	ft_bzero(&term, sizeof(term));
+	tcgetattr(STDIN_FILENO, &term);
+	// if (mode)
+	// 	terminal.c_lflag |= ECHOCTL;
+	// else if (!mode)
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	while (1)
 	{
-		//signal(SIGINT, sigint_handler);
-		printf(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET);
-		raw_line = readline("$ ");
-		// if (raw_line == NULL)
-		// {
-		// 	// Handle EOF (Ctrl+D)
-		// 	printf("\n");
-		// 	// break ;
-		// }
-		// signal(SIGINT, SIG_DFL);
+		raw_line = readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
 		if (ft_strlen(raw_line) > 0)
 		{
 			add_history(raw_line);
 			exit_code = execute(raw_line, envp);
 		}
-		// signal(SIGINT, sigint_handler);
 		free(raw_line);
 	}
 	return (exit_code);

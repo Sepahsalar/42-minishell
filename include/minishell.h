@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/10 12:35:12 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:26:42 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 # include <sys/errno.h>
 # include <string.h>
 # include <signal.h>
-# include <sys/ioctl.h>
+# include <termios.h>
+// # include <sys/ioctl.h>
 // # include "pipex.h" //might not be needed
 # include <readline/readline.h>
 # include <readline/history.h>
-
 
 # define ANSI_COLOR_GREEN "\x1b[32m"
 # define ANSI_COLOR_RESET "\x1b[0m"
@@ -41,8 +41,6 @@ typedef struct s_file
 	int				trunc;
 	int				input;
 	char			*limiter;
-	//int				fd_heredoc;
-	//char			*heredoc_file;
 	int				write;
 	int				fd;
 	long			fd_operator;
@@ -87,12 +85,10 @@ typedef struct s_cmd
 	int				exist;
 	int				exec;
 	int				error;
-	// t_heredoc		*heredoc;
-	// int				fd_heredoc;
-	// char            *heredoc_file;
 	struct s_cmd	*next;
 }					t_cmd;
 
+void		rl_replace_line(const char *text, int clear_undo);
 void		ft_clean_2d_char(char **array);
 t_cmd		*ft_clean_cmd_list(t_cmd *first);
 t_cmd		*ft_create_cmd_list(int total_number);
@@ -140,7 +136,7 @@ void		ft_execution_package(t_cmd *cmd,
 				char **cmd_address, char ***cmd_args, char ***cmd_env);
 t_file		*ft_last_file(t_file *head);
 t_cmd		*ft_last_cmd(t_cmd *head);
-int 		ft_cmd_count(t_cmd *cmd);
+int			ft_cmd_count(t_cmd *cmd);
 long		ft_atoi_file(char **input, int def);
 t_last_file	*ft_clean_last_out_list(t_last_file *first);
 int			ft_fill_last_out(t_cmd **cmd);
