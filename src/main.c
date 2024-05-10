@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/08 18:40:56 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:44:22 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,29 +132,65 @@ static int execute(char *raw_line, char **envp)
 // 	}
 // }
 
+// void (*signal(int sig, void (*func)(int)))(int);
 
-int	main(int argc, char *argv[], char *envp[])
+void	sigint_handler(int sig)
+{
+	//char    *raw_line;
+
+	if (sig == SIGINT)
+	{
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_replace_line(STDIN_FILENO, "");
+		rl_on_new_line();
+		// printf(ANSI_COLOR_GREEN "\n[ASAL]" ANSI_COLOR_RESET);
+		// // printf("$");
+		// rl_on_new_line();
+		// raw_line = readline("$ ");
+		// if (ft_strlen(raw_line) > 0)
+		// 	return ;
+		// else
+		// {
+		//     printf(ANSI_COLOR_GREEN "\n[ASAL]" ANSI_COLOR_RESET);
+		// 	rl_redisplay();
+		// 	// raw_line = readline("$ ");
+		// }
+
+		// free(raw_line);
+        // printf("\n");
+        // signal(SIGINT, SIG_DFL);
+    }
+		// printf("Asal is happy");
+	
+}
+
+
+int	main(int argc, char **argv, char **envp)
 {
 	char	*raw_line;
 	int		exit_code;
 
 	(void)argc;
 	(void)argv;
+	signal(SIGINT, sigint_handler);
 	while (1)
 	{
+		//signal(SIGINT, sigint_handler);
 		printf(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET);
 		raw_line = readline("$ ");
-		if (raw_line == NULL)
-		{
-			// Handle EOF (Ctrl+D)
-			printf("\n");
-			break ;
-		}
-		if (strlen(raw_line) > 0)
+		// if (raw_line == NULL)
+		// {
+		// 	// Handle EOF (Ctrl+D)
+		// 	printf("\n");
+		// 	// break ;
+		// }
+		// signal(SIGINT, SIG_DFL);
+		if (ft_strlen(raw_line) > 0)
 		{
 			add_history(raw_line);
 			exit_code = execute(raw_line, envp);
 		}
+		// signal(SIGINT, sigint_handler);
 		free(raw_line);
 	}
 	return (exit_code);
