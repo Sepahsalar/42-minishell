@@ -6,13 +6,13 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:31:28 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/07 12:48:53 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:05:08 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_accessibility(char *address, char mode)
+int	check_accessibility(char *address, char mode)
 {
 	int	result;
 
@@ -31,7 +31,7 @@ int	ft_accessibility(char *address, char mode)
 	return (0);
 }
 
-char	*ft_find_address(t_cmd *cmd, char mode)
+char	*find_address(t_cmd *cmd, char mode)
 {
 	char	**all_path;
 	char	*address;
@@ -44,7 +44,7 @@ char	*ft_find_address(t_cmd *cmd, char mode)
 	// 	return (NULL);
 	if (ft_strchr(cmd->cmd_name, '/'))
 	{
-		if (ft_accessibility(cmd->cmd_name, mode) == 1)
+		if (check_accessibility(cmd->cmd_name, mode) == 1)
 		{
 			address = ft_strdup(cmd->cmd_name);
 			if (!address)
@@ -80,25 +80,25 @@ char	*ft_find_address(t_cmd *cmd, char mode)
 		{
 			cmd->error = 1;
 			free(temp);
-			ft_clean_2d_char(all_path);
+			clean_2d_char(all_path);
 			return (NULL);
 		}
-		if (ft_accessibility(address, mode) == 1)
+		if (check_accessibility(address, mode) == 1)
 		{
 			free(temp);
-			ft_clean_2d_char(all_path);
+			clean_2d_char(all_path);
 			return (address);
 		}
 		free (address);
 		i++;
 	}
 	free(temp);
-	ft_clean_2d_char(all_path);
+	clean_2d_char(all_path);
 	return (0);
 }
 
 
-int	ft_find_cmd_address(t_cmd *cmd)
+int	find_cmd_address(t_cmd *cmd)
 {
 	char	*temp_address;
 
@@ -108,7 +108,7 @@ int	ft_find_cmd_address(t_cmd *cmd)
 		cmd->exist = 0;
 		cmd->exec = 0;
 	}
-	temp_address = ft_find_address(cmd, 'X');
+	temp_address = find_address(cmd, 'X');
 	if (cmd->error == 1)
 		return (1);
 	if (temp_address)
@@ -119,7 +119,7 @@ int	ft_find_cmd_address(t_cmd *cmd)
 	}
 	else
 	{
-		temp_address = ft_find_address(cmd, 'F');
+		temp_address = find_address(cmd, 'F');
 		if (cmd->error == 1)
 			return (1);
 		if (temp_address)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
+#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/05/13 16:25:35 by nnourine         ###   ########.fr        #
+#    Updated: 2024/05/13 19:23:02 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,47 +24,37 @@ INCDIR = include
 LIBFT = lib/libft
 
 # Files
-SRCS =  $(SRCDIR)/main.c \
-		$(SRCDIR)/utility.c \
-		$(SRCDIR)/master_clean.c \
+SRCS =  $(SRCDIR)/atoi_file.c \
+		$(SRCDIR)/create_args.c \
 		$(SRCDIR)/create_cmd_list.c \
+		$(SRCDIR)/create_env_list.c \
 		$(SRCDIR)/create_file_list.c \
 		$(SRCDIR)/create_raw_cmd.c \
+		$(SRCDIR)/execution_package.c \
+		$(SRCDIR)/expand_dollar.c \
+		$(SRCDIR)/fd_heredoc.c \
+		$(SRCDIR)/fill_address_access.c \
 		$(SRCDIR)/fill_cmd_list.c \
-		$(SRCDIR)/fill_raw_cmd_list.c \
-		$(SRCDIR)/fill_index_cmd_list.c \
-		$(SRCDIR)/fill_heredoc_cmd_list.c \
-		$(SRCDIR)/char_2d_count.c \
-		$(SRCDIR)/fill_env_list.c \
-		$(SRCDIR)/create_env_list.c \
 		$(SRCDIR)/fill_env_cmd_list.c \
-		$(SRCDIR)/create_heredoc_list.c \
-		$(SRCDIR)/token_count.c \
-		$(SRCDIR)/ft_istoken.c \
-		$(SRCDIR)/fill_files.c \
-		$(SRCDIR)/ft_split_pipex.c \
-		$(SRCDIR)/helper.c \
-		$(SRCDIR)/helper3.c \
-		$(SRCDIR)/create_args.c \
-		$(SRCDIR)/create_cmd_address.c \
-		$(SRCDIR)/fill_address_access_cmd_list.c \
-		$(SRCDIR)/fill_name_and_args_cmd_list.c \
+		$(SRCDIR)/fill_env_list.c \
 		$(SRCDIR)/fill_file_data.c \
-		$(SRCDIR)/pipex.c \
+		$(SRCDIR)/fill_files.c \
+		$(SRCDIR)/fill_index_cmd_list.c \
+		$(SRCDIR)/fill_last_file_utils.c \
+		$(SRCDIR)/fill_last_file.c \
+		$(SRCDIR)/fill_args_cmd_list.c \
+		$(SRCDIR)/fill_raw_cmd_list.c \
+		$(SRCDIR)/find_cmd_address.c \
+		$(SRCDIR)/istoken.c \
+		$(SRCDIR)/main.c \
+		$(SRCDIR)/master_clean.c \
 		$(SRCDIR)/pipex_utils.c \
 		$(SRCDIR)/pipex_utils2.c \
-		$(SRCDIR)/here_doc.c \
 		$(SRCDIR)/recreate_2d_env.c \
+		$(SRCDIR)/split_pipex.c \
+		$(SRCDIR)/utility1.c \
 		$(SRCDIR)/utility2.c \
-		$(SRCDIR)/last_node.c \
-		$(SRCDIR)/execution_package.c \
-		$(SRCDIR)/cmd_count.c \
-		$(SRCDIR)/create_and_fill_last_out.c \
-		$(SRCDIR)/create_and_fill_last_in.c \
-		$(SRCDIR)/ft_atoi_file.c \
-		$(SRCDIR)/fd_heredoc.c \
-		$(SRCDIR)/expand_dollar.c \
-		
+		$(SRCDIR)/utility3.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

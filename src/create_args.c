@@ -6,14 +6,14 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:10:06 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/07 12:47:47 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:04:24 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 //ft_handle_quote is based on the assumption that read_line doesn't trim or
 //process anything. just give us the exact input.
-int	ft_handle_quote(char ***input)
+int	handle_quote(char ***input)
 {
 	char	**args;
 	char	*temp;
@@ -44,7 +44,7 @@ int	ft_handle_quote(char ***input)
 	return (0);
 }
 
-char	*ft_handle_quote_str(char *input)
+char	*handle_quote_str(char *input)
 {
 	char	*temp;
 
@@ -61,12 +61,12 @@ char	*ft_handle_quote_str(char *input)
 	return (temp);
 }
 
-char	**ft_create_args(char *str)
+char	**create_args(char *str)
 {
 	char	**args;
 
-	args = ft_split_pipex(str);
-	if (ft_handle_quote(&args))
+	args = split_pipex(str);
+	if (handle_quote(&args))
 		return (NULL);
 	return (args);
 }

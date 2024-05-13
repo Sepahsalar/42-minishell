@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 16:27:32 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:55:44 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
 # include "../lib/libft/libft.h"
+# include <stdio.h>
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/errno.h>
@@ -61,14 +59,6 @@ typedef struct s_last_file
 	struct s_last_file	*next;
 }						t_last_file;
 
-// typedef struct s_heredoc
-// {
-// 	t_file				*file;
-// 	int					fd_heredoc;
-// 	char				*heredoc_file;
-// 	struct s_heredoc	*next;
-// }						t_heredoc;
-
 typedef struct s_cmd
 {
 	int				index;
@@ -90,62 +80,58 @@ typedef struct s_cmd
 }					t_cmd;
 
 void		rl_replace_line(const char *text, int clear_undo);
-// void		rl_clear_history (void);
-void		ft_clean_2d_char(char **array);
-t_cmd		*ft_clean_cmd_list(t_cmd *first);
-t_cmd		*ft_create_cmd_list(int total_number);
-t_file		*ft_clean_file_list(t_file *first);
-t_file		*ft_create_file_list(int total_number);
-char		**ft_create_raw_cmd(const char *input);
-int			ft_char_2d_count(char **array);
-int			ft_fill_raw_cmd_list(t_cmd **cmd, char **raw_cmd);
-void		ft_fill_index_cmd_list(t_cmd **cmd);
-char		*ft_strdup_modified(char *s, char *token);
-int			ft_fill_heredoc_cmd_list(t_cmd **cmd);
+void		clean_2d_char(char **array);
+t_cmd		*clean_cmd_list(t_cmd *first);
+t_cmd		*create_cmd_list(int total_number);
+t_file		*clean_file_list(t_file *first);
+t_file		*create_file_list(int total_number);
+char		**create_raw_cmd(const char *input);
+int			char_2d_count(char **array);
+int			fill_raw_cmd_list(t_cmd **cmd, char **raw_cmd);
+void		fill_index_cmd_list(t_cmd **cmd);
+char		*strdup_modified(char *s, char *token);
 char		*ft_remove(char *str, char *del1, char *del2);
-void		ft_master_clean(char **raw_cmd,
+void		master_clean(char **raw_cmd,
 				t_env *env, t_cmd *cmd, int exit_value);
-t_cmd		*ft_fill_cmd_list(char **raw_cmd, t_env *env);
-char		**ft_copy_2d_char(char **array);
-t_env		*ft_clean_env_list(t_env *first);
-t_env		*ft_create_env_list(int total_number);
-t_env		*ft_fill_env_list(char **envp, char **raw_cmd);
-void		ft_fill_env_cmd_list(t_cmd **cmd, t_env *env);
-int			ft_token_count(char *str, char *token);
-int			ft_istoken(int c);
-int			ft_fill_files(t_cmd **cmd, char *token, int type);
-int			master_pipex(t_cmd *cmd);
-char		**ft_split_pipex(char const *s);
-char		**ft_split_all_delimiter(char const *s);
-char		**ft_free_split(char ***m, int j);
-int			ft_triger_maker_sp(int triger, char c, char divider);
-int			ft_len_helper(const char *s);
-int			ft_handle_quote(char ***input);
-char		**ft_create_args(char *str);
-int			ft_fill_name_and_args_cmd_list(t_cmd **cmd);
-int			ft_accessibility(char *address, char mode);
-int			ft_find_cmd_address(t_cmd *cmd);
-int			ft_fill_address_access(t_cmd **cmd);
-int			ft_create_file_data(t_file *file);
-int			ft_fill_file_data(t_cmd **cmd);
-char		*ft_handle_quote_str(char *input);
+t_cmd		*fill_cmd_list(char **raw_cmd, t_env *env);
+t_env		*clean_env_list(t_env *first);
+t_env		*create_env_list(int total_number);
+t_env		*fill_env_list(char **envp, char **raw_cmd);
+void		fill_env_cmd_list(t_cmd **cmd, t_env *env);
+int			token_count(char *str, char *token);
+int			istoken(int c);
+int			fill_files(t_cmd **cmd, char *token, int type);
+char		**split_pipex(char const *s);
+char		**split_all_delimiter(char const *s);
+char		**free_split(char ***m, int j);
+int			triger_maker_sp(int triger, char c, char divider);
+int			len_helper(const char *s);
+int			handle_quote(char ***input);
+char		**create_args(char *str);
+int			fill_args_cmd_list(t_cmd **cmd);
+int			check_accessibility(char *address, char mode);
+int			find_cmd_address(t_cmd *cmd);
+int			fill_address_access(t_cmd **cmd);
+int			create_file_data(t_file *file);
+int			fill_file_data(t_cmd **cmd);
+char		*handle_quote_str(char *input);
 int			execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution);
 int			ft_isspace(int c);
-char		**ft_recreate_2d_env(t_env *env);
-int			ft_all_space(char *str);
-char		**ft_copy_2d_char(char **src);
-void		ft_execution_package(t_cmd *cmd,
+char		**recreate_2d_env(t_env *env);
+int			all_space(char *str);
+char		**copy_2d_char(char **src);
+void		execution_package(t_cmd *cmd,
 				char **cmd_address, char ***cmd_args, char ***cmd_env);
-t_file		*ft_last_file(t_file *head);
-t_cmd		*ft_last_cmd(t_cmd *head);
-int			ft_cmd_count(t_cmd *cmd);
-long		ft_atoi_file(char **input, int def);
-t_last_file	*ft_clean_last_out_list(t_last_file *first);
-int			ft_fill_last_out(t_cmd **cmd);
-t_last_file	*ft_clean_last_in_list(t_last_file *first);
-int			ft_fill_last_in(t_cmd **cmd);
-int			ft_fd_heredoc(t_cmd **cmd_address);
-int			ft_fill_fd_heredoc(t_cmd **start_cmd);
-int 		expand_all_dollar(t_cmd *start);
+int			cmd_count(t_cmd *cmd);
+long		atoi_file(char **input, int def);
+int			fill_last_out(t_cmd **cmd);
+t_last_file	*clean_last_file_list(t_last_file *first);
+int			fill_last_in(t_cmd **cmd);
+int			fd_heredoc(t_cmd **cmd_address);
+int			fill_fd_heredoc(t_cmd **start_cmd);
+int			expand_all_dollar(t_cmd *start);
+int			check_unique(t_last_file *first, t_file *temp);
+t_last_file	*create_last_file_node(t_file *file, t_file *temp);
+t_last_file	*create_last_file_list(t_file *file);
 
 #endif //MINISHELL_H

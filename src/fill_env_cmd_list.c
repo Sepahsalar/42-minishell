@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   fill_env_cmd_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:09:33 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/19 11:10:18 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:09:09 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_fill_env_cmd_list(t_cmd **cmd, t_env *env)
+void	fill_env_cmd_list(t_cmd **cmd, t_env *env)
 {
 	t_cmd	*temp;
 

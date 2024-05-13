@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 17:31:21 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:38:38 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ char	*expand_dollar(t_cmd *cmd, char *str)
 		return (NULL);
 	}
 	new_str = malloc(len1 + ft_strlen(expanded) + ft_strlen(part2) + 1);
+	if (!new_str)
+	{
+		free(variable);
+		free(expanded);
+		return (NULL);
+	}
 	new_str[len1 + ft_strlen(expanded) + ft_strlen(part2)] = '\0';
 	ft_memcpy(new_str, str, len1);
 	ft_memcpy(new_str + len1, expanded, ft_strlen(expanded));

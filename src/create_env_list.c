@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:21:29 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/19 10:23:52 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:05:57 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_clean_env_node(t_env *node)
+void	clean_env_node(t_env *node)
 {
 	if (node)
 	{
@@ -24,7 +24,7 @@ void	ft_clean_env_node(t_env *node)
 	}
 }
 
-t_env	*ft_clean_env_list(t_env *first)
+t_env	*clean_env_list(t_env *first)
 {
 	t_env	*node;
 	t_env	*temp;
@@ -33,13 +33,13 @@ t_env	*ft_clean_env_list(t_env *first)
 	while (node)
 	{
 		temp = node->next;
-		ft_clean_env_node(node);
+		clean_env_node(node);
 		node = temp;
 	}
 	return (0);
 }
 
-t_env	*ft_create_env_node(void)
+t_env	*create_env_node(void)
 {
 	t_env			*new;
 
@@ -50,7 +50,7 @@ t_env	*ft_create_env_node(void)
 	return (new);
 }
 
-t_env	*ft_create_env_list(int total_number)
+t_env	*create_env_list(int total_number)
 {
 	t_env	*first;
 	t_env	*new;
@@ -62,13 +62,13 @@ t_env	*ft_create_env_list(int total_number)
 	index = 0;
 	while (index < total_number)
 	{
-		new = ft_create_env_node();
+		new = create_env_node();
 		if (index == 0)
 			first = new;
 		else
 			old->next = new;
 		if (!new)
-			return (ft_clean_env_list(first));
+			return (clean_env_list(first));
 		old = new;
 		index++;
 	}

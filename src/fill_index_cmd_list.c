@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   fill_index_cmd_list.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:21:28 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/19 09:21:40 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:11:18 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_fill_index_cmd_list(t_cmd **cmd)
+void	fill_index_cmd_list(t_cmd **cmd)
 {
 	int		index;
 	t_cmd	*temp;

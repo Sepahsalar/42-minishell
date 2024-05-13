@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_istoken.c                                       :+:      :+:    :+:   */
+/*   fill_address_access_cmd_list.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 10:44:13 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/22 10:49:43 by nnourine         ###   ########.fr       */
+/*   Created: 2024/04/23 14:09:59 by nnourine          #+#    #+#             */
+/*   Updated: 2024/05/13 18:08:15 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_istoken(int c)
+int	fill_address_access(t_cmd **cmd)
 {
-	if (c == '<' || c == '>' || c == '|' || c == '$')
-		return (1);
+	t_cmd	*temp;
+
+	temp = *cmd;
+	while (temp)
+	{
+		if (find_cmd_address(temp))
+			return (1);
+		temp = temp->next;
+	}
 	return (0);
 }

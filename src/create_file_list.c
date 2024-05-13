@@ -3,30 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_file_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:07:14 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/29 10:45:27 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:06:26 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// void	ft_clean_file_node(t_file *node)
-// {
-// 	if (node)
-// 	{
-// 		if (node->raw)
-// 			free (node->raw);
-// 		if (node->address)
-// 			free (node->address);
-// 		if (node->fd)
-// 			close(node->fd);
-// 		free (node);
-// 	}
-// }
-
-void	ft_clean_file_node(t_file *node)
+void	clean_file_node(t_file *node)
 {
 	if (node)
 	{
@@ -42,7 +28,7 @@ void	ft_clean_file_node(t_file *node)
 	}
 }
 
-t_file	*ft_clean_file_list(t_file *first)
+t_file	*clean_file_list(t_file *first)
 {
 	t_file	*node;
 	t_file	*temp;
@@ -51,13 +37,13 @@ t_file	*ft_clean_file_list(t_file *first)
 	while (node)
 	{
 		temp = node->next;
-		ft_clean_file_node(node);
+		clean_file_node(node);
 		node = temp;
 	}
 	return (0);
 }
 
-t_file	*ft_create_file_node(void)
+t_file	*create_file_node(void)
 {
 	t_file			*new;
 
@@ -69,7 +55,7 @@ t_file	*ft_create_file_node(void)
 	return (new);
 }
 
-t_file	*ft_create_file_list(int total_number)
+t_file	*create_file_list(int total_number)
 {
 	t_file	*first;
 	t_file	*new;
@@ -81,13 +67,13 @@ t_file	*ft_create_file_list(int total_number)
 	index = 0;
 	while (index < total_number)
 	{
-		new = ft_create_file_node();
+		new = create_file_node();
 		if (index == 0)
 			first = new;
 		else
 			old->next = new;
 		if (!new)
-			return (ft_clean_file_list(first));
+			return (clean_file_list(first));
 		old = new;
 		index++;
 	}

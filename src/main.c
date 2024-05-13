@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 16:12:12 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:19:17 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,24 @@ static int	execute(char *raw_line, char **envp)
 	t_cmd	*cmd;
 	t_cmd	*temp_cmd;
 	int		status_last_cmd;
-	int		cmd_count;
+	int		cmd_counter;
 	t_file	*temp_file;
 
 	status_last_cmd = 0;
-	raw_cmd = ft_create_raw_cmd(raw_line);
-	env = ft_fill_env_list(envp, raw_cmd);
-	cmd = ft_fill_cmd_list(raw_cmd, env);
-	ft_master_clean(raw_cmd, 0, 0, -1);
-	cmd_count = ft_cmd_count(cmd);
+	raw_cmd = create_raw_cmd(raw_line);
+	env = fill_env_list(envp, raw_cmd);
+	cmd = fill_cmd_list(raw_cmd, env);
+	master_clean(raw_cmd, 0, 0, -1);
+	cmd_counter = cmd_count(cmd);
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
-		if (temp_cmd->index == cmd_count)
+		if (temp_cmd->index == cmd_counter)
 			status_last_cmd = execute_cmd(cmd, temp_cmd);
 		else
 			execute_cmd(cmd, temp_cmd);
 		temp_cmd = temp_cmd->next;
 	}
-
-
 	// temp_cmd = cmd;
 	// while(temp_cmd)
 	// {
@@ -52,10 +50,6 @@ static int	execute(char *raw_line, char **envp)
 	// 	printf("cmd_execute:%d\n", temp_cmd->exec);
 	// 	temp_cmd = temp_cmd->next;
 	// }
-	
-	
-	
-	
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
@@ -126,7 +120,7 @@ static int	execute(char *raw_line, char **envp)
 	// 		printf("outfile:%s\n", (temp->output_trunc)->address);
 	// 	temp = temp->next;
 	// }
-	ft_master_clean(0, env, cmd, -1);
+	master_clean(0, env, cmd, -1);
 	return (status_last_cmd);
 }
 

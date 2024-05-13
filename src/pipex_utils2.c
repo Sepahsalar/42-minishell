@@ -6,22 +6,11 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:31:40 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/04/23 17:22:41 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:23:08 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
-
-size_t	find_max(char *str1, char *str2)
-{
-	size_t	max;
-
-	if (ft_strlen(str1) > ft_strlen(str2))
-		max = ft_strlen(str1);
-	else
-		max = ft_strlen(str2);
-	return (max);
-}
 
 void	error(int status)
 {

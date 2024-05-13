@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utility.c                                          :+:      :+:    :+:   */
+/*   utility1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/24 10:02:55 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:39:49 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_clean_2d_char(char **array)
+void	clean_2d_char(char **array)
 {
 	int		index;
 
@@ -33,7 +33,7 @@ int	ft_isspace(int c)
 	return (0);
 }
 
-static size_t	ft_strlen_modified(char *s)
+static size_t	strlen_modified(char *s)
 {
 	size_t	len;
 
@@ -42,7 +42,7 @@ static size_t	ft_strlen_modified(char *s)
 		return (0);
 	else
 	{
-		while (*s != '\0' && !ft_isspace(*s) && !ft_istoken(*s))
+		while (*s != '\0' && !ft_isspace(*s) && !istoken(*s))
 		{
 			++s;
 			++len;
@@ -51,7 +51,7 @@ static size_t	ft_strlen_modified(char *s)
 	}
 }
 
-char	*ft_strdup_modified(char *s, char *token)
+char	*strdup_modified(char *s, char *token)
 {
 	size_t	l;
 	char	*d;
@@ -60,7 +60,7 @@ char	*ft_strdup_modified(char *s, char *token)
 	s = s + l;
 	while (*s != '\0' && ft_isspace(*s))
 		++s;
-	l = ft_strlen_modified(s);
+	l = strlen_modified(s);
 	d = malloc((l + 1) * sizeof (char));
 	if (d == 0)
 		return (0);

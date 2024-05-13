@@ -1,25 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_address_access_cmd_list.c                     :+:      :+:    :+:   */
+/*   fill_last_file.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 14:09:59 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/23 14:14:01 by nnourine         ###   ########.fr       */
+/*   Created: 2024/05/06 17:49:37 by nnourine          #+#    #+#             */
+/*   Updated: 2024/05/13 18:57:09 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_fill_address_access(t_cmd **cmd)
+int	fill_last_in(t_cmd **cmd)
 {
 	t_cmd	*temp;
 
 	temp = *cmd;
 	while (temp)
 	{
-		if (ft_find_cmd_address(temp))
+		temp->last_in = create_last_file_list(temp->input);
+		if (temp->input && !temp->last_in)
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
+}
+
+int	fill_last_out(t_cmd **cmd)
+{
+	t_cmd	*temp;
+
+	temp = *cmd;
+	while (temp)
+	{
+		temp->last_out = create_last_file_list(temp->output);
+		if (temp->output && !temp->last_out)
 			return (1);
 		temp = temp->next;
 	}

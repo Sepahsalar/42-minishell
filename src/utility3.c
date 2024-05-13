@@ -1,18 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helper3.c                                          :+:      :+:    :+:   */
+/*   utility3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 10:44:57 by nima              #+#    #+#             */
-/*   Updated: 2024/05/13 15:23:43 by nnourine         ###   ########.fr       */
+/*   Created: 2024/01/30 11:08:29 by nnourine          #+#    #+#             */
+/*   Updated: 2024/05/13 18:44:50 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**ft_split_all_delimiter(char const *s)
+char	**free_split(char ***m, int j)
+{
+	int	k;
+
+	k = 0;
+	while (k < j)
+	{
+		free((*m)[k]);
+		k++;
+	}
+	free (*m);
+	return (0);
+}
+
+int	triger_maker_sp(int triger, char c, char divider)
+{
+	if (c == divider)
+	{
+		if (triger == 0)
+			triger = 1;
+		else
+			triger = 0;
+	}
+	return (triger);
+}
+
+char	**split_all_delimiter(char const *s)
 {
 	char	**m;
 
@@ -29,26 +55,7 @@ char	**ft_split_all_delimiter(char const *s)
 	return (m);
 }
 
-char	*ft_full_add(char *add, int x)
-{
-	if (x)
-		return (add);
-	else
-	{
-		free(add);
-		return (0);
-	}
-}
-
-char	*ft_full_cmd(char *first, char **args, int x)
-{
-	if (x)
-		return (args[0]);
-	else
-		return (first);
-}
-
-int	ft_len_helper(const char *s)
+int	len_helper(const char *s)
 {
 	int	j;
 
@@ -68,13 +75,18 @@ int	ft_len_helper(const char *s)
 	return (j + 1);
 }
 
-// t_rule	*ft_broken_rule_cleaner(t_rule *n, char **args, char *start)
-// {
-// 	if (n)
-// 		free (n);
-// 	if (args)
-// 		ft_free_doule_pointer (args);
-// 	if (start)
-// 		free (start);
-// 	return (0);
-// }
+int	check_unique(t_last_file *first, t_file *temp)
+{
+	t_last_file	*node;
+
+	if (!first)
+		return (1);
+	node = first;
+	while (node)
+	{
+		if (node->file->fd_operator == temp->fd_operator)
+			return (0);
+		node = node->next;
+	}
+	return (1);
+}

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:07:14 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/08 14:44:32 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:49:25 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_clean_cmd_node(t_cmd *node)
+void	clean_cmd_node(t_cmd *node)
 {
 	if (node)
 	{
@@ -23,26 +23,20 @@ void	ft_clean_cmd_node(t_cmd *node)
 		if (node->address)
 			free (node->address);
 		if (node->args)
-			ft_clean_2d_char(node->args);
+			clean_2d_char(node->args);
 		if (node->input)
-			ft_clean_file_list(node->input);
+			clean_file_list(node->input);
 		if (node->output)
-			ft_clean_file_list(node->output);
+			clean_file_list(node->output);
 		if (node->last_out)
-			ft_clean_last_out_list(node->last_out);
+			clean_last_file_list(node->last_out);
 		if (node->last_in)
-			ft_clean_last_in_list(node->last_out);
-		// commented this part beause we are call this function before execution. We should keep this for the execution
-		// if (node->fd_heredoc > 2)
-		// {
-		// 	close(node->fd_heredoc);
-		// 	unlink(node->fd_heredoc);
-		// }
+			clean_last_file_list(node->last_out);
 		free (node);
 	}
 }
 
-t_cmd	*ft_clean_cmd_list(t_cmd *first)
+t_cmd	*clean_cmd_list(t_cmd *first)
 {
 	t_cmd	*node;
 	t_cmd	*temp;
@@ -51,13 +45,13 @@ t_cmd	*ft_clean_cmd_list(t_cmd *first)
 	while (node)
 	{
 		temp = node->next;
-		ft_clean_cmd_node(node);
+		clean_cmd_node(node);
 		node = temp;
 	}
 	return (0);
 }
 
-t_cmd	*ft_create_cmd_node(void)
+t_cmd	*create_cmd_node(void)
 {
 	t_cmd			*new;
 
@@ -68,7 +62,7 @@ t_cmd	*ft_create_cmd_node(void)
 	return (new);
 }
 
-t_cmd	*ft_create_cmd_list(int total_number)
+t_cmd	*create_cmd_list(int total_number)
 {
 	t_cmd	*first;
 	t_cmd	*new;
@@ -80,13 +74,13 @@ t_cmd	*ft_create_cmd_list(int total_number)
 	index = 0;
 	while (index < total_number)
 	{
-		new = ft_create_cmd_node();
+		new = create_cmd_node();
 		if (index == 0)
 			first = new;
 		else
 			old->next = new;
 		if (!new)
-			return (ft_clean_cmd_list(first));
+			return (clean_cmd_list(first));
 		old = new;
 		index++;
 	}
