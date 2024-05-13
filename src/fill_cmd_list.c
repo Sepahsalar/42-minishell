@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:43:39 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/08 14:46:22 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:28:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ t_cmd	*ft_fill_cmd_list(char **raw_cmd, t_env *env)
 	if (ft_fill_address_access(&cmd))
 		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (ft_fill_file_data(&cmd))
+		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	if (expand_all_dollar(cmd))
 		ft_master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	return (cmd);
 }

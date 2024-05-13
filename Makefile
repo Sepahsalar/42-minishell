@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
+#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/05/10 14:11:24 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/05/13 16:25:35 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRCS =  $(SRCDIR)/main.c \
 		$(SRCDIR)/create_and_fill_last_in.c \
 		$(SRCDIR)/ft_atoi_file.c \
 		$(SRCDIR)/fd_heredoc.c \
+		$(SRCDIR)/expand_dollar.c \
 		
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

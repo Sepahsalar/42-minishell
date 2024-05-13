@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:10:21 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/24 10:03:40 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:12:03 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ static char	**ft_create(char const *s, char c, int i, int j)
 char	**ft_split_pipex(char const *s)
 {
 	char	**m;
+	char	**temp;
 
 	if (s == 0 || s[0] == '\0' || ft_all_space((char *)s))
 	{
@@ -122,5 +123,6 @@ char	**ft_split_pipex(char const *s)
 		return (m);
 	}
 	m = ft_create (s, ' ', 0, 0);
+	temp = m ;
 	return (m);
 }

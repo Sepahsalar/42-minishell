@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/10 16:27:28 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:27:32 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 
 # define ANSI_COLOR_GREEN "\x1b[32m"
 # define ANSI_COLOR_RESET "\x1b[0m"
+# define ANSI_MOVE_UP "\033[1A"
+
+// volatile int g_signal;
 
 typedef struct s_file
 {
@@ -87,6 +90,7 @@ typedef struct s_cmd
 }					t_cmd;
 
 void		rl_replace_line(const char *text, int clear_undo);
+// void		rl_clear_history (void);
 void		ft_clean_2d_char(char **array);
 t_cmd		*ft_clean_cmd_list(t_cmd *first);
 t_cmd		*ft_create_cmd_list(int total_number);
@@ -142,5 +146,6 @@ t_last_file	*ft_clean_last_in_list(t_last_file *first);
 int			ft_fill_last_in(t_cmd **cmd);
 int			ft_fd_heredoc(t_cmd **cmd_address);
 int			ft_fill_fd_heredoc(t_cmd **start_cmd);
+int 		expand_all_dollar(t_cmd *start);
 
 #endif //MINISHELL_H
