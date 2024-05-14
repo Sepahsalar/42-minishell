@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/14 17:31:32 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:48:04 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ char	*expand_dollar(t_cmd *cmd, char *str, char **envp)
 		}
 		j++;
 	}
-	if (ft_strchr(str, '$') && *(ft_strchr(str, '$') + 1) == '\0')
+	if (ft_strchr(str, '$') && (*(ft_strchr(str, '$') + 1) == '\0'
+			|| *(ft_strchr(str, '$') + 1) == '\"'))
 	{
 		new_str = ft_strdup(str);
 		return (new_str);
