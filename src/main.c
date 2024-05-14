@@ -6,13 +6,13 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/14 12:00:34 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:24:23 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	execute(char *raw_line, char **envp)
+int	execute_all(char *raw_line, char **envp)
 {
 	char	**raw_cmd;
 	t_env	*env;
@@ -25,7 +25,7 @@ static int	execute(char *raw_line, char **envp)
 	status_last_cmd = 0;
 	raw_cmd = create_raw_cmd(raw_line);
 	env = fill_env_list(envp, raw_cmd);
-	cmd = fill_cmd_list(raw_cmd, env);
+	cmd = fill_cmd_list(raw_cmd, env, envp);
 	master_clean(raw_cmd, 0, 0, -1);
 	cmd_counter = cmd_count(cmd);
 	temp_cmd = cmd;
@@ -142,13 +142,17 @@ static void	sig_handler(int sig)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char				*raw_line;
-	int					exit_code;
+	char			*raw_line;
+	int				exit_code;
+	struct termios	term;
+	int				fd_stdin;
+	int				fd_stdout;
 	// struct sigaction	action;
-	struct termios		term;
 
 	(void)argc;
 	(void)argv;
+	fd_stdin = dup(STDIN_FILENO);
+	fd_stdout = dup(STDOUT_FILENO);
 	signal(SIGQUIT, &sig_handler);
 	signal(SIGINT, &sig_handler);
 	// sigemptyset(&action.sa_mask);
@@ -164,6 +168,7 @@ int	main(int argc, char **argv, char **envp)
 	// else if (!mode)
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	
 	while (1)
 	{
 		raw_line = readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
@@ -171,14 +176,22 @@ int	main(int argc, char **argv, char **envp)
 		{
 			// here we should call our "exit" built-in function
 			printf (ANSI_MOVE_UP ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ exit\n");
+			close(fd_stdin);
+			close(fd_stdout);
 			return (0);
 		}
 		if (ft_strlen(raw_line) > 0)
 		{
 			add_history(raw_line);
-			exit_code = execute(raw_line, envp);
+			exit_code = execute_all(raw_line, envp);
+			close(STDIN_FILENO);
+			dup(fd_stdin);
+			close(STDOUT_FILENO);
+			dup(fd_stdout);
 		}
 		free(raw_line);
 	}
+	close(fd_stdin);
+	close(fd_stdout);
 	return (exit_code);
 }

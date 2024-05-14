@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:43:39 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/14 10:27:48 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:23:40 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_cmd	*fill_cmd_list(char **raw_cmd, t_env *env)
+t_cmd	*fill_cmd_list(char **raw_cmd, t_env *env, char **envp)
 {
 	t_cmd	*cmd;
 	int		cmd_count;
@@ -82,7 +82,7 @@ t_cmd	*fill_cmd_list(char **raw_cmd, t_env *env)
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_file_data(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
-	if (expand_all_dollar(cmd))
+	if (expand_all_dollar(cmd, envp))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (handle_quote_cmd(cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);

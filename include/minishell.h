@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/14 10:27:17 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:25:13 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char		*strdup_modified(char *s, char *token);
 char		*ft_remove(char *str, char *del1, char *del2);
 void		master_clean(char **raw_cmd,
 				t_env *env, t_cmd *cmd, int exit_value);
-t_cmd		*fill_cmd_list(char **raw_cmd, t_env *env);
+t_cmd		*fill_cmd_list(char **raw_cmd, t_env *env, char **envp);
 t_env		*clean_env_list(t_env *first);
 t_env		*create_env_list(int total_number);
 t_env		*fill_env_list(char **envp, char **raw_cmd);
@@ -129,10 +129,11 @@ t_last_file	*clean_last_file_list(t_last_file *first);
 int			fill_last_in(t_cmd **cmd);
 int			fd_heredoc(t_cmd **cmd_address);
 int			fill_fd_heredoc(t_cmd **start_cmd);
-int			expand_all_dollar(t_cmd *start);
+int			expand_all_dollar(t_cmd *start, char **envp);
 int			check_unique(t_last_file *first, t_file *temp);
 t_last_file	*create_last_file_node(t_file *file, t_file *temp);
 t_last_file	*create_last_file_list(t_file *file);
 int			handle_quote_cmd(t_cmd *start);
+int			execute_all(char *raw_line, char **envp);
 
 #endif //MINISHELL_H
