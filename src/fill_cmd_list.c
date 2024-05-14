@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:43:39 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 18:41:44 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/14 10:27:48 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ t_cmd	*fill_cmd_list(char **raw_cmd, t_env *env)
 	if (fill_file_data(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (expand_all_dollar(cmd))
+		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	if (handle_quote_cmd(cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	return (cmd);
 }

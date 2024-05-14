@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 17:38:38 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/14 10:58:34 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,36 @@ char	*expand_dollar(t_cmd *cmd, char *str)
 	int		len1;
 	char	*part2;
 	char	*variable;
+	int		sq_triger;
+	int		index;
 
 	env = cmd->env;
+	index = 0;
+	sq_triger = 0;
+	while (index < (int)ft_strlen(str) && str[index] != '$')
+	{
+		if (str[index] == '\'')
+		{
+			if (sq_triger)
+				sq_triger = 0;
+			else
+				sq_triger = 1;
+		}
+		index++;
+	}
+	if (sq_triger || *(ft_strchr(str, '$') + 1) == '\0')
+	{
+		new_str = ft_strdup(str);
+		return (new_str);
+	}
 	find = ft_strchr(str, '$');
 	len1 = find - str;
 	if (find[len1 + 1])
 		find++;
 	len_var = 0;
-	while (find[len_var + 1] && find[len_var + 1] != ' ')
+	while (find[len_var] && find[len_var] != ' '
+		&& find[len_var] != '\"' && find[len_var] != '\'')
 		len_var++;
-	len_var++;
 	variable = malloc(len_var + 1);
 	if (!variable)
 		return (NULL);

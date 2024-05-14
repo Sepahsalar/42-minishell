@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 18:55:44 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/14 10:27:17 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,6 @@ int			expand_all_dollar(t_cmd *start);
 int			check_unique(t_last_file *first, t_file *temp);
 t_last_file	*create_last_file_node(t_file *file, t_file *temp);
 t_last_file	*create_last_file_list(t_file *file);
+int			handle_quote_cmd(t_cmd *start);
 
 #endif //MINISHELL_H
