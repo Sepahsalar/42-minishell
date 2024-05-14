@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/13 18:22:43 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/14 11:56:08 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
-
+// test just clear command
 int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 {
-	char	*cmd_address;
-	char	**cmd_args;
-	char	**cmd_env;
-	t_file	*temp_file;
-	t_file	*last_input;
-	t_file	*last_output;
+	char		*cmd_address;
+	char		**cmd_args;
+	char		**cmd_env;
+	t_file		*temp_file;
+	t_file		*last_input;
+	t_file		*last_output;
 	t_last_file	*last;
-	int		fd[2];
-	pid_t	pid;
-	int     status;
-	int		index;
+	int			fd[2];
+	pid_t		pid;
+	int     	status;
+	int			index;
 
 	status = 0;
 	last_input = NULL;
@@ -91,7 +91,7 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		master_clean(0, cmd_start->env, cmd_execution, 1);
 	if (pid == 0)
 	{
-		// //Handle fd overflow before this point
+		//Handle fd overflow before this point
 		last = cmd_execution->last_in;
 		if (last)
 		{
@@ -165,6 +165,7 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		close(fd[1]);
 		if (cmd_execution->index < cmd_count(cmd_start))
 			dup2(fd[0], STDIN_FILENO);
+		// printf("cmd->address: %s\n", cmd_execution->address);
 		close(fd[0]);
 		if (cmd_execution->index == cmd_count(cmd_start))
 		{
@@ -180,6 +181,7 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 				index++;
 			}
 		}
+		// printf("cmd->address2: %s\n", cmd_execution->address);
 	}
 	return (status);
 }

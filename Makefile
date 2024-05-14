@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
+#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/05/14 10:28:44 by nnourine         ###   ########.fr        #
+#    Updated: 2024/05/14 11:47:21 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,7 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/istoken.c \
 		$(SRCDIR)/main.c \
 		$(SRCDIR)/master_clean.c \
-		$(SRCDIR)/pipex_utils.c \
-		$(SRCDIR)/pipex_utils2.c \
+		$(SRCDIR)/pipex.c \
 		$(SRCDIR)/recreate_2d_env.c \
 		$(SRCDIR)/split_pipex.c \
 		$(SRCDIR)/utility1.c \
