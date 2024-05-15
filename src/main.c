@@ -6,16 +6,15 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/15 12:06:08 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:58:56 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	execute_all(char *raw_line, char **envp)
+int	execute_all(char *raw_line, t_env *env, t_env *original_env)
 {
 	char	**raw_cmd;
-	t_env	*env;
 	t_cmd	*cmd;
 	t_cmd	*temp_cmd;
 	int		status_last_cmd;
@@ -24,8 +23,8 @@ int	execute_all(char *raw_line, char **envp)
 
 	status_last_cmd = 0;
 	raw_cmd = create_raw_cmd(raw_line);
-	env = fill_env_list(envp, raw_cmd);
-	cmd = fill_cmd_list(raw_cmd, env, envp);
+	// env = fill_env_list(envp, raw_cmd);
+	cmd = fill_cmd_list(raw_cmd, env, original_env);
 	master_clean(raw_cmd, 0, 0, -1);
 	cmd_counter = cmd_count(cmd);
 	temp_cmd = cmd;
@@ -147,10 +146,14 @@ int	main(int argc, char **argv, char **envp)
 	struct termios	term;
 	int				fd_stdin;
 	int				fd_stdout;
+	t_env           *env;
+	t_env			*original_env;
 	// struct sigaction	action;
 
 	(void)argc;
 	(void)argv;
+	env = fill_env_list(envp);
+	original_env = fill_env_list(envp);
 	fd_stdin = dup(STDIN_FILENO);
 	fd_stdout = dup(STDOUT_FILENO);
 	signal(SIGQUIT, &sig_handler);
@@ -182,7 +185,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strlen(raw_line) > 0)
 		{
 			add_history(raw_line);
-			exit_code = execute_all(raw_line, envp);
+			exit_code = execute_all(raw_line, env, original_env);
 			close(STDIN_FILENO);
 			dup(fd_stdin);
 			close(STDOUT_FILENO);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:10:21 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 18:14:14 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:08:33 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,30 @@ static int	count_words(char const *s, char c)
 static int	len_quote(char const *s, char c)
 {
 	int	j;
+	char temp;
+	int   triger_change;
 
+	triger_change = 1;
 	j = 0;
 	if ((*s != 34 && *s != 39))
 	{
-		while (!((s[j] != c)
-				&& (s[j + 1] == '\0' || s[j + 1] == c)))
+		temp = c;
+		while (!((s[j] != temp)
+				&& (s[j + 1] == '\0' || s[j + 1] == temp)))
+		{
+			if ((s[j] == '\'') && triger_change)
+			{
+				temp = '\'';
+				triger_change = 0;
+			}
+			if ((s[j] == '\"') && triger_change)
+			{
+				temp = '\"';
+				triger_change = 0;
+			}
+			j++;
+		}
+		while (!triger_change && s[j] && s[j] != c)
 			j++;
 	}
 	else

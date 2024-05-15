@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/14 14:25:13 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:31:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_cmd
 	char			*raw;
 	char			*current;
 	t_env			*env;
+	t_env	 		*original_env;
 	t_file			*input;
 	t_file			*output;
 	t_last_file		*last_in;
@@ -93,11 +94,12 @@ char		*strdup_modified(char *s, char *token);
 char		*ft_remove(char *str, char *del1, char *del2);
 void		master_clean(char **raw_cmd,
 				t_env *env, t_cmd *cmd, int exit_value);
-t_cmd		*fill_cmd_list(char **raw_cmd, t_env *env, char **envp);
+t_cmd		*fill_cmd_list(char **raw_cmd, t_env *env, t_env *original_env);
 t_env		*clean_env_list(t_env *first);
 t_env		*create_env_list(int total_number);
-t_env		*fill_env_list(char **envp, char **raw_cmd);
+t_env		*fill_env_list(char **envp);
 void		fill_env_cmd_list(t_cmd **cmd, t_env *env);
+void		fill_original_env_cmd_list(t_cmd **cmd, t_env *original_env);
 int			token_count(char *str, char *token);
 int			istoken(int c);
 int			fill_files(t_cmd **cmd, char *token, int type);
@@ -106,7 +108,6 @@ char		**split_all_delimiter(char const *s);
 char		**free_split(char ***m, int j);
 int			triger_maker_sp(int triger, char c, char divider);
 int			len_helper(const char *s);
-int			handle_quote(char ***input);
 char		**create_args(char *str);
 int			fill_args_cmd_list(t_cmd **cmd);
 int			check_accessibility(char *address, char mode);
@@ -129,11 +130,12 @@ t_last_file	*clean_last_file_list(t_last_file *first);
 int			fill_last_in(t_cmd **cmd);
 int			fd_heredoc(t_cmd **cmd_address);
 int			fill_fd_heredoc(t_cmd **start_cmd);
-int			expand_all_dollar(t_cmd *start, char **envp);
+int			expand_all_dollar(t_cmd *start);
 int			check_unique(t_last_file *first, t_file *temp);
 t_last_file	*create_last_file_node(t_file *file, t_file *temp);
 t_last_file	*create_last_file_list(t_file *file);
 int			handle_quote_cmd(t_cmd *start);
-int			execute_all(char *raw_line, char **envp);
+int			execute_all(char *raw_line, t_env *env, t_env *orignial_env);
+void		fill_name_cmd_list(t_cmd **cmd);
 
 #endif //MINISHELL_H

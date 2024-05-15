@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:23:32 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/14 17:38:14 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:49:42 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	handle_quote_cmd(t_cmd *start)
 	temp = start;
 	while (temp)
 	{
-		printf("arg[1]: %s\n", temp->args[1]);
 		if (handle_quote_args(&temp->args))
 			return (1);
 		temp = temp->next;
