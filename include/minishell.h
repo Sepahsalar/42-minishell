@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/16 18:57:28 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/16 20:05:48 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int			handle_quote_cmd(t_cmd *start);
 int			execute_all(char *raw_line, t_env *env, t_env *orignial_env);
 void		fill_name_cmd_list(t_cmd **cmd);
 t_dollar	*create_fill_dollar_list(char *arg);
-char		*expand_dollar_helper(t_cmd *cmd, char *str, char *find);
+char		*expand_dollar_helper(t_cmd *cmd, char *str, char *find, int type);
 int			handle_dollar_struct(t_cmd *cmd);
 char		*inside_double_quote(char *location);
 

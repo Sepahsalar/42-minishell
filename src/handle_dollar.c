@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:07:18 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/16 19:42:50 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/16 20:09:22 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ char	*handle_dollar_str(t_cmd *cmd, t_handle_dollar hd)
 		int real_index = real_location - sq_location;
 		inside = inside_double_quote(sq_location);
 		char *inside_location = inside + real_index - 1;
-		printf("inside: %s\n", inside);
-		handeled_inside = expand_dollar_helper(cmd, inside, inside_location);
-		printf("handeled_inside: %s\n", handeled_inside);
+		// printf("inside: %s\n", inside);
+		handeled_inside = expand_dollar_helper(cmd, inside, inside_location, hd.dollar->type);
+		// printf("handeled_inside: %s\n", handeled_inside);
 		new_str = replace_inside(hd.str, sq_location, inside, handeled_inside);
 		free(inside);
 		return (new_str);
@@ -44,13 +44,15 @@ char	*handle_dollar_str(t_cmd *cmd, t_handle_dollar hd)
 	else if (hd.dollar->type == 4)
 	{
 		// printf("hd.str -> type 4 = %s | place of $ is = %s\n", hd.str, hd.dollar->place);
-		new_str = expand_dollar_helper(cmd, hd.str, hd.dollar->place);
+		new_str = expand_dollar_helper(cmd, hd.str,
+				hd.dollar->place, hd.dollar->type);
 		return (new_str);
 	}
 	else
 	{
 		// printf("hd.str -> type %d = %s | place of $ is = %s\n",hd.dollar->type, hd.str, hd.dollar->place);
-		new_str = expand_dollar_helper(cmd, hd.str, hd.dollar->place);
+		new_str = expand_dollar_helper(cmd, hd.str,
+				hd.dollar->place, hd.dollar->type);
 		return (new_str);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/16 19:53:43 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/16 20:10:34 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,23 @@ char	*expand_pid(char *str, char *start, char *temp, int count)
 	return (new);
 }
 
-// static char	*get_current_pid(t_env *original_env)
-// {
-// 	char	*raw_line;
-// 	int		fd;
-// 	char	*pid_str;
-// 	//handle the case when PATH gets unset. We should give PATH here somehow
-// 	raw_line = "ps|awk '$4==\"./minishell\"'|tail -n 1|awk '{print $1}' >.pid";
-// 	execute_all(raw_line, original_env, original_env);
-// 	fd = open(".pid", O_RDONLY);
-// 	pid_str = get_next_line(fd);
-// 	pid_str[ft_strlen(pid_str) - 1] = '\0';
-// 	close(fd);
-// 	unlink(".pid");
-// 	return (pid_str);
-// }
+static char	*get_current_pid(t_env *original_env)
+{
+	char	*raw_line;
+	int		fd;
+	char	*pid_str;
+	//handle the case when PATH gets unset. We should give PATH here somehow
+	raw_line = "ps|awk '$4==\"./minishell\"'|tail -n 1|awk '{print $1}' >.pid";
+	execute_all(raw_line, original_env, original_env);
+	fd = open(".pid", O_RDONLY);
+	pid_str = get_next_line(fd);
+	pid_str[ft_strlen(pid_str) - 1] = '\0';
+	close(fd);
+	unlink(".pid");
+	return (pid_str);
+}
 
-char	*expand_dollar_helper(t_cmd *cmd, char *str , char *find)
+char	*expand_dollar_helper(t_cmd *cmd, char *str , char *find, int type)
 {
 	t_env	*env;
 	char	*new_str;
@@ -81,37 +81,30 @@ char	*expand_dollar_helper(t_cmd *cmd, char *str , char *find)
 	// temp = NULL;
 	j = 0;
 	initial_length = ft_strlen(str);
-	// temp = get_current_pid(cmd->original_env);
+	temp = get_current_pid(cmd->original_env);
 	// printf("after getting pid = %s\n", temp);
-	// while (count && find[index] && j < initial_length)
-	// {
-	// 	if (find[index + 1] && find[index + 1] == '$')
-	// 	{
-	// 		count++;
-	// 		index++;
-	// 	}
-	// 	else
-	// 	{
-	// 		count = count / 2;
-	// 		str = expand_pid(str, find, temp, count);
-	// 		index = 0;
-	// 		count = 0;
-	// 		find = ft_strchr(str + index, '$');
-	// 		if (find)
-	// 			count = 1;
-	// 	}
-	// 	j++;
-	// }
-	// if (ft_strchr(str, '$') && (*(ft_strchr(str, '$') + 1) == '\0'
-	// 		|| *(ft_strchr(str, '$') + 1) == '\"'))
-	// {
-	// 	new_str = ft_strdup(str);
-	// 	return (new_str);
-	// }
-	// if (find && (*(find + 1) == '\0'
-	// 		|| *(find + 1) == '\"' || *(find + 1) == ' '))
-	 if (find && (*(find + 1) == '\0'
-			|| *(find + 1) == ' '))
+	while (count && find[index] && j < initial_length)
+	{
+		if (find[index + 1] && find[index + 1] == '$')
+		{
+			count++;
+			index++;
+		}
+		else
+		{
+			count = count / 2;
+			str = expand_pid(str, find, temp, count);
+			index = 0;
+			count = 0;
+			find = ft_strchr(str + index, '$');
+			if (find)
+				count = 1;
+		}
+		j++;
+	}
+	if (find && (*(find + 1) == '\0'
+			|| *(find + 1) == ' ' || (type == 4 && (*(find + 1) == '\''
+					|| *(find + 1) == '\"'))))
 	{
 		new_str = ft_strdup(str);
 		return (new_str);
