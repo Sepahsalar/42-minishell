@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/15 15:33:52 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:26:51 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		close(temp_file->fd);
 		temp_file = temp_file->next;
 	}
+	if (cmd_execution->cmd_name == NULL || *cmd_execution->cmd_name == '\0')
+	    return (0);
 	if (cmd_execution->exec == 0)
 	{
 		if (cmd_execution->exist)

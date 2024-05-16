@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/15 15:31:37 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:57:28 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,23 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
+typedef struct s_dollar
+{
+	int				id;
+	char			*place;
+	int				type;
+	struct s_dollar	*previous;
+	struct s_dollar	*next;
+}					t_dollar;
+
+typedef struct s_handle_dollar
+{
+	char			*str;
+	t_dollar		*dollar;
+}					t_handle_dollar;
+
+
+
 void		rl_replace_line(const char *text, int clear_undo);
 void		clean_2d_char(char **array);
 t_cmd		*clean_cmd_list(t_cmd *first);
@@ -137,5 +154,12 @@ t_last_file	*create_last_file_list(t_file *file);
 int			handle_quote_cmd(t_cmd *start);
 int			execute_all(char *raw_line, t_env *env, t_env *orignial_env);
 void		fill_name_cmd_list(t_cmd **cmd);
+t_dollar	*create_fill_dollar_list(char *arg);
+char		*expand_dollar_helper(t_cmd *cmd, char *str, char *find);
+int			handle_dollar_struct(t_cmd *cmd);
+char		*inside_double_quote(char *location);
+
+char		*replace_inside(char *str, char *location, char *inside, char *handled_inside);
+t_dollar	*clean_dollar_list(t_dollar *first);
 
 #endif //MINISHELL_H

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
+#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/05/14 11:47:21 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/05/16 16:10:21 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,8 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/utility2.c \
 		$(SRCDIR)/utility3.c \
 		$(SRCDIR)/handle_quote.c \
+		$(SRCDIR)/find_palce_type_dollar.c \
+		$(SRCDIR)/handle_dollar.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:43:39 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/15 15:43:28 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:55:13 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_cmd	*fill_cmd_list(char **raw_cmd, t_env *env, t_env *original_env)
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	fill_env_cmd_list(&cmd, env);
 	fill_original_env_cmd_list(&cmd, original_env);
+	if (handle_dollar_struct(cmd))
+		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_files(&cmd, ">", 1))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_last_out(&cmd))
@@ -79,8 +81,8 @@ t_cmd	*fill_cmd_list(char **raw_cmd, t_env *env, t_env *original_env)
 	// }
 	if (fill_args_cmd_list(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
-	if (expand_all_dollar(cmd))
-		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	// if (expand_all_dollar(cmd))
+	// 	master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (handle_quote_cmd(cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	fill_name_cmd_list(&cmd);
