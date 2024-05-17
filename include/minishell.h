@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/17 11:20:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:14:41 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int			fill_address_access(t_cmd **cmd);
 int			create_file_data(t_file *file);
 int			fill_file_data(t_cmd **cmd);
 char		*handle_quote_str(char *input);
-int			execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution);
+int			execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution, t_env **env);
 int			ft_isspace(int c);
 char		**recreate_2d_env(t_env *env);
 int			all_space(char *str);
@@ -158,9 +158,13 @@ t_dollar	*create_fill_dollar_list(char *arg);
 char		*expand_dollar_helper(t_cmd *cmd, char *str, char *find, int type);
 int			handle_dollar_struct(t_cmd *cmd);
 char		*inside_double_quote(char *location);
-
-char		*replace_inside(char *str, char *location, char *inside, char *handled_inside);
+char		*replace_inside(char *str, char *location,
+				char *inside, char *handled_inside);
 t_dollar	*clean_dollar_list(t_dollar *first);
 void		remove_previous_node(t_dollar *current);
+int			run_env(t_cmd *cmd);
+int			is_builtin(t_cmd *cmd);
+int			run_builtin(t_cmd *cmd, t_env **env);
+int			run_export(t_cmd *cmd, int original, t_env **env);
 
 #endif //MINISHELL_H

@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/05/16 16:10:21 by nnourine         ###   ########.fr        #
+#    Updated: 2024/05/17 18:24:36 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,9 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/handle_quote.c \
 		$(SRCDIR)/find_palce_type_dollar.c \
 		$(SRCDIR)/handle_dollar.c \
+		$(SRCDIR)/builtin.c \
+		$(SRCDIR)/env.c \
+		$(SRCDIR)/export.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

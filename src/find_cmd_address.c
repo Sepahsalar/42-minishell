@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_cmd_address.c                               :+:      :+:    :+:   */
+/*   find_cmd_address.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:31:28 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 18:05:08 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:45:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,17 @@ char	*find_address(t_cmd *cmd, char mode)
 	return (0);
 }
 
-
 int	find_cmd_address(t_cmd *cmd)
 {
 	char	*temp_address;
+
+	if (cmd->cmd_name)
+	{
+		cmd->address = 0;
+		cmd->exist = 0;
+		cmd->exec = 0;
+	}
+	
 
 	if (!cmd->cmd_name)
 	{

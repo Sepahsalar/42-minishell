@@ -6,21 +6,23 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/17 13:19:12 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:14:56 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// 1) write env, unset and export builtin
-// 2) handle $? with export of a new variable n to the "original" env
-// 3) take a look at the handle quote function
-// 4) write other builtins
-// 5) take a look at the readline function when ctrl + c & ctrl v, also
-// 	  when line is long
-// 6) create a .history file to keep the commands for each SHLVL
-// 7) update SHLVL in env, so we can have multiple ./minishell inside of each other (like bash)
-// 8) error handling after readline and before giving it to execute command
+// 1) write env, unset and export builtin------------------------------------2h                                  
+// 2) handle $? with export of a new variable n to the "original" env--------2h
+// 3) take a look at the handle quote function-------------------------------8h
+// 4) write other builtins and update the pipex functions--------------------16h
+// 5) take a look at the readline function when cmd + c & cmd + v, also
+// 	  when line is long------------------------------------------------------16h
+// 6) create a .history file to keep the commands for each SHLVL-------------8h
+// 7) update SHLVL in env, so we can have multiple ./minishell
+//    inside of each other (like bash - like a builtin)----------------------4h
+// 8) error handling after readline and before giving it to execute command--40h
+// 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
 
 int	execute_all(char *raw_line, t_env *env, t_env *original_env)
 {
@@ -40,9 +42,9 @@ int	execute_all(char *raw_line, t_env *env, t_env *original_env)
 	while (temp_cmd)
 	{
 		if (temp_cmd->index == cmd_counter)
-			status_last_cmd = execute_cmd(cmd, temp_cmd);
+			status_last_cmd = execute_cmd(cmd, temp_cmd, &env);
 		else
-			execute_cmd(cmd, temp_cmd);
+			execute_cmd(cmd, temp_cmd, &env);
 		temp_cmd = temp_cmd->next;
 	}
 	temp_cmd = cmd;
@@ -92,12 +94,15 @@ int	main(int argc, char **argv, char **envp)
 	int				fd_stdout;
 	t_env           *env;
 	t_env			*original_env;
+	t_env	**p;
 	// struct sigaction	action;
 
 	(void)argc;
 	(void)argv;
 	env = fill_env_list(envp);
 	original_env = fill_env_list(envp);
+	p = malloc(sizeof(t_env*));
+	p = &(env);
 	fd_stdin = dup(STDIN_FILENO);
 	fd_stdout = dup(STDOUT_FILENO);
 	signal(SIGQUIT, &sig_handler);
@@ -130,10 +135,12 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(raw_line);
 			exit_code = execute_all(raw_line, env, original_env);
+			printf("exit code in main is : %d\n", exit_code);
 			close(STDIN_FILENO);
 			dup(fd_stdin);
 			close(STDOUT_FILENO);
 			dup(fd_stdout);
+			printf("env: %s\n", env->key);
 		}
 		free(raw_line);
 	}
