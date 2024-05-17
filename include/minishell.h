@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/16 20:05:48 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:20:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,5 +161,6 @@ char		*inside_double_quote(char *location);
 
 char		*replace_inside(char *str, char *location, char *inside, char *handled_inside);
 t_dollar	*clean_dollar_list(t_dollar *first);
+void		remove_previous_node(t_dollar *current);
 
 #endif //MINISHELL_H

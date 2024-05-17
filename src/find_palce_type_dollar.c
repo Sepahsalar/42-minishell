@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:31:42 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/16 18:52:06 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:20:23 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,30 @@ int	type_finder(char *sq, char *dq, int heredoc)
 	if (heredoc)
 		return (-1);
 	if (!sq && !dq)
-		return (5);
-	else if (!sq && dq)
-		return (4);
-	else if (sq && !dq)
 		return (3);
-	else if (sq < dq)
+	else if (!sq && dq)
 		return (2);
-	else
+	else if (sq && !dq)
 		return (1);
+	else if (sq < dq)
+		return (1);
+	else
+		return (2);
+}
+
+void	remove_previous_node(t_dollar *current)
+{
+	t_dollar *previous;
+
+	if (current)
+	{
+		previous = current->previous;
+		if (previous)
+		{
+			free(previous);
+			current->previous = NULL;
+		}
+	}
 }
 
 t_dollar	*create_fill_dollar_list(char *arg)
@@ -106,13 +121,10 @@ t_dollar	*create_fill_dollar_list(char *arg)
 	while (index < (int)ft_strlen(arg))
 	{
 		sq_dq_updater(&arg[index], &sq, &dq);
-		// printf("for char : %c -> sq: %s , dq: %s\n", arg[index], sq, dq);
 		heredoc_updater(&arg[index], &heredoc);
-		if (arg[index] == '$')
+		if (arg[index] == '$' && (!arg[index - 1] || arg[index - 1] != '$'))
 		{
-			// printf("sq: %s , dq: %s\n", sq, dq);
 			type = type_finder(sq, dq, heredoc);
-			// printf("type: %d\n", type);
 			id++;
 			new = create_dollar_node(id, &arg[index], type);
 			if (id == 1)

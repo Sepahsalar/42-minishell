@@ -6,11 +6,21 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/15 13:58:56 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:19:12 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// 1) write env, unset and export builtin
+// 2) handle $? with export of a new variable n to the "original" env
+// 3) take a look at the handle quote function
+// 4) write other builtins
+// 5) take a look at the readline function when ctrl + c & ctrl v, also
+// 	  when line is long
+// 6) create a .history file to keep the commands for each SHLVL
+// 7) update SHLVL in env, so we can have multiple ./minishell inside of each other (like bash)
+// 8) error handling after readline and before giving it to execute command
 
 int	execute_all(char *raw_line, t_env *env, t_env *original_env)
 {
@@ -23,7 +33,6 @@ int	execute_all(char *raw_line, t_env *env, t_env *original_env)
 
 	status_last_cmd = 0;
 	raw_cmd = create_raw_cmd(raw_line);
-	// env = fill_env_list(envp, raw_cmd);
 	cmd = fill_cmd_list(raw_cmd, env, original_env);
 	master_clean(raw_cmd, 0, 0, -1);
 	cmd_counter = cmd_count(cmd);
@@ -36,19 +45,6 @@ int	execute_all(char *raw_line, t_env *env, t_env *original_env)
 			execute_cmd(cmd, temp_cmd);
 		temp_cmd = temp_cmd->next;
 	}
-	// temp_cmd = cmd;
-	// while(temp_cmd)
-	// {
-	// 	printf("raw_cmd:%s\n", temp_cmd->raw);
-	// 	printf("current_cmd:%s\n", temp_cmd->current);
-	// 	printf("cmd_ADD:%s\n", temp_cmd->address);
-	// 	printf("cmd_NAME:%s\n", temp_cmd->cmd_name);
-	// 	printf("cmd_arg0:%s\n", temp_cmd->args[0]);
-	// 	printf("cmd_arg1:%s\n", temp_cmd->args[1]);
-	// 	printf("cmd_exist:%d\n", temp_cmd->exist);
-	// 	printf("cmd_execute:%d\n", temp_cmd->exec);
-	// 	temp_cmd = temp_cmd->next;
-	// }
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
@@ -67,58 +63,6 @@ int	execute_all(char *raw_line, t_env *env, t_env *original_env)
 		}
 		temp_cmd = temp_cmd->next;
 	}
-	// c = cmd;
-	// i = 1;
-	// while (c)
-	// {
-	// 	printf("we are in cmd number %d\n", i);
-	// 	printf("*****checking inputs\n");
-	// 	f = c->input;
-	// 	while (f)
-	// 	{
-	// 		printf("input raw: %s\n", f->raw);
-	// 		printf("input address: %s\n", f->address);
-	// 		printf("input read: %d\n", f->read);
-	// 		printf("input write: %d\n", f->write);
-	// 		printf("input exist: %d\n", f->exist);
-	// 		if (f->append == 1)
-	// 			printf("wtf: append\n");
-	// 		if (f->trunc == 1)
-	// 			printf("wtf: trunc\n");
-	// 		if (f->limiter)
-	// 			printf("limiter is %s\n", f->limiter);
-	// 		f = f->next;
-	// 	}
-	// 	printf("*****checking outputs\n");
-	// 	f = c->output;
-	// 	while (f)
-	// 	{
-	// 		printf("output raw: %s\n", f->raw);
-	// 		printf("output address: %s\n", f->address);
-	// 		printf("output read: %d\n", f->read);
-	// 		printf("output write: %d\n", f->write);
-	// 		printf("output exist: %d\n", f->exist);
-	// 		if (f->append == 1)
-	// 			printf("append\n");
-	// 		if (f->trunc == 1)
-	// 			printf("trunc\n");
-	// 		if (f->limiter)
-	// 			printf("limiter is %s\n", f->limiter);
-	// 		f = f->next;
-	// 	}
-	// 	c = c->next;
-	// 	i++;
-	// 	printf("\n\n");
-	// }
-	//master_pipex(cmd);
-	// temp = cmd;
-	// while (temp)
-	// {
-	// 	printf("command:%s\n", temp->cmd_name);
-	// 	if (temp->output_trunc)
-	// 		printf("outfile:%s\n", (temp->output_trunc)->address);
-	// 	temp = temp->next;
-	// }
 	master_clean(0, env, cmd, -1);
 	return (status_last_cmd);
 }
