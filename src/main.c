@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/20 15:46:41 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:58:52 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,17 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
+		printf("start\n");
 		if (temp_cmd->index == cmd_counter)
 		{
 			env_pack_result = execute_cmd(cmd, temp_cmd);
 		}
 		else
 			execute_cmd(cmd, temp_cmd);
+		printf("end\n");
 		temp_cmd = temp_cmd->next;
 	}
+	printf("the exit code of this command is %s\n", env_pack_result.original_env->value);
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
@@ -68,8 +71,6 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 		}
 		temp_cmd = temp_cmd->next;
 	}
-	// env_pack_result.env = env_pack.env;
-	// env_pack_result.original_env = env_pack.original_env;
 	//master_clean(0, env, cmd, -1);
 	return (env_pack_result);
 }
@@ -106,6 +107,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	env_pack.env = fill_env_list(envp);
 	env_pack.original_env = fill_env_list(envp);
+	env_pack.original_env = export_orginal(env_pack.original_env, 0);
 	fd_stdin = dup(STDIN_FILENO);
 	fd_stdout = dup(STDOUT_FILENO);
 	signal(SIGQUIT, &sig_handler);
@@ -126,10 +128,12 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		raw_line = readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
+		// raw_line = readline("[ASAL]$ ");
 		if (!raw_line)
 		{
 			// here we should call our "exit" built-in function
 			printf (ANSI_MOVE_UP ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ exit\n");
+			// printf (ANSI_MOVE_UP "[ASAL]$ exit\n");
 			close(fd_stdin);
 			close(fd_stdout);
 			return (0);

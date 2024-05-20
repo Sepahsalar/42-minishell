@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/20 16:24:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:18:34 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 
 # define ANSI_COLOR_GREEN "\001\x1b[32m\002"
 # define ANSI_COLOR_RESET "\001\x1b[0m\002"
+// # define ANSI_COLOR_GREEN "\x1b[32m"
+// # define ANSI_COLOR_RESET "\x1b[0m"
 # define ANSI_MOVE_UP "\033[1A"
 
 // volatile int g_signal;
@@ -169,5 +171,6 @@ t_env_pack			run_env(t_cmd *cmd);
 int			is_builtin(t_cmd *cmd);
 t_env_pack		run_builtin(t_cmd *cmd);
 t_env_pack	run_export(t_cmd *cmd, int original);
+t_env		*export_orginal(t_env *env, int status);
 
 #endif //MINISHELL_H

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:44:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/20 15:46:18 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:37:59 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,33 @@ t_env_pack	run_export(t_cmd *cmd, int original)
 	}
 	env_pack.env = cmd->env;
 	env_pack.original_env = cmd->original_env;
+	env_pack.original_env = export_orginal(env_pack.original_env, 0); // instead of 0 it should be the correct exit code
 	return (env_pack);
+}
+
+t_env	*export_orginal(t_env *env, int status)
+{
+	t_env		*temp_env;
+	char		*temp;
+	char 		*status_str;
+
+	temp_env = env;
+	while (temp_env != NULL)
+	{
+		if (ft_strlen("exit_code") == ft_strlen(temp_env->key)
+			&& !ft_strncmp(temp_env->key, "exit_code",
+				ft_strlen("exit_code")))
+			break ;
+		temp_env = temp_env->next;
+	}
+	status_str = ft_itoa(status);
+	if (!temp_env)
+		add_node_front(&env, "exit_code", status_str);
+	else
+	{
+		temp = temp_env->value;
+		temp_env->value = status_str;
+		free(temp);
+	}
+	return (env);
 }
