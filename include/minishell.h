@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/17 20:14:41 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:06:16 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define ANSI_COLOR_GREEN "\x1b[32m"
-# define ANSI_COLOR_RESET "\x1b[0m"
+# define ANSI_COLOR_GREEN "\001\x1b[32m\002"
+# define ANSI_COLOR_RESET "\001\x1b[0m\002"
 # define ANSI_MOVE_UP "\033[1A"
 
 // volatile int g_signal;
@@ -91,11 +91,15 @@ typedef struct s_dollar
 
 typedef struct s_handle_dollar
 {
-	char			*str;
-	t_dollar		*dollar;
-}					t_handle_dollar;
+	char		*str;
+	t_dollar	*dollar;
+}				t_handle_dollar;
 
-
+typedef struct s_env_pack
+{
+	t_env	*env;
+	t_env	*original_env;
+}			t_env_pack;
 
 void		rl_replace_line(const char *text, int clear_undo);
 void		clean_2d_char(char **array);
@@ -133,7 +137,7 @@ int			fill_address_access(t_cmd **cmd);
 int			create_file_data(t_file *file);
 int			fill_file_data(t_cmd **cmd);
 char		*handle_quote_str(char *input);
-int			execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution, t_env **env);
+t_env_pack			execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution);
 int			ft_isspace(int c);
 char		**recreate_2d_env(t_env *env);
 int			all_space(char *str);
@@ -147,12 +151,11 @@ t_last_file	*clean_last_file_list(t_last_file *first);
 int			fill_last_in(t_cmd **cmd);
 int			fd_heredoc(t_cmd **cmd_address);
 int			fill_fd_heredoc(t_cmd **start_cmd);
-int			expand_all_dollar(t_cmd *start);
 int			check_unique(t_last_file *first, t_file *temp);
 t_last_file	*create_last_file_node(t_file *file, t_file *temp);
 t_last_file	*create_last_file_list(t_file *file);
 int			handle_quote_cmd(t_cmd *start);
-int			execute_all(char *raw_line, t_env *env, t_env *orignial_env);
+t_env_pack	execute_all(char *raw_line, t_env_pack env_pack);
 void		fill_name_cmd_list(t_cmd **cmd);
 t_dollar	*create_fill_dollar_list(char *arg);
 char		*expand_dollar_helper(t_cmd *cmd, char *str, char *find, int type);
@@ -162,9 +165,9 @@ char		*replace_inside(char *str, char *location,
 				char *inside, char *handled_inside);
 t_dollar	*clean_dollar_list(t_dollar *first);
 void		remove_previous_node(t_dollar *current);
-int			run_env(t_cmd *cmd);
+t_env_pack			run_env(t_cmd *cmd);
 int			is_builtin(t_cmd *cmd);
-int			run_builtin(t_cmd *cmd, t_env **env);
-int			run_export(t_cmd *cmd, int original, t_env **env);
+t_env_pack		run_builtin(t_cmd *cmd);
+t_env_pack	run_export(t_cmd *cmd, int original);
 
 #endif //MINISHELL_H

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd_address.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:31:28 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/17 16:45:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:48:58 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ int	find_cmd_address(t_cmd *cmd)
 		cmd->exist = 0;
 		cmd->exec = 0;
 	}
-	
-
 	if (!cmd->cmd_name)
 	{
 		cmd->address = 0;

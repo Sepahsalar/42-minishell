@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:40:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/17 18:27:16 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:39:54 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	run_env(t_cmd *cmd)
+t_env_pack	run_env(t_cmd *cmd)
 {
-	t_env	*env;
+	t_env		*env;
+	t_env_pack	env_pack;
 
 	env = cmd->env;
 	while (env)
@@ -22,5 +23,7 @@ int	run_env(t_cmd *cmd)
 		printf("%s=%s\n", env->key, env->value);
 		env = env->next;
 	}
-	return (0);
+	env_pack.env = cmd->env;
+	env_pack.original_env = cmd->original_env;
+	return (env_pack);
 }

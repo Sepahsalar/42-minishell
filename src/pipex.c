@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/17 20:01:00 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:11:35 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 // test just clear command
-int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution, t_env **env)
+t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 {
 	char		*cmd_address;
 	char		**cmd_args;
@@ -25,10 +25,13 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution, t_env **env)
 	pid_t		pid;
 	int     	status;
 	int			index;
+	t_env_pack	env_pack;
 
 	status = 0;
 	last_input = NULL;
 	last_output = NULL;
+	env_pack.env = cmd_execution->env;
+	env_pack.original_env = cmd_execution->original_env;
 	temp_file = cmd_execution->input;
 	while (temp_file)
 	{
@@ -39,13 +42,13 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution, t_env **env)
 				printf("bash: %s: No such file or directory\n",
 					temp_file->address);
 				master_clean(0, cmd_start->env, cmd_start, -1);
-				return (1);
+				// return (1);
 			}
 			else
 			{
 				printf("bash: %s: Permission denied\n", temp_file->address);
 				master_clean(0, cmd_start->env, cmd_start, -1);
-				return (1);
+				// return (1);
 			}
 		}
 		temp_file = temp_file->next;
@@ -62,15 +65,13 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution, t_env **env)
 		if (temp_file->fd == -1)
 		{
 			master_clean(0, cmd_start->env, cmd_execution, -1);
-			return (1);
+			// return (1);
 		}
 		close(temp_file->fd);
 		temp_file = temp_file->next;
 	}
-	if (cmd_execution->cmd_name == NULL || *cmd_execution->cmd_name == '\0')
-		return (0);
-	printf("cmd_exec = %s\n", cmd_execution->cmd_name);
-	printf("is_builtin = %d\n", is_builtin(cmd_execution));
+	// if (cmd_execution->cmd_name == NULL || *cmd_execution->cmd_name == '\0')
+	// 	// return (0);
 	if (cmd_execution->exec == 0 && is_builtin(cmd_execution) == -1)
 	{
 		if (cmd_execution->exist)
@@ -78,19 +79,19 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution, t_env **env)
 			printf("bash: %s: Permission denied\n",
 				cmd_execution->cmd_name);
 			master_clean(0, cmd_start->env, cmd_execution, -1);
-			return (126);
+			// return (126);
 		}
 		else
 		{
 			printf("bash: %s: command not found\n",
 				cmd_execution->cmd_name);
 			master_clean(0, cmd_start->env, cmd_execution, -1);
-			return (127);
+			// return (127);
 		}
 	}
 	if (cmd_count(cmd_start) == 1 && (is_builtin(cmd_execution) == 4 || is_builtin(cmd_execution) == 5))
 	{
-		run_builtin(cmd_execution, env);
+		env_pack = run_builtin(cmd_execution);
 	}
 	else if (is_builtin(cmd_execution) != 4 || is_builtin(cmd_execution) != 5)
 	{
@@ -153,11 +154,8 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution, t_env **env)
 			}
 			close(fd[0]);
 			close(fd[1]);
-			int result = run_builtin(cmd_execution, env);
-			//printf("result = %d\n", result);
-			if (result != -1)
-				exit(result);
-			else
+			env_pack = run_builtin(cmd_execution);
+			if (is_builtin(cmd_execution) == -1)
 			{
 				execution_package(cmd_execution, &cmd_address, &cmd_args, &cmd_env);
 				if (cmd_execution->error)
@@ -182,9 +180,7 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution, t_env **env)
 			close(fd[1]);
 			if (cmd_execution->index < cmd_count(cmd_start))
 				dup2(fd[0], STDIN_FILENO);
-			// printf("cmd->address: %s\n", cmd_execution->address);
 			close(fd[0]);
-		
 			if (cmd_execution->index == cmd_count(cmd_start))
 			{
 				waitpid(pid, &status, 0);
@@ -199,8 +195,7 @@ int	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution, t_env **env)
 					index++;
 				}
 			}
-			// printf("cmd->address2: %s\n", cmd_execution->address);
 		}
 	}
-	return (status);
+	return (env_pack);
 }

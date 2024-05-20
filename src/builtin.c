@@ -3,17 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:46:38 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/17 19:56:10 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:50:10 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	run_builtin(t_cmd *cmd, t_env **env)
+t_env_pack	run_builtin(t_cmd *cmd)
 {
+	t_env_pack	env_pack;
+	
+
+	env_pack.env = cmd->env;
+	env_pack.original_env = cmd->original_env;
 	// if (ft_strlen("echo") == ft_strlen(cmd->cmd_name)
 	// 	&& !ft_strncmp(cmd->cmd_name, "echo", ft_strlen("echo")))
 	// 	return (run_echo(cmd));
@@ -25,7 +30,10 @@ int	run_builtin(t_cmd *cmd, t_env **env)
 	// 	return (run_pwd(cmd));
 	if (ft_strlen("export") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "export", ft_strlen("export")))
-		return (run_export(cmd, 0, env));
+	{
+		run_export(cmd, 0);
+		return (run_export(cmd, 0));// should be replaced with exit code of return
+	}
 	// if (ft_strlen("unset") == ft_strlen(cmd->cmd_name)
 	// 	&& !ft_strncmp(cmd->cmd_name, "unset", ft_strlen("unset")))
 	// 	return (run_unset(cmd));
@@ -38,7 +46,8 @@ int	run_builtin(t_cmd *cmd, t_env **env)
 	// if (ft_strlen("minishell") == ft_strlen(cmd->cmd_name)
 	// 	&& !ft_strncmp(cmd->cmd_name, "minishell", ft_strlen("minishell")))
 	// 	return (run_minishell(cmd));
-	return (-1);
+	return (env_pack);
+	// return (-1);
 }
 
 int	is_builtin(t_cmd *cmd)
@@ -67,10 +76,8 @@ int	is_builtin(t_cmd *cmd)
 	if (ft_strlen("export") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "export", ft_strlen("export")))
 		return (4);
-	printf("cmd_name: %s\n", cmd->cmd_name);
 	if (ft_strlen("env") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "env", ft_strlen("env")))
 		return (6);
-	
 	return (-1);
 }

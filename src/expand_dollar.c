@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/17 20:13:53 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:12:57 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,12 @@ static char	*get_current_pid(t_env *original_env)
 	char	*raw_line;
 	int		fd;
 	char	*pid_str;
+	t_env_pack env_pack;
 
 	raw_line = "ps|awk '$4==\"./minishell\"'|tail -n 1|awk '{print $1}' >.pid";
-	execute_all(raw_line, original_env, original_env);
+	env_pack.env = original_env;
+	env_pack.original_env = original_env;
+	execute_all(raw_line, env_pack);
 	fd = open(".pid", O_RDONLY);
 	pid_str = get_next_line(fd);
 	pid_str[ft_strlen(pid_str) - 1] = '\0';
@@ -71,6 +74,7 @@ char	*expand_dollar_helper(t_cmd *cmd, char *str , char *find, int type)
 	int		initial_length;
 	int		remained_dollar;
 	int		reletive_index;
+	
 
 	env = cmd->env;
 	temp = str;

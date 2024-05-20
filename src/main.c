@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/17 20:14:56 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:46:41 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,30 @@
 // 8) error handling after readline and before giving it to execute command--40h
 // 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
 
-int	execute_all(char *raw_line, t_env *env, t_env *original_env)
+t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {
-	char	**raw_cmd;
-	t_cmd	*cmd;
-	t_cmd	*temp_cmd;
-	int		status_last_cmd;
-	int		cmd_counter;
-	t_file	*temp_file;
+	char		**raw_cmd;
+	t_cmd		*cmd;
+	t_cmd		*temp_cmd;
+	int			status_last_cmd;
+	int			cmd_counter;
+	t_file		*temp_file;
+	t_env_pack	env_pack_result;
 
 	status_last_cmd = 0;
 	raw_cmd = create_raw_cmd(raw_line);
-	cmd = fill_cmd_list(raw_cmd, env, original_env);
+	cmd = fill_cmd_list(raw_cmd, env_pack.env, env_pack.original_env);
 	master_clean(raw_cmd, 0, 0, -1);
 	cmd_counter = cmd_count(cmd);
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
 		if (temp_cmd->index == cmd_counter)
-			status_last_cmd = execute_cmd(cmd, temp_cmd, &env);
+		{
+			env_pack_result = execute_cmd(cmd, temp_cmd);
+		}
 		else
-			execute_cmd(cmd, temp_cmd, &env);
+			execute_cmd(cmd, temp_cmd);
 		temp_cmd = temp_cmd->next;
 	}
 	temp_cmd = cmd;
@@ -65,8 +68,10 @@ int	execute_all(char *raw_line, t_env *env, t_env *original_env)
 		}
 		temp_cmd = temp_cmd->next;
 	}
-	master_clean(0, env, cmd, -1);
-	return (status_last_cmd);
+	// env_pack_result.env = env_pack.env;
+	// env_pack_result.original_env = env_pack.original_env;
+	//master_clean(0, env, cmd, -1);
+	return (env_pack_result);
 }
 
 static void	sig_handler(int sig)
@@ -92,17 +97,15 @@ int	main(int argc, char **argv, char **envp)
 	struct termios	term;
 	int				fd_stdin;
 	int				fd_stdout;
-	t_env           *env;
-	t_env			*original_env;
-	t_env	**p;
+	// t_env           *env;
+	// t_env			*original_env;
+	t_env_pack 		env_pack;
 	// struct sigaction	action;
 
 	(void)argc;
 	(void)argv;
-	env = fill_env_list(envp);
-	original_env = fill_env_list(envp);
-	p = malloc(sizeof(t_env*));
-	p = &(env);
+	env_pack.env = fill_env_list(envp);
+	env_pack.original_env = fill_env_list(envp);
 	fd_stdin = dup(STDIN_FILENO);
 	fd_stdout = dup(STDOUT_FILENO);
 	signal(SIGQUIT, &sig_handler);
@@ -134,13 +137,11 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strlen(raw_line) > 0)
 		{
 			add_history(raw_line);
-			exit_code = execute_all(raw_line, env, original_env);
-			printf("exit code in main is : %d\n", exit_code);
+			env_pack = execute_all(raw_line, env_pack);
 			close(STDIN_FILENO);
 			dup(fd_stdin);
 			close(STDOUT_FILENO);
 			dup(fd_stdout);
-			printf("env: %s\n", env->key);
 		}
 		free(raw_line);
 	}
