@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 13:17:25 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:33:32 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_env	*cpy_env(t_env *env)
 	while (env)
 	{
 		new = malloc(sizeof(t_env));
-		new->next = 0;
+		ft_memset(new, 0, sizeof(t_env));
 		new->key = ft_strdup(env->key);
 		new->value = ft_strdup(env->value);
 		if (!start)
@@ -133,7 +133,7 @@ char	*expand_dollar_helper(t_cmd *cmd, char *str , char *find, int type)
 		len_var = 0;
 		while (find[len_var] && find[len_var] != ' '
 			&& find[len_var] != '\"' && find[len_var] != '\''
-			&& find[len_var] != '?')
+			&& find[len_var] != '?' && find[len_var] != '=')
 			len_var++;
 		if (find[0] == '?' && len_var == 0)
 			len_var = 1;

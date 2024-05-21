@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:46:38 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 14:30:02 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:31:38 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_env_pack	run_builtin(t_cmd *cmd)
 	if (ft_strlen("export") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "export", ft_strlen("export")))
 	{
-		run_export(cmd, 0);
-		return (run_export(cmd, 0));// should be replaced with exit code of return
+		// run_export(cmd);
+		return (run_export(cmd));// should be replaced with exit code of return
 	}
 	if (ft_strlen("unset") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "unset", ft_strlen("unset")))

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_minishell.c                                    :+:      :+:    :+:   */
+/*   init_temp_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:56 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 14:33:38 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:15:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 // 	return (env_pack);
 // }
 
-t_env	*set_sh_level(t_env *env)
+t_env	*set_start(t_env *env)
 {
 	char		*temp_str;
 	t_env       *temp_env;
@@ -54,5 +54,22 @@ t_env	*set_sh_level(t_env *env)
 	}
 	else
 		add_node_front(&env, "SHLVL", ft_itoa(1));
+	temp_env = env;
+	while (temp_env && !same(temp_env->key, "OLDPWD"))
+		temp_env = temp_env->next;
+	if (temp_env)
+		env = remove_node(env, temp_env);
+	return (env);
+}
+
+t_env	*unset_oldpwd(t_env *env)
+{
+	t_env	*temp_env;
+
+	temp_env = env;
+	while (temp_env && !same(temp_env->key, "OLDPWD"))
+		temp_env = temp_env->next;
+	if (temp_env)
+		env = remove_node(env, temp_env);
 	return (env);
 }

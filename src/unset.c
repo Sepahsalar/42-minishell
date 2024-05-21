@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:05:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 11:58:57 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:13:25 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	same(char *s1, char *s2)
 	return (0);
 }
 
-void	*remove_node(t_env *start, t_env *node)
+t_env	*remove_node(t_env *start, t_env *node)
 {
 	t_env	*temp;
 	t_env	*before_node;
@@ -77,6 +77,6 @@ t_env_pack	run_unset(t_cmd *cmd)
 			env_pack.env = remove_node(env_pack.env, temp);
 		index++;
 	}
-	export_orginal(env_pack.original_env, 0);
+	export_original(env_pack.original_env, 0);
 	return (env_pack);
 }

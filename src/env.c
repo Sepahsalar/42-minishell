@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:40:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 10:50:00 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:30:39 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ t_env_pack	run_env(t_cmd *cmd)
 		// ft_putendl_fd(env->value, 1);
 		env = env->next;
 	}
-	export_orginal(env_pack.original_env, 0);
+	export_original(env_pack.original_env, 0);
 	return (env_pack);
 }

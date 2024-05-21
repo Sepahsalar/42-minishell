@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:21:29 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 18:05:57 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:35:55 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

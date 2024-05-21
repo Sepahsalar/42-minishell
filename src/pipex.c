@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/21 14:30:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:30:21 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 				printf("bash: %s: No such file or directory\n",
 					temp_file->address);
 				master_clean(0, cmd_start->env, cmd_start, -1);
-				env_pack.original_env = export_orginal(env_pack.original_env, 1);
+				env_pack.original_env = export_original(env_pack.original_env, 1);
 				return (env_pack);
 			}
 			else
 			{
 				printf("bash: %s: Permission denied\n", temp_file->address);
 				master_clean(0, cmd_start->env, cmd_start, -1);
-				env_pack.original_env = export_orginal(env_pack.original_env, 1);
+				env_pack.original_env = export_original(env_pack.original_env, 1);
 				return (env_pack);
 			}
 		}
@@ -67,7 +67,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		if (temp_file->fd == -1)
 		{
 			master_clean(0, cmd_start->env, cmd_execution, -1);
-			env_pack.original_env = export_orginal(env_pack.original_env, 1);
+			env_pack.original_env = export_original(env_pack.original_env, 1);
 			return (env_pack);
 		}
 		close(temp_file->fd);
@@ -75,7 +75,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	}
 	if (cmd_execution->cmd_name == NULL || *cmd_execution->cmd_name == '\0')
 	{
-		env_pack.original_env = export_orginal(env_pack.original_env, 0);
+		env_pack.original_env = export_original(env_pack.original_env, 0);
 		return (env_pack);
 	}
 	if (cmd_execution->exec == 0 && is_builtin(cmd_execution) == -1)
@@ -85,7 +85,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			printf("bash: %s: Permission denied\n",
 				cmd_execution->cmd_name);
 			master_clean(0, cmd_start->env, cmd_execution, -1);
-			env_pack.original_env = export_orginal(env_pack.original_env, 126);
+			env_pack.original_env = export_original(env_pack.original_env, 126);
 			return (env_pack);
 		}
 		else
@@ -93,7 +93,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			printf("bash: %s: command not found\n",
 				cmd_execution->cmd_name);
 			master_clean(0, cmd_start->env, cmd_execution, -1);
-			env_pack.original_env = export_orginal(env_pack.original_env, 127);
+			env_pack.original_env = export_original(env_pack.original_env, 127);
 			return (env_pack);
 		}
 	}
@@ -199,7 +199,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 					status = WEXITSTATUS (status);
 				else if (WIFSIGNALED(status))
 					status = WTERMSIG(status) + 128;
-				env_pack.original_env = export_orginal(env_pack.original_env, status);
+				env_pack.original_env = export_original(env_pack.original_env, status);
 				index = 1;
 				while (index < cmd_execution->index)
 				{

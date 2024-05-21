@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 14:31:09 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:15:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,10 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	env_pack.env = set_sh_level(fill_env_list(envp));
+	env_pack.env = set_start(fill_env_list(envp));
 	// env_pack.original_env = fill_env_list(envp);
 	// env_pack.original_env = export_orginal(env_pack.original_env, 0);
-	env_pack.original_env = export_orginal(fill_env_list(envp), 0);
+	env_pack.original_env = export_original(fill_env_list(envp), 0);
 
 	//_=/usr/bin/env should we correct this?
 	//should we increase shell level to 2 at the begening

@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/05/21 14:03:36 by nnourine         ###   ########.fr        #
+#    Updated: 2024/05/21 18:09:38 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/export.c \
 		$(SRCDIR)/unset.c \
 		$(SRCDIR)/pwd.c \
-		$(SRCDIR)/run_minishell.c \
+		$(SRCDIR)/init_temp_env.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

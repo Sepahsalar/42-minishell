@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 14:29:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:15:18 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
+	int				index;
 	struct s_env	*next;
 }					t_env;
 
@@ -170,15 +171,16 @@ void		remove_previous_node(t_dollar *current);
 t_env_pack			run_env(t_cmd *cmd);
 int			is_builtin(t_cmd *cmd);
 t_env_pack		run_builtin(t_cmd *cmd);
-t_env_pack	run_export(t_cmd *cmd, int original);
-t_env		*export_orginal(t_env *env, int status);
+t_env_pack	run_export(t_cmd *cmd);
+t_env		*export_original(t_env *env, int status);
 t_env_pack	init_env_pack(t_cmd *cmd);
-int	same(char *s1, char *s2);
+int			same(char *s1, char *s2);
+t_env		*remove_node(t_env *start, t_env *node);
 t_env_pack	run_unset(t_cmd *cmd);
 t_env_pack	run_pwd(t_cmd *cmd);
-t_env_pack	run_minishell(t_cmd *cmd);
 void		add_node_front(t_env **env, char *key, char *value);
 // t_env_pack	run_minishell(t_cmd *cmd);
-t_env		*set_sh_level(t_env *env);
+t_env		*set_start(t_env *env);
+t_env		*cpy_env(t_env *env);
 
 #endif //MINISHELL_H
