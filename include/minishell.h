@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 11:00:37 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:29:46 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,5 +175,10 @@ t_env		*export_orginal(t_env *env, int status);
 t_env_pack	init_env_pack(t_cmd *cmd);
 int	same(char *s1, char *s2);
 t_env_pack	run_unset(t_cmd *cmd);
+t_env_pack	run_pwd(t_cmd *cmd);
+t_env_pack	run_minishell(t_cmd *cmd);
+void		add_node_front(t_env **env, char *key, char *value);
+// t_env_pack	run_minishell(t_cmd *cmd);
+t_env		*set_sh_level(t_env *env);
 
 #endif //MINISHELL_H

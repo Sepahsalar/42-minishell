@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/20 12:12:57 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:17:25 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,48 @@ char	*expand_pid(char *str, char *start, char *temp, int count)
 	return (new);
 }
 
+t_env	*cpy_env(t_env *env)
+{
+	t_env	*new;
+	t_env	*old;
+	t_env	*start;
+
+	start = NULL;
+	while (env)
+	{
+		new = malloc(sizeof(t_env));
+		new->next = 0;
+		new->key = ft_strdup(env->key);
+		new->value = ft_strdup(env->value);
+		if (!start)
+			start = new;
+		else
+			old->next = new;
+		old = new;
+		env = env->next;
+	}
+	return (start);
+}
+
 static char	*get_current_pid(t_env *original_env)
 {
-	char	*raw_line;
-	int		fd;
-	char	*pid_str;
-	t_env_pack env_pack;
+	char		*raw_line;
+	int			fd;
+	char		*pid_str;
+	t_env_pack	env_pack;
+	t_env		*cpy;	
 
 	raw_line = "ps|awk '$4==\"./minishell\"'|tail -n 1|awk '{print $1}' >.pid";
-	env_pack.env = original_env;
-	env_pack.original_env = original_env;
+	cpy = cpy_env(original_env);
+	env_pack.env = cpy;
+	env_pack.original_env = cpy;
 	execute_all(raw_line, env_pack);
 	fd = open(".pid", O_RDONLY);
 	pid_str = get_next_line(fd);
 	pid_str[ft_strlen(pid_str) - 1] = '\0';
 	close(fd);
 	unlink(".pid");
+	clean_env_list(cpy);
 	return (pid_str);
 }
 
@@ -117,18 +143,28 @@ char	*expand_dollar_helper(t_cmd *cmd, char *str , char *find, int type)
 		ft_memcpy(variable, find, len_var);
 		variable[len_var] = '\0';
 		part2 = find + len_var;
-		while (env && ((int)ft_strlen(env->key) != len_var
-				|| ft_strncmp((env->key), variable, len_var)))
-			env = env->next;
-		if (env)
-			expanded = ft_strdup(env->value);
-		else
-			expanded = ft_strdup("");
-		if (!expanded)
+		expanded = NULL;
+		if (same(variable, "?"))
 		{
-			free(variable);
-			return (NULL);
+			if (same(cmd->original_env->key, "exit_code"))
+				expanded = ft_strdup(cmd->original_env->value);
 		}
+		else
+		{
+			while (env && ((int)ft_strlen(env->key) != len_var
+					|| ft_strncmp((env->key), variable, len_var)))
+				env = env->next;
+			if (env)
+				expanded = ft_strdup(env->value);
+			else
+				expanded = ft_strdup("");
+			if (!expanded)
+			{
+				free(variable);
+				return (NULL);
+			}
+		}
+		// printf("expanded is %s\n", expanded);
 		new_str = malloc(len1 + ft_strlen(expanded) + ft_strlen(part2) + 1);
 		if (!new_str)
 		{

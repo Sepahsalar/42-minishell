@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:07:18 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/17 13:19:49 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 11:43:11 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 char	*handle_dollar_str(t_cmd *cmd, t_handle_dollar hd)
 {
 	char	*new_str;
-
-	printf("place: %s\n", hd.dollar->place);
 
 	new_str = expand_dollar_helper(cmd, hd.str,
 			hd.dollar->place, hd.dollar->type);
