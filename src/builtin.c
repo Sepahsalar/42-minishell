@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:46:38 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/20 15:50:10 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/21 10:56:38 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_env_pack	run_builtin(t_cmd *cmd)
 {
 	t_env_pack	env_pack;
-	
 
 	env_pack.env = cmd->env;
 	env_pack.original_env = cmd->original_env;
@@ -34,9 +33,9 @@ t_env_pack	run_builtin(t_cmd *cmd)
 		run_export(cmd, 0);
 		return (run_export(cmd, 0));// should be replaced with exit code of return
 	}
-	// if (ft_strlen("unset") == ft_strlen(cmd->cmd_name)
-	// 	&& !ft_strncmp(cmd->cmd_name, "unset", ft_strlen("unset")))
-	// 	return (run_unset(cmd));
+	if (ft_strlen("unset") == ft_strlen(cmd->cmd_name)
+		&& !ft_strncmp(cmd->cmd_name, "unset", ft_strlen("unset")))
+		return (run_unset(cmd));
 	if (ft_strlen("env") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "env", ft_strlen("env")))
 		return (run_env(cmd));
@@ -76,6 +75,9 @@ int	is_builtin(t_cmd *cmd)
 	if (ft_strlen("export") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "export", ft_strlen("export")))
 		return (4);
+	if (ft_strlen("unset") == ft_strlen(cmd->cmd_name)
+		&& !ft_strncmp(cmd->cmd_name, "unset", ft_strlen("unset")))
+		return (5);
 	if (ft_strlen("env") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "env", ft_strlen("env")))
 		return (6);

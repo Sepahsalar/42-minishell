@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/20 19:58:52 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 11:37:19 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,15 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
-		printf("start\n");
 		if (temp_cmd->index == cmd_counter)
 		{
 			env_pack_result = execute_cmd(cmd, temp_cmd);
 		}
 		else
 			execute_cmd(cmd, temp_cmd);
-		printf("end\n");
 		temp_cmd = temp_cmd->next;
 	}
-	printf("the exit code of this command is %s\n", env_pack_result.original_env->value);
+	printf("\n\n************************ Exit code: %s\n", env_pack_result.original_env->value);
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{

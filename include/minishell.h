@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/20 18:18:34 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 11:00:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,5 +172,8 @@ int			is_builtin(t_cmd *cmd);
 t_env_pack		run_builtin(t_cmd *cmd);
 t_env_pack	run_export(t_cmd *cmd, int original);
 t_env		*export_orginal(t_env *env, int status);
+t_env_pack	init_env_pack(t_cmd *cmd);
+int	same(char *s1, char *s2);
+t_env_pack	run_unset(t_cmd *cmd);
 
 #endif //MINISHELL_H

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/20 20:07:21 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 11:35:09 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,17 +161,11 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			}
 			close(fd[0]);
 			close(fd[1]);
-			if (is_builtin(cmd_execution) != 4 && is_builtin(cmd_execution) != 5 && is_builtin(cmd_execution) != -1)
+			if (is_builtin(cmd_execution) != -1)
 			{
 				env_pack = run_builtin(cmd_execution);
-				// // close(0);
-				// close(1);
-				// dup(1);
+				exit(ft_atoi(env_pack.original_env->value));
 			}
-			// else if (is_builtin(cmd_execution) == 4 && is_builtin(cmd_execution) == 5)
-			// {
-            //     // we should handle error of the unset, export
-            // }
 			else if (is_builtin(cmd_execution) == -1)
 			{
 				execution_package(cmd_execution, &cmd_address, &cmd_args, &cmd_env);
@@ -195,8 +189,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		else
 		{
 			close(fd[1]);
-			if (cmd_execution->index < cmd_count(cmd_start)
-					&& is_builtin(cmd_execution) != 4 && is_builtin(cmd_execution) != 5)
+			if (cmd_execution->index < cmd_count(cmd_start))
 				dup2(fd[0], STDIN_FILENO);
 			close(fd[0]);
 			if (cmd_execution->index == cmd_count(cmd_start))
@@ -206,20 +199,15 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 					status = WEXITSTATUS (status);
 				else if (WIFSIGNALED(status))
 					status = WTERMSIG(status) + 128;
-				printf("end01\n");
 				env_pack.original_env = export_orginal(env_pack.original_env, status);
 				index = 1;
-				printf("end02\n");
 				while (index < cmd_execution->index)
 				{
-					printf("end03\n");
 					wait(0);
 					index++;
 				}
-				printf("end04\n");
 			}
 		}
-		printf("we are here\n");
 	}
 	return (env_pack);
 }

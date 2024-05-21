@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:44:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/20 17:37:59 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/21 10:06:23 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	add_node_front(t_env **env, char *key, char *value)
 	*env = new;
 }
 
+//probably original should be removed from the input
 t_env_pack	run_export(t_cmd *cmd, int original)
 {
 	t_env		*temp_env;
