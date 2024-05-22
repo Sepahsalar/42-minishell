@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 18:15:18 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/22 09:50:04 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,13 @@ typedef struct s_env_pack
 	t_env	*env;
 	t_env	*original_env;
 }			t_env_pack;
+
+typedef struct s_quote
+{
+	int				start;
+	int				end;
+	struct s_quote	*next;
+}					t_quote;
 
 void		rl_replace_line(const char *text, int clear_undo);
 void		clean_2d_char(char **array);

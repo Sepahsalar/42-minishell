@@ -6,22 +6,24 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 18:15:37 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/22 12:04:31 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// 1) write env, unset and export builtin------------------------------------2h                                  
-// 2) handle $? with export of a new variable n to the "original" env--------2h
-// 3) take a look at the handle quote function-------------------------------8h
+// 1) write env, unset and export builtin------------------------------------2h half                              
+// 2) handle $? with export of a new variable n to the "original" env--------2h done
+// 3) take a look at the handle quote function-------------------------------8h done
 // 4) write other builtins and update the pipex functions--------------------16h
 // 5) take a look at the readline function when cmd + c & cmd + v, also
 // 	  when line is long------------------------------------------------------16h
-// 6) create a .history file to keep the commands for each SHLVL-------------8h
-// 7) update SHLVL in env, so we can have multiple ./minishell
-//    inside of each other (like bash - like a builtin)----------------------4h
-// 8) error handling after readline and before giving it to execute command--40h
+// 6) create a .history file to keep the commands for each SHLVL-------------8h denied
+// 7) update SHLVL in env, so we can have multiple ./minishell 
+//    inside of each other (like bash - like a builtin)----------------------4h half/done
+// 8) error handling and leaks management after readline and before giving it
+//    to execute command-----------------------------------------------------40h
+// (for this step, remind to handle this: '>|' '<>' '< |' '< <' '<<<') 
 // 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
@@ -50,7 +52,7 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 			execute_cmd(cmd, temp_cmd);
 		temp_cmd = temp_cmd->next;
 	}
-	printf("\n\n************************ Exit code: %s\n", env_pack_result.original_env->value);
+	// printf("\n\n************************ Exit code: %s\n", env_pack_result.original_env->value);
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
