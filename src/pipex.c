@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/21 15:30:21 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:35:59 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			return (env_pack);
 		}
 	}
-	if (cmd_count(cmd_start) == 1 && (is_builtin(cmd_execution) >=4 && is_builtin(cmd_execution) <= 5))
+	if (cmd_count(cmd_start) == 1 && ((is_builtin(cmd_execution) >=4 && is_builtin(cmd_execution) <= 5) || (is_builtin(cmd_execution) == 2)))
 		env_pack = run_builtin(cmd_execution);
 	else
 	{

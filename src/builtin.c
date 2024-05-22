@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:46:38 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 15:31:38 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:34:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ t_env_pack	run_builtin(t_cmd *cmd)
 	// if (ft_strlen("echo") == ft_strlen(cmd->cmd_name)
 	// 	&& !ft_strncmp(cmd->cmd_name, "echo", ft_strlen("echo")))
 	// 	return (run_echo(cmd));
-	// if (ft_strlen("cd") == ft_strlen(cmd->cmd_name)
-	// 	&& !ft_strncmp(cmd->cmd_name, "cd", ft_strlen("cd")))
-	// 	return (run_cd(cmd));
+	if (ft_strlen("cd") == ft_strlen(cmd->cmd_name)
+		&& !ft_strncmp(cmd->cmd_name, "cd", ft_strlen("cd")))
+		return (run_cd(cmd));
 	if (ft_strlen("pwd") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "pwd", ft_strlen("pwd")))
 		return (run_pwd(cmd));
@@ -72,6 +72,9 @@ int	is_builtin(t_cmd *cmd)
 	// 	i++;
 	// }
 	// return (-1);
+	if (ft_strlen("cd") == ft_strlen(cmd->cmd_name)
+		&& !ft_strncmp(cmd->cmd_name, "cd", ft_strlen("cd")))
+		return (2);
 	if (ft_strlen("pwd") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "pwd", ft_strlen("pwd")))
 		return (3);

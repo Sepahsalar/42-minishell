@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:26:11 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 15:32:10 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:02:00 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ t_env_pack	run_pwd(t_cmd *cmd)
 
 	path = NULL;
 	env_pack = init_env_pack(cmd);
-	path = getcwd(path, 0);
+	path = getcwd(NULL, 0);
 	//maybe protection against failure
 	printf("%s\n", path);
+	free(path);
 	export_original(env_pack.original_env, 0);
 	return (env_pack);
 }

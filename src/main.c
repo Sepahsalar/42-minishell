@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/22 13:16:43 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:15:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 //10) (bonus) handle "ls |" like a heredoc
 //     قیل از هر چیز تریم اسپیس صورت گیرد. بعد از تیرم اگر ایندکس منفی یک برابر پایپ بود هیر داک باز می شود و جوین صوزت می گیرد
 // دوباره همین کار تکرار می شود
-
+//11) (bonus) handle "./minishell" inside of ASAL
+//12) (might be mandatory) check just pressing tab why it goes to next line
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {

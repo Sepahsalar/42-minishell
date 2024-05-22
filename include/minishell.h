@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/22 09:50:04 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:33:26 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,15 @@ typedef struct s_quote
 	struct s_quote	*next;
 }					t_quote;
 
+typedef struct s_dot
+{
+	char			*old_pwd;
+	int				i_old;
+	char			*arg;
+	int				i_arg;
+	struct s_quote	*next;
+}					t_dot;
+
 void		rl_replace_line(const char *text, int clear_undo);
 void		clean_2d_char(char **array);
 t_cmd		*clean_cmd_list(t_cmd *first);
@@ -189,5 +198,9 @@ void		add_node_front(t_env **env, char *key, char *value);
 // t_env_pack	run_minishell(t_cmd *cmd);
 t_env		*set_start(t_env *env);
 t_env		*cpy_env(t_env *env);
+char 		*sliced_str(char *str, int start, int end);
+t_env_pack run_cd(t_cmd *cmd);
+char	*value_finder(t_env *env, char *key);
+t_env	*custom_export(t_env *env, char *key, char *value);
 
 #endif //MINISHELL_H
