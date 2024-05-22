@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:44:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 18:44:04 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/22 09:23:10 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 // handle this declare -x OLDPWD="\"nima\"" after fixing handle quote
 // also delete this "declare -x _="/Users/nnourine/Hive/minishell/42-minishell/./minishell""
+// error handling for export
 
 void	add_node_front(t_env **env, char *key, char *value)
 {
@@ -167,7 +168,7 @@ t_env	*handle_oldpwd(t_env *env)
 		temp = temp->next;
 	}
 	if (!has_oldpwd)
-		add_node_front(&env, "OLDPWD", NULL);
+		add_node_front(&env, ft_strdup("OLDPWD"), NULL);
 	return (env);
 }
 
@@ -209,8 +210,7 @@ t_env_pack	run_export(t_cmd *cmd)
 			}
 			index++;
 		}
-		//Probably it still has some sort of memory address also it is set to NULL(i am talking about value OLDPWD = NULL).
-		// clean_env_list(cpy);
+		clean_env_list(cpy);
 	}
 	else
 	{
