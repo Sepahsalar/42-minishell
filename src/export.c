@@ -6,15 +6,11 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:44:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/22 12:09:53 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/22 13:16:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// handle this declare -x OLDPWD="\"nima\"" after fixing handle quote
-// also delete this "declare -x _="/Users/nnourine/Hive/minishell/42-minishell/./minishell""
-// error handling for export
 
 void	add_node_front(t_env **env, char *key, char *value)
 {
@@ -26,68 +22,6 @@ void	add_node_front(t_env **env, char *key, char *value)
 	new->next = *env;
 	*env = new;
 }
-
-//probably original should be removed from the input
-// t_env_pack	run_export(t_cmd *cmd, int original)
-// {
-// 	t_env		*temp_env;
-// 	t_env_pack	env_pack;
-// 	char		**args;
-// 	int			index;
-// 	char		*new_env;
-// 	char		**split;
-// 	char		*temp;
-
-// 	original = 0;
-// 	new_env = NULL;
-// 	args = cmd->args;
-// 	if (args)
-// 	{
-// 		index = 0;
-// 		while (args[index])
-// 		{
-// 			if (ft_strchr(args[index], '='))
-// 			{
-// 				new_env = ft_strdup(args[index]);
-// 				// if (new_env == NULL)
-// 				// 	return (1);
-// 				split = ft_split(new_env, '=');
-// 				if (original)
-// 					temp_env = cmd->original_env;
-// 				else
-// 					temp_env = cmd->env;
-// 				while (temp_env != NULL)
-// 				{
-// 					if (ft_strlen(split[0]) == ft_strlen(temp_env->key)
-// 						&& !ft_strncmp(temp_env->key, split[0],
-// 							ft_strlen(split[0])))
-// 						break ;
-// 					temp_env = temp_env->next;
-// 				}
-// 				if (!temp_env)
-// 				{
-// 					if (original)
-// 						add_node_front(&cmd->original_env, split[0], split[1]);
-// 					else
-// 						add_node_front(&cmd->env, split[0], split[1]);
-// 				}
-// 				else
-// 				{
-// 					temp = temp_env->value;
-// 					temp_env->value = ft_strdup(split[1]);
-// 					free(temp);
-// 				}
-// 				free(new_env);
-// 				// clean_2d_char(split);
-// 			}
-// 			index++;
-// 		}
-// 	}
-// 	env_pack.env = cmd->env;
-// 	env_pack.original_env = cmd->original_env;
-// 	env_pack.original_env = export_orginal(env_pack.original_env, 0); // instead of 0 it should be the correct exit code
-// 	return (env_pack);
-// }
 
 int	is_higher(char *s1, char *s2)
 {
@@ -129,14 +63,14 @@ t_env	*sort_env(t_env *env)
 
 	index = 1;
 	count = env_count(env);
-	printf("env_count: %d\n", count);
+	// printf("env_count: %d\n", count);
 	while (index <= count)
 	{
-		printf("index: %d\n", index);
+		// printf("index: %d\n", index);
 		temp = env;
 		while (temp && temp->index)
 			temp = temp->next;
-		printf("middle\n");
+		// printf("middle\n");
 		temp_index = temp;
 		temp = env;
 		while (temp)
@@ -146,7 +80,7 @@ t_env	*sort_env(t_env *env)
 				temp_index = temp;
 			temp = temp->next;
 		}
-		printf("end\n");
+		// printf("end\n");
 		if (temp_index)
 			temp_index->index = index;
 		index++;
@@ -185,9 +119,11 @@ t_env_pack	run_export(t_cmd *cmd)
 	t_env       *sorted;
 	t_env 		*cpy;
 	int			count;
+	int			i;
 
 	new_env = NULL;
 	status = 0;
+	i = 0;
 	args = cmd->args;
 	if (!args[1])
 	{
@@ -200,11 +136,23 @@ t_env_pack	run_export(t_cmd *cmd)
 			temp_env = sorted;
 			while (temp_env && temp_env->index != index)
 				temp_env = temp_env->next;
-			if (temp_env)
+			if (temp_env && !same(temp_env->key, "_"))
 			{
+				i = 0;
 				printf("declare -x %s", temp_env->key);
 				if (temp_env->value)
-					printf("=\"%s\"\n", temp_env->value);
+				{
+					printf("=\"");
+					while (temp_env->value[i])
+					{
+						if (temp_env->value[i] == '\"')
+							printf("\\\"");
+						else
+							printf("%c", temp_env->value[i]);
+						i++;
+					}
+					printf("\"\n");
+				}
 				else
 					printf("\n");
 			}
@@ -219,29 +167,38 @@ t_env_pack	run_export(t_cmd *cmd)
 		{
 			if (ft_strchr(args[index], '='))
 			{
-				new_env = ft_strdup(args[index]);
-				// if (new_env == NULL)
-				// 	return (1);
-				split = ft_split(new_env, '=');
-				temp_env = cmd->env;
-				while (temp_env != NULL)
+				// if (args)
+				if(!ft_isalpha(args[index][0]) && args[index][0] != '_')
 				{
-					if (ft_strlen(split[0]) == ft_strlen(temp_env->key)
-						&& !ft_strncmp(temp_env->key, split[0],
-							ft_strlen(split[0])))
-						break ;
-					temp_env = temp_env->next;
+					printf("bash: export: `%s': not a valid identifier\n", args[index]);
+					status = 1;
 				}
-				if (!temp_env)
-					add_node_front(&cmd->env, split[0], split[1]);
 				else
 				{
-					temp = temp_env->value;
-					temp_env->value = ft_strdup(split[1]);
-					free(temp);
+					new_env = ft_strdup(args[index]);
+					// if (new_env == NULL)
+					// 	return (1);
+					split = ft_split(new_env, '=');
+					temp_env = cmd->env;
+					while (temp_env != NULL)
+					{
+						if (ft_strlen(split[0]) == ft_strlen(temp_env->key)
+							&& !ft_strncmp(temp_env->key, split[0],
+								ft_strlen(split[0])))
+							break ;
+						temp_env = temp_env->next;
+					}
+					if (!temp_env)
+						add_node_front(&cmd->env, split[0], split[1]);
+					else
+					{
+						temp = temp_env->value;
+						temp_env->value = ft_strdup(split[1]);
+						free(temp);
+					}
+					free(new_env);
+					//clean_2d_char(split);
 				}
-				free(new_env);
-				//clean_2d_char(split);
 			}
 			index++;
 		}

@@ -6,18 +6,18 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/22 12:04:31 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/22 13:16:43 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// 1) write env, unset and export builtin------------------------------------2h half                              
+// 1) write env, unset and export builtin------------------------------------2h done                              
 // 2) handle $? with export of a new variable n to the "original" env--------2h done
 // 3) take a look at the handle quote function-------------------------------8h done
-// 4) write other builtins and update the pipex functions--------------------16h
+// 4) write other builtins and update the pipex functions--------------------16h 0.25 done
 // 5) take a look at the readline function when cmd + c & cmd + v, also
-// 	  when line is long------------------------------------------------------16h
+// 	  when line is long------------------------------------------------------16h done
 // 6) create a .history file to keep the commands for each SHLVL-------------8h denied
 // 7) update SHLVL in env, so we can have multiple ./minishell 
 //    inside of each other (like bash - like a builtin)----------------------4h half/done
@@ -25,6 +25,10 @@
 //    to execute command-----------------------------------------------------40h
 // (for this step, remind to handle this: '>|' '<>' '< |' '< <' '<<<') 
 // 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
+//10) (bonus) handle "ls |" like a heredoc
+//     قیل از هر چیز تریم اسپیس صورت گیرد. بعد از تیرم اگر ایندکس منفی یک برابر پایپ بود هیر داک باز می شود و جوین صوزت می گیرد
+// دوباره همین کار تکرار می شود
+
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {
