@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:46:38 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/22 17:34:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:08:45 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ t_env_pack	run_builtin(t_cmd *cmd)
 		return (run_pwd(cmd));
 	if (ft_strlen("export") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "export", ft_strlen("export")))
-	{
-		// run_export(cmd);
 		return (run_export(cmd));// should be replaced with exit code of return
-	}
 	if (ft_strlen("unset") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "unset", ft_strlen("unset")))
 		return (run_unset(cmd));
@@ -42,16 +39,12 @@ t_env_pack	run_builtin(t_cmd *cmd)
 	// if (ft_strlen("exit") == ft_strlen(cmd->cmd_name)
 	// 	&& !ft_strncmp(cmd->cmd_name, "exit", ft_strlen("exit")))
 	// 	return (run_exit(cmd));
-	// if (ft_strlen("minishell") == ft_strlen(cmd->cmd_name)
-	// 	&& !ft_strncmp(cmd->cmd_name, "minishell", ft_strlen("minishell")))
-	// 	return (run_minishell(cmd));
 	return (env_pack);
-	// return (-1);
 }
 
 int	is_builtin(t_cmd *cmd)
 {
-	// char	*builtin[9];
+	// char	*builtin[8];
 	// int      i;
 
 	// builtin[0] = "echo";
@@ -62,7 +55,6 @@ int	is_builtin(t_cmd *cmd)
 	// builtin[5] = "env";
 	// builtin[6] = "exit";
 	// builtin[7] = "minishell";
-	// builtin[8] = NULL;
 	// i = 0;
 	// while (builtin[i])
 	// {
@@ -87,8 +79,5 @@ int	is_builtin(t_cmd *cmd)
 	if (ft_strlen("env") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "env", ft_strlen("env")))
 		return (6);
-	// if (ft_strlen("minishell") == ft_strlen(cmd->cmd_name)
-	// 	&& !ft_strncmp(cmd->cmd_name, "minishell", ft_strlen("minishell")))
-	// 	return (8);
 	return (-1);
 }
