@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/22 15:15:37 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:12:44 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // 1) write env, unset and export builtin------------------------------------2h done                              
 // 2) handle $? with export of a new variable n to the "original" env--------2h done
 // 3) take a look at the handle quote function-------------------------------8h done
-// 4) write other builtins and update the pipex functions--------------------16h 0.25 done
+// 4) write other builtins and update the pipex functions-------------------16h done
 // 5) take a look at the readline function when cmd + c & cmd + v, also
 // 	  when line is long------------------------------------------------------16h done
 // 6) create a .history file to keep the commands for each SHLVL-------------8h denied
@@ -25,8 +25,10 @@
 //    to execute command-----------------------------------------------------40h
 // (for this step, remind to handle this: '>|' '<>' '< |' '< <' '<<<') 
 // 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
+//10) uset stat or fstat instead of access
 //10) (bonus) handle "ls |" like a heredoc
-//     قیل از هر چیز تریم اسپیس صورت گیرد. بعد از تیرم اگر ایندکس منفی یک برابر پایپ بود هیر داک باز می شود و جوین صوزت می گیرد
+//     قیل از هر چیز تریم اسپیس صورت گیرد.
+// بعد از تریم اگر ایندکس منفی یک برابر پایپ بود هیر داک باز می شود و جوین صوزت می گیرد
 // دوباره همین کار تکرار می شود
 //11) (bonus) handle "./minishell" inside of ASAL
 //12) (might be mandatory) check just pressing tab why it goes to next line
@@ -138,16 +140,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		raw_line = readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
-		// raw_line = readline("[ASAL]$ ");
 		if (!raw_line)
-		{
-			// here we should call our "exit" built-in function
-			printf (ANSI_MOVE_UP ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ exit\n");
-			// printf (ANSI_MOVE_UP "[ASAL]$ exit\n");
-			close(fd_stdin);
-			close(fd_stdout);
-			return (0);
-		}
+			run_exit_eof(env_pack.original_env, fd_stdin, fd_stdout);
 		if (ft_strlen(raw_line) > 0 && !all_space(raw_line))
 		{
 			add_history(raw_line);

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:46:38 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 09:41:08 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:30:02 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,72 +16,47 @@ t_env_pack	run_builtin(t_cmd *cmd)
 {
 	t_env_pack	env_pack;
 
-	env_pack.env = cmd->env;
-	env_pack.original_env = cmd->original_env;
-	if (ft_strlen("echo") == ft_strlen(cmd->cmd_name)
-		&& !ft_strncmp(cmd->cmd_name, "echo", ft_strlen("echo")))
+	env_pack = init_env_pack(cmd);
+	if (same("echo", cmd->cmd_name))
 		return (run_echo(cmd));
-	if (ft_strlen("cd") == ft_strlen(cmd->cmd_name)
-		&& !ft_strncmp(cmd->cmd_name, "cd", ft_strlen("cd")))
+	else if (same("cd", cmd->cmd_name))
 		return (run_cd(cmd));
-	if (ft_strlen("pwd") == ft_strlen(cmd->cmd_name)
-		&& !ft_strncmp(cmd->cmd_name, "pwd", ft_strlen("pwd")))
+	else if (same("pwd", cmd->cmd_name))
 		return (run_pwd(cmd));
-	if (ft_strlen("export") == ft_strlen(cmd->cmd_name)
-		&& !ft_strncmp(cmd->cmd_name, "export", ft_strlen("export")))
-		return (run_export(cmd));// should be replaced with exit code of return
-	if (ft_strlen("unset") == ft_strlen(cmd->cmd_name)
-		&& !ft_strncmp(cmd->cmd_name, "unset", ft_strlen("unset")))
+	else if (same("export", cmd->cmd_name))
+		return (run_export(cmd));
+	else if (same("unset", cmd->cmd_name))
 		return (run_unset(cmd));
-	if (ft_strlen("env") == ft_strlen(cmd->cmd_name)
-		&& !ft_strncmp(cmd->cmd_name, "env", ft_strlen("env")))
+	else if (same("env", cmd->cmd_name))
 		return (run_env(cmd));
-	// if (ft_strlen("exit") == ft_strlen(cmd->cmd_name)
-	// 	&& !ft_strncmp(cmd->cmd_name, "exit", ft_strlen("exit")))
-	// 	return (run_exit(cmd));
+	else if (same("exit", cmd->cmd_name))
+		return (run_exit(cmd));
+	else if (same("./minishell", cmd->cmd_name))
+		return (run_minishell(cmd));
 	return (env_pack);
 }
 
 int	is_builtin(t_cmd *cmd)
 {
-	// char	*builtin[8];
-	// int      i;
+	// char	*builtin[9];
+	char	*builtin[8];
+	int		i;
 
-	// builtin[0] = "echo";
-	// builtin[1] = "cd";
-	// builtin[2] = "pwd";
-	// builtin[3] = "export";
-	// builtin[4] = "unset";
-	// builtin[5] = "env";
-	// builtin[6] = "exit";
-	// builtin[7] = "minishell";
-	// i = 0;
-	// while (builtin[i])
-	// {
-	// 	if (ft_strlen(builtin[i]) == ft_strlen(cmd->cmd_name)
-	// 		&& ft_strncmp(cmd->cmd_name, builtin[i], ft_strlen(builtin[i])))
-	// 		return (i + 1);
-	// 	i++;
-	// }
-	// return (-1);
-	if (ft_strlen("echo") == ft_strlen(cmd->cmd_name)
-		&& !ft_strncmp(cmd->cmd_name, "echo", ft_strlen("echo")))
-		return (1);
-	if (ft_strlen("cd") == ft_strlen(cmd->cmd_name)
-		&& !ft_strncmp(cmd->cmd_name, "cd", ft_strlen("cd")))
-		return (2);
-	if (ft_strlen("pwd") == ft_strlen(cmd->cmd_name)
-		&& !ft_strncmp(cmd->cmd_name, "pwd", ft_strlen("pwd")))
-		return (3);
-	if (ft_strlen("export") == ft_strlen(cmd->cmd_name)
-		&& !ft_strncmp(cmd->cmd_name, "export", ft_strlen("export")))
-		return (4);
-	if (ft_strlen("unset") == ft_strlen(cmd->cmd_name)
-		&& !ft_strncmp(cmd->cmd_name, "unset", ft_strlen("unset")))
-		return (5);
-	if (ft_strlen("env") == ft_strlen(cmd->cmd_name)
-		&& !ft_strncmp(cmd->cmd_name, "env", ft_strlen("env")))
-		return (6);
-	//./minishell separate from minishell should be handled here = do nothing (problem ../42_minishell/minishell   ?? how to make it equal to ./minishell / how to separate it from another fake minishell )
+	builtin[0] = "echo";
+	builtin[1] = "cd";
+	builtin[2] = "pwd";
+	builtin[3] = "export";
+	builtin[4] = "unset";
+	builtin[5] = "env";
+	builtin[6] = "exit";
+	// builtin[7] = "./minishell";
+	builtin[7] = NULL;
+	i = 0;
+	while (builtin[i])
+	{
+		if (same(builtin[i], cmd->cmd_name))
+			return (i + 1);
+		i++;
+	}
 	return (-1);
 }

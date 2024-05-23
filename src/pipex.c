@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/23 09:38:01 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:16:48 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		env_pack.original_env = export_original(env_pack.original_env, 0);
 		return (env_pack);
 	}
-	if (cmd_execution->exec == 0 && is_builtin(cmd_execution) == -1)
+	if ((!cmd_execution->exec || cmd_execution->dir) && is_builtin(cmd_execution) == -1)
 	{
-		if (cmd_execution->exist)
+		if (cmd_execution->dir)
 		{
-			printf("bash: %s: Permission denied\n",
+			printf("bash: %s: is a directory\n",
 				cmd_execution->cmd_name);
 			master_clean(0, cmd_start->env, cmd_execution, -1);
 			env_pack.original_env = export_original(env_pack.original_env, 126);
@@ -90,11 +90,22 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		}
 		else
 		{
-			printf("bash: %s: command not found\n",
-				cmd_execution->cmd_name);
-			master_clean(0, cmd_start->env, cmd_execution, -1);
-			env_pack.original_env = export_original(env_pack.original_env, 127);
-			return (env_pack);
+			if (cmd_execution->exist)
+			{
+				printf("bash: %s: Permission denied\n",
+					cmd_execution->cmd_name);
+				master_clean(0, cmd_start->env, cmd_execution, -1);
+				env_pack.original_env = export_original(env_pack.original_env, 126);
+				return (env_pack);
+			}
+			else
+			{
+				printf("bash: %s: command not found\n",
+					cmd_execution->cmd_name);
+				master_clean(0, cmd_start->env, cmd_execution, -1);
+				env_pack.original_env = export_original(env_pack.original_env, 127);
+				return (env_pack);
+			}
 		}
 	}
 	// if (cmd_count(cmd_start) == 1 && ((is_builtin(cmd_execution) >=4 && is_builtin(cmd_execution) <= 5) || (is_builtin(cmd_execution) == 2)))
@@ -169,7 +180,8 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			}
 			else if (is_builtin(cmd_execution) == -1)
 			{
-				execution_package(cmd_execution, &cmd_address, &cmd_args, &cmd_env);
+				execution_package(cmd_execution, &cmd_address,
+					&cmd_args, &cmd_env);
 				if (cmd_execution->error)
 				{
 					free(cmd_address);
@@ -184,6 +196,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 					free(cmd_address);
 					clean_2d_char(cmd_args);
 					clean_2d_char(cmd_env);
+					exit (1);
 				}
 			}
 		}

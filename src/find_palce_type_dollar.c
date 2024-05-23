@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:31:42 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/17 13:20:23 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:02:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ t_dollar	*create_fill_dollar_list(char *arg)
 	dq = NULL;
 	heredoc = 0;
 	id = 0;
+
 	while (index < (int)ft_strlen(arg))
 	{
 		sq_dq_updater(&arg[index], &sq, &dq);

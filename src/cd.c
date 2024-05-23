@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 10:15:01 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:14:08 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ char *full_path_finder(char *pwd, char *arg, char *home)
 	char	*temp1;
 	char	*temp2;
 
-	if (arg[0] == '~')
+	printf("home: %s\n", home);
+	if (!arg)
+		return (ft_strdup(home));
+	else if (arg[0] == '~')
 		return (ft_strjoin(home, (arg + 1)));
 	else if (arg[0] != '/')
 	{
@@ -176,7 +179,6 @@ t_env_pack	run_cd(t_cmd *cmd)
 	char		*full_path;
 	char		*new_pwd;
 	char		*home;
-
 
 	env_pack = init_env_pack(cmd);
 	old_pwd = getcwd(NULL, 0);
