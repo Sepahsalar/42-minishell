@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:46:38 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/22 18:08:45 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/23 09:41:08 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ t_env_pack	run_builtin(t_cmd *cmd)
 
 	env_pack.env = cmd->env;
 	env_pack.original_env = cmd->original_env;
-	// if (ft_strlen("echo") == ft_strlen(cmd->cmd_name)
-	// 	&& !ft_strncmp(cmd->cmd_name, "echo", ft_strlen("echo")))
-	// 	return (run_echo(cmd));
+	if (ft_strlen("echo") == ft_strlen(cmd->cmd_name)
+		&& !ft_strncmp(cmd->cmd_name, "echo", ft_strlen("echo")))
+		return (run_echo(cmd));
 	if (ft_strlen("cd") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "cd", ft_strlen("cd")))
 		return (run_cd(cmd));
@@ -64,6 +64,9 @@ int	is_builtin(t_cmd *cmd)
 	// 	i++;
 	// }
 	// return (-1);
+	if (ft_strlen("echo") == ft_strlen(cmd->cmd_name)
+		&& !ft_strncmp(cmd->cmd_name, "echo", ft_strlen("echo")))
+		return (1);
 	if (ft_strlen("cd") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "cd", ft_strlen("cd")))
 		return (2);
@@ -79,5 +82,6 @@ int	is_builtin(t_cmd *cmd)
 	if (ft_strlen("env") == ft_strlen(cmd->cmd_name)
 		&& !ft_strncmp(cmd->cmd_name, "env", ft_strlen("env")))
 		return (6);
+	//./minishell separate from minishell should be handled here = do nothing (problem ../42_minishell/minishell   ?? how to make it equal to ./minishell / how to separate it from another fake minishell )
 	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 09:12:34 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/23 09:31:50 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,9 +198,10 @@ void		add_node_front(t_env **env, char *key, char *value);
 // t_env_pack	run_minishell(t_cmd *cmd);
 t_env		*set_start(t_env *env);
 t_env		*cpy_env(t_env *env);
-char 		*sliced_str(char *str, int start, int end);
-t_env_pack run_cd(t_cmd *cmd);
-char	*value_finder(t_env *env, char *key);
-t_env	*custom_export(t_env *env, char *key, char *value);
+char		*sliced_str(char *str, int start, int end);
+t_env_pack	run_cd(t_cmd *cmd);
+char		*value_finder(t_env *env, char *key);
+t_env		*custom_export(t_env *env, char *key, char *value);
+t_env_pack	run_echo(t_cmd *cmd);
 
 #endif //MINISHELL_H
