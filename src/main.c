@@ -6,13 +6,13 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 13:12:44 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:29:10 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// 1) write env, unset and export builtin------------------------------------2h done                              
+// 1) write env, unset and export builtin------------------------------------2h done
 // 2) handle $? with export of a new variable n to the "original" env--------2h done
 // 3) take a look at the handle quote function-------------------------------8h done
 // 4) write other builtins and update the pipex functions-------------------16h done
@@ -25,13 +25,12 @@
 //    to execute command-----------------------------------------------------40h
 // (for this step, remind to handle this: '>|' '<>' '< |' '< <' '<<<') 
 // 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
-//10) uset stat or fstat instead of access
-//10) (bonus) handle "ls |" like a heredoc
+//10) uset stat or fstat instead of access------------------------------------1h done
+//11) (bonus) handle "ls |" like a heredoc------------------------------------4h denied
 //     قیل از هر چیز تریم اسپیس صورت گیرد.
 // بعد از تریم اگر ایندکس منفی یک برابر پایپ بود هیر داک باز می شود و جوین صوزت می گیرد
 // دوباره همین کار تکرار می شود
-//11) (bonus) handle "./minishell" inside of ASAL
-//12) (might be mandatory) check just pressing tab why it goes to next line
+//12) (bonus) handle "./minishell" inside of ASAL-----------------------------2h done
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {
