@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:46:38 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 12:30:02 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:33:37 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ t_env_pack	run_builtin(t_cmd *cmd)
 
 int	is_builtin(t_cmd *cmd)
 {
-	// char	*builtin[9];
-	char	*builtin[8];
+	char	*builtin[9];
 	int		i;
 
 	builtin[0] = "echo";
@@ -49,8 +48,8 @@ int	is_builtin(t_cmd *cmd)
 	builtin[4] = "unset";
 	builtin[5] = "env";
 	builtin[6] = "exit";
-	// builtin[7] = "./minishell";
-	builtin[7] = NULL;
+	builtin[7] = "./minishell";
+	builtin[8] = NULL;
 	i = 0;
 	while (builtin[i])
 	{

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
+#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/05/23 11:18:52 by nnourine         ###   ########.fr        #
+#    Updated: 2024/05/23 14:35:24 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/utility2.c \
 		$(SRCDIR)/utility3.c \
 		$(SRCDIR)/handle_quote.c \
-		$(SRCDIR)/find_palce_type_dollar.c \
+		$(SRCDIR)/find_place_type_dollar.c \
 		$(SRCDIR)/handle_dollar.c \
 		$(SRCDIR)/builtin.c \
 		$(SRCDIR)/env.c \
