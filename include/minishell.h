@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/22 17:33:26 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/23 09:12:34 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,14 @@ typedef struct s_quote
 	struct s_quote	*next;
 }					t_quote;
 
-typedef struct s_dot
-{
-	char			*old_pwd;
-	int				i_old;
-	char			*arg;
-	int				i_arg;
-	struct s_quote	*next;
-}					t_dot;
+// typedef struct s_dot
+// {
+// 	char			*old_pwd;
+// 	int				i_old;
+// 	char			*arg;
+// 	int				i_arg;
+// 	struct s_quote	*next;
+// }					t_dot;
 
 void		rl_replace_line(const char *text, int clear_undo);
 void		clean_2d_char(char **array);
