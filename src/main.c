@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 14:29:10 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:41:09 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 			execute_cmd(cmd, temp_cmd);
 		temp_cmd = temp_cmd->next;
 	}
-	// printf("\n\n************************ Exit code: %s\n", env_pack_result.original_env->value);
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
@@ -104,21 +103,13 @@ int	main(int argc, char **argv, char **envp)
 	struct termios	term;
 	int				fd_stdin;
 	int				fd_stdout;
-	// t_env           *env;
-	// t_env			*original_env;
 	t_env_pack 		env_pack;
 	// struct sigaction	action;
 
 	(void)argc;
 	(void)argv;
 	env_pack.env = set_start(fill_env_list(envp));
-	// env_pack.original_env = fill_env_list(envp);
-	// env_pack.original_env = export_orginal(env_pack.original_env, 0);
 	env_pack.original_env = export_original(fill_env_list(envp), 0);
-
-	//_=/usr/bin/env should we correct this?
-	//should we increase shell level to 2 at the begening
-	
 	fd_stdin = dup(STDIN_FILENO);
 	fd_stdout = dup(STDOUT_FILENO);
 	signal(SIGQUIT, &sig_handler);
