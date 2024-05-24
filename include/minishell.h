@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/24 13:00:57 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:15:01 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,5 +226,6 @@ t_error		find_error(char *line);
 int			cmd_counter_error(const char *input);
 char		*find_token(char *cur);
 char		*change_token_heredoc(char *token, char *cur, int *index, t_error error);
+int			check_after_token(char *str);
 
 #endif //MINISHELL_H

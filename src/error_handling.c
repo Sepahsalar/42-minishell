@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/24 13:27:21 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:14:17 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	check_after_token(char *str)
+{
+	return (ft_strchr(str, '|') || ft_strchr(str, '<') || ft_strchr(str, '>')
+		|| ((ft_strchr(str, '<') && ft_strchr(str, '<' + 1 == '<')))
+		|| ((ft_strchr(str, '>') && ft_strchr(str, '>' + 1 == '>'))));
+}
 
 char	*find_token(char *cur)
 {
@@ -26,7 +33,6 @@ char	*find_token(char *cur)
 	token[6] = NULL;
 
 	index = 0;
-
 	while (token[index])
 	{
 		if (ft_strncmp(cur, token[index], ft_strlen(token[index])) == 0)
@@ -114,11 +120,8 @@ void	handle_heredoc_error(char *token, char *cur, t_error error)
 
 	if (same(token, "<<"))
 	{
-		// printf("cmd_counter: %d, index_cmd: %d\n", error.cmd_counter, error.index_cmd);
-		// if (error.cmd_counter != error.index_cmd)
-		// 	printf("bash: syntax error near unexpected token `%s'\n", error.error);
 		limiter_len = 0;
-		while (cur[limiter_len] != ' ' && cur[limiter_len] !='\0'
+		while (cur[limiter_len] != ' ' && cur[limiter_len] != '\0'
 			&& !find_token(cur + limiter_len))
 			limiter_len++;
 		limiter = malloc(limiter_len + 2);
@@ -135,8 +138,6 @@ void	handle_heredoc_error(char *token, char *cur, t_error error)
 		}
 		free(line);
 		(void)error;
-		// if (error.cmd_counter == error.index_cmd)
-		// 	printf("bash: syntax error near unexpected token `%s'\n", error.error);
 	}
 }
 
@@ -155,16 +156,7 @@ char	*change_token_heredoc(char *token, char *cur, int *index, t_error error)
 		*index = *index + 1;
 		if (*cur != ' ')
 		{
-			// if (error.cmd_counter == error.index_cmd)
-			// {
-				handle_heredoc_error(token, cur, error);
-			// 	printf("bash: syntax error near unexpected token `%s'\n", error.error);
-			// }
-			// else
-			// {
-			// 	printf("bash: syntax error near unexpected token `%s'\n", error.error);
-			// 	handle_heredoc_error(token, cur);
-			// }
+			handle_heredoc_error(token, cur, error);
 			return (NULL);
 		}
 		else

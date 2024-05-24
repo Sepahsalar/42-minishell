@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/24 13:38:11 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:21:45 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,16 @@
 //    inside of each other (like bash - like a builtin)----------------------4h half/done
 // 8) error handling and leaks management after readline and before giving it
 //    to execute command-----------------------------------------------------40h
-// (for this step, remind to handle this: '>|' '<>' '< |' '< <' '<<<')
-// handle "" as a command or a redirection
+// 8-1) (for this step, remind to handle this: '>|' '<>' '< |' '< <' '<<<')
+// 8-2) handle "" as a command or a redirection
+// 8-3) check "<<< end", it should do nothing but now it is creating heredoc that never ends
+// 8-4) handle this:
+// 		bash-3.2$ >>> hi
+// 		bash: syntax error near unexpected token `>'
+// 		bash-3.2$ > >> hi
+// 		bash: syntax error near unexpected token `>>'
+// 		bash-3.2$ << ls > >>
+// 		bash: syntax error near unexpected token `>>'
 // 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
 //10) uset stat or fstat instead of access------------------------------------1h done
 //11) (bonus) handle "ls |" like a heredoc------------------------------------4h denied
@@ -57,27 +65,22 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 		index = 0;
 		token = NULL;
 		heredoc_place = ft_strnstr(raw_line, "<<", error.index);
-		if (!heredoc_place || ft_strchr(raw_line + error.index , '|') || ft_strchr(raw_line + error.index , '>'))
+		if (!heredoc_place || check_after_token(raw_line + error.index))
 		{
 			printed = 1;
-			printf("bash: syntax error near unexpected token `%s'\n", error.error);
+			printf("bash: syntax error near unexpected token `%s'\n",
+				error.error);
 		}
-		// else
-		// {
-			while (index <= error.index)
-			{
-				if (raw_line[index] == '|')
-					error.index_cmd++;
-				// if (error.index_cmd == error.cmd_counter && !printed)
-				// {
-				// 	printf("bash: syntax error near unexpected token `%s'\n", error.error);
-				// 	printed = 1;
-				// }
-				token = change_token_heredoc(token, (raw_line + index), &index, error);
-			}
-		// }
-		if(!printed)
-		    printf("bash: syntax error near unexpected token `%s'\n", error.error);
+		while (index <= error.index)
+		{
+			if (raw_line[index] == '|')
+				error.index_cmd++;
+			token = change_token_heredoc(token, (raw_line + index),
+					&index, error);
+		}
+		if (!printed)
+			printf("bash: syntax error near unexpected token `%s'\n",
+				error.error);
 		return (env_pack_result);
 	}
 	raw_cmd = create_raw_cmd(raw_line);
