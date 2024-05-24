@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:31:28 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 14:16:31 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:19:46 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_accessibility(char *address, char mode)
 	{
 		result = stat(address, &buf);
 		//protection
-		result = 1;
+		result = 1; //make it better
 		if (S_ISDIR(buf.st_mode))
 			result = 0;
 	}
@@ -116,6 +116,7 @@ int	find_cmd_address(t_cmd *cmd)
 	// 	cmd->exist = 0;
 	// 	cmd->exec = 0;
 	// }
+	// if (!cmd->cmd_name || !cmd->cmd_name[0])
 	if (!cmd->cmd_name)
 	{
 		cmd->address = 0;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
+#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/05/23 14:35:24 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/05/24 09:39:43 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/echo.c \
 		$(SRCDIR)/exit.c \
 		$(SRCDIR)/atol_exit.c \
+		$(SRCDIR)/error_handling.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

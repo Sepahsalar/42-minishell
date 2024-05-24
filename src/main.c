@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 14:41:09 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:38:11 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 //    inside of each other (like bash - like a builtin)----------------------4h half/done
 // 8) error handling and leaks management after readline and before giving it
 //    to execute command-----------------------------------------------------40h
-// (for this step, remind to handle this: '>|' '<>' '< |' '< <' '<<<') 
+// (for this step, remind to handle this: '>|' '<>' '< |' '< <' '<<<')
+// handle "" as a command or a redirection
 // 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
 //10) uset stat or fstat instead of access------------------------------------1h done
 //11) (bonus) handle "ls |" like a heredoc------------------------------------4h denied
@@ -41,8 +42,44 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 	int			cmd_counter;
 	t_file		*temp_file;
 	t_env_pack	env_pack_result;
+	int			index;
+	char        *token;
+	t_error		error;
+	char		*heredoc_place;
+	int			printed = 0;
 
 	status_last_cmd = 0;
+	error = find_error(raw_line);
+	if (error.error)
+	{
+		env_pack_result = env_pack;
+		export_original(env_pack_result.original_env, 258);
+		index = 0;
+		token = NULL;
+		heredoc_place = ft_strnstr(raw_line, "<<", error.index);
+		if (!heredoc_place || ft_strchr(raw_line + error.index , '|') || ft_strchr(raw_line + error.index , '>'))
+		{
+			printed = 1;
+			printf("bash: syntax error near unexpected token `%s'\n", error.error);
+		}
+		// else
+		// {
+			while (index <= error.index)
+			{
+				if (raw_line[index] == '|')
+					error.index_cmd++;
+				// if (error.index_cmd == error.cmd_counter && !printed)
+				// {
+				// 	printf("bash: syntax error near unexpected token `%s'\n", error.error);
+				// 	printed = 1;
+				// }
+				token = change_token_heredoc(token, (raw_line + index), &index, error);
+			}
+		// }
+		if(!printed)
+		    printf("bash: syntax error near unexpected token `%s'\n", error.error);
+		return (env_pack_result);
+	}
 	raw_cmd = create_raw_cmd(raw_line);
 	cmd = fill_cmd_list(raw_cmd, env_pack.env, env_pack.original_env);
 	master_clean(raw_cmd, 0, 0, -1);

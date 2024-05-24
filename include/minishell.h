@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 13:30:10 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:00:57 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,14 @@ typedef struct s_atol
 	int		is_error;
 }		t_atol;
 
+typedef struct s_error
+{
+	char	*error;
+	int		index;
+	int		index_cmd;
+	int		cmd_counter;
+}			t_error;
+
 // typedef struct s_dot
 // {
 // 	char			*old_pwd;
@@ -214,5 +222,9 @@ t_env_pack	run_echo(t_cmd *cmd);
 t_env_pack	run_exit(t_cmd *cmd);
 t_atol		atol_exit(char *str);
 void		run_exit_eof(t_env *env, int fd_stdin, int fd_stdout);
+t_error		find_error(char *line);
+int			cmd_counter_error(const char *input);
+char		*find_token(char *cur);
+char		*change_token_heredoc(char *token, char *cur, int *index, t_error error);
 
 #endif //MINISHELL_H
