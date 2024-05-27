@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 14:21:30 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:52:14 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,22 @@ char	*strdup_modified(char *s, char *token)
 		return (0);
 	ft_memcpy (d, s, l);
 	d[l] = '\0';
+	// printf("d: %s\n", d);
 	return (d);
 }
 
-char	*ft_remove(char *str, char *del1, char *del2)
+char	*ft_remove(char *str, char *del, t_file *file)
 {
 	int		len1;
 	int		len2;
 	char	*part2;
 	char	*temp;
 	char	*result;
+	int     original_len;
 
-	len1 = ft_strnstr(str, del1, ft_strlen(str)) - str;
-	part2 = ft_strnstr(str, del2, ft_strlen(str)) + ft_strlen(del2);
+	original_len = ft_strlen(str);
+	len1 = file->place;
+	part2 = ft_strnstr(str, del, ft_strlen(str)) + ft_strlen(del);
 	temp = part2;
 	len2 = 0;
 	while (*temp)
@@ -116,5 +119,11 @@ char	*ft_remove(char *str, char *del1, char *del2)
 	ft_memcpy(result + len1, part2, len2);
 	result[len1 + len2] = '\0';
 	free(str);
+	file = file->next;
+	while (file)
+	{
+		file->place = file->place + len1 + len2 - original_len;
+		file = file->next;
+	}
 	return (result);
 }

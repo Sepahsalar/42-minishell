@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 11:08:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:50:32 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_file
 	int				write;
 	int				fd;
 	long			fd_operator;
+	int				place;
 	struct s_file	*next;
 }					t_file;
 
@@ -135,6 +136,12 @@ typedef struct s_error
 // 	struct s_quote	*next;
 // }					t_dot;
 
+typedef struct s_hd_file
+{
+	char	*str;
+	t_file	*file;
+}			t_hd_file;
+
 void		rl_replace_line(const char *text, int clear_undo);
 void		clean_2d_char(char **array);
 t_cmd		*clean_cmd_list(t_cmd *first);
@@ -146,7 +153,8 @@ int			char_2d_count(char **array);
 int			fill_raw_cmd_list(t_cmd **cmd, char **raw_cmd);
 void		fill_index_cmd_list(t_cmd **cmd);
 char		*strdup_modified(char *s, char *token);
-char		*ft_remove(char *str, char *del1, char *del2);
+// char		*ft_remove(char *str, char *del1, char *del2);
+char		*ft_remove(char *str, char *del, t_file *file);
 void		master_clean(char **raw_cmd,
 				t_env *env, t_cmd *cmd, int exit_value);
 t_cmd		*fill_cmd_list(char **raw_cmd, t_env *env, t_env *original_env);
@@ -155,9 +163,9 @@ t_env		*create_env_list(int total_number);
 t_env		*fill_env_list(char **envp);
 void		fill_env_cmd_list(t_cmd **cmd, t_env *env);
 void		fill_original_env_cmd_list(t_cmd **cmd, t_env *original_env);
-int			token_count(char *str, char *token);
+// int			token_count(char *str, char *token);
 int			istoken(int c);
-int			fill_files(t_cmd **cmd, char *token, int type);
+int			fill_files(t_cmd **cmd, char *token);
 char		**split_pipex(char const *s);
 char		**split_all_delimiter(char const *s);
 char		**free_split(char ***m, int j);
@@ -180,7 +188,8 @@ char		**copy_2d_char(char **src);
 void		execution_package(t_cmd *cmd,
 				char **cmd_address, char ***cmd_args, char ***cmd_env);
 int			cmd_count(t_cmd *cmd);
-long		atoi_file(char **input, int def);
+// long		atoi_file(char **input, int def);
+long	atoi_file(char **input, int place, int def);
 int			fill_last_out(t_cmd **cmd);
 t_last_file	*clean_last_file_list(t_last_file *first);
 int			fill_last_in(t_cmd **cmd);
@@ -227,5 +236,7 @@ int			cmd_counter_error(const char *input);
 char		*find_token(char *cur);
 char		*change_token_heredoc(char *token, char *cur, int *index, t_error error);
 int			check_after_token(char *str);
+t_file		*create_file_node(int	place);
+int			fill_files_helper(char *str, char *c , t_cmd *cmd);
 
 #endif //MINISHELL_H
