@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/27 14:40:12 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:37:56 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,31 +84,51 @@ t_error	find_error(char *line)
 	char	*cur;
 	int		len;
 	t_error	error;
+	char	*sq;
+	char    *dq;
 
+	sq = NULL;
+	dq = NULL;
 	index = 0;
 	cur = line;
 	len = (int)ft_strlen(line);
 	token = NULL;
 	while (index <= len)
 	{
-		if (token)
+		printf("cur[index] = %c\n", cur[index]);
+		if (cur[index] == '\"' || cur[index] == '\'')
 		{
-			if (!accept_char(token, cur + index))
-			{
-				error.index = index;
-				if (cur[index] == '\0')
-					error.error = ft_strdup("newline");
-				else
-				{
-					if (find_token(cur + index))
-						error.error = ft_strdup(find_token(cur + index));
-					else
-						error.error = sliced_str(cur, index, index);
-				}
-				return (error);
-			}
+			if (cur[index] == '\"' && dq == NULL)
+				dq = &cur[index];
+			else if (cur[index] == '\"')
+				dq = NULL;
+			else if (cur[index] == '\'' && sq == NULL)
+				sq = &cur[index];
+			else if (cur[index] == '\'')
+				sq = NULL;
+			index++;
 		}
-		token = change_token(token, cur + index, &index);
+		else
+		{
+			if (token && !sq && !dq)
+			{
+				if (!accept_char(token, cur + index))
+				{
+					error.index = index;
+					if (cur[index] == '\0')
+						error.error = ft_strdup("newline");
+					else
+					{
+						if (find_token(cur + index))
+							error.error = ft_strdup(find_token(cur + index));
+						else
+							error.error = sliced_str(cur, index, index);
+					}
+					return (error);
+				}
+			}
+			token = change_token(token, cur + index, &index); //sq dq
+		}
 	}
 	error.index = 0;
 	error.error = NULL;
