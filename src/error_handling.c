@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/27 10:11:48 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:15:01 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ t_error	find_error(char *line)
 	cur = line;
 	len = (int)ft_strlen(line);
 	token = NULL;
-	error.cmd_counter = cmd_counter_error(line);
-	error.index_cmd = 1;
 	while (index <= len)
 	{
 		if (token)

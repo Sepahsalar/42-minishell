@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/24 14:15:01 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:14:14 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,6 @@ typedef struct s_error
 {
 	char	*error;
 	int		index;
-	int		index_cmd;
-	int		cmd_counter;
 }			t_error;
 
 // typedef struct s_dot

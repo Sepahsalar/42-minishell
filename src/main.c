@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/24 14:21:45 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:14:44 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 		}
 		while (index <= error.index)
 		{
-			if (raw_line[index] == '|')
-				error.index_cmd++;
 			token = change_token_heredoc(token, (raw_line + index),
 					&index, error);
 		}
