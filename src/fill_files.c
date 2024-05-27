@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:29:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 18:28:03 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:23:33 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@ t_file	*set_temp_file(t_cmd **temp, int file_count, int type)
 		(*temp)->input = create_file_list(file_count);
 		temp_file = (*temp)->input;
 	}
-	// else if (type == 1)
-	// {
-	// 	(*temp)->output_trunc = ft_create_file_list(file_count);
-	// 	temp_file = (*temp)->output_trunc;
-	// }
-	// else
-	// {
-	// 	(*temp)->output_append = ft_create_file_list(file_count);
-	// 	temp_file = (*temp)->output_append;
-	// }
 	else
 	{
 		(*temp)->output = create_file_list(file_count);
@@ -108,6 +98,7 @@ int	fill_files(t_cmd **cmd, char *token, int type)
 		else
 			file_count = token_count(temp->current, "<")
 				- token_count(temp->current, "<<");
+		printf("calculated filecount : %d\n", file_count);
 		if (file_count > 0)
 		{
 			temp_file = set_temp_file(&temp, file_count, type);

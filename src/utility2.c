@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:04:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 18:39:55 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:13:33 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ int	token_count(char *str, char *token)
 	int		counter;
 	int		index;
 	char	*temp;
+	char	*sq;
+	char    *dq;
+	int     len;
+
+	sq = NULL;
+	dq = NULL;
 
 	if (!str || *str == '\0')
 		return (0);
@@ -84,14 +90,49 @@ int	token_count(char *str, char *token)
 	counter = 0;
 	index = 0;
 	temp = str;
-	while (temp && *temp)
+	// while (temp && *temp)
+	// {
+	// 	temp = ft_strnstr(temp, token, ft_strlen(temp));
+	// 	if (temp)
+	// 	{
+	// 		temp = temp + ft_strlen(token);
+	// 		counter++;
+	// 	}
+	// }
+	index = 0;
+	len = ft_strlen(str);
+	while (index < len)
 	{
-		temp = ft_strnstr(temp, token, ft_strlen(temp));
-		if (temp)
+		if (str[index] == '\"' && dq == NULL)
 		{
-			temp = temp + ft_strlen(token);
-			counter++;
+			dq = &str[index];
+			index++;
 		}
+		else if (str[index] == '\"')
+		{
+			dq = NULL;
+			index++;
+		}
+		else if (str[index] == '\'' && sq == NULL)
+		{
+			sq = &str[index];
+			index++;
+		}
+		else if (str[index] == '\'')
+		{
+			sq = NULL;
+			index++;
+		}
+		else if (!sq && !dq && ft_strnstr(str + index, token, ft_strlen(token)))
+		{
+			// if (ft_strnstr(str + index, token, ft_strlen(token)))
+			// {
+				counter++;
+				index = index + ft_strlen(token);
+			// }
+		}
+		else
+			index++;
 	}
 	return (counter);
 }

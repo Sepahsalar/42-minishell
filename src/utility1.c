@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 12:04:59 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:21:30 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,33 @@ static size_t	strlen_modified(char *s)
 		return (0);
 	else
 	{
-		while (*s != '\0' && !ft_isspace(*s) && !istoken(*s))
+		if (*s == '\"')
 		{
-			++s;
-			++len;
+			s++;
+			while (*s != '\0' && *s != '\"')
+			{
+				len++;
+				s++;
+			}
+			len += 2;
+		}
+		else if (*s == '\'')
+		{
+			s++;
+			while (*s != '\0' && *s != '\'')
+			{
+				len++;
+				s++;
+			}
+			len += 2;
+		}
+		else
+		{
+			while (*s != '\0' && !ft_isspace(*s) && !istoken(*s))
+			{
+				s++;
+				len++;
+			}
 		}
 		return (len);
 	}
