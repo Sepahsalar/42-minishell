@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_file_data.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:51:07 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/13 18:01:45 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:43:21 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	create_file_data(t_file *file)
 	if (!file->raw || file->limiter)
 		return (0);
 	else
-		file->address = handle_quote_str(file->raw);
+		file->address = handling_quote(file->raw);
+	// else
+	// 	file->address = handle_quote_str(file->raw);
 	if (!file->address)
 		return (1);
 	file->exist = check_accessibility (file->address, 'F');

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:31:28 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/24 12:19:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:43:29 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	check_accessibility(char *address, char mode)
 	
 	if (!address)
 		return (0);
+	// if (address[0] == '\0')
+	// 	return (0);
 	if (mode == 'X')
 		result = access(address, X_OK);
 	else if (mode == 'R')

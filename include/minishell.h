@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 10:14:14 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:30:45 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,8 @@ int			find_cmd_address(t_cmd *cmd);
 int			fill_address_access(t_cmd **cmd);
 int			create_file_data(t_file *file);
 int			fill_file_data(t_cmd **cmd);
-char		*handle_quote_str(char *input);
+// char		*handle_quote_str(char *input);
+char		*handling_quote(char *str);
 t_env_pack			execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution);
 int			ft_isspace(int c);
 char		**recreate_2d_env(t_env *env);

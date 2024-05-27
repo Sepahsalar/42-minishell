@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/24 12:20:22 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:44:21 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 					O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (temp_file->fd == -1)
 		{
+			printf("bash: %s: %s\n", temp_file->address, strerror(errno));
 			master_clean(0, cmd_start->env, cmd_execution, -1);
 			env_pack.original_env = export_original(env_pack.original_env, 1);
 			return (env_pack);
