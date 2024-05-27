@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/24 14:14:17 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:11:48 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,12 @@ t_error	find_error(char *line)
 				if (cur[index] == '\0')
 					error.error = ft_strdup("newline");
 				else
-					error.error = sliced_str(cur, index, index);
+				{
+					if (find_token(cur + index))
+						error.error = ft_strdup(find_token(cur + index));
+					else
+						error.error = sliced_str(cur, index, index);
+				}
 				return (error);
 			}
 		}
