@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 18:23:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:03:06 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// 1) write env, unset and export builtin------------------------------------2h done
-// 2) handle $? with export of a new variable n to the "original" env--------2h done
-// 3) take a look at the handle quote function-------------------------------8h done
-// 4) write other builtins and update the pipex functions-------------------16h done
-// 5) take a look at the readline function when cmd + c & cmd + v, also
-// 	  when line is long------------------------------------------------------16h done
 // 6) create a .history file to keep the commands for each SHLVL-------------8h denied
 // 7) update SHLVL in env, so we can have multiple ./minishell 
 //    inside of each other (like bash - like a builtin)----------------------4h half/done
@@ -34,12 +28,10 @@
 // 		bash-3.2$ << ls > >>
 // 		bash: syntax error near unexpected token `>>'
 // 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
-//10) uset stat or fstat instead of access------------------------------------1h done
 //11) (bonus) handle "ls |" like a heredoc------------------------------------4h denied
 //     قیل از هر چیز تریم اسپیس صورت گیرد.
 // بعد از تریم اگر ایندکس منفی یک برابر پایپ بود هیر داک باز می شود و جوین صوزت می گیرد
 // دوباره همین کار تکرار می شود
-//12) (bonus) handle "./minishell" inside of ASAL-----------------------------2h done
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {
@@ -65,8 +57,8 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 		index = 0;
 		token = NULL;
 		heredoc_place = ft_strnstr(raw_line, "<<", error.index);
-		if (!heredoc_place || check_after_token(raw_line + error.index +
-				ft_strlen(error.error) - 1))
+		if (!heredoc_place || check_after_token(raw_line + error.index
+				+ ft_strlen(error.error) - 1))
 		{
 			printed = 1;
 			printf("bash: syntax error near unexpected token `%s'\n",

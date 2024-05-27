@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:04:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 17:51:49 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:03:37 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**copy_2d_char(char **src)
 	return (dest);
 }
 
-t_hd_file *remove_update(t_hd_file *hd, char *c)
+t_hd_file	*remove_update(t_hd_file *hd, char *c)
 {
 	char	*temp_str;
 
@@ -95,17 +95,8 @@ t_hd_file *remove_update(t_hd_file *hd, char *c)
 		temp_str++;
 	}
 	else if (*c == '<')
-	{
-		// hd->file->raw = strdup_modified(temp_str, c);
 		hd->file->input = 1;
-	}
 	hd->file->raw = strdup_modified(temp_str, c);
-	// if (*c == '>' && *(temp_str + 1) == '>')
-	// 	hd->str = ft_remove(hd->str, hd->file->raw, hd->file);
-	// else if (*c == '<' && *(temp_str + 1) == '<')
-	// 	hd->str = ft_remove(hd->str, hd->file->raw, hd->file);
-	// else
-	// hd->str = ft_remove(hd->str, hd->file->raw, hd->file);
 	hd->str = ft_remove(hd->str, hd->file->raw, hd->file);
 	return (hd);
 }
