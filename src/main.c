@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 10:14:44 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 11:32:47 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 		index = 0;
 		token = NULL;
 		heredoc_place = ft_strnstr(raw_line, "<<", error.index);
-		if (!heredoc_place || check_after_token(raw_line + error.index))
+		// if (!heredoc_place || check_after_token(raw_line + error.index))
+		if (!heredoc_place || check_after_token(raw_line + error.index + ft_strlen(error.error) - 1))
 		{
 			printed = 1;
 			printf("bash: syntax error near unexpected token `%s'\n",
