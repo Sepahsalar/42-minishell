@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/27 10:44:21 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 11:15:57 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		close(temp_file->fd);
 		temp_file = temp_file->next;
 	}
-	if (cmd_execution->cmd_name == NULL || *cmd_execution->cmd_name == '\0')
+	if (cmd_execution->cmd_name == NULL || (*cmd_execution->cmd_name == '\0' && cmd_execution->empty_cmd != 1))
 	// if (cmd_execution->cmd_name == NULL) //maybe this if should be deleted
 	{
 		env_pack.original_env = export_original(env_pack.original_env, 0);

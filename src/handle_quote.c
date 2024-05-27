@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:23:32 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/22 11:59:28 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 11:12:51 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,8 @@ int	handle_quote_cmd(t_cmd *start)
 	temp = start;
 	while (temp)
 	{
+		if (same(temp->args[0], "\"\"") || same(temp->args[0], "\'\'"))
+			temp->empty_cmd = 1;
 		if (handle_quote_args(&temp->args))
 			return (1);
 		temp = temp->next;

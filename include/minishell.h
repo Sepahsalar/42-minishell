@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 10:30:45 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/27 11:08:46 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_cmd
 	t_last_file		*last_in;
 	t_last_file		*last_out;
 	t_file			*std_error;
+	int				empty_cmd;
 	char			*cmd_name;
 	char			*address;
 	char			**args;
