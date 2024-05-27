@@ -52,3 +52,10 @@ Mkfile.old
 dkms.conf
 .vscode
 .DS_Store
+
+# Testers
+minishell_tester/
+
+# Virtual Environment
+venv/
+
