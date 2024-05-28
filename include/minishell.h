@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 13:18:05 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:51:16 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ typedef struct s_cmd
 	t_last_file		*last_in;
 	t_last_file		*last_out;
 	t_file			*std_error;
-	int				unseted_
+	int				is_file;
+	int             exec_error;
 	int				empty_cmd;
 	char			*cmd_name;
 	char			*address;
@@ -173,6 +174,7 @@ char		**split_all_delimiter(char const *s);
 char		**free_split(char ***m, int j);
 int			triger_maker_sp(int triger, char c, char divider);
 int			len_helper(const char *s);
+int			len_helper_pipe(const char *s);
 char		**create_args(char *str);
 int			fill_args_cmd_list(t_cmd **cmd);
 int			check_accessibility(char *address, char mode);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:08:29 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 18:44:50 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:20:47 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,26 @@ int	len_helper(const char *s)
 	{
 		while (s[j + 1] && ((s[j + 1] != 39)
 				|| (s[j + 2] && s[j + 1] == 39 && s[j + 2] != ' ')))
+			j++;
+	}
+	return (j + 1);
+}
+
+int	len_helper_pipe(const char *s)
+{
+	int	j;
+
+	j = 0;
+	if (*s == 34)
+	{
+		while (s[j + 1] && ((s[j + 1] != 34)
+				|| (s[j + 2] && s[j + 1] == 34 && s[j + 2] != '|')))
+			j++;
+	}
+	else
+	{
+		while (s[j + 1] && ((s[j + 1] != 39)
+				|| (s[j + 2] && s[j + 1] == 39 && s[j + 2] != '|')))
 			j++;
 	}
 	return (j + 1);
