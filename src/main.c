@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 11:28:56 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:30:48 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,11 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 				+ ft_strlen(error.error) - 1))
 		{
 			printed = 1;
-			printf("bash: syntax error near unexpected token `%s'\n",
-				error.error);
+			// printf("bash: syntax error near unexpected token `%s'\n",
+			// 	error.error);
+			ft_putstr_fd("bash: syntax error near unexpected token `", 2);
+			ft_putstr_fd(error.error, 2);
+			ft_putendl_fd("\'", 2);
 		}
 		while (index <= error.index)
 		{
@@ -95,8 +98,13 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 			}
 		}
 		if (!printed)
-			printf("bash: syntax error near unexpected token `%s'\n",
-				error.error);
+		{
+			// printf("bash: syntax error near unexpected token `%s'\n",
+			// 	error.error);
+			ft_putstr_fd("bash: syntax error near unexpected token `", 2);
+			ft_putstr_fd(error.error, 2);
+			ft_putendl_fd("\'", 2);
+		}
 		return (env_pack_result);
 	}
 	raw_cmd = create_raw_cmd(raw_line);

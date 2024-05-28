@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:31:28 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 11:16:22 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:14:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ char	*find_address(t_cmd *cmd, char mode)
 		return (NULL);
 	}
 	temp_env = cmd->env;
-	while (!ft_strnstr(temp_env->key, "PATH", 4))
+	while (temp_env && !ft_strnstr(temp_env->key, "PATH", 4))
 		temp_env = temp_env->next;
+	if (!temp_env)
+		return (0);
 	all_path = ft_split(temp_env->value, ':');
 	if (!all_path)
 	{

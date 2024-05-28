@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/28 11:22:22 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 11:34:26 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ t_error	find_error(char *line)
 					return (error);
 				}
 			}
-			token = change_token(token, cur + index, &index, (sq != NULL ||  dq != NULL));
+			token = change_token(token, cur + index, &index,
+					(sq != NULL || dq != NULL));
 		}
 	}
 	error.index = 0;

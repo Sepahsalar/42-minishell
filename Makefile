@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/05/24 09:39:43 by nnourine         ###   ########.fr        #
+#    Updated: 2024/05/28 12:46:32 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/exit.c \
 		$(SRCDIR)/atol_exit.c \
 		$(SRCDIR)/error_handling.c \
+		$(SRCDIR)/export_check.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

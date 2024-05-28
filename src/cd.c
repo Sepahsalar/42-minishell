@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 14:26:28 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:18:52 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,13 @@ t_env_pack	run_cd(t_cmd *cmd)
 	full_path = full_path_finder(old_pwd, cmd->args[1], home);
 	if (chdir(full_path) == -1)
 	{
-		printf("bash: %s: %s: %s\n",cmd->args[0], cmd->args[1], strerror(errno));
+		// printf("bash: %s: %s: %s\n",cmd->args[0], cmd->args[1], strerror(errno));
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(cmd->args[1], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
 		env_pack.original_env = export_original(cmd->original_env, 1);
 	}
 	else

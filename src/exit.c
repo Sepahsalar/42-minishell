@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:49:01 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 11:46:10 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:14:57 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ t_env_pack	run_exit(t_cmd *cmd)
 	printf("exit\n");
 	if (cmd->args[2])
 	{
-		printf("bash: exit: too many arguments\n");
+		// printf("bash: exit: too many arguments\n");
+		ft_putendl_fd("bash: exit: too many arguments", 2);
 		exit (1);
 	}
 	if (cmd->args[1])
@@ -32,7 +33,10 @@ t_env_pack	run_exit(t_cmd *cmd)
 		exit_code.num = 0;
 	if (exit_code.is_error == 1)
 	{
-		printf("bash: exit: %s: numeric argument required\n", cmd->args[1]);
+		// printf("bash: exit: %s: numeric argument required\n", cmd->args[1]);
+		ft_putstr_fd("bash: exit: ", 2);
+		ft_putstr_fd(cmd->args[1], 2);
+		ft_putendl_fd(": numeric argument required", 2);
 		exit (255);
 	}
 	exit_code.num = exit_code.num % 256;

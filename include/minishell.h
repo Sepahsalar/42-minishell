@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 17:50:32 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:18:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_cmd
 	t_last_file		*last_in;
 	t_last_file		*last_out;
 	t_file			*std_error;
+	int				unseted_
 	int				empty_cmd;
 	char			*cmd_name;
 	char			*address;
@@ -167,6 +168,7 @@ void		fill_original_env_cmd_list(t_cmd **cmd, t_env *original_env);
 int			istoken(int c);
 int			fill_files(t_cmd **cmd, char *token);
 char		**split_pipex(char const *s);
+char		**split_pipex_pipe(char const *s);
 char		**split_all_delimiter(char const *s);
 char		**free_split(char ***m, int j);
 int			triger_maker_sp(int triger, char c, char divider);
@@ -237,6 +239,7 @@ char		*find_token(char *cur);
 char		*change_token_heredoc(char *token, char *cur, int *index, t_error error);
 int			check_after_token(char *str);
 t_file		*create_file_node(int	place);
-int			fill_files_helper(char *str, char *c , t_cmd *cmd);
+int			fill_files_helper(char *str, char *c, t_cmd *cmd);
+int			export_check(char *str);
 
 #endif //MINISHELL_H

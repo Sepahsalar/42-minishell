@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/27 11:15:57 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:08:08 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,21 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		{
 			if (temp_file->exist == 0)
 			{
-				printf("bash: %s: No such file or directory\n",
-					temp_file->address);
+				// printf("bash: %s: No such file or directory\n",
+				// 	temp_file->address);
+				ft_putstr_fd("bash: ", 2);
+				ft_putstr_fd(temp_file->address, 2);
+				ft_putendl_fd(": No such file or directory", 2);
 				master_clean(0, cmd_start->env, cmd_start, -1);
 				env_pack.original_env = export_original(env_pack.original_env, 1);
 				return (env_pack);
 			}
 			else
 			{
-				printf("bash: %s: Permission denied\n", temp_file->address);
+				// printf("bash: %s: Permission denied\n", temp_file->address);
+				ft_putstr_fd("bash: ", 2);
+				ft_putstr_fd(temp_file->address, 2);
+				ft_putendl_fd(": Permission denied", 2);
 				master_clean(0, cmd_start->env, cmd_start, -1);
 				env_pack.original_env = export_original(env_pack.original_env, 1);
 				return (env_pack);
@@ -66,7 +72,11 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 					O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (temp_file->fd == -1)
 		{
-			printf("bash: %s: %s\n", temp_file->address, strerror(errno));
+			// printf("bash: %s: %s\n", temp_file->address, strerror(errno));
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(temp_file->address, 2);
+			ft_putstr_fd(": ", 2);
+			ft_putendl_fd(strerror(errno), 2);
 			master_clean(0, cmd_start->env, cmd_execution, -1);
 			env_pack.original_env = export_original(env_pack.original_env, 1);
 			return (env_pack);
@@ -84,8 +94,11 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	{
 		if (cmd_execution->dir)
 		{
-			printf("bash: %s: is a directory\n",
-				cmd_execution->cmd_name);
+			// printf("bash: %s: is a directory\n",
+			// 	cmd_execution->cmd_name);
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(cmd_execution->cmd_name, 2);
+			ft_putendl_fd(": is a directory", 2);
 			master_clean(0, cmd_start->env, cmd_execution, -1);
 			env_pack.original_env = export_original(env_pack.original_env, 126);
 			return (env_pack);
@@ -94,16 +107,22 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		{
 			if (cmd_execution->exist)
 			{
-				printf("bash: %s: Permission denied\n",
-					cmd_execution->cmd_name);
+				// printf("bash: %s: Permission denied\n",
+				// 	cmd_execution->cmd_name);
+				ft_putstr_fd("bash: ", 2);
+				ft_putstr_fd(cmd_execution->cmd_name, 2);
+				ft_putendl_fd(": Permission denied", 2);
 				master_clean(0, cmd_start->env, cmd_execution, -1);
 				env_pack.original_env = export_original(env_pack.original_env, 126);
 				return (env_pack);
 			}
 			else
 			{
-				printf("bash: %s: command not found\n",
-					cmd_execution->cmd_name);
+				// printf("bash: %s: command not found\n",
+					// cmd_execution->cmd_name);
+				ft_putstr_fd("bash: ", 2);
+				ft_putstr_fd(cmd_execution->cmd_name, 2);
+				ft_putendl_fd(": command not found", 2);
 				master_clean(0, cmd_start->env, cmd_execution, -1);
 				env_pack.original_env = export_original(env_pack.original_env, 127);
 				return (env_pack);

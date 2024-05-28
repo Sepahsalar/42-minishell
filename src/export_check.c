@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   export_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 13:26:11 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 12:02:07 by nnourine         ###   ########.fr       */
+/*   Created: 2024/05/28 12:43:44 by nnourine          #+#    #+#             */
+/*   Updated: 2024/05/28 13:07:34 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_env_pack	run_pwd(t_cmd *cmd)
+int	export_check(char *str)
 {
-	t_env_pack	env_pack;
-	char		*path;
+	char	*find;
 
-	path = NULL;
-	env_pack = init_env_pack(cmd);
-	path = getcwd(NULL, 0);
-	//maybe protection against failure
-	// printf("%s\n", path);
-	ft_putendl_fd(path, 1);
-	free(path);
-	export_original(env_pack.original_env, 0);
-	return (env_pack);
+	find = ft_strchr(str, '=');
+	if (find == str)
+		return (0);
+	while (*str && (str < find || !find))
+	{
+		if (!ft_isalpha(*str) && *str != '_' && *str != '=')
+			return (0);
+		str++;
+	}
+	return (1);
 }
-

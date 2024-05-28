@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:10:21 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/15 15:08:33 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:35:25 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,31 @@ char	**split_pipex(char const *s)
 		return (m);
 	}
 	m = create(s, ' ', 0, 0);
+	temp = m ;
+	return (m);
+}
+
+char	**split_pipex_pipe(char const *s)
+{
+	char	**m;
+	char	**temp;
+
+	if (s == 0 || s[0] == '\0' || all_space((char *)s))
+	{
+		m = malloc(2 * sizeof(char *));
+		if (m == 0)
+			return (0);
+		m[1] = 0;
+		m[0] = malloc(sizeof(char));
+		if (!m[0])
+		{
+			free(m);
+			return (0);
+		}
+		m[0][0] = '\0';
+		return (m);
+	}
+	m = create(s, '|', 0, 0);
 	temp = m ;
 	return (m);
 }

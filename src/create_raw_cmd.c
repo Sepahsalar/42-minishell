@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:06:38 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 10:15:25 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:36:59 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	**create_raw_cmd(const char *input)
 {
 	char	**raw_cmd;
 
-	raw_cmd = ft_split(input, '|');
+	raw_cmd = split_pipex_pipe(input);
 	if (!raw_cmd)
 		master_clean(0, 0, 0, EXIT_FAILURE);
 	return (raw_cmd);
