@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/27 18:37:56 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 11:22:22 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,31 @@ int	accept_char(char *token, char *cur)
 	return (1);
 }
 
-char	*change_token(char *token, char *cur, int *index)
+char	*change_token(char *token, char *cur, int *index, int sq_dq)
 {
 	char	*new_token;
 
-	new_token = find_token(cur);
-	if (new_token)
+	if (!sq_dq)
 	{
-		*index = *index + ft_strlen(new_token);
-		return (new_token);
+		new_token = find_token(cur);
+		if (new_token)
+		{
+			*index = *index + ft_strlen(new_token);
+			return (new_token);
+		}
+		else
+		{
+			*index = *index + 1;
+			if (*cur != ' ')
+				return (NULL);
+			else
+				return (token);
+		}
 	}
 	else
 	{
 		*index = *index + 1;
-		if (*cur != ' ')
-			return (NULL);
-		else
-			return (token);
+		return (NULL);
 	}
 }
 
@@ -95,7 +103,7 @@ t_error	find_error(char *line)
 	token = NULL;
 	while (index <= len)
 	{
-		printf("cur[index] = %c\n", cur[index]);
+
 		if (cur[index] == '\"' || cur[index] == '\'')
 		{
 			if (cur[index] == '\"' && dq == NULL)
@@ -127,7 +135,7 @@ t_error	find_error(char *line)
 					return (error);
 				}
 			}
-			token = change_token(token, cur + index, &index); //sq dq
+			token = change_token(token, cur + index, &index, (sq != NULL ||  dq != NULL));
 		}
 	}
 	error.index = 0;

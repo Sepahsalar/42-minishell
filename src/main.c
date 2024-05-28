@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 19:03:06 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/28 11:28:56 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 	t_error		error;
 	char		*heredoc_place;
 	int			printed = 0;
+	char		*sq;
+	char    	*dq;
 
+	sq = NULL;
+	dq = NULL;
 	status_last_cmd = 0;
 	error = find_error(raw_line);
 	if (error.error)
@@ -66,8 +70,29 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 		}
 		while (index <= error.index)
 		{
-			token = change_token_heredoc(token, (raw_line + index),
-					&index, error);
+			if (raw_line[index] == '\"' || raw_line[index] == '\'')
+			{
+				if (raw_line[index] == '\"' && dq == NULL)
+					dq = &raw_line[index];
+				else if (raw_line[index] == '\"')
+					dq = NULL;
+				else if (raw_line[index] == '\'' && sq == NULL)
+					sq = &raw_line[index];
+				else if (raw_line[index] == '\'')
+					sq = NULL;
+				index++;
+			}
+			else
+			{
+				if (sq || dq)
+				{
+					token = NULL;
+					index++;
+				}
+				else
+					token = change_token_heredoc(token, (raw_line + index),
+							&index, error);
+			}
 		}
 		if (!printed)
 			printf("bash: syntax error near unexpected token `%s'\n",
