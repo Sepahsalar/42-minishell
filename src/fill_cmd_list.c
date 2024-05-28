@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:43:39 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 17:21:10 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:01:40 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ t_cmd	*fill_cmd_list(char **raw_cmd, t_env *env, t_env *original_env)
 	fill_env_cmd_list(&cmd, env);
 	fill_original_env_cmd_list(&cmd, original_env);
 	if (handle_dollar_struct(cmd))
+		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	if (fill_files_all(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_files(&cmd, ">"))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);

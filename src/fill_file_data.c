@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:51:07 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/27 10:43:21 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:54:15 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,3 +63,24 @@ int	fill_file_data(t_cmd **cmd)
 	}
 	return (0);
 }
+
+// int	fill_file_data_all(t_cmd **cmd)
+// {
+// 	t_cmd	*temp_cmd;
+// 	t_file	*temp_file;
+
+// 	temp_cmd = *cmd;
+// 	while (temp_cmd)
+// 	{
+
+// 		temp_file = temp_cmd->all;
+// 		while (temp_file)
+// 		{
+// 			if (create_file_data(temp_file))
+// 				return (1);
+// 			temp_file = temp_file->next;
+// 		}
+// 		temp_cmd = temp_cmd->next;
+// 	}
+// 	return (0);
+// }

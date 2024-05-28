@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:29:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 17:20:15 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:13:52 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,29 @@ int	fill_files(t_cmd **cmd, char *token)
 	{
 		if (fill_files_helper(temp->current, token, temp))
 			return (1);
+		temp = temp->next;
+	}
+	return (0);
+}
+
+int	fill_files_all(t_cmd **cmd)
+{
+	t_cmd	*temp;
+	t_file	*temp_file;
+
+	temp = *cmd;
+	while (temp)
+	{
+		if (fill_files_helper_all(temp))
+			return (1);
+		//printf("%s\n", temp->all->raw);
+		temp_file = temp->all;
+		while (temp_file)
+		{
+			if (create_file_data(temp_file))
+				return (1);
+			temp_file = temp_file->next;
+		}
 		temp = temp->next;
 	}
 	return (0);

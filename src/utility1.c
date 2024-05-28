@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 19:03:53 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:32:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,45 +33,85 @@ int	ft_isspace(int c)
 	return (0);
 }
 
+// static size_t	strlen_modified(char *s)
+// {
+// 	size_t	len;
+
+// 	len = 0;
+// 	if (s == 0 || *s == '\0')
+// 		return (0);
+// 	else
+// 	{
+// 		if (*s == '\"')
+// 		{
+// 			s++;
+// 			while (*s != '\0' && *s != '\"')
+// 			{
+// 				len++;
+// 				s++;
+// 			}
+// 			len += 2;
+// 		}
+// 		else if (*s == '\'')
+// 		{
+// 			s++;
+// 			while (*s != '\0' && *s != '\'')
+// 			{
+// 				len++;
+// 				s++;
+// 			}
+// 			len += 2;
+// 		}
+// 		else
+// 		{
+// 			while (*s != '\0' && !ft_isspace(*s) && !istoken(*s))
+// 			{
+// 				s++;
+// 				len++;
+// 			}
+// 		}
+// 		return (len);
+// 	}
+// }
+
 static size_t	strlen_modified(char *s)
 {
 	size_t	len;
+	int		sq;
+	int		dq;
+	int		index;
 
 	len = 0;
+	sq = 0;
+	dq = 0;
+	index = 0;
 	if (s == 0 || *s == '\0')
 		return (0);
-	else
+	sq = 0;
+	dq = 0;
+	while (s[index])
 	{
-		if (*s == '\"')
+		if (s[index] == '\"' || s[index] == '\'')
 		{
-			s++;
-			while (*s != '\0' && *s != '\"')
-			{
-				len++;
-				s++;
-			}
-			len += 2;
-		}
-		else if (*s == '\'')
-		{
-			s++;
-			while (*s != '\0' && *s != '\'')
-			{
-				len++;
-				s++;
-			}
-			len += 2;
+			if (s[index] == '\'' && sq)
+				sq = 0;
+			else if (s[index] == '\'')
+				sq = 1;
+			else if (s[index] == '\"' && dq)
+				dq = 0;
+			else if (s[index] == '\"')
+			    dq = 1;
+			len++;
 		}
 		else
 		{
-			while (*s != '\0' && !ft_isspace(*s) && !istoken(*s))
-			{
-				s++;
-				len++;
-			}
+			if (s[index] == ' ' && !sq && !dq)
+				break ;
+			len++;
 		}
-		return (len);
+		index++;
 	}
+	return (len);
 }
 
 char	*strdup_modified(char *s, char *token)
@@ -79,16 +119,19 @@ char	*strdup_modified(char *s, char *token)
 	size_t	l;
 	char	*d;
 
+	// printf("s:%s\n", s);
 	l = ft_strlen(token);
 	s = s + l;
 	while (*s != '\0' && ft_isspace(*s))
 		++s;
 	l = strlen_modified(s);
+	
 	d = malloc((l + 1) * sizeof (char));
 	if (d == 0)
 		return (0);
 	ft_memcpy (d, s, l);
 	d[l] = '\0';
+	// printf("d:%s\n", d);
 	return (d);
 }
 

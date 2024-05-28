@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:10:21 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 15:26:55 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:44:16 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,13 @@ static int	len_quote_pipe(char const *s, char c)
 			}
 			j++;
 		}
+		//printf("[%d]:%c\n",j, s[j]);
 		// printf("triger_change = %d\n", triger_change);
 		while (!triger_change && s[j] && s[j] != c)
 			j++;
-		// if (s[j] == c)
-		// 	j--;
+		//printf("[%d]:%c\n",j, s[j]);
+		if (s[j] == c)
+			j--;
 	}
 	else
 		j = len_helper_pipe(s);

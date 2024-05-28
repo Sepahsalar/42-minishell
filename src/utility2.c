@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:04:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 19:03:37 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:07:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,5 +161,91 @@ int	fill_files_helper(char *str, char *c , t_cmd *cmd)
 		cmd->output = start;
 	else
 		cmd->input = start;
+	return (0);
+}
+
+t_hd_file	*remove_update_all(t_hd_file *hd)
+{
+	char	*temp_str;
+
+	temp_str = hd->str + hd->file->place;
+	if (*(temp_str) == '>'  && *(temp_str + 1) == '>')
+	{
+		// temp_str++;
+		hd->file->append = 1;
+		hd->file->raw = strdup_modified(temp_str, ">>");
+	}
+	else if (*(temp_str) == '>')
+	{
+		hd->file->trunc = 1;
+		hd->file->raw = strdup_modified(temp_str, ">");
+	}
+	else if (*(temp_str) == '<' && *(temp_str + 1) != '<')
+	{
+		hd->file->input = 1;
+		hd->file->raw = strdup_modified(temp_str, "<");
+	}
+	return (hd);
+}
+
+int	fill_files_helper_all(t_cmd *cmd)
+{
+	int			index;
+	char		*sq;
+	char		*dq;
+	int			len;
+	t_file		*start;
+	t_file		*new;
+	t_file  	*old;
+	t_hd_file	*hd;
+	char        *str;
+
+	sq = NULL;
+	dq = NULL;
+	str = cmd->current;
+	hd = malloc(sizeof(t_hd_file));
+	ft_memset(hd, 0, sizeof(t_hd_file));
+	if (!str || *str == '\0')
+		return (0);
+	start = NULL;
+	index = 0;
+	len = ft_strlen(str);
+	while (index < len)
+	{
+		if (str[index] == '\"' && dq == NULL)
+			dq = &str[index];
+		else if (str[index] == '\"')
+			dq = NULL;
+		else if (str[index] == '\'' && sq == NULL)
+			sq = &str[index];
+		else if (str[index] == '\'')
+			sq = NULL;
+		else if (!sq && !dq && (str[index] == '>' || str[index] == '<'))
+		{
+			new = create_file_node(index);
+			if (start == NULL)
+				start = new;
+			else
+				old->next = new;
+			if (!new)
+			{
+				clean_file_list(start);
+				return (1);
+			}
+			old = new;
+			if (str[index + 1] == '>' || str[index + 1] == '<')
+				index++;
+		}
+		index++;
+	}
+	hd->file = start;
+	hd->str = ft_strdup(str);
+	while (hd->file)
+	{
+		hd = remove_update_all(hd);
+		hd->file = hd->file->next;
+	}
+	// cmd->current = ft_strdup(hd->str);
+	cmd->all = start;
 	return (0);
 }
