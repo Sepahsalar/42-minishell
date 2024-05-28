@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/28 20:26:53 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/28 20:32:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,19 +319,25 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			close(fd[0]);
 			if (cmd_execution->index == cmd_count(cmd_start))
 			{
+				index = 1;
+				while (index < cmd_execution->index)
+				{
+					wait(0);
+					index++;
+				}
 				waitpid(pid, &status, 0);
 				if (WIFEXITED(status))
 					status = WEXITSTATUS (status);
 				else if (WIFSIGNALED(status))
 					status = WTERMSIG(status) + 128;
 				env_pack.original_env = export_original(env_pack.original_env, status);
-				index = 1;
+				// index = 1;
 				// printf("cmd_count: %d\n", cmd_execution->index);
-				while (index < cmd_execution->index)
-				{
-					wait(0);
-					index++;
-				}
+				// while (index < cmd_execution->index)
+				// {
+				// 	wait(0);
+				// 	index++;
+				// }
 			}
 		}
 	}
