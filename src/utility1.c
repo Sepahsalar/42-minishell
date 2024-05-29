@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 19:32:05 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:22:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ char	*strdup_modified(char *s, char *token)
 	while (*s != '\0' && ft_isspace(*s))
 		++s;
 	l = strlen_modified(s);
-	
 	d = malloc((l + 1) * sizeof (char));
 	if (d == 0)
 		return (0);

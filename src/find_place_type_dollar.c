@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_palce_type_dollar.c                           :+:      :+:    :+:   */
+/*   find_place_type_dollar.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:31:42 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 13:02:05 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:36:46 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,12 @@ t_dollar	*create_fill_dollar_list(char *arg)
 	dq = NULL;
 	heredoc = 0;
 	id = 0;
-
 	while (index < (int)ft_strlen(arg))
 	{
 		sq_dq_updater(&arg[index], &sq, &dq);
 		heredoc_updater(&arg[index], &heredoc);
-		if (arg[index] == '$' && (!arg[index - 1] || arg[index - 1] != '$'))
+		if (arg[index] && arg[index] == '$'
+			&& (index < 1 || arg[index - 1] != '$'))
 		{
 			type = type_finder(sq, dq, heredoc);
 			id++;

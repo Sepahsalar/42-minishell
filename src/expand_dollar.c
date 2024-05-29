@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 15:22:32 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:41:45 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_env	*cpy_env(t_env *env)
 	return (start);
 }
 
-static char	*get_current_pid(t_env *original_env)
+char	*get_current_pid(t_env *original_env)
 {
 	char		*raw_line;
 	int			fd;
@@ -79,6 +79,7 @@ static char	*get_current_pid(t_env *original_env)
 	fd = open(".pid", O_RDONLY);
 	pid_str = get_next_line(fd);
 	pid_str[ft_strlen(pid_str) - 1] = '\0';
+	// printf("%s\n", pid_str);
 	close(fd);
 	unlink(".pid");
 	clean_env_list(cpy);
@@ -100,32 +101,37 @@ char	*expand_dollar_helper(t_cmd *cmd, char *str , char *find, int type)
 	int		initial_length;
 	int		remained_dollar;
 	int		reletive_index;
-	
 
+	
 	env = cmd->env;
 	temp = str;
 	count = 0;
 	index = 0;
 	initial_length = ft_strlen(str);
-	temp = get_current_pid(cmd->original_env);
+	temp = cmd->original_env->next->value;
 	while (find[index] && find[index] == '$')
 	{
 		count++;
 		index++;
 	}
+	// printf("count: %d\n", count);
 	remained_dollar = count % 2;
 	count = count / 2;
 	reletive_index = find - str;
+	// printf("reletive_index: %d\n", reletive_index);
 	str = expand_pid(str, find, temp, count);
+	// printf("str: %s\n", str);
 	if (count)
 		find = str + reletive_index + (ft_strlen(temp) * count);
 	if ((!*find) || (find && (*(find + 1) == '\0'
-				|| *(find + 1) == ' ' || (type == 2 && (*(find + 1) == '\''
+				|| *(find + 1) == ' ' || *(find + 1) == '=' || (type == 2 && (*(find + 1) == '\''
 						|| *(find + 1) == '\"')))))
 	{
 		new_str = ft_strdup(str);
+		// printf("new_str: %s\n", new_str);
 		return (new_str);
 	}
+	// printf("end\n");
 	if (remained_dollar)
 	{
 		len1 = find - str;

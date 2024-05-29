@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:04:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 19:07:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:28:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,22 @@ char	**copy_2d_char(char **src)
 t_hd_file	*remove_update(t_hd_file *hd, char *c)
 {
 	char	*temp_str;
+	int		len;
+	t_file	*file;
 
+	len = ft_strlen(hd->str);
 	if (*c == '>')
 		hd->file->fd_operator = atoi_file(&(hd->str), hd->file->place, 1);
 	else if (*c == '<')
 		hd->file->fd_operator = atoi_file(&(hd->str), hd->file->place, 0);
+	hd->file->place = hd->file->place + ft_strlen(hd->str) - len;
 	temp_str = hd->str + hd->file->place;
+	file = hd->file->next;
+	while (file)
+	{
+		file->place = file->place + ft_strlen(hd->str) - len;
+		file = file->next;
+	}
 	if (*c == '>' && *(temp_str + 1) == '>')
 	{
 		temp_str++;

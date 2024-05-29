@@ -6,32 +6,14 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 12:30:48 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:45:43 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 // 6) create a .history file to keep the commands for each SHLVL-------------8h denied
-// 7) update SHLVL in env, so we can have multiple ./minishell 
-//    inside of each other (like bash - like a builtin)----------------------4h half/done
-// 8) error handling and leaks management after readline and before giving it
-//    to execute command-----------------------------------------------------40h
-// 8-1) (for this step, remind to handle this: '>|' '<>' '< |' '< <' '<<<')
-// 8-2) handle "" as a command or a redirection
-// 8-3) check "<<< end", it should do nothing but now it is creating heredoc that never ends
-// 8-4) handle this:
-// 		bash-3.2$ >>> hi
-// 		bash: syntax error near unexpected token `>'
-// 		bash-3.2$ > >> hi
-// 		bash: syntax error near unexpected token `>>'
-// 		bash-3.2$ << ls > >>
-// 		bash: syntax error near unexpected token `>>'
 // 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
-//11) (bonus) handle "ls |" like a heredoc------------------------------------4h denied
-//     قیل از هر چیز تریم اسپیس صورت گیرد.
-// بعد از تریم اگر ایندکس منفی یک برابر پایپ بود هیر داک باز می شود و جوین صوزت می گیرد
-// دوباره همین کار تکرار می شود
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {
@@ -57,6 +39,14 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 	if (error.error)
 	{
 		env_pack_result = env_pack;
+		if (error.not_handling)
+		{
+			env_pack_result.original_env = export_original(env_pack_result.original_env, 1);
+			ft_putstr_fd("ASAL: We are not going to handle `", 2);
+			ft_putstr_fd(error.error, 2);
+			ft_putendl_fd("\'", 2);
+			return (env_pack_result);
+		}
 		export_original(env_pack_result.original_env, 258);
 		index = 0;
 		token = NULL;
@@ -65,8 +55,6 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 				+ ft_strlen(error.error) - 1))
 		{
 			printed = 1;
-			// printf("bash: syntax error near unexpected token `%s'\n",
-			// 	error.error);
 			ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 			ft_putstr_fd(error.error, 2);
 			ft_putendl_fd("\'", 2);
@@ -99,8 +87,6 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 		}
 		if (!printed)
 		{
-			// printf("bash: syntax error near unexpected token `%s'\n",
-			// 	error.error);
 			ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 			ft_putstr_fd(error.error, 2);
 			ft_putendl_fd("\'", 2);
@@ -168,14 +154,24 @@ int	main(int argc, char **argv, char **envp)
 	int				fd_stdin;
 	int				fd_stdout;
 	t_env_pack 		env_pack;
+	char 			*pid;
+	t_env *original_env;
 	// struct sigaction	action;
 
 	(void)argc;
 	(void)argv;
-	env_pack.env = set_start(fill_env_list(envp));
-	env_pack.original_env = export_original(fill_env_list(envp), 0);
 	fd_stdin = dup(STDIN_FILENO);
 	fd_stdout = dup(STDOUT_FILENO);
+	env_pack.env = set_start(fill_env_list(envp));
+	pid = get_current_pid(env_pack.env);
+	dup(fd_stdin);
+	close(STDOUT_FILENO);
+	dup(fd_stdout);
+	original_env = fill_env_list(envp);
+	original_env = custom_export(original_env,
+			ft_strdup("pid"), ft_strdup(pid));
+	original_env = export_original(original_env, 0);
+	env_pack.original_env = original_env;
 	signal(SIGQUIT, &sig_handler);
 	signal(SIGINT, &sig_handler);
 	// sigemptyset(&action.sa_mask);

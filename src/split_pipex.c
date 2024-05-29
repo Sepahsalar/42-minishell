@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:10:21 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 18:44:16 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 11:34:06 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,16 @@ static int	len_quote_pipe(char const *s, char c)
 	char	temp;
 	int		triger_change;
 
+	// printf("str: %s\n",s);
 	triger_change = 1;
 	j = 0;
 	if ((*s != 34 && *s != 39))
 	{
 		temp = c;
-		while (!((s[j] != temp)
+		while (s[j] && !((s[j] != temp)
 				&& (s[j + 1] == '\0' || s[j + 1] == temp)))
 		{
+			// printf("hi\n");
 			if ((s[j] == '\'') && triger_change)
 			{
 				temp = '\'';
@@ -97,11 +99,11 @@ static int	len_quote_pipe(char const *s, char c)
 			}
 			j++;
 		}
-		//printf("[%d]:%c\n",j, s[j]);
+		// printf("[%d]:%c\n",j, s[j]);
 		// printf("triger_change = %d\n", triger_change);
 		while (!triger_change && s[j] && s[j] != c)
 			j++;
-		//printf("[%d]:%c\n",j, s[j]);
+		// printf("[%d]:%c\n",j, s[j]);
 		if (s[j] == c)
 			j--;
 	}

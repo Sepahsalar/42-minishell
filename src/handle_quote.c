@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:23:32 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 11:12:51 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:02:40 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 int	end_finder(char *str, int index)
 {
-	if (str[index] != '\'' && str[index] != '\"')
+	if (str[index] && str[index] != '\'' && str[index] != '\"')
 	{
 		index++;
-		while (str[index] != '\'' && str[index] != '\"' && str[index] != '\0')
+		while (str[index] && str[index] != '\'' && str[index] != '\"')
 			index++;
 		index--;
 	}
-	else if (str[index] == '\"')
+	else if (str[index] && str[index] == '\"')
 	{
 		index++;
-		while (str[index] != '\"' && str[index] != '\0')
+		while (str[index] && str[index] != '\"')
 			index++;
 	}
-	else
+	else if (str[index])
 	{
 		index++;
-		while (str[index] != '\'' && str[index] != '\0')
+		while (str[index] && str[index] != '\'')
 			index++;
 	}
 	return (index);

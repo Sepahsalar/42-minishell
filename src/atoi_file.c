@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:03:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/27 17:55:33 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:12:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,6 @@ long	atoi_file(char **input, int place, int def)
 
 	a = 0;
 	str = *input;
-	// if (def == 0)
-	// 	find = ft_strchr(str, '<');
-	// else
-	// 	find = ft_strchr(str, '>');
 	find = str + place;
 	temp = find - str;
 	if (temp)
@@ -107,14 +103,13 @@ long	atoi_file(char **input, int place, int def)
 	while (str[temp] >= '0' && str[temp] <= '9')
 	{
 		a = a * 10 + (str[temp] - '0');
-		// if (a < 0)
-		// 	perror("bash");
 		temp++;
 	}
 	new = malloc(len1 + len2 + 1);
 	new[len1 + len2] = '\0';
 	ft_memcpy(new, str, len1);
 	ft_memcpy(new + len1, part2, len2);
+	// printf("final output = %s\n", new);
 	temp_str = *input;
 	*input = new;
 	free(temp_str);

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 17:51:56 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 13:22:32 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_cmd
 	t_file			*std_error;
 	t_file			*all;
 	int				is_file;
-	int             exec_error;
+	int             file_error;
 	int				empty_cmd;
 	char			*cmd_name;
 	char			*address;
@@ -87,6 +87,7 @@ typedef struct s_cmd
 	int				exec;
 	int				dir;
 	int				error;
+	pid_t			pid;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -128,6 +129,7 @@ typedef struct s_error
 {
 	char	*error;
 	int		index;
+	int		not_handling;
 }			t_error;
 
 // typedef struct s_dot
@@ -245,6 +247,7 @@ t_file		*create_file_node(int	place);
 int			fill_files_helper(char *str, char *c, t_cmd *cmd);
 int			fill_files_helper_all(t_cmd *cmd);
 int			export_check(char *str);
-int	fill_files_all(t_cmd **cmd);
+int			fill_files_all(t_cmd **cmd);
+char		*get_current_pid(t_env *original_env);
 
 #endif //MINISHELL_H

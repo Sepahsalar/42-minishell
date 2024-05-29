@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/28 20:32:05 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:31:15 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	t_file		*last_output;
 	t_last_file	*last;
 	int			fd[2];
-	pid_t		pid;
+	//pid_t		pid;
 	int     	status;
-	int			index;
+	// int			index;
 	t_env_pack	env_pack;
+	t_cmd        *temp_cmd;
 
 	status = 0;
 	last_input = NULL;
@@ -47,7 +48,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 					ft_putendl_fd(": No such file or directory", 2);
 					master_clean(0, cmd_start->env, cmd_start, -1);
 					env_pack.original_env = export_original(env_pack.original_env, 1);
-					cmd_execution->exec_error = 1;
+					cmd_execution->file_error = 1;
 					break ;
 				}
 				else
@@ -57,7 +58,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 					ft_putendl_fd(": Permission denied", 2);
 					master_clean(0, cmd_start->env, cmd_start, -1);
 					env_pack.original_env = export_original(env_pack.original_env, 1);
-					cmd_execution->exec_error = 1;
+					cmd_execution->file_error = 1;
 					break ;
 				}
 			}
@@ -78,7 +79,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 				ft_putendl_fd(strerror(errno), 2);
 				master_clean(0, cmd_start->env, cmd_execution, -1);
 				env_pack.original_env = export_original(env_pack.original_env, 1);
-				cmd_execution->exec_error = 1;
+				cmd_execution->file_error = 1;
 				break ;
 			}
 			close(temp_file->fd);
@@ -90,7 +91,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 
 
 	// temp_file = cmd_execution->input;
-	// while (temp_file && !cmd_execution->exec_error)
+	// while (temp_file && !cmd_execution->file_error)
 	// {
 	// 	if (temp_file->read == 0 && !temp_file->limiter)
 	// 	{
@@ -103,7 +104,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	// 			ft_putendl_fd(": No such file or directory", 2);
 	// 			master_clean(0, cmd_start->env, cmd_start, -1);
 	// 			env_pack.original_env = export_original(env_pack.original_env, 1);
-	// 			cmd_execution->exec_error = 1;
+	// 			cmd_execution->file_error = 1;
 	// 			// close(0);
 	// 			// return (env_pack);
 	// 		}
@@ -115,14 +116,14 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	// 			ft_putendl_fd(": Permission denied", 2);
 	// 			master_clean(0, cmd_start->env, cmd_start, -1);
 	// 			env_pack.original_env = export_original(env_pack.original_env, 1);
-	// 			cmd_execution->exec_error = 1;
+	// 			cmd_execution->file_error = 1;
 	// 			// return (env_pack);
 	// 		}
 	// 	}
 	// 	temp_file = temp_file->next;
 	// }
 	// temp_file = cmd_execution->output;
-	// while (temp_file && !cmd_execution->exec_error)
+	// while (temp_file && !cmd_execution->file_error)
 	// {
 	// 	//printf("address: %s\n", temp_file->address);
 	// 	if (temp_file->trunc)
@@ -140,7 +141,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	// 		ft_putendl_fd(strerror(errno), 2);
 	// 		master_clean(0, cmd_start->env, cmd_execution, -1);
 	// 		env_pack.original_env = export_original(env_pack.original_env, 1);
-	// 		cmd_execution->exec_error = 1;
+	// 		cmd_execution->file_error = 1;
 	// 		// return (env_pack);
 	// 	}
 	// 	close(temp_file->fd);
@@ -152,9 +153,9 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	{
 		env_pack.original_env = export_original(env_pack.original_env, 0);
 		// return (env_pack);
-		cmd_execution->exec_error = 1;
+		cmd_execution->file_error = 1;
 	}
-	if ((!cmd_execution->exec || cmd_execution->dir) && is_builtin(cmd_execution) == -1 && !cmd_execution->exec_error)
+	if ((!cmd_execution->exec || cmd_execution->dir) && is_builtin(cmd_execution) == -1 && !cmd_execution->file_error)
 	{
 		if (cmd_execution->dir)
 		{
@@ -165,7 +166,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			ft_putendl_fd(": is a directory", 2);
 			master_clean(0, cmd_start->env, cmd_execution, -1);
 			env_pack.original_env = export_original(env_pack.original_env, 126);
-			cmd_execution->exec_error = 1;
+			cmd_execution->file_error = 1;
 			// return (env_pack);
 		}
 		else
@@ -179,7 +180,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 				ft_putendl_fd(": Permission denied", 2);
 				master_clean(0, cmd_start->env, cmd_execution, -1);
 				env_pack.original_env = export_original(env_pack.original_env, 126);
-				cmd_execution->exec_error = 1;
+				cmd_execution->file_error = 1;
 				// return (env_pack);
 			}
 			else
@@ -194,28 +195,62 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 					ft_putendl_fd(": command not found", 2);
 				master_clean(0, cmd_start->env, cmd_execution, -1);
 				env_pack.original_env = export_original(env_pack.original_env, 127);
-				cmd_execution->exec_error = 1;
+				cmd_execution->file_error = 1;
 				// return (env_pack);
 			}
 		}
 	}
-	// printf("exec error: %d\n", cmd_execution->exec_error);
+	// printf("exec error: %d\n", cmd_execution->file_error);
 	// printf("last: %s\n", cmd_execution->last_out->file->address);
 	// if (cmd_count(cmd_start) == 1 && ((is_builtin(cmd_execution) >=4 && is_builtin(cmd_execution) <= 5) || (is_builtin(cmd_execution) == 2)))
-	if (cmd_count(cmd_start) == 1 && (is_builtin(cmd_execution) == 2 || is_builtin(cmd_execution) == 4 || is_builtin(cmd_execution) == 5) && !cmd_execution->exec_error)
-		env_pack = run_builtin(cmd_execution);
+	if (cmd_count(cmd_start) == 1 && (is_builtin(cmd_execution) == 2
+			|| is_builtin(cmd_execution) == 4 || is_builtin(cmd_execution) == 5
+			|| is_builtin(cmd_execution) == 7) && !cmd_execution->file_error)
+	{
+		if (is_builtin(cmd_execution) == 7 || is_builtin(cmd_execution) == 4)
+		{
+			last = cmd_execution->last_out;
+			if (last && !cmd_execution->file_error)
+			{
+				while (last)
+				{
+					last_output = last->file;
+					if (last_output->fd_operator <= 2)
+					{
+						if (last_output->trunc)
+							last_output->fd = open(last_output->address,
+									O_WRONLY | O_TRUNC, 0644);
+						else if (last_output->append)
+							last_output->fd = open(last_output->address,
+									O_WRONLY | O_APPEND, 0644);
+						if (last_output->fd == -1)
+							master_clean(0, cmd_start->env, cmd_execution, 1);
+						if (dup2(last_output->fd,
+								last_output->fd_operator) == -1)
+							master_clean(0, cmd_start->env, cmd_execution, 1);
+					}
+					last = last->next;
+				}
+			}
+			env_pack = run_builtin(cmd_execution);
+		}
+		else
+			env_pack = run_builtin(cmd_execution);
+		// printf("cmd_execution->args[0] = %s\n", cmd_execution->args[0]);
+		// printf("cmd_execution->args[1] = %s\n", cmd_execution->args[1]);
+	}
 	else
 	{
 		if (pipe(fd) == -1)
 			master_clean(0, cmd_start->env, cmd_execution, 1);
-		pid = fork();
-		if (pid == -1)
+		cmd_execution->pid = fork();
+		if (cmd_execution->pid == -1)
 			master_clean(0, cmd_start->env, cmd_execution, 1);
-		if (pid == 0)
+		if (cmd_execution->pid == 0)
 		{
 			//Handle fd overflow before this point
 			last = cmd_execution->last_in;
-			if (last && !cmd_execution->exec_error)
+			if (last && !cmd_execution->file_error)
 			{
 				while (last)
 				{
@@ -227,15 +262,17 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 							master_clean(0, cmd_start->env, cmd_execution, 1);
 						if (dup2(last_input->fd, last_input->fd_operator) == -1)
 							master_clean(0, cmd_start->env, cmd_execution, 1);
+						close(last_input->fd);
+						//close(last_input->fd_operator);
 					}
 					last = last->next;
 				}
 			}
 			
 			last = cmd_execution->last_out;
-			// printf("exec error: %d\n", cmd_execution->exec_error);
+			// printf("exec error: %d\n", cmd_execution->file_error);
 			// //printf("last: %p\n", cmd_execution->last_out);
-			if (last && !cmd_execution->exec_error)
+			if (last && !cmd_execution->file_error)
 			{
 				// printf("1hi\n");
 				while (last)
@@ -267,7 +304,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 					dup2(fd[1], STDOUT_FILENO);
 				// printf("1hi3\n");
 			}
-			else if (cmd_count(cmd_start) > cmd_execution->index && !cmd_execution->exec_error)
+			else if (cmd_count(cmd_start) > cmd_execution->index && !cmd_execution->file_error)
 			{
 				// printf("if index: %d : name : %s\n", cmd_execution->index, cmd_execution->cmd_name);
 				if (dup2(fd[1], STDOUT_FILENO) == -1)
@@ -278,7 +315,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			close(fd[0]);
 			close(fd[1]);
 			
-			if (cmd_execution->exec_error)
+			if (cmd_execution->file_error)
 				exit(ft_atoi(env_pack.original_env->value));
 			
 			if (is_builtin(cmd_execution) != -1)
@@ -317,21 +354,29 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			if (cmd_execution->index < cmd_count(cmd_start))
 				dup2(fd[0], STDIN_FILENO);
 			close(fd[0]);
+			//close(cmd_execution->last_in->file->fd);
+			// if (cmd_execution->index == 1)
+				// close(STDIN_FILENO);
 			if (cmd_execution->index == cmd_count(cmd_start))
 			{
-				index = 1;
-				while (index < cmd_execution->index)
+				close(STDIN_FILENO);
+				waitpid(cmd_execution->pid, &status, 0);
+				
+				//printf("i am waiting for pid: %d with name of %s\n", cmd_execution->pid, cmd_execution->cmd_name);
+				temp_cmd = cmd_start;
+				while (temp_cmd != cmd_execution)
 				{
-					wait(0);
-					index++;
+					//printf("i am waiting for pid: %d with name of %s\n", temp_cmd->pid, temp_cmd->cmd_name);
+					waitpid(temp_cmd->pid, NULL, 0);
+					temp_cmd = temp_cmd->next;
 				}
-				waitpid(pid, &status, 0);
+				// waitpid(cmd_execution->pid, &status, 0);
 				if (WIFEXITED(status))
 					status = WEXITSTATUS (status);
 				else if (WIFSIGNALED(status))
 					status = WTERMSIG(status) + 128;
 				env_pack.original_env = export_original(env_pack.original_env, status);
-				// index = 1;
+				// int index = 1;
 				// printf("cmd_count: %d\n", cmd_execution->index);
 				// while (index < cmd_execution->index)
 				// {

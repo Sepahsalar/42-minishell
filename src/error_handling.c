@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/28 11:34:26 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:19:33 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ t_error	find_error(char *line)
 	sq = NULL;
 	dq = NULL;
 	index = 0;
+	error.not_handling = 0;
 	cur = line;
 	len = (int)ft_strlen(line);
 	token = NULL;
@@ -107,11 +108,17 @@ t_error	find_error(char *line)
 		if (cur[index] == '\"' || cur[index] == '\'')
 		{
 			if (cur[index] == '\"' && dq == NULL)
+			{
+				token = NULL;
 				dq = &cur[index];
+			}
 			else if (cur[index] == '\"')
 				dq = NULL;
 			else if (cur[index] == '\'' && sq == NULL)
+			{
+				token = NULL;
 				sq = &cur[index];
+			}
 			else if (cur[index] == '\'')
 				sq = NULL;
 			index++;
@@ -120,7 +127,14 @@ t_error	find_error(char *line)
 		{
 			if (token && !sq && !dq)
 			{
-				if (!accept_char(token, cur + index))
+				// printf("token: %s\n", token);
+				if (same(token, "<<<"))
+				{
+					error.not_handling = 1;
+					error.error = ft_strdup("<<<");
+					return (error);
+				}
+				else if (!accept_char(token, cur + index))
 				{
 					error.index = index;
 					if (cur[index] == '\0')
