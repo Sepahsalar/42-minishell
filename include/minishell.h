@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 13:22:32 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:38:38 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
+# include <sys/ioctl.h>
 
 # define ANSI_COLOR_GREEN "\001\x1b[32m\002"
 # define ANSI_COLOR_RESET "\001\x1b[0m\002"
-// # define ANSI_COLOR_GREEN "\x1b[32m"
-// # define ANSI_COLOR_RESET "\x1b[0m"
 # define ANSI_MOVE_UP "\033[1A"
 
-// volatile int g_signal;
+volatile int g_signal;
 
 typedef struct s_file
 {
@@ -70,7 +69,7 @@ typedef struct s_cmd
 	char			*raw;
 	char			*current;
 	t_env			*env;
-	t_env	 		*original_env;
+	t_env			*original_env;
 	t_file			*input;
 	t_file			*output;
 	t_last_file		*last_in;
@@ -78,7 +77,7 @@ typedef struct s_cmd
 	t_file			*std_error;
 	t_file			*all;
 	int				is_file;
-	int             file_error;
+	int				file_error;
 	int				empty_cmd;
 	char			*cmd_name;
 	char			*address;
@@ -132,15 +131,6 @@ typedef struct s_error
 	int		not_handling;
 }			t_error;
 
-// typedef struct s_dot
-// {
-// 	char			*old_pwd;
-// 	int				i_old;
-// 	char			*arg;
-// 	int				i_arg;
-// 	struct s_quote	*next;
-// }					t_dot;
-
 typedef struct s_hd_file
 {
 	char	*str;
@@ -187,7 +177,7 @@ int			create_file_data(t_file *file);
 int			fill_file_data(t_cmd **cmd);
 // char		*handle_quote_str(char *input);
 char		*handling_quote(char *str);
-t_env_pack			execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution);
+t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution);
 int			ft_isspace(int c);
 char		**recreate_2d_env(t_env *env);
 int			all_space(char *str);
@@ -196,7 +186,7 @@ void		execution_package(t_cmd *cmd,
 				char **cmd_address, char ***cmd_args, char ***cmd_env);
 int			cmd_count(t_cmd *cmd);
 // long		atoi_file(char **input, int def);
-long	atoi_file(char **input, int place, int def);
+long		atoi_file(char **input, int place, int def);
 int			fill_last_out(t_cmd **cmd);
 t_last_file	*clean_last_file_list(t_last_file *first);
 int			fill_last_in(t_cmd **cmd);
@@ -216,9 +206,9 @@ char		*replace_inside(char *str, char *location,
 				char *inside, char *handled_inside);
 t_dollar	*clean_dollar_list(t_dollar *first);
 void		remove_previous_node(t_dollar *current);
-t_env_pack			run_env(t_cmd *cmd);
+t_env_pack	run_env(t_cmd *cmd);
 int			is_builtin(t_cmd *cmd);
-t_env_pack		run_builtin(t_cmd *cmd);
+t_env_pack	run_builtin(t_cmd *cmd);
 t_env_pack	run_export(t_cmd *cmd);
 t_env		*export_original(t_env *env, int status);
 t_env_pack	init_env_pack(t_cmd *cmd);
@@ -241,13 +231,15 @@ void		run_exit_eof(t_env *env, int fd_stdin, int fd_stdout);
 t_error		find_error(char *line);
 int			cmd_counter_error(const char *input);
 char		*find_token(char *cur);
-char		*change_token_heredoc(char *token, char *cur, int *index, t_error error);
+char		*change_token_heredoc(char *token, char *cur,
+				int *index, t_error error);
 int			check_after_token(char *str);
-t_file		*create_file_node(int	place);
+t_file		*create_file_node(int place);
 int			fill_files_helper(char *str, char *c, t_cmd *cmd);
 int			fill_files_helper_all(t_cmd *cmd);
 int			export_check(char *str);
 int			fill_files_all(t_cmd **cmd);
 char		*get_current_pid(t_env *original_env);
+void		sig_handler(int sig);
 
 #endif //MINISHELL_H

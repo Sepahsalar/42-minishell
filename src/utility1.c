@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 14:22:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:52:13 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static size_t	strlen_modified(char *s)
 			else if (s[index] == '\"' && dq)
 				dq = 0;
 			else if (s[index] == '\"')
-			    dq = 1;
+				dq = 1;
 			len++;
 		}
 		else
@@ -119,7 +119,6 @@ char	*strdup_modified(char *s, char *token)
 	size_t	l;
 	char	*d;
 
-	// printf("s:%s\n", s);
 	l = ft_strlen(token);
 	s = s + l;
 	while (*s != '\0' && ft_isspace(*s))
@@ -130,7 +129,6 @@ char	*strdup_modified(char *s, char *token)
 		return (0);
 	ft_memcpy (d, s, l);
 	d[l] = '\0';
-	// printf("d:%s\n", d);
 	return (d);
 }
 

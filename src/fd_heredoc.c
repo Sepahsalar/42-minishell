@@ -6,11 +6,54 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:59:53 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 18:08:05 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/29 17:34:21 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static void	sig_handler_heredoc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ioctl(0, TIOCSTI, "\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		printf("\033[1A");
+		g_signal = sig;
+	}
+	else if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		// printf (ANSI_MOVE_UP"> "ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$\n");
+	}
+}
+
+char	*custom_get_next_line(void)
+{
+	char	buf[2];
+	char	*line;
+	char	*temp;
+	// int	i;
+
+	line = ft_strdup("");
+	buf[0] = '\0';
+	buf[1] = '\0';
+	// i = 0;
+	// while (buf[0] != '\n' && (i > 0 && same(line, "")))
+	// ft_putstr_fd("> ", STDOUT_FILENO);
+	while (buf[0] != '\n')
+	{
+		buf[0] = '\0';
+		read(STDIN_FILENO, buf, 1);
+		temp = line;
+		line = ft_strjoin(line, buf);
+		if (same(line, ""))
+			return (NULL);
+	}
+	// printf("line read: %s\n", line);
+	return (line);
+}
 
 int	fd_heredoc(t_cmd **cmd_address)
 {
@@ -29,6 +72,8 @@ int	fd_heredoc(t_cmd **cmd_address)
 	temp_input = cmd->input;
 	file_name = 0;
 	heredoc_text = 0;
+	signal(SIGINT, &sig_handler_heredoc);
+	signal(SIGQUIT, &sig_handler_heredoc);
 	while (temp_input)
 	{
 		//protection needed
@@ -52,39 +97,53 @@ int	fd_heredoc(t_cmd **cmd_address)
 				return (1);
 			ft_putstr_fd("> ", STDOUT_FILENO);
 			line = get_next_line(STDIN_FILENO);
+			// line = NULL;
 			if (!line)
 				return (1);
-			while (ft_strlen(line) != ft_strlen(temp_str)
-				|| ft_strncmp(line, temp_str, ft_strlen(temp_str)))
+			while (!same(line, temp_str) && !g_signal)
 			{
 				if (!heredoc_text)
+				{
 					heredoc_text = ft_strdup(line);
+				}
 				else
 				{
 					temp_heredoc_text = heredoc_text;
-					heredoc_text = ft_strjoin(heredoc_text, line);
+					if (line)
+						heredoc_text = ft_strjoin(heredoc_text, line);
+					else
+					{
+						break ;
+					}
 					if (!heredoc_text)
 					{
-						free(line);
-						free(temp_heredoc_text);
-						free(temp_str);
+						// free(line);
+						// free(temp_heredoc_text);
+						// free(temp_str);
 						return (1);
 					}
 					free(temp_heredoc_text);
 				}
-				free(line);
+				//free(line);
 				ft_putstr_fd("> ", STDOUT_FILENO);
-				line = get_next_line(STDIN_FILENO);
+				// if (g_)
+				// line = get_next_line(STDIN_FILENO);
+				line = custom_get_next_line();
+				//printf("%s", line);
 			}
-			free(line);
-			free(temp_str);
+			// if (g_signal)
+			// 	write(STDOUT_FILENO, "\n", 0);
+			// free(line);
+			// free(temp_str);
 			ft_putstr_fd(heredoc_text, temp_input->fd);
-			free(heredoc_text);
+			// free(heredoc_text);
 			heredoc_text = NULL;
 			temp_input->fd = -2;
 		}
 		temp_input = temp_input->next;
 	}
+	signal(SIGINT, &sig_handler);
+	signal(SIGQUIT, &sig_handler);
 	return (0);
 }
 

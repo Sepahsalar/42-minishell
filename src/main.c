@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 14:45:43 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:36:51 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 	dq = NULL;
 	status_last_cmd = 0;
 	error = find_error(raw_line);
+	env_pack_result = env_pack;
 	if (error.error)
 	{
 		env_pack_result = env_pack;
 		if (error.not_handling)
 		{
-			env_pack_result.original_env = export_original(env_pack_result.original_env, 1);
+			env_pack_result.original_env
+				= export_original(env_pack_result.original_env, 1);
 			ft_putstr_fd("ASAL: We are not going to handle `", 2);
 			ft_putstr_fd(error.error, 2);
 			ft_putendl_fd("\'", 2);
@@ -98,15 +100,18 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 	master_clean(raw_cmd, 0, 0, -1);
 	cmd_counter = cmd_count(cmd);
 	temp_cmd = cmd;
-	while (temp_cmd)
+	if (!g_signal)
 	{
-		if (temp_cmd->index == cmd_counter)
+		while (temp_cmd)
 		{
-			env_pack_result = execute_cmd(cmd, temp_cmd);
+			if (temp_cmd->index == cmd_counter)
+			{
+				env_pack_result = execute_cmd(cmd, temp_cmd);
+			}
+			else
+				execute_cmd(cmd, temp_cmd);
+			temp_cmd = temp_cmd->next;
 		}
-		else
-			execute_cmd(cmd, temp_cmd);
-		temp_cmd = temp_cmd->next;
 	}
 	temp_cmd = cmd;
 	while (temp_cmd)
@@ -130,7 +135,7 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 	return (env_pack_result);
 }
 
-static void	sig_handler(int sig)
+void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -138,6 +143,8 @@ static void	sig_handler(int sig)
 		rl_replace_line("", STDIN_FILENO);
 		rl_on_new_line();
 		rl_redisplay();
+		// printf(ANSI_MOVE_UP);
+		g_signal = sig;
 	}
 	else if (sig == SIGQUIT)
 	{
@@ -145,6 +152,8 @@ static void	sig_handler(int sig)
 		rl_redisplay();
 	}
 }
+
+
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -160,6 +169,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	g_signal = 0;
 	fd_stdin = dup(STDIN_FILENO);
 	fd_stdout = dup(STDOUT_FILENO);
 	env_pack.env = set_start(fill_env_list(envp));
@@ -189,6 +199,7 @@ int	main(int argc, char **argv, char **envp)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	while (1)
 	{
+		g_signal = 0;
 		raw_line = readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
 		if (!raw_line)
 			run_exit_eof(env_pack.original_env, fd_stdin, fd_stdout);
