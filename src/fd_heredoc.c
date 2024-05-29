@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:59:53 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 17:34:21 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/29 20:04:28 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,44 +16,43 @@ static void	sig_handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
+		// readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
 		ioctl(0, TIOCSTI, "\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_on_new_line();
+		// rl_replace_line("", 0);
 		printf("\033[1A");
+		// write(STDOUT_FILENO, "\n", 1);
+		//rl_replace_line("", STDIN_FILENO);
+		// rl_on_new_line();
+		// rl_redisplay();
 		g_signal = sig;
 	}
-	else if (sig == SIGQUIT)
-	{
-		rl_on_new_line();
-		// printf (ANSI_MOVE_UP"> "ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$\n");
-	}
+	// else if (sig == SIGQUIT)
+	// {
+	// 	(void)sig;
+	// }
 }
 
-char	*custom_get_next_line(void)
-{
-	char	buf[2];
-	char	*line;
-	char	*temp;
-	// int	i;
+// char	*custom_get_next_line(void)
+// {
+// 	char	buf[2];
+// 	char	*line;
+// 	char	*temp;
 
-	line = ft_strdup("");
-	buf[0] = '\0';
-	buf[1] = '\0';
-	// i = 0;
-	// while (buf[0] != '\n' && (i > 0 && same(line, "")))
-	// ft_putstr_fd("> ", STDOUT_FILENO);
-	while (buf[0] != '\n')
-	{
-		buf[0] = '\0';
-		read(STDIN_FILENO, buf, 1);
-		temp = line;
-		line = ft_strjoin(line, buf);
-		if (same(line, ""))
-			return (NULL);
-	}
-	// printf("line read: %s\n", line);
-	return (line);
-}
+// 	line = ft_strdup("");
+// 	buf[0] = '\0';
+// 	buf[1] = '\0';
+// 	while (buf[0] != '\n')
+// 	{
+// 		buf[0] = '\0';
+// 		read(STDIN_FILENO, buf, 1);
+// 		temp = line;
+// 		line = ft_strjoin(line, buf);
+// 		if (same(line, ""))
+// 			return (NULL);
+// 	}
+// 	return (line);
+// }
 
 int	fd_heredoc(t_cmd **cmd_address)
 {
@@ -62,6 +61,7 @@ int	fd_heredoc(t_cmd **cmd_address)
 	char	*file_name;
 	char	*temp_str;
 	char	*temp_str2;
+	char	*temp_str3;
 	char	*heredoc_text;
 	char	*temp_heredoc_text;
 	char 	*line;
@@ -73,7 +73,8 @@ int	fd_heredoc(t_cmd **cmd_address)
 	file_name = 0;
 	heredoc_text = 0;
 	signal(SIGINT, &sig_handler_heredoc);
-	signal(SIGQUIT, &sig_handler_heredoc);
+	// signal(SIGINT, SIG_DFL);
+	// signal(SIGQUIT, SIG_IGN);
 	while (temp_input)
 	{
 		//protection needed
@@ -95,12 +96,11 @@ int	fd_heredoc(t_cmd **cmd_address)
 			temp_str = ft_strjoin(temp_input->limiter, "\n");
 			if (!temp_str)
 				return (1);
-			ft_putstr_fd("> ", STDOUT_FILENO);
-			line = get_next_line(STDIN_FILENO);
-			// line = NULL;
-			if (!line)
-				return (1);
-			while (!same(line, temp_str) && !g_signal)
+			temp_str3 = readline("> ");
+			if (!temp_str3)
+				printf(ANSI_MOVE_UP"> ");
+			line = ft_strjoin(temp_str3, "\n");
+			while (!same(line, temp_str) && line && !g_signal)
 			{
 				if (!heredoc_text)
 				{
@@ -113,6 +113,7 @@ int	fd_heredoc(t_cmd **cmd_address)
 						heredoc_text = ft_strjoin(heredoc_text, line);
 					else
 					{
+						printf(ANSI_MOVE_UP"> ");
 						break ;
 					}
 					if (!heredoc_text)
@@ -125,12 +126,49 @@ int	fd_heredoc(t_cmd **cmd_address)
 					free(temp_heredoc_text);
 				}
 				//free(line);
-				ft_putstr_fd("> ", STDOUT_FILENO);
-				// if (g_)
-				// line = get_next_line(STDIN_FILENO);
-				line = custom_get_next_line();
-				//printf("%s", line);
+				temp_str3 = readline("> ");
+				if (!temp_str3)
+					printf(ANSI_MOVE_UP"> ");
+				line = ft_strjoin(temp_str3, "\n");
 			}
+
+			//old version
+			// ft_putstr_fd("> ", STDOUT_FILENO);
+			// line = custom_get_next_line();
+			// // line = NULL;
+			// // if (!line)
+			// // 	return (1);
+			// while (!same(line, temp_str) && line)
+			// {
+			// 	if (!heredoc_text)
+			// 	{
+			// 		heredoc_text = ft_strdup(line);
+			// 	}
+			// 	else
+			// 	{
+			// 		temp_heredoc_text = heredoc_text;
+			// 		if (line)
+			// 			heredoc_text = ft_strjoin(heredoc_text, line);
+			// 		else
+			// 		{
+			// 			break ;
+			// 		}
+			// 		if (!heredoc_text)
+			// 		{
+			// 			// free(line);
+			// 			// free(temp_heredoc_text);
+			// 			// free(temp_str);
+			// 			return (1);
+			// 		}
+			// 		free(temp_heredoc_text);
+			// 	}
+			// 	//free(line);
+			// 	ft_putstr_fd("> ", STDOUT_FILENO);
+			// 	// if (g_)
+			// 	// line = get_next_line(STDIN_FILENO);
+			// 	line = custom_get_next_line();
+			// 	//printf("%s", line);
+			// }
 			// if (g_signal)
 			// 	write(STDOUT_FILENO, "\n", 0);
 			// free(line);
@@ -143,7 +181,7 @@ int	fd_heredoc(t_cmd **cmd_address)
 		temp_input = temp_input->next;
 	}
 	signal(SIGINT, &sig_handler);
-	signal(SIGQUIT, &sig_handler);
+	// signal(SIGQUIT, SIG_IGN);
 	return (0);
 }
 
