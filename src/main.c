@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 18:34:39 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/29 20:27:37 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,8 @@ int	main(int argc, char **argv, char **envp)
 	t_env_pack 		env_pack;
 	char 			*pid;
 	t_env *original_env;
+	// int	fd_history;
+	// char *line;
 	// struct sigaction	action;
 
 	(void)argc;
@@ -175,6 +177,13 @@ int	main(int argc, char **argv, char **envp)
 	fd_stdout = dup(STDOUT_FILENO);
 	env_pack.env = set_start(fill_env_list(envp));
 	pid = get_current_pid(env_pack.env);
+	// fd_history = open("l", O_RDWR | O_CREAT | O_APPEND, 0644);
+	// line = get_next_line(fd_history);
+	// while (line)
+	// {
+	// 	add_history(line);
+    //     line = get_next_line(fd_history);
+	// }
 	dup(fd_stdin);
 	close(STDOUT_FILENO);
 	dup(fd_stdout);
@@ -207,6 +216,7 @@ int	main(int argc, char **argv, char **envp)
 			run_exit_eof(env_pack.original_env, fd_stdin, fd_stdout);
 		if (ft_strlen(raw_line) > 0 && !all_space(raw_line))
 		{
+			// ft_putendl_fd(raw_line, fd_history);
 			add_history(raw_line);
 			env_pack = execute_all(raw_line, env_pack);
 			close(STDIN_FILENO);
@@ -218,5 +228,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	close(fd_stdin);
 	close(fd_stdout);
+	// close(fd_history);
 	return (exit_code);
 }
