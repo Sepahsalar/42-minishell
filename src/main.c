@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 18:29:18 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:46:39 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,8 @@ void	sig_handler(int sig)
 	else if (sig == SIGINT && g_signal == WAIT_FOR_COMMAND)
 	{
 		write(STDOUT_FILENO, "\n", 1);
-		rl_on_new_line();
 		rl_replace_line("", STDIN_FILENO);
+		rl_on_new_line();
 		rl_redisplay();
 	}
 }
@@ -212,6 +212,25 @@ void	save_history(char *raw_line)
 	close(fd_history);
 }
 
+t_env_pack env_pack_at_start(char **envp, int fd_stdin, int fd_stdout)
+{
+	t_env_pack	env_pack;
+	char		*pid;
+	t_env		*original_env;
+
+	env_pack.env = set_start(fill_env_list(envp));
+	pid = get_current_pid(env_pack.env);
+	dup(fd_stdin);
+	close(STDOUT_FILENO);
+	dup(fd_stdout);
+	original_env = fill_env_list(envp);
+	original_env = custom_export(original_env,
+			ft_strdup("pid"), ft_strdup(pid));
+	original_env = export_original(original_env, 0);
+	env_pack.original_env = original_env;
+	return (env_pack);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*raw_line;
@@ -219,24 +238,13 @@ int	main(int argc, char **argv, char **envp)
 	int			fd_stdin;
 	int			fd_stdout;
 	t_env_pack	env_pack;
-	char 		*pid;
-	t_env		*original_env;
 
 	(void)argc;
 	(void)argv;
 	fd_stdin = dup(STDIN_FILENO);
 	fd_stdout = dup(STDOUT_FILENO);
-	env_pack.env = set_start(fill_env_list(envp));
-	pid = get_current_pid(env_pack.env);
-	dup(fd_stdin);
-	close(STDOUT_FILENO);
-	dup(fd_stdout);
+	env_pack = env_pack_at_start(envp, fd_stdin, fd_stdout);
 	load_history();
-	original_env = fill_env_list(envp);
-	original_env = custom_export(original_env,
-			ft_strdup("pid"), ft_strdup(pid));
-	original_env = export_original(original_env, 0);
-	env_pack.original_env = original_env;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, &sig_handler);
 	while (1)
