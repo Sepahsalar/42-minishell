@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 18:02:37 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:29:18 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,28 @@
 
 // 6) create a .history file to keep the commands for each SHLVL-------------8h denied
 // 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
+
+void	change_mode_to(int mode)
+{
+	struct termios	term;
+
+	if (mode == RUNNING_COMMAND)
+	{
+		g_signal = RUNNING_COMMAND;
+		ft_bzero(&term, sizeof(term));
+		tcgetattr(STDIN_FILENO, &term);
+		term.c_lflag |= ECHOCTL;
+		tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	}
+	else if (mode == WAIT_FOR_COMMAND)
+	{
+		g_signal = WAIT_FOR_COMMAND;
+		ft_bzero(&term, sizeof(term));
+		tcgetattr(STDIN_FILENO, &term);
+		term.c_lflag &= ~ECHOCTL;
+		tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	}
+}
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {
@@ -95,13 +117,7 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 		}
 		return (env_pack_result);
 	}
-	struct termios	term;
-
-	ft_bzero(&term, sizeof(term));
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag |= ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	g_signal = 0;
+	change_mode_to(RUNNING_COMMAND);
 	raw_cmd = create_raw_cmd(raw_line);
 	cmd = fill_cmd_list(raw_cmd, env_pack.env, env_pack.original_env);
 	master_clean(raw_cmd, 0, 0, -1);
@@ -120,19 +136,9 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 			temp_cmd = temp_cmd->next;
 		}
 	}
-	printf("i am after while loop\n");
-	g_signal = 10;
-	ft_bzero(&term, sizeof(term));
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	temp_cmd = cmd;
 	while (temp_cmd)
 	{
-		ft_bzero(&term, sizeof(term));
-		tcgetattr(STDIN_FILENO, &term);
-		term.c_lflag &= ~ECHOCTL;
-		tcsetattr(STDIN_FILENO, TCSANOW, &term);
 		if (temp_cmd->last_in)
 			temp_file = temp_cmd->last_in->file;
 		else
@@ -154,70 +160,19 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 
 void	sig_handler(int sig)
 {
-	struct termios	term;
-	// int				sign;
-
-	// ft_bzero(&term, sizeof(term));
-	// tcgetattr(STDIN_FILENO, &term);
-	// // sign = g_signal;
-	if (sig == SIGINT && g_signal == 0)
+	if (sig == SIGINT && g_signal == RUNNING_COMMAND)
 	{
-		printf("i recieved the signal in the running mode\n");
-		ft_bzero(&term, sizeof(term));
-		tcgetattr(STDIN_FILENO, &term);
-		term.c_lflag &= ~ECHOCTL;
-		tcsetattr(STDIN_FILENO, TCSANOW, &term);
-		// ioctl(0, TIOCSTI, "\n");
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
-		// printf(ANSI_MOVE_UP);
 		rl_replace_line("", STDIN_FILENO);
-		// printf("i am in 0\n");
-		// g_signal = 10;
-		
-		// term.c_lflag |= ECHOCTL;
-		// tcsetattr(STDIN_FILENO, TCSANOW, &term);
-		// rl_on_new_line();
-		// rl_redisplay();
-		// rl_on_new_line();
-		// ioctl(0, TIOCSTI, "\n");
-		// rl_on_new_line();
-		// rl_replace_line("", 0);
-		// // printf("\033[1A");
-		// // printf(ANSI_MOVE_UP);
 	}
-	else if (sig == SIGINT && g_signal == 10)
+	else if (sig == SIGINT && g_signal == WAIT_FOR_COMMAND)
 	{
-		// ft_bzero(&term, sizeof(term));
-		// tcgetattr(STDIN_FILENO, &term);
-		// term.c_lflag &= ~ECHOCTL;
-		// tcsetattr(STDIN_FILENO, TCSANOW, &term);
-		// ioctl(0, TIOCSTI, "\n");
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", STDIN_FILENO);
-		// rl_on_new_line();
 		rl_redisplay();
-		
-		// printf("i am in 10\n");
-		// rl_on_new_line();
-		// ioctl(0, TIOCSTI, "\n");
-		// rl_on_new_line();
-		// rl_replace_line("", 0);
-		// // printf("\033[1A");
-		// // printf(ANSI_MOVE_UP);
 	}
-	// if (sign == 10)
-	// 	term.c_lflag &= ~ECHOCTL;
-	// else if (sign == 0)
-	// 	term.c_lflag |= ECHOCTL;
-	// tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	// else if (sig == SIGQUIT)
-	// {
-	// 	// rl_replace_line(0, STDIN_FILENO);
-	// 	rl_on_new_line();
-	// 	rl_redisplay();
-	// }
 }
 
 void	load_history(void)
@@ -259,18 +214,16 @@ void	save_history(char *raw_line)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char			*raw_line;
-	int				exit_code;
-	struct termios	term;
-	int				fd_stdin;
-	int				fd_stdout;
-	t_env_pack 		env_pack;
-	char 			*pid;
-	t_env			*original_env;
+	char		*raw_line;
+	int			exit_code;
+	int			fd_stdin;
+	int			fd_stdout;
+	t_env_pack	env_pack;
+	char 		*pid;
+	t_env		*original_env;
 
 	(void)argc;
 	(void)argv;
-	g_signal = 0;
 	fd_stdin = dup(STDIN_FILENO);
 	fd_stdout = dup(STDOUT_FILENO);
 	env_pack.env = set_start(fill_env_list(envp));
@@ -286,28 +239,14 @@ int	main(int argc, char **argv, char **envp)
 	env_pack.original_env = original_env;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, &sig_handler);
-	// ft_bzero(&term, sizeof(term));
-	// tcgetattr(STDIN_FILENO, &term);
-	// // // if (!g_signal)
-	// 	term.c_lflag &= ~ECHOCTL;
-	// // // else
-	// // // 	term.c_lflag |= ECHOCTL;
-	// tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	while (1)
 	{
-		// printf("i am here before getting raw_line\n");
-		ft_bzero(&term, sizeof(term));
-		tcgetattr(STDIN_FILENO, &term);
-		term.c_lflag &= ~ECHOCTL;
-		tcsetattr(STDIN_FILENO, TCSANOW, &term);
+		change_mode_to(WAIT_FOR_COMMAND);
 		raw_line = readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
 		if (!raw_line)
 			run_exit_eof(env_pack.original_env, fd_stdin, fd_stdout);
-		printf("i am here before checking raw_line: %s\n", raw_line);
 		if (ft_strlen(raw_line) > 0 && !all_space(raw_line))
 		{
-			printf("i am here: %s\n", raw_line);
-			g_signal = 0;
 			save_history(raw_line);
 			rl_clear_history();
 			load_history();

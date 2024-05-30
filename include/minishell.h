@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 16:55:20 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:16:26 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@
 # define ANSI_MOVE_TO_END "\033[K"
 # define ANSI_MOVE_LEFT "\033[8D"
 # define ANSI_MOVE_RIGHT "\033[C"
+
+
+# define WAIT_FOR_COMMAND 10
+# define RUNNING_COMMAND 0
 
 volatile int g_signal;
 
