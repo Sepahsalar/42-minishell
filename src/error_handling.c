@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/30 12:05:13 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:57:39 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_after_token(char *str)
 
 char	*find_token(char *cur)
 {
-	char	*token[11];
+	char	*token[13];
 	int		index;
 
 	token[0] = "|";
@@ -34,7 +34,9 @@ char	*find_token(char *cur)
 	token[7] = "&&";
 	token[8] = "&";
 	token[9] = "*";
-	token[10] = NULL;
+	token[10] = "\\";
+	token[11] = ";";
+	token[12] = NULL;
 
 	index = 0;
 	while (token[index])
@@ -132,7 +134,8 @@ t_error	find_error(char *line)
 			if (token && !sq && !dq)
 			{
 				if (same(token, "<<<") || same(token, "&&") || same(token, "&")
-					|| same(token, "||") || same(token, "*"))
+					|| same(token, "||") || same(token, "*") || same(token, ";")
+					|| same(token, "\\"))
 				{
 					error.not_handling = 1;
 					error.error = ft_strdup(token);

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:04:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 12:54:20 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:48:25 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	**copy_2d_char(char **src)
 t_hd_file	*remove_update(t_hd_file *hd, char *ch)
 {
 	char	*temp_str;
+	char 	*temp_str2;
 	int		len;
 	t_file	*file;
 
@@ -107,7 +108,9 @@ t_hd_file	*remove_update(t_hd_file *hd, char *ch)
 	else if (*ch == '<' && *(temp_str + 1) == '<')
 	{
 		// printf("temp_str: %s\n", temp_str);
-		hd->file->limiter = strdup_modified(temp_str, "<<");
+		temp_str2 = strdup_modified(temp_str, "<<");
+		hd->file->limiter = handling_quote(temp_str2);
+		//free(temp_str2);
 		// printf("hd->file->limiter: %s\n", hd->file->limiter);
 		temp_str++;
 	}
