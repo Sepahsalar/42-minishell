@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 10:33:20 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 10:49:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,11 +200,7 @@ int	main(int argc, char **argv, char **envp)
 	int				fd_stdout;
 	t_env_pack 		env_pack;
 	char 			*pid;
-	t_env *original_env;
-	// int	fd_history;
-	// char *line;
-	// char *temp;
-	// struct sigaction	action;
+	t_env			*original_env;
 
 	(void)argc;
 	(void)argv;
@@ -222,20 +218,10 @@ int	main(int argc, char **argv, char **envp)
 			ft_strdup("pid"), ft_strdup(pid));
 	original_env = export_original(original_env, 0);
 	env_pack.original_env = original_env;
-	// signal(SIGQUIT, &sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, &sig_handler);
-	// sigemptyset(&action.sa_mask);
-	// action.sa_flags = SA_RESTART;
-	// ft_memset(&action, 0, sizeof(action));
-	// action.sa_handler = SIG_IGN;
-	// // sigaction(SIGINT, &action, NULL);
-	// sigaction(SIGQUIT, &action, NULL);
 	ft_bzero(&term, sizeof(term));
 	tcgetattr(STDIN_FILENO, &term);
-	// if (mode)
-	// 	terminal.c_lflag |= ECHOCTL;
-	// else if (!mode)
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	while (1)
@@ -259,6 +245,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	close(fd_stdin);
 	close(fd_stdout);
-	// close(fd_history);
 	return (exit_code);
 }

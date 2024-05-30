@@ -6,13 +6,13 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:10:21 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 11:34:06 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:52:36 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	count_words(char const *s, char c)
+static int	count_words(char const *s, char ch)
 {
 	int	i;
 	int	count;
@@ -27,7 +27,7 @@ static int	count_words(char const *s, char c)
 	i = 0;
 	while (s[i] != '\0')
 	{
-		if ((s[i] != c) && (i == 0 || (i > 0 && s[i - 1] == c))
+		if ((s[i] != ch) && (i == 0 || (i > 0 && s[i - 1] == ch))
 			&& triger1 == 0 && triger2 == 0)
 			count++;
 		triger1 = triger_maker_sp(triger1, s[i], 34);
@@ -37,7 +37,7 @@ static int	count_words(char const *s, char c)
 	return (count);
 }
 
-static int	len_quote(char const *s, char c)
+static int	len_quote(char const *s, char ch)
 {
 	int		j;
 	char	temp;
@@ -47,7 +47,7 @@ static int	len_quote(char const *s, char c)
 	j = 0;
 	if ((*s != 34 && *s != 39))
 	{
-		temp = c;
+		temp = ch;
 		while (!((s[j] != temp)
 				&& (s[j + 1] == '\0' || s[j + 1] == temp)))
 		{
@@ -63,7 +63,7 @@ static int	len_quote(char const *s, char c)
 			}
 			j++;
 		}
-		while (!triger_change && s[j] && s[j] != c)
+		while (!triger_change && s[j] && s[j] != ch)
 			j++;
 	}
 	else
@@ -71,7 +71,7 @@ static int	len_quote(char const *s, char c)
 	return (j + 1);
 }
 
-static int	len_quote_pipe(char const *s, char c)
+static int	len_quote_pipe(char const *s, char ch)
 {
 	int		j;
 	char	temp;
@@ -82,7 +82,7 @@ static int	len_quote_pipe(char const *s, char c)
 	j = 0;
 	if ((*s != 34 && *s != 39))
 	{
-		temp = c;
+		temp = ch;
 		while (s[j] && !((s[j] != temp)
 				&& (s[j + 1] == '\0' || s[j + 1] == temp)))
 		{
@@ -101,10 +101,10 @@ static int	len_quote_pipe(char const *s, char c)
 		}
 		// printf("[%d]:%c\n",j, s[j]);
 		// printf("triger_change = %d\n", triger_change);
-		while (!triger_change && s[j] && s[j] != c)
+		while (!triger_change && s[j] && s[j] != ch)
 			j++;
 		// printf("[%d]:%c\n",j, s[j]);
-		if (s[j] == c)
+		if (s[j] == ch)
 			j--;
 	}
 	else
@@ -114,13 +114,13 @@ static int	len_quote_pipe(char const *s, char c)
 
 
 
-static char	*dup_char(char const *s, char c)
+static char	*dup_char(char const *s, char ch)
 {
 	int		len;
 	char	*m;
 	int		i;
 
-	len = len_quote(s, c);
+	len = len_quote(s, ch);
 	m = malloc ((len + 1) * sizeof(char));
 	if (!m)
 		return (0);
@@ -133,13 +133,13 @@ static char	*dup_char(char const *s, char c)
 	}
 	return (m);
 }
-static char	*dup_char_pipe(char const *s, char c)
+static char	*dup_char_pipe(char const *s, char ch)
 {
 	int		len;
 	char	*m;
 	int		i;
 
-	len = len_quote_pipe(s, c);
+	len = len_quote_pipe(s, ch);
 	m = malloc ((len + 1) * sizeof(char));
 	if (!m)
 		return (0);
@@ -153,24 +153,24 @@ static char	*dup_char_pipe(char const *s, char c)
 	return (m);
 }
 
-static char	**create(char const *s, char c, int i, int j)
+static char	**create(char const *s, char ch, int i, int j)
 {
 	char	**m;
 	int		triger1;
 	int		triger2;
 
-	m = malloc((count_words(s, c) + 1) * sizeof (char *));
+	m = malloc((count_words(s, ch) + 1) * sizeof (char *));
 	if (m == 0)
 		return (0);
-	m[count_words(s, c)] = 0;
+	m[count_words(s, ch)] = 0;
 	triger1 = 0;
 	triger2 = 0;
 	while (s[i] != '\0')
 	{
-		if ((i == 0 || (i > 0 && s[i - 1] == c))
-			&& s[i] != c && triger1 == 0 && triger2 == 0)
+		if ((i == 0 || (i > 0 && s[i - 1] == ch))
+			&& s[i] != ch && triger1 == 0 && triger2 == 0)
 		{
-			m[j] = dup_char(s + i, c);
+			m[j] = dup_char(s + i, ch);
 			if (m[j] == 0)
 				return (free_split(&m, j));
 			j++;
@@ -182,24 +182,24 @@ static char	**create(char const *s, char c, int i, int j)
 	return (m);
 }
 
-static char	**create_pipe(char const *s, char c, int i, int j)
+static char	**create_pipe(char const *s, char ch, int i, int j)
 {
 	char	**m;
 	int		triger1;
 	int		triger2;
 
-	m = malloc((count_words(s, c) + 1) * sizeof (char *));
+	m = malloc((count_words(s, ch) + 1) * sizeof (char *));
 	if (m == 0)
 		return (0);
-	m[count_words(s, c)] = 0;
+	m[count_words(s, ch)] = 0;
 	triger1 = 0;
 	triger2 = 0;
 	while (s[i] != '\0')
 	{
-		if ((i == 0 || (i > 0 && s[i - 1] == c))
-			&& s[i] != c && triger1 == 0 && triger2 == 0)
+		if ((i == 0 || (i > 0 && s[i - 1] == ch))
+			&& s[i] != ch && triger1 == 0 && triger2 == 0)
 		{
-			m[j] = dup_char_pipe(s + i, c);
+			m[j] = dup_char_pipe(s + i, ch);
 			if (m[j] == 0)
 				return (free_split(&m, j));
 			j++;
@@ -216,6 +216,7 @@ char	**split_pipex(char const *s)
 	char	**m;
 	char	**temp;
 
+	// printf("s: %s\n", s);
 	if (s == 0 || s[0] == '\0' || all_space((char *)s))
 	{
 		m = malloc(2 * sizeof (char *));

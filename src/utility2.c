@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:04:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 14:28:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:54:20 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,21 @@ char	**copy_2d_char(char **src)
 	return (dest);
 }
 
-t_hd_file	*remove_update(t_hd_file *hd, char *c)
+t_hd_file	*remove_update(t_hd_file *hd, char *ch)
 {
 	char	*temp_str;
 	int		len;
 	t_file	*file;
 
+	// printf("hd->str beginning remove update: %s\n", hd->str);
 	len = ft_strlen(hd->str);
-	if (*c == '>')
+	// printf("remove update1: %s\n", hd->str);
+	if (*ch == '>')
 		hd->file->fd_operator = atoi_file(&(hd->str), hd->file->place, 1);
-	else if (*c == '<')
+	else if (*ch == '<')
 		hd->file->fd_operator = atoi_file(&(hd->str), hd->file->place, 0);
+	// printf("hd->str after atoi file: %s\n", hd->str);
+	// printf("remove update2: %s\n", hd->str);
 	hd->file->place = hd->file->place + ft_strlen(hd->str) - len;
 	temp_str = hd->str + hd->file->place;
 	file = hd->file->next;
@@ -90,28 +94,40 @@ t_hd_file	*remove_update(t_hd_file *hd, char *c)
 		file->place = file->place + ft_strlen(hd->str) - len;
 		file = file->next;
 	}
-	if (*c == '>' && *(temp_str + 1) == '>')
+	// printf("remove update3: %s\n", hd->str);
+	if (*ch == '>' && *(temp_str + 1) == '>')
 	{
 		temp_str++;
 		hd->file->append = 1;
 	}
-	else if (*c == '>')
+	else if (*ch == '>')
 	{
 		hd->file->trunc = 1;
 	}
-	else if (*c == '<' && *(temp_str + 1) == '<')
+	else if (*ch == '<' && *(temp_str + 1) == '<')
 	{
+		// printf("temp_str: %s\n", temp_str);
 		hd->file->limiter = strdup_modified(temp_str, "<<");
+		// printf("hd->file->limiter: %s\n", hd->file->limiter);
 		temp_str++;
 	}
-	else if (*c == '<')
+	else if (*ch == '<')
 		hd->file->input = 1;
-	hd->file->raw = strdup_modified(temp_str, c);
+	// printf("remove update4: %s\n", hd->str);
+	// printf("before the fucking dup str is: %s\n", hd->str);
+	// printf("before the fucking dup file name is: %s\n", hd->file->raw);
+	// printf("before the fucking dup temp_str is: %s\n", temp_str);
+	hd->file->raw = strdup_modified(temp_str, ch);
+	// printf("remove update5: %s\n", hd->str);
+	// printf("after the fucking dup str is: %s\n", hd->str);
+	// printf("after the fucking dup file name is: %s\n", hd->file->raw);
 	hd->str = ft_remove(hd->str, hd->file->raw, hd->file);
+	// printf("remove update6: %s\n", hd->str);
+	// printf("hd->str at end: %s\n", hd->str);
 	return (hd);
 }
 
-int	fill_files_helper(char *str, char *c , t_cmd *cmd)
+int	fill_files_helper(char *str, char *ch , t_cmd *cmd)
 {
 	int			index;
 	char		*sq;
@@ -141,7 +157,7 @@ int	fill_files_helper(char *str, char *c , t_cmd *cmd)
 			sq = &str[index];
 		else if (str[index] == '\'')
 			sq = NULL;
-		else if (!sq && !dq && str[index] == *c)
+		else if (!sq && !dq && str[index] == *ch)
 		{
 			new = create_file_node(index);
 			if (start == NULL)
@@ -154,20 +170,22 @@ int	fill_files_helper(char *str, char *c , t_cmd *cmd)
 				return (1);
 			}
 			old = new;
-			if (str[index + 1] == *c)
+			if (str[index + 1] == *ch)
 				index++;
 		}
 		index++;
 	}
 	hd->file = start;
 	hd->str = ft_strdup(str);
+	// printf("hd->str: %s\n", hd->str);
 	while (hd->file)
 	{
-		hd = remove_update(hd, c);
+		hd = remove_update(hd, ch);
 		hd->file = hd->file->next;
 	}
 	cmd->current = ft_strdup(hd->str);
-	if (*c == '>')
+	// printf("cmd->current fill files helper: %s\n", cmd->current);
+	if (*ch == '>')
 		cmd->output = start;
 	else
 		cmd->input = start;
@@ -179,7 +197,7 @@ t_hd_file	*remove_update_all(t_hd_file *hd)
 	char	*temp_str;
 
 	temp_str = hd->str + hd->file->place;
-	if (*(temp_str) == '>'  && *(temp_str + 1) == '>')
+	if (*(temp_str) == '>' && *(temp_str + 1) == '>')
 	{
 		// temp_str++;
 		hd->file->append = 1;
@@ -212,6 +230,7 @@ int	fill_files_helper_all(t_cmd *cmd)
 
 	sq = NULL;
 	dq = NULL;
+	// printf("cmd->current helper all: %s\n", cmd->current);
 	str = cmd->current;
 	hd = malloc(sizeof(t_hd_file));
 	ft_memset(hd, 0, sizeof(t_hd_file));

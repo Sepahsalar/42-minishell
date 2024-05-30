@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:08:29 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 15:20:47 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:26:39 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char	**free_split(char ***m, int j)
 	return (0);
 }
 
-int	triger_maker_sp(int triger, char c, char divider)
+int	triger_maker_sp(int triger, char ch, char divider)
 {
-	if (c == divider)
+	if (ch == divider)
 	{
 		if (triger == 0)
 			triger = 1;

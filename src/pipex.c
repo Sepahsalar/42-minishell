@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/29 14:57:21 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/30 11:11:42 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 				exit(ft_atoi(env_pack.original_env->value));
 			if (is_builtin(cmd_execution) != -1)
 			{
+				cmd_execution->child_builtin = 1;
 				env_pack = run_builtin(cmd_execution);
 				exit(ft_atoi(env_pack.original_env->value));
 			}

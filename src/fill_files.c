@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:29:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 19:13:52 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:53:30 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int	fill_files(t_cmd **cmd, char *token)
 	t_cmd	*temp;
 
 	temp = *cmd;
+	// printf("cmd current fill files: %s\n", temp->current);
 	while (temp)
 	{
 		if (fill_files_helper(temp->current, token, temp))

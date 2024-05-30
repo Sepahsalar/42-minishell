@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 09:52:06 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:31:08 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_cmd
 	t_file			*all;
 	int				is_file;
 	int				file_error;
+	int				child_builtin;
 	int				empty_cmd;
 	char			*cmd_name;
 	char			*address;
@@ -143,7 +144,7 @@ void		clean_2d_char(char **array);
 t_cmd		*clean_cmd_list(t_cmd *first);
 t_cmd		*create_cmd_list(int total_number);
 t_file		*clean_file_list(t_file *first);
-t_file		*create_file_list(int total_number);
+// t_file		*create_file_list(int total_number);
 char		**create_raw_cmd(const char *input);
 int			char_2d_count(char **array);
 int			fill_raw_cmd_list(t_cmd **cmd, char **raw_cmd);
@@ -166,7 +167,7 @@ char		**split_pipex(char const *s);
 char		**split_pipex_pipe(char const *s);
 char		**split_all_delimiter(char const *s);
 char		**free_split(char ***m, int j);
-int			triger_maker_sp(int triger, char c, char divider);
+int			triger_maker_sp(int triger, char ch, char divider);
 int			len_helper(const char *s);
 int			len_helper_pipe(const char *s);
 char		**create_args(char *str);
@@ -179,7 +180,7 @@ int			fill_file_data(t_cmd **cmd);
 // char		*handle_quote_str(char *input);
 char		*handling_quote(char *str);
 t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution);
-int			ft_isspace(int c);
+int			ft_isspace(int ch);
 char		**recreate_2d_env(t_env *env);
 int			all_space(char *str);
 char		**copy_2d_char(char **src);
@@ -230,13 +231,13 @@ t_env_pack	run_exit(t_cmd *cmd);
 t_atol		atol_exit(char *str);
 void		run_exit_eof(t_env *env, int fd_stdin, int fd_stdout);
 t_error		find_error(char *line);
-int			cmd_counter_error(const char *input);
+// int			cmd_counter_error(const char *input);
 char		*find_token(char *cur);
 char		*change_token_heredoc(char *token, char *cur,
 				int *index, t_error error);
 int			check_after_token(char *str);
 t_file		*create_file_node(int place);
-int			fill_files_helper(char *str, char *c, t_cmd *cmd);
+int			fill_files_helper(char *str, char *ch, t_cmd *cmd);
 int			fill_files_helper_all(t_cmd *cmd);
 int			export_check(char *str);
 int			fill_files_all(t_cmd **cmd);

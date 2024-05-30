@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 14:52:13 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:49:38 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	clean_2d_char(char **array)
 	free(array);
 }
 
-int	ft_isspace(int c)
+int	ft_isspace(int ch)
 {
-	if (c == ' ' || c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r')
+	if (ch == ' ' || ch == '\t' || ch == '\n'
+		|| ch == '\v' || ch == '\f' || ch == '\r')
 		return (1);
 	return (0);
 }
@@ -105,7 +105,7 @@ static size_t	strlen_modified(char *s)
 		}
 		else
 		{
-			if (s[index] == ' ' && !sq && !dq)
+			if ((s[index] == ' ' || istoken(s[index])) && (!sq && !dq))
 				break ;
 			len++;
 		}
@@ -121,6 +121,7 @@ char	*strdup_modified(char *s, char *token)
 
 	l = ft_strlen(token);
 	s = s + l;
+	// printf("%s\n", s);
 	while (*s != '\0' && ft_isspace(*s))
 		++s;
 	l = strlen_modified(s);
@@ -143,7 +144,7 @@ char	*ft_remove(char *str, char *del, t_file *file)
 
 	original_len = ft_strlen(str);
 	len1 = file->place;
-	part2 = ft_strnstr(str, del, ft_strlen(str)) + ft_strlen(del);
+	part2 = ft_strnstr(str + len1, del, ft_strlen(str)) + ft_strlen(del);
 	temp = part2;
 	len2 = 0;
 	while (*temp)

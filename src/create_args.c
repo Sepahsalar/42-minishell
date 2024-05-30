@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:10:06 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 10:29:08 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:52:34 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	**create_args(char *str)
 {
 	char	**args;
 
+	// printf("str: %s\n", str);
 	args = split_pipex(str);
 	return (args);
 }

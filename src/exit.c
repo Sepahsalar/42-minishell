@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:49:01 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 14:29:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 11:12:18 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ t_env_pack	run_exit(t_cmd *cmd)
 	exit_code.num = 0;
 	exit_code.is_error = 0;
 	env_pack = init_env_pack(cmd);
-	ft_putendl_fd("exit", 2);
+	if (!cmd->child_builtin)
+		ft_putendl_fd("exit", 2);
 	count = char_2d_count(cmd->args);
 	if (count > 2)
 	{
