@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 10:09:32 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 10:33:20 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,33 +154,12 @@ void	sig_handler(int sig)
 	// }
 }
 
-
-
-int	main(int argc, char **argv, char **envp)
+void	load_history(void)
 {
-	char			*raw_line;
-	int				exit_code;
-	struct termios	term;
-	int				fd_stdin;
-	int				fd_stdout;
-	t_env_pack 		env_pack;
-	char 			*pid;
-	t_env *original_env;
-	int	fd_history;
-	char *line;
-	char *temp;
-	// struct sigaction	action;
+	int		fd_history;
+	char	*line;
+	char	*temp;
 
-	(void)argc;
-	(void)argv;
-	g_signal = 0;
-	fd_stdin = dup(STDIN_FILENO);
-	fd_stdout = dup(STDOUT_FILENO);
-	env_pack.env = set_start(fill_env_list(envp));
-	pid = get_current_pid(env_pack.env);
-	dup(fd_stdin);
-	close(STDOUT_FILENO);
-	dup(fd_stdout);
 	fd_history = open(".history", O_RDWR | O_CREAT | O_APPEND, 0644);
 	line = get_next_line(fd_history);
 	if (line)
@@ -201,6 +180,43 @@ int	main(int argc, char **argv, char **envp)
 		}
 	}
 	close(fd_history);
+}
+
+void	save_history(char *raw_line)
+{
+	int	fd_history;
+
+	fd_history = open(".history", O_RDWR | O_CREAT | O_APPEND, 0644);
+	ft_putendl_fd(raw_line, fd_history);
+	close(fd_history);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	char			*raw_line;
+	int				exit_code;
+	struct termios	term;
+	int				fd_stdin;
+	int				fd_stdout;
+	t_env_pack 		env_pack;
+	char 			*pid;
+	t_env *original_env;
+	// int	fd_history;
+	// char *line;
+	// char *temp;
+	// struct sigaction	action;
+
+	(void)argc;
+	(void)argv;
+	g_signal = 0;
+	fd_stdin = dup(STDIN_FILENO);
+	fd_stdout = dup(STDOUT_FILENO);
+	env_pack.env = set_start(fill_env_list(envp));
+	pid = get_current_pid(env_pack.env);
+	dup(fd_stdin);
+	close(STDOUT_FILENO);
+	dup(fd_stdout);
+	load_history();
 	original_env = fill_env_list(envp);
 	original_env = custom_export(original_env,
 			ft_strdup("pid"), ft_strdup(pid));
@@ -230,30 +246,9 @@ int	main(int argc, char **argv, char **envp)
 			run_exit_eof(env_pack.original_env, fd_stdin, fd_stdout);
 		if (ft_strlen(raw_line) > 0 && !all_space(raw_line))
 		{
-			fd_history = open(".history", O_RDWR | O_CREAT | O_APPEND, 0644);
-			ft_putendl_fd(raw_line, fd_history);
+			save_history(raw_line);
 			rl_clear_history();
-			close(fd_history);
-			fd_history = open(".history", O_RDWR | O_CREAT | O_APPEND, 0644);
-			line = get_next_line(fd_history);
-			if (line)
-			{
-				temp = line;
-				line = ft_strtrim(line, "\n");
-				if (temp)
-					free(temp);
-				while (line)
-				{
-					add_history(line);
-					free(line);
-					line = get_next_line(fd_history);
-					temp = line;
-					line = ft_strtrim(line, "\n");
-					if (temp)
-						free(temp);
-				}
-			}
-			close(fd_history);
+			load_history();
 			env_pack = execute_all(raw_line, env_pack);
 			close(STDIN_FILENO);
 			dup(fd_stdin);
