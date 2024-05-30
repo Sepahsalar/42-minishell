@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 12:31:08 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:47:52 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,7 @@ t_file		*create_file_node(int place);
 int			fill_files_helper(char *str, char *ch, t_cmd *cmd);
 int			fill_files_helper_all(t_cmd *cmd);
 int			export_check(char *str);
+int			export_check_key(char *str);
 int			fill_files_all(t_cmd **cmd);
 char		*get_current_pid(t_env *original_env);
 void		sig_handler(int sig);

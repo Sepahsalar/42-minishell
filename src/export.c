@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:44:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 12:59:59 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:51:46 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,9 @@ t_env_pack	run_export(t_cmd *cmd)
 	t_env 		*cpy;
 	int			count;
 	int			i;
+	char *temp_str_1;
+	char *temp_str_2;
+	char *find1;
 
 	new_env = NULL;
 	status = 0;
@@ -165,6 +168,7 @@ t_env_pack	run_export(t_cmd *cmd)
 		index = 1;
 		while (args[index])
 		{
+			// printf("hi\n");
 			if (!export_check(args[index]))
 			{
 				// printf("bash: export: `%s': not a valid identifier\n", args[index]);
@@ -175,50 +179,86 @@ t_env_pack	run_export(t_cmd *cmd)
 			}
 			else if (ft_strchr(args[index], '='))
 			{
-				// if (args)
-				// if (!export_check(args[index]))
-				// {
-				// 	// printf("bash: export: `%s': not a valid identifier\n", args[index]);
-				// 	ft_putstr_fd("bash: export: `", 2);
-				// 	ft_putstr_fd(args[index], 2);
-				// 	ft_putendl_fd("\': not a valid identifier", 2);
-				// 	status = 1;
-				// }
-				// else
-				// {
+				if (ft_strchr(args[index], '=') - (args[index]) > 0 && *(ft_strchr(args[index], '=') - 1) == '+')
+				{
+					// printf("hi\n");
 					new_env = ft_strdup(args[index]);
 					// if (new_env == NULL)
 					// 	return (1);
-					char *temp_str_1;
-					char *temp_str_2;
-					char *find1;
 					find1 = ft_strchr(new_env, '=');
-					temp_str_1 = ft_substr(new_env, 0, find1 - new_env);
-					temp_str_2 = ft_substr(new_env, find1 - new_env + 1, ft_strlen(find1 + 1));
-					// printf("1: %s\n", temp_str_1);
-					// printf("2: %s\n", temp_str_2);
-					
-					split = ft_split(new_env, '=');
-					temp_env = cmd->env;
-					while (temp_env != NULL)
+					temp_str_1 = ft_substr(new_env, 0, find1 - new_env - 1);
+					if (!export_check_key(temp_str_1))
 					{
-						if (ft_strlen(temp_str_1) == ft_strlen(temp_env->key)
-							&& !ft_strncmp(temp_env->key, temp_str_1,
-								ft_strlen(temp_str_1)))
-							break ;
-						temp_env = temp_env->next;
+						ft_putstr_fd("bash: export: `", 2);
+						ft_putstr_fd(args[index], 2);
+						ft_putendl_fd("\': not a valid identifier", 2);
+						status = 1;
 					}
-					if (!temp_env)
-						add_node_front(&cmd->env, temp_str_1, temp_str_2);
 					else
 					{
-						temp = temp_env->value;
-						temp_env->value = ft_strdup(temp_str_2);
-						free(temp);
+						temp_str_2 = ft_substr(new_env, find1 - new_env + 1, ft_strlen(find1 + 1));
+						// printf("1: %s\n", temp_str_1);
+						// printf("2: %s\n", temp_str_2);
+						split = ft_split(new_env, '=');
+						temp_env = cmd->env;
+						while (temp_env != NULL)
+						{
+							if (ft_strlen(temp_str_1) == ft_strlen(temp_env->key)
+								&& !ft_strncmp(temp_env->key, temp_str_1,
+									ft_strlen(temp_str_1)))
+								break ;
+							temp_env = temp_env->next;
+						}
+						if (!temp_env)
+							add_node_front(&cmd->env, temp_str_1, temp_str_2);
+						else
+						{
+							temp = temp_env->value;
+							temp_env->value = ft_strjoin(temp, temp_str_2);
+							free(temp);
+						}
+						free(new_env);
 					}
-					free(new_env);
-					//clean_2d_char(split);
-				// }
+				}
+				else
+				{
+					new_env = ft_strdup(args[index]);
+					// if (new_env == NULL)
+					// 	return (1);
+					find1 = ft_strchr(new_env, '=');
+					temp_str_1 = ft_substr(new_env, 0, find1 - new_env);
+					if (!export_check_key(temp_str_1))
+					{
+						ft_putstr_fd("bash: export: `", 2);
+						ft_putstr_fd(args[index], 2);
+						ft_putendl_fd("\': not a valid identifier", 2);
+						status = 1;
+					}
+					else
+					{
+						temp_str_2 = ft_substr(new_env, find1 - new_env + 1, ft_strlen(find1 + 1));
+						split = ft_split(new_env, '=');
+						temp_env = cmd->env;
+						while (temp_env != NULL)
+						{
+							if (ft_strlen(temp_str_1) == ft_strlen(temp_env->key)
+								&& !ft_strncmp(temp_env->key, temp_str_1,
+									ft_strlen(temp_str_1)))
+								break ;
+							temp_env = temp_env->next;
+						}
+						if (!temp_env)
+							add_node_front(&cmd->env, temp_str_1, temp_str_2);
+						else
+						{
+							temp = temp_env->value;
+							temp_env->value = ft_strdup(temp_str_2);
+							free(temp);
+						}
+						free(new_env);
+						//clean_2d_char(split);
+					}
+				}
 			}
 			index++;
 		}
