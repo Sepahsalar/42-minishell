@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 14:47:52 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:55:20 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@
 # define ANSI_COLOR_GREEN "\001\x1b[32m\002"
 # define ANSI_COLOR_RESET "\001\x1b[0m\002"
 # define ANSI_MOVE_UP "\033[1A"
+
+# define ANSI_SAVE_CURSOR "\033[s"
+# define ANSI_RESTORE_CURSOR "\033[u"
+# define ANSI_MOVE_TO_END "\033[K"
+# define ANSI_MOVE_LEFT "\033[8D"
+# define ANSI_MOVE_RIGHT "\033[C"
 
 volatile int g_signal;
 

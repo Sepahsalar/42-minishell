@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/30 13:57:39 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:21:36 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,19 @@ t_error	find_error(char *line)
 	cur = line;
 	len = (int)ft_strlen(line);
 	token = NULL;
+	while (line[index] && line[index] != '|')
+	{
+		if (line[index] != ' ')
+			break ;
+		index++;
+	}
+	if (line[index] == '|')
+	{
+		error.index = index;
+		error.error = ft_strdup("|");
+		return (error);
+	}
+	index = 0;
 	while (index <= len)
 	{
 

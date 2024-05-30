@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:04:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 13:48:25 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:45:48 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int	all_space(char *str)
 	int	index;
 
 	index = 0;
-	while (str[index] != '\0')
+	if (!str || !str[0])
+		return (1);
+	while (str[index])
 	{
 		if (!ft_isspace(str[index]))
 			return (0);

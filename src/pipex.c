@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/30 13:38:00 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:24:21 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,10 +373,15 @@ temp_file = cmd_execution->all;
 					waitpid(temp_cmd->pid, NULL, 0);
 					temp_cmd = temp_cmd->next;
 				}
+				// printf("%s\n", strerror(status));
 				if (WIFEXITED(status))
 					status = WEXITSTATUS (status);
 				else if (WIFSIGNALED(status))
 					status = WTERMSIG(status) + 128;
+				// printf("%s\n", strerror(errno));
+				// printf("%s\n", strerror(status));
+				// if (status > 128)
+				// 	printf("%s\n", strsignal(status - 128));
 				env_pack.original_env
 					= export_original(env_pack.original_env, status);
 			}
