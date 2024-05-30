@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 18:11:32 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/30 09:52:06 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ typedef struct s_hd_file
 }			t_hd_file;
 
 void		rl_replace_line(const char *text, int clear_undo);
+void		rl_clear_history(void);
 void		clean_2d_char(char **array);
 t_cmd		*clean_cmd_list(t_cmd *first);
 t_cmd		*create_cmd_list(int total_number);
