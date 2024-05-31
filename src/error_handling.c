@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/31 11:56:31 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:39:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,29 @@ int	check_after_token(char *str)
 
 char	*find_token(char *cur)
 {
-	char	*token[15];
+	char	*token[20];
 	int		index;
 
 	token[0] = "||";
-	token[1] = "<<<";
-	token[2] = "<<";
-	token[3] = "<";
-	token[4] = ">>";
-	token[5] = ">";
-	token[6] = "|";
-	token[7] = "&&";
-	token[8] = "&";
-	token[9] = "*";
-	token[10] = "\\";
-	token[11] = ";";
-	token[12] = "(";
-	token[13] = ")";
-	token[14] = NULL;
-
+	token[1] = "<>";
+	token[2] = "<<<";
+	token[3] = "<<";
+	token[4] = "<";
+	token[5] = ">>";
+	token[6] = ">";
+	token[7] = "|";
+	token[8] = "&&";
+	token[9] = "&";
+	token[10] = "*";
+	token[11] = "\\";
+	token[12] = ";";
+	token[13] = "(";
+	token[14] = ")";
+	token[15] = "{";
+	token[16] = "}";
+	token[17] = "[";
+	token[18] = "]";
+	token[19] = NULL;
 	index = 0;
 	while (token[index])
 	{
@@ -57,11 +61,11 @@ int	accept_char(char *token, char *cur)
 		if (*cur == '|' || *cur == '\0')
 			return (0);
 	}
-	else if (same(token, "<"))
-	{
-		if ((find_token(cur) && !same(find_token(cur), ">")) || *cur == '\0')
-			return (0);
-	}
+	// else if (same(token, "<"))
+	// {
+	// 	if ((find_token(cur) && !same(find_token(cur), ">")) || *cur == '\0')
+	// 		return (0);
+	// }
 	else
 	{
 		if (find_token(cur) || *cur == '\0')
@@ -155,7 +159,9 @@ t_error	find_error(char *line)
 			{
 				if (same(token, "<<<") || same(token, "&&") || same(token, "\\")
 					|| same(token, "||") || same(token, "*") || same(token, ";")
-					|| same(token, "&") || same(token, "(") || same(token, ")"))
+					|| same(token, "&") || same(token, "(") || same(token, ")")
+					|| same(token, "<>") || same(token, "{") || same(token, "}")
+					|| same(token, "[") || same(token, "]"))
 				{
 					error.not_handling = 1;
 					error.error = ft_strdup(token);
@@ -169,7 +175,12 @@ t_error	find_error(char *line)
 					else
 					{
 						if (find_token(cur + index))
-							error.error = ft_strdup(find_token(cur + index));
+						{
+							// if (same(token, "<") && same(find_token(cur + index) , ">>") && *(cur + index - 1) == '<')
+							// 	error.error = ft_strdup(">");
+							// else
+								error.error = ft_strdup(find_token(cur + index));
+						}
 						else
 							error.error = sliced_str(cur, index, index);
 					}
