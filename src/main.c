@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/31 10:01:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/31 11:43:30 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 		{
 			env_pack_result.original_env
 				= export_original(env_pack_result.original_env, 1);
-			ft_putstr_fd("ASAL: We are not going to handle `", 2);
+			ft_putstr_fd("ASAL: We are not handling `", 2);
 			ft_putstr_fd(error.error, 2);
 			ft_putendl_fd("\'", 2);
 			return (env_pack_result);

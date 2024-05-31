@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/31 11:30:18 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:57:11 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	{
 		if (temp_file->input)
 		{
-			if (!temp_file->limiter)
+			if (!temp_file->limiter && !temp_file->ignore)
 			{
 				temp_file->fd = open(temp_file->address, O_RDONLY);
 				if (temp_file->fd == -1)
@@ -179,7 +179,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 				temp_file = temp_file->next;
 			}
 			temp_file = cmd_execution->input;
-			while (temp_file)
+			while (temp_file && !temp_file->ignore && !temp_file->limiter)
 			{
 				temp_file->fd = open(temp_file->address, O_RDONLY);
 				if (temp_file->fd == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 12:49:38 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:55:30 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,47 +32,6 @@ int	ft_isspace(int ch)
 		return (1);
 	return (0);
 }
-
-// static size_t	strlen_modified(char *s)
-// {
-// 	size_t	len;
-
-// 	len = 0;
-// 	if (s == 0 || *s == '\0')
-// 		return (0);
-// 	else
-// 	{
-// 		if (*s == '\"')
-// 		{
-// 			s++;
-// 			while (*s != '\0' && *s != '\"')
-// 			{
-// 				len++;
-// 				s++;
-// 			}
-// 			len += 2;
-// 		}
-// 		else if (*s == '\'')
-// 		{
-// 			s++;
-// 			while (*s != '\0' && *s != '\'')
-// 			{
-// 				len++;
-// 				s++;
-// 			}
-// 			len += 2;
-// 		}
-// 		else
-// 		{
-// 			while (*s != '\0' && !ft_isspace(*s) && !istoken(*s))
-// 			{
-// 				s++;
-// 				len++;
-// 			}
-// 		}
-// 		return (len);
-// 	}
-// }
 
 static size_t	strlen_modified(char *s)
 {
@@ -144,7 +103,12 @@ char	*ft_remove(char *str, char *del, t_file *file)
 
 	original_len = ft_strlen(str);
 	len1 = file->place;
-	part2 = ft_strnstr(str + len1, del, ft_strlen(str)) + ft_strlen(del);
+	if (file->ignore)
+		part2 = str + len1 + 1;
+	// original_len = ft_strlen(str);
+	// len1 = file->place;
+	else
+		part2 = ft_strnstr(str + len1, del, ft_strlen(str)) + ft_strlen(del);
 	temp = part2;
 	len2 = 0;
 	while (*temp)

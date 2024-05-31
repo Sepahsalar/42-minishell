@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:43:39 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/31 10:08:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:18:40 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ t_cmd	*fill_cmd_list(char **raw_cmd, t_env *env, t_env *original_env)
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_files_all(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
-	if (fill_files(&cmd, ">"))
-		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_files(&cmd, "<"))
+		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	if (fill_files(&cmd, ">"))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_last_out(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
