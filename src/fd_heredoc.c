@@ -3,35 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   fd_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:59:53 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 20:04:28 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/05/31 11:00:25 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	sig_handler_heredoc(int sig)
-{
-	if (sig == SIGINT)
-	{
-		// readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
-		ioctl(0, TIOCSTI, "\n");
-		// rl_on_new_line();
-		// rl_replace_line("", 0);
-		printf("\033[1A");
-		// write(STDOUT_FILENO, "\n", 1);
-		//rl_replace_line("", STDIN_FILENO);
-		// rl_on_new_line();
-		// rl_redisplay();
-		g_signal = sig;
-	}
-	// else if (sig == SIGQUIT)
-	// {
-	// 	(void)sig;
-	// }
-}
+// static void	sig_handler_heredoc(int sig)
+// {
+// 	if (sig == SIGINT)
+// 	{
+// 		// readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
+// 		ioctl(0, TIOCSTI, "\n");
+// 		// rl_on_new_line();
+// 		// rl_replace_line("", 0);
+// 		printf("\033[1A");
+// 		// write(STDOUT_FILENO, "\n", 1);
+// 		//rl_replace_line("", STDIN_FILENO);
+// 		// rl_on_new_line();
+// 		// rl_redisplay();
+// 		g_signal = sig;
+// 	}
+// 	// else if (sig == SIGQUIT)
+// 	// {
+// 	// 	(void)sig;
+// 	// }
+// }
 
 // char	*custom_get_next_line(void)
 // {
@@ -72,10 +72,12 @@ int	fd_heredoc(t_cmd **cmd_address)
 	temp_input = cmd->input;
 	file_name = 0;
 	heredoc_text = 0;
-	signal(SIGINT, &sig_handler_heredoc);
+	// change_mode(HEREDOC);
+	// g_signal = HEREDOC;
+	// signal(SIGINT, &sig_handler_heredoc);
 	// signal(SIGINT, SIG_DFL);
 	// signal(SIGQUIT, SIG_IGN);
-	while (temp_input)
+	while (temp_input && g_signal == HEREDOC)
 	{
 		//protection needed
 		if (temp_input->limiter)
@@ -97,10 +99,10 @@ int	fd_heredoc(t_cmd **cmd_address)
 			if (!temp_str)
 				return (1);
 			temp_str3 = readline("> ");
-			if (!temp_str3)
-				printf(ANSI_MOVE_UP"> ");
+			// if (!temp_str3)
+			// 	printf(ANSI_MOVE_UP"> ");
 			line = ft_strjoin(temp_str3, "\n");
-			while (!same(line, temp_str) && line && !g_signal)
+			while (!same(line, temp_str) && line && g_signal == HEREDOC)
 			{
 				if (!heredoc_text)
 				{
@@ -113,7 +115,7 @@ int	fd_heredoc(t_cmd **cmd_address)
 						heredoc_text = ft_strjoin(heredoc_text, line);
 					else
 					{
-						printf(ANSI_MOVE_UP"> ");
+						// printf(ANSI_MOVE_UP"> ");
 						break ;
 					}
 					if (!heredoc_text)
@@ -127,52 +129,11 @@ int	fd_heredoc(t_cmd **cmd_address)
 				}
 				//free(line);
 				temp_str3 = readline("> ");
-				if (!temp_str3)
-					printf(ANSI_MOVE_UP"> ");
+				// if (!temp_str3)
+				// 	printf(ANSI_MOVE_UP);
 				line = ft_strjoin(temp_str3, "\n");
 			}
-
-			//old version
-			// ft_putstr_fd("> ", STDOUT_FILENO);
-			// line = custom_get_next_line();
-			// // line = NULL;
-			// // if (!line)
-			// // 	return (1);
-			// while (!same(line, temp_str) && line)
-			// {
-			// 	if (!heredoc_text)
-			// 	{
-			// 		heredoc_text = ft_strdup(line);
-			// 	}
-			// 	else
-			// 	{
-			// 		temp_heredoc_text = heredoc_text;
-			// 		if (line)
-			// 			heredoc_text = ft_strjoin(heredoc_text, line);
-			// 		else
-			// 		{
-			// 			break ;
-			// 		}
-			// 		if (!heredoc_text)
-			// 		{
-			// 			// free(line);
-			// 			// free(temp_heredoc_text);
-			// 			// free(temp_str);
-			// 			return (1);
-			// 		}
-			// 		free(temp_heredoc_text);
-			// 	}
-			// 	//free(line);
-			// 	ft_putstr_fd("> ", STDOUT_FILENO);
-			// 	// if (g_)
-			// 	// line = get_next_line(STDIN_FILENO);
-			// 	line = custom_get_next_line();
-			// 	//printf("%s", line);
-			// }
-			// if (g_signal)
-			// 	write(STDOUT_FILENO, "\n", 0);
-			// free(line);
-			// free(temp_str);
+			//printf("this is the text of heredoc_text : %s\n", heredoc_text);
 			ft_putstr_fd(heredoc_text, temp_input->fd);
 			// free(heredoc_text);
 			heredoc_text = NULL;
@@ -180,7 +141,9 @@ int	fd_heredoc(t_cmd **cmd_address)
 		}
 		temp_input = temp_input->next;
 	}
-	signal(SIGINT, &sig_handler);
+	// if (g_signal != HEREDOC_INTERRUPTED)
+	// 	change_mode(RUNNING_COMMAND);
+	// signal(SIGINT, &sig_handler);
 	// signal(SIGQUIT, SIG_IGN);
 	return (0);
 }
@@ -191,12 +154,15 @@ int	fill_fd_heredoc(t_cmd **start_cmd)
 
 	if (!start_cmd)
 		return (0);
+	change_mode(HEREDOC);
 	cmd = *start_cmd;
-	while (cmd)
+	while (cmd && g_signal == HEREDOC)
 	{
 		if (fd_heredoc(&cmd))
 			return (1);
 		cmd = cmd->next;
 	}
+	if (g_signal == HEREDOC)
+		change_mode(RUNNING_COMMAND);
 	return (0);
 }

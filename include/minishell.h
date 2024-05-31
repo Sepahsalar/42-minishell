@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 18:16:26 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/31 11:03:11 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,18 @@
 
 # define ANSI_COLOR_GREEN "\001\x1b[32m\002"
 # define ANSI_COLOR_RESET "\001\x1b[0m\002"
-# define ANSI_MOVE_UP "\033[1A"
+// # define ANSI_MOVE_UP "\033[1A"
 
-# define ANSI_SAVE_CURSOR "\033[s"
-# define ANSI_RESTORE_CURSOR "\033[u"
-# define ANSI_MOVE_TO_END "\033[K"
-# define ANSI_MOVE_LEFT "\033[8D"
-# define ANSI_MOVE_RIGHT "\033[C"
+// # define ANSI_SAVE_CURSOR "\033[s"
+// # define ANSI_RESTORE_CURSOR "\033[u"
+// # define ANSI_MOVE_TO_END "\033[K"
+// # define ANSI_MOVE_LEFT "\033[8D"
+// # define ANSI_MOVE_RIGHT "\033[C"
 
 
 # define WAIT_FOR_COMMAND 10
+# define HEREDOC 20
+# define HEREDOC_INTERRUPTED 30
 # define RUNNING_COMMAND 0
 
 volatile int g_signal;
@@ -254,5 +256,6 @@ int			export_check_key(char *str);
 int			fill_files_all(t_cmd **cmd);
 char		*get_current_pid(t_env *original_env);
 void		sig_handler(int sig);
+void		change_mode(int mode);
 
 #endif //MINISHELL_H

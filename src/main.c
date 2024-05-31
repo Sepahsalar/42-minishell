@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 18:46:39 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/05/31 10:01:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // 6) create a .history file to keep the commands for each SHLVL-------------8h denied
 // 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
 
-void	change_mode_to(int mode)
+void	change_mode(int mode)
 {
 	struct termios	term;
 
@@ -30,6 +30,14 @@ void	change_mode_to(int mode)
 	else if (mode == WAIT_FOR_COMMAND)
 	{
 		g_signal = WAIT_FOR_COMMAND;
+		ft_bzero(&term, sizeof(term));
+		tcgetattr(STDIN_FILENO, &term);
+		term.c_lflag &= ~ECHOCTL;
+		tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	}
+	else if (mode == HEREDOC)
+	{
+		g_signal = HEREDOC;
 		ft_bzero(&term, sizeof(term));
 		tcgetattr(STDIN_FILENO, &term);
 		term.c_lflag &= ~ECHOCTL;
@@ -117,13 +125,13 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 		}
 		return (env_pack_result);
 	}
-	change_mode_to(RUNNING_COMMAND);
+	change_mode(RUNNING_COMMAND);
 	raw_cmd = create_raw_cmd(raw_line);
 	cmd = fill_cmd_list(raw_cmd, env_pack.env, env_pack.original_env);
 	master_clean(raw_cmd, 0, 0, -1);
 	cmd_counter = cmd_count(cmd);
 	temp_cmd = cmd;
-	if (!g_signal)
+	if (g_signal == RUNNING_COMMAND)
 	{
 		while (temp_cmd)
 		{
@@ -172,6 +180,12 @@ void	sig_handler(int sig)
 		rl_replace_line("", STDIN_FILENO);
 		rl_on_new_line();
 		rl_redisplay();
+	}
+	else if (sig == SIGINT && g_signal == HEREDOC)
+	{
+		ioctl(0, TIOCSTI, "\n");
+		printf("\033[1A");
+		g_signal = HEREDOC_INTERRUPTED;
 	}
 }
 
@@ -231,6 +245,12 @@ t_env_pack env_pack_at_start(char **envp, int fd_stdin, int fd_stdout)
 	return (env_pack);
 }
 
+void	apply_custom_signal_handler(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &sig_handler);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*raw_line;
@@ -245,11 +265,10 @@ int	main(int argc, char **argv, char **envp)
 	fd_stdout = dup(STDOUT_FILENO);
 	env_pack = env_pack_at_start(envp, fd_stdin, fd_stdout);
 	load_history();
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, &sig_handler);
+	apply_custom_signal_handler();
 	while (1)
 	{
-		change_mode_to(WAIT_FOR_COMMAND);
+		change_mode(WAIT_FOR_COMMAND);
 		raw_line = readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
 		if (!raw_line)
 			run_exit_eof(env_pack.original_env, fd_stdin, fd_stdout);
