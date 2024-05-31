@@ -55,6 +55,7 @@ dkms.conf
 
 # Testers
 minishell_tester/
+.different_inputs
 
 # Virtual Environment
 venv/
