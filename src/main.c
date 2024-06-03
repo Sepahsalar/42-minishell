@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 10:29:08 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 10:43:57 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,13 @@
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {
-	char		**raw_cmd;
-	t_cmd		*cmd;
-	t_cmd		*temp_cmd;
-	int			status_last_cmd;
-	int			cmd_counter;
-	t_file		*temp_file;
 	t_env_pack	env_pack_result;
 	t_error		error;
 
-	status_last_cmd = 0;
 	error = find_error(raw_line);
-	env_pack_result = env_pack;
 	if (error.error)
 		return (error_actions(env_pack, error, raw_line));
-	change_mode(RUNNING_COMMAND);
-	raw_cmd = create_raw_cmd(raw_line);
-	cmd = fill_cmd_list(raw_cmd, env_pack.env, env_pack.original_env);
-	master_clean(raw_cmd, 0, 0, -1);
-	cmd_counter = cmd_count(cmd);
-	temp_cmd = cmd;
-	if (g_signal == RUNNING_COMMAND)
-	{
-		while (temp_cmd)
-		{
-			if (temp_cmd->index == cmd_counter)
-			{
-				env_pack_result = execute_cmd(cmd, temp_cmd);
-			}
-			else
-				execute_cmd(cmd, temp_cmd);
-			temp_cmd = temp_cmd->next;
-		}
-	}
-	temp_cmd = cmd;
-	while (temp_cmd)
-	{
-		if (temp_cmd->last_in)
-			temp_file = temp_cmd->last_in->file;
-		else
-			temp_file = NULL;
-		while (temp_file)
-		{
-			if (temp_file->limiter)
-			{
-				close(temp_file->fd); //maybe double close
-				unlink(temp_file->address);
-			}
-			temp_file = temp_file->next;
-		}
-		temp_cmd = temp_cmd->next;
-	}
-	//master_clean(0, env, cmd, -1);
+	env_pack_result = execute_actions(raw_line, env_pack);
 	return (env_pack_result);
 }
 

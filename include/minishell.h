@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 10:20:08 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 10:40:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,5 +259,6 @@ char		*get_current_pid(t_env *original_env);
 void		sig_handler(int sig);
 void		change_mode(int mode);
 t_env_pack	error_actions(t_env_pack env_pack, t_error error, char *raw_line);
+t_env_pack	execute_actions(char *raw_line, t_env_pack env_pack);
 
 #endif //MINISHELL_H
