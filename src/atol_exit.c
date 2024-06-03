@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 11:01:19 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 13:06:16 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:12:23 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ static t_atol	atol_exit_helper(char *str)
 
 t_atol	atol_exit(char *str)
 {
-	// int		sign;
-	// int		i;
 	long	a;
 	t_atol	res;
 
@@ -51,22 +49,6 @@ t_atol	atol_exit(char *str)
 	res.num = 0;
 	res.is_error = 0;
 	a = 0;
-	// while (str[i])
-	// {
-	// 	if (!(ft_isdigit(str[i]) || str[0] == '-' || str[0] == '+'))
-	// 	{
-	// 		res.is_error = 1;
-	// 		return (res);
-	// 	}
-	// 	i++;
-	// }
-	// i = 0;
-	// if (str[i] == '-' || str[i] == '+')
-	// {
-	// 	if (str[i] == '-')
-	// 		sign = sign * -1;
-	// 	i++;
-	// }
 	res = atol_exit_helper(str);
 	while (str[res.i] >= '0' && str[res.i] <= '9')
 	{
