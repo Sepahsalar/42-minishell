@@ -3,47 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/31 11:43:30 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 10:29:08 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// 6) create a .history file to keep the commands for each SHLVL-------------8h denied
-// 9) handle ctrl + c & ctrl d inside of a heredoc---------------------------16h
-
-void	change_mode(int mode)
-{
-	struct termios	term;
-
-	if (mode == RUNNING_COMMAND)
-	{
-		g_signal = RUNNING_COMMAND;
-		ft_bzero(&term, sizeof(term));
-		tcgetattr(STDIN_FILENO, &term);
-		term.c_lflag |= ECHOCTL;
-		tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	}
-	else if (mode == WAIT_FOR_COMMAND)
-	{
-		g_signal = WAIT_FOR_COMMAND;
-		ft_bzero(&term, sizeof(term));
-		tcgetattr(STDIN_FILENO, &term);
-		term.c_lflag &= ~ECHOCTL;
-		tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	}
-	else if (mode == HEREDOC)
-	{
-		g_signal = HEREDOC;
-		ft_bzero(&term, sizeof(term));
-		tcgetattr(STDIN_FILENO, &term);
-		term.c_lflag &= ~ECHOCTL;
-		tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	}
-}
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {
@@ -54,77 +21,13 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 	int			cmd_counter;
 	t_file		*temp_file;
 	t_env_pack	env_pack_result;
-	int			index;
-	char        *token;
 	t_error		error;
-	char		*heredoc_place;
-	int			printed = 0;
-	char		*sq;
-	char    	*dq;
 
-	sq = NULL;
-	dq = NULL;
 	status_last_cmd = 0;
 	error = find_error(raw_line);
 	env_pack_result = env_pack;
 	if (error.error)
-	{
-		env_pack_result = env_pack;
-		if (error.not_handling)
-		{
-			env_pack_result.original_env
-				= export_original(env_pack_result.original_env, 1);
-			ft_putstr_fd("ASAL: We are not handling `", 2);
-			ft_putstr_fd(error.error, 2);
-			ft_putendl_fd("\'", 2);
-			return (env_pack_result);
-		}
-		export_original(env_pack_result.original_env, 258);
-		index = 0;
-		token = NULL;
-		heredoc_place = ft_strnstr(raw_line, "<<", error.index);
-		if (!heredoc_place || check_after_token(raw_line + error.index
-				+ ft_strlen(error.error) - 1))
-		{
-			printed = 1;
-			ft_putstr_fd("bash: syntax error near unexpected token `", 2);
-			ft_putstr_fd(error.error, 2);
-			ft_putendl_fd("\'", 2);
-		}
-		while (index <= error.index)
-		{
-			if (raw_line[index] == '\"' || raw_line[index] == '\'')
-			{
-				if (raw_line[index] == '\"' && dq == NULL)
-					dq = &raw_line[index];
-				else if (raw_line[index] == '\"')
-					dq = NULL;
-				else if (raw_line[index] == '\'' && sq == NULL)
-					sq = &raw_line[index];
-				else if (raw_line[index] == '\'')
-					sq = NULL;
-				index++;
-			}
-			else
-			{
-				if (sq || dq)
-				{
-					token = NULL;
-					index++;
-				}
-				else
-					token = change_token_heredoc(token, (raw_line + index),
-							&index, error);
-			}
-		}
-		if (!printed)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `", 2);
-			ft_putstr_fd(error.error, 2);
-			ft_putendl_fd("\'", 2);
-		}
-		return (env_pack_result);
-	}
+		return (error_actions(env_pack, error, raw_line));
 	change_mode(RUNNING_COMMAND);
 	raw_cmd = create_raw_cmd(raw_line);
 	cmd = fill_cmd_list(raw_cmd, env_pack.env, env_pack.original_env);
