@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/06/03 14:27:39 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/06/03 18:37:56 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/fill_env_list.c \
 		$(SRCDIR)/fill_file_data.c \
 		$(SRCDIR)/fill_files.c \
+		$(SRCDIR)/fill_files_helper.c \
 		$(SRCDIR)/fill_index_cmd_list.c \
 		$(SRCDIR)/fill_last_file_utils.c \
 		$(SRCDIR)/fill_last_file.c \
@@ -49,15 +50,20 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/pipex.c \
 		$(SRCDIR)/recreate_2d_env.c \
 		$(SRCDIR)/split_pipex.c \
+		$(SRCDIR)/split_pipex_utils.c \
 		$(SRCDIR)/utility1.c \
 		$(SRCDIR)/utility2.c \
 		$(SRCDIR)/utility3.c \
+		$(SRCDIR)/utility4.c \
 		$(SRCDIR)/handle_quote.c \
+		$(SRCDIR)/handle_quote_utils.c \
 		$(SRCDIR)/find_place_type_dollar.c \
 		$(SRCDIR)/handle_dollar.c \
 		$(SRCDIR)/builtin.c \
 		$(SRCDIR)/env.c \
 		$(SRCDIR)/export.c \
+		$(SRCDIR)/export_utils.c \
+		$(SRCDIR)/export_utils2.c \
 		$(SRCDIR)/unset.c \
 		$(SRCDIR)/pwd.c \
 		$(SRCDIR)/init_temp_env.c \
@@ -73,6 +79,7 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/execute_actions.c \
 		$(SRCDIR)/error_handling_utils.c \
 		$(SRCDIR)/error_handling_heredoc.c \
+		$(SRCDIR)/ft_remove.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

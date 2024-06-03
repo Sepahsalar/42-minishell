@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:08:29 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 12:26:39 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:27:59 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,4 @@ int	len_helper_pipe(const char *s)
 			j++;
 	}
 	return (j + 1);
-}
-
-int	check_unique(t_last_file *first, t_file *temp)
-{
-	t_last_file	*node;
-
-	if (!first)
-		return (1);
-	node = first;
-	while (node)
-	{
-		if (node->file->fd_operator == temp->fd_operator)
-			return (0);
-		node = node->next;
-	}
-	return (1);
 }
