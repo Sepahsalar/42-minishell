@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/06/03 18:37:56 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/06/03 19:25:10 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/create_env_list.c \
 		$(SRCDIR)/create_file_list.c \
 		$(SRCDIR)/create_raw_cmd.c \
+		$(SRCDIR)/execute_cmd.c \
 		$(SRCDIR)/expand_dollar.c \
 		$(SRCDIR)/fd_heredoc.c \
 		$(SRCDIR)/fill_address_access.c \
@@ -42,12 +43,17 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/fill_last_file_utils.c \
 		$(SRCDIR)/fill_last_file.c \
 		$(SRCDIR)/fill_args_cmd_list.c \
+		$(SRCDIR)/fill_dollar_list.c \
 		$(SRCDIR)/fill_raw_cmd_list.c \
 		$(SRCDIR)/find_cmd_address.c \
 		$(SRCDIR)/istoken.c \
 		$(SRCDIR)/main.c \
 		$(SRCDIR)/master_clean.c \
-		$(SRCDIR)/pipex.c \
+		$(SRCDIR)/pipex_utils.c \
+		$(SRCDIR)/pipex_utils2.c \
+		$(SRCDIR)/pipex_utils3.c \
+		$(SRCDIR)/pipex_utils4.c \
+		$(SRCDIR)/pipex_utils5.c \
 		$(SRCDIR)/recreate_2d_env.c \
 		$(SRCDIR)/split_pipex.c \
 		$(SRCDIR)/split_pipex_utils.c \
@@ -57,7 +63,7 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/utility4.c \
 		$(SRCDIR)/handle_quote.c \
 		$(SRCDIR)/handle_quote_utils.c \
-		$(SRCDIR)/find_place_type_dollar.c \
+		$(SRCDIR)/fill_dollar_list_utils.c \
 		$(SRCDIR)/handle_dollar.c \
 		$(SRCDIR)/builtin.c \
 		$(SRCDIR)/env.c \

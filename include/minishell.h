@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 18:35:00 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:26:11 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ t_last_file	*create_last_file_list(t_file *file);
 int			handle_quote_cmd(t_cmd *start);
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack);
 void		fill_name_cmd_list(t_cmd **cmd);
-t_dollar	*create_fill_dollar_list(char *arg);
+t_dollar	*fill_dollar_list(char *arg);
 char		*expand_dollar_helper(t_cmd *cmd, char *str, char *find, int type);
 int			handle_dollar_struct(t_cmd *cmd);
 char		*inside_double_quote(char *location);
@@ -283,5 +283,37 @@ int			len_quote(char const *s, char ch);
 int			len_quote_pipe(const char *s, char ch);
 t_hd_file	*remove_update(t_hd_file *hd, char *ch);
 t_hd_file	*remove_update_all(t_hd_file *hd);
+t_env_pack	cmd_dir(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack);
+t_env_pack	empty_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack);
+t_env_pack	input_output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack);
+void		input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack);
+t_env_pack	full_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack);
+void		output_redirect_builtin(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack);
+void		output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack, int fd[2]);
+void		input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack);
+t_env_pack	waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack);
+t_env_pack	init_and_check(t_cmd *cmd_start, t_cmd *cmd_execution);
+t_env_pack	parent_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack);
+t_env_pack	after_child(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack, int fd[2]);
+void		input_output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack, int fd[2]);
+void		child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack);
+void		child_process(t_cmd *cmd_start, t_cmd *cmd_execution,
+				t_env_pack env_pack, int fd[2]);
+int			should_execute_in_parent(t_cmd *cmd_start, t_cmd *cmd_execution);
+int			type_finder(char *sq, char *dq, int heredoc);
+t_dollar	*create_dollar_node(int id, char *place, int type);
 
 #endif //MINISHELL_H
