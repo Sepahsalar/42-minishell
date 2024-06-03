@@ -6,14 +6,15 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 18:31:19 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:35:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 // test just clear command
 
-t_env_pack	output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution, t_file *temp_file, t_env_pack env_pack)
+t_env_pack	output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_file *temp_file, t_env_pack env_pack)
 {
 	if (temp_file->trunc)
 		temp_file->fd = open(temp_file->address,
@@ -35,7 +36,8 @@ t_env_pack	output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution, t_file *t
 	return (env_pack);
 }
 
-t_env_pack	input_check(t_cmd *cmd_start, t_cmd *cmd_execution, t_file *temp_file, t_env_pack env_pack)
+t_env_pack	input_check(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_file *temp_file, t_env_pack env_pack)
 {
 	if (!temp_file->limiter && !temp_file->ignore)
 	{
@@ -55,7 +57,8 @@ t_env_pack	input_check(t_cmd *cmd_start, t_cmd *cmd_execution, t_file *temp_file
 	return (env_pack);
 }
 
-t_env_pack	input_output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+t_env_pack	input_output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
 {
 	t_file		*temp_file;
 
@@ -63,9 +66,11 @@ t_env_pack	input_output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution, t_e
 	while (temp_file)
 	{
 		if (temp_file->input)
-        	env_pack = input_check(cmd_start, cmd_execution, temp_file, env_pack);
+			env_pack = input_check(cmd_start, cmd_execution,
+					temp_file, env_pack);
 		else if (temp_file->trunc || temp_file->append)
-			env_pack = output_check_create(cmd_start, cmd_execution, temp_file, env_pack);
+			env_pack = output_check_create(cmd_start, cmd_execution,
+					temp_file, env_pack);
 		if (temp_file->fd == -1)
 			break ;
 		// close(temp_file->fd);
@@ -74,9 +79,10 @@ t_env_pack	input_output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution, t_e
 	return (env_pack);
 }
 
-t_env_pack	empty_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+t_env_pack	empty_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
 {
-	(void)cmd_start;//if needed for clean up
+	(void)cmd_start;
 	if (cmd_execution->cmd_name == NULL
 		|| (*cmd_execution->cmd_name == '\0' && cmd_execution->empty_cmd != 1))
 	{
@@ -97,7 +103,8 @@ t_env_pack	cmd_dir(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
 	return (env_pack);
 }
 
-t_env_pack	cmd_permission(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+t_env_pack	cmd_permission(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
 {
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(cmd_execution->cmd_name, 2);
@@ -109,7 +116,8 @@ t_env_pack	cmd_permission(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env
 	return (env_pack);
 }
 
-t_env_pack	cmd_not_found(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+t_env_pack	cmd_not_found(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
 {
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(cmd_execution->cmd_name, 2);
@@ -124,7 +132,8 @@ t_env_pack	cmd_not_found(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_
 	return (env_pack);
 }
 
-t_env_pack	full_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+t_env_pack	full_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
 {
 	if ((!cmd_execution->exec || cmd_execution->dir)
 		&& is_builtin(cmd_execution) == -1 && !cmd_execution->file_error)
@@ -142,7 +151,8 @@ t_env_pack	full_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env
 	return (env_pack);
 }
 
-void input_output_open_helper(t_cmd *cmd_start, t_cmd *cmd_execution, t_file *temp_file, t_env_pack env_pack)
+void input_output_open_helper(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_file *temp_file, t_env_pack env_pack)
 {
 	(void)env_pack;
 	if (temp_file->trunc)
@@ -155,7 +165,8 @@ void input_output_open_helper(t_cmd *cmd_start, t_cmd *cmd_execution, t_file *te
 		master_clean(0, cmd_start->env, cmd_execution, 1);
 }
 
-void input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+void input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
 {
 	t_file		*temp_file;
 
@@ -198,7 +209,8 @@ void	output_redirect_builtin_helper(t_cmd *cmd_start, t_cmd *cmd_execution,
 	}
 }
 
-void	output_redirect_builtin(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+void	output_redirect_builtin(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
 {
 	t_last_file	*last;
 
@@ -207,13 +219,15 @@ void	output_redirect_builtin(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack 
 	{
 		while (last)
 		{
-			output_redirect_builtin_helper(cmd_start, cmd_execution, last, env_pack);
+			output_redirect_builtin_helper(cmd_start, cmd_execution,
+				last, env_pack);
 			last = last->next;
 		}
 	}
 }
 
-void	input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+void	input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
 {
 	t_file		*last_input;
 	t_last_file	*last;
@@ -236,7 +250,8 @@ void	input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
 	}
 }
 
-void	output_redirect_helper(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack, int fd[2])
+void	output_redirect_helper(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack, int fd[2])
 {
 	t_file		*last_output;
 	t_last_file	*last;
@@ -261,7 +276,8 @@ void	output_redirect_helper(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack e
 		dup2(fd[1], STDOUT_FILENO);
 }
 
-void	output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack, int fd[2])
+void	output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack, int fd[2])
 {
 	t_last_file	*last;
 
@@ -276,13 +292,15 @@ void	output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack
 	}
 }
 
-void	input_output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack, int fd[2])
+void	input_output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack, int fd[2])
 {
 	input_redirect(cmd_start, cmd_execution, env_pack);
 	output_redirect(cmd_start, cmd_execution, env_pack, fd);
 }
 
-t_env_pack waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+t_env_pack waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
 {
 	int		status;
 	t_cmd	*temp_cmd;
@@ -305,7 +323,8 @@ t_env_pack waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack en
 	return (env_pack);
 }
 
-void non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+void non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
 {
 	char		*cmd_address;
 	char		**cmd_args;
@@ -334,7 +353,8 @@ void non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack en
 
 }
 
-void builtin_child_execution(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+void builtin_child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
 {
 	(void)cmd_start;
 	cmd_execution->child_builtin = 1;
@@ -342,7 +362,8 @@ void builtin_child_execution(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack 
 	exit(ft_atoi(env_pack.original_env->value));
 }
 
-void child_execution(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+void child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
 {
 	if (cmd_execution->file_error)
 		exit(ft_atoi(env_pack.original_env->value));
