@@ -3,56 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fd_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:59:53 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/31 11:00:25 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:57:42 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// static void	sig_handler_heredoc(int sig)
-// {
-// 	if (sig == SIGINT)
-// 	{
-// 		// readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
-// 		ioctl(0, TIOCSTI, "\n");
-// 		// rl_on_new_line();
-// 		// rl_replace_line("", 0);
-// 		printf("\033[1A");
-// 		// write(STDOUT_FILENO, "\n", 1);
-// 		//rl_replace_line("", STDIN_FILENO);
-// 		// rl_on_new_line();
-// 		// rl_redisplay();
-// 		g_signal = sig;
-// 	}
-// 	// else if (sig == SIGQUIT)
-// 	// {
-// 	// 	(void)sig;
-// 	// }
-// }
-
-// char	*custom_get_next_line(void)
-// {
-// 	char	buf[2];
-// 	char	*line;
-// 	char	*temp;
-
-// 	line = ft_strdup("");
-// 	buf[0] = '\0';
-// 	buf[1] = '\0';
-// 	while (buf[0] != '\n')
-// 	{
-// 		buf[0] = '\0';
-// 		read(STDIN_FILENO, buf, 1);
-// 		temp = line;
-// 		line = ft_strjoin(line, buf);
-// 		if (same(line, ""))
-// 			return (NULL);
-// 	}
-// 	return (line);
-// }
 
 int	fd_heredoc(t_cmd **cmd_address)
 {
@@ -72,11 +30,6 @@ int	fd_heredoc(t_cmd **cmd_address)
 	temp_input = cmd->input;
 	file_name = 0;
 	heredoc_text = 0;
-	// change_mode(HEREDOC);
-	// g_signal = HEREDOC;
-	// signal(SIGINT, &sig_handler_heredoc);
-	// signal(SIGINT, SIG_DFL);
-	// signal(SIGQUIT, SIG_IGN);
 	while (temp_input && g_signal == HEREDOC)
 	{
 		//protection needed
@@ -99,8 +52,6 @@ int	fd_heredoc(t_cmd **cmd_address)
 			if (!temp_str)
 				return (1);
 			temp_str3 = readline("> ");
-			// if (!temp_str3)
-			// 	printf(ANSI_MOVE_UP"> ");
 			line = ft_strjoin(temp_str3, "\n");
 			while (!same(line, temp_str) && line && g_signal == HEREDOC)
 			{
@@ -114,10 +65,7 @@ int	fd_heredoc(t_cmd **cmd_address)
 					if (line)
 						heredoc_text = ft_strjoin(heredoc_text, line);
 					else
-					{
-						// printf(ANSI_MOVE_UP"> ");
 						break ;
-					}
 					if (!heredoc_text)
 					{
 						// free(line);
@@ -129,22 +77,14 @@ int	fd_heredoc(t_cmd **cmd_address)
 				}
 				//free(line);
 				temp_str3 = readline("> ");
-				// if (!temp_str3)
-				// 	printf(ANSI_MOVE_UP);
 				line = ft_strjoin(temp_str3, "\n");
 			}
-			//printf("this is the text of heredoc_text : %s\n", heredoc_text);
 			ft_putstr_fd(heredoc_text, temp_input->fd);
-			// free(heredoc_text);
 			heredoc_text = NULL;
 			temp_input->fd = -2;
 		}
 		temp_input = temp_input->next;
 	}
-	// if (g_signal != HEREDOC_INTERRUPTED)
-	// 	change_mode(RUNNING_COMMAND);
-	// signal(SIGINT, &sig_handler);
-	// signal(SIGQUIT, SIG_IGN);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:23:32 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 12:02:40 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:01:18 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ t_quote	*create_and_fill_quote_list(char *str)
 	head = NULL;
 	while (index < (int)ft_strlen(str) - 1 || index == 0)
 	{
-		// printf("index:%d\n", index);
 		end = end_finder(str, index);
 		new = create_and_fill_quote_node(index, end);
 		if (head == NULL)
@@ -92,7 +91,6 @@ t_quote	*create_and_fill_quote_list(char *str)
 		old = new;
 		index = end + 1;
 	}
-	// printf("end of quote list\n");
 	return (head);
 }
 
@@ -104,7 +102,6 @@ char *sliced_str(char *str, int start, int end)
 	len = end - start + 1;
 	result = malloc(len + 1);
 	result[len] = '\0';
-	// printf("in sliced str; start: %d, end: %d\n", start, end);
 	ft_memcpy(result, str + start, len);
 	return (result);
 }
@@ -130,7 +127,6 @@ char	*handling_quote(char *str)
 	while (temp)
 	{
 		temp_str = result;
-		// printf("in handling quote; start: %d, end: %d\n", temp->start, temp->end);
 		result = ft_strjoin(result, quote_helper(str, temp->start, temp->end));
 		free(temp_str);
 		temp = temp->next;
@@ -149,7 +145,6 @@ int	handle_quote_args(char ***input)
 	index = 0;
 	while (args[index])
 	{
-		// printf("in handle_quote_args: %s\n", args[index]);
 		temp = args[index];
 		args[index] = handling_quote(temp);
 		free(temp);

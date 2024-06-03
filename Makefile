@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/06/03 13:49:02 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/06/03 13:54:03 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,6 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/create_env_list.c \
 		$(SRCDIR)/create_file_list.c \
 		$(SRCDIR)/create_raw_cmd.c \
-		$(SRCDIR)/execution_package.c \
 		$(SRCDIR)/expand_dollar.c \
 		$(SRCDIR)/fd_heredoc.c \
 		$(SRCDIR)/fill_address_access.c \

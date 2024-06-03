@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_place_type_dollar.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:31:42 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 14:36:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:00:34 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	type_finder(char *sq, char *dq, int heredoc)
 
 void	remove_previous_node(t_dollar *current)
 {
-	t_dollar *previous;
+	t_dollar	*previous;
 
 	if (current)
 	{

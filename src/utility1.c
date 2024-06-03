@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/31 12:55:30 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:03:20 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ char	*strdup_modified(char *s, char *token)
 
 	l = ft_strlen(token);
 	s = s + l;
-	// printf("%s\n", s);
 	while (*s != '\0' && ft_isspace(*s))
 		++s;
 	l = strlen_modified(s);
@@ -105,8 +104,6 @@ char	*ft_remove(char *str, char *del, t_file *file)
 	len1 = file->place;
 	if (file->ignore)
 		part2 = str + len1 + 1;
-	// original_len = ft_strlen(str);
-	// len1 = file->place;
 	else
 		part2 = ft_strnstr(str + len1, del, ft_strlen(str)) + ft_strlen(del);
 	temp = part2;

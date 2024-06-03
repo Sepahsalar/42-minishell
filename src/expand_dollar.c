@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 14:41:45 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:56:34 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ char	*get_current_pid(t_env *original_env)
 	fd = open(".pid", O_RDONLY);
 	pid_str = get_next_line(fd);
 	pid_str[ft_strlen(pid_str) - 1] = '\0';
-	// printf("%s\n", pid_str);
 	close(fd);
 	unlink(".pid");
 	clean_env_list(cpy);
@@ -102,7 +101,6 @@ char	*expand_dollar_helper(t_cmd *cmd, char *str , char *find, int type)
 	int		remained_dollar;
 	int		reletive_index;
 
-	
 	env = cmd->env;
 	temp = str;
 	count = 0;
@@ -114,24 +112,20 @@ char	*expand_dollar_helper(t_cmd *cmd, char *str , char *find, int type)
 		count++;
 		index++;
 	}
-	// printf("count: %d\n", count);
 	remained_dollar = count % 2;
 	count = count / 2;
 	reletive_index = find - str;
-	// printf("reletive_index: %d\n", reletive_index);
 	str = expand_pid(str, find, temp, count);
-	// printf("str: %s\n", str);
 	if (count)
 		find = str + reletive_index + (ft_strlen(temp) * count);
 	if ((!*find) || (find && (*(find + 1) == '\0'
-				|| *(find + 1) == ' ' || *(find + 1) == '=' || (type == 2 && (*(find + 1) == '\''
+				|| *(find + 1) == ' ' || *(find + 1) == '='
+				|| (type == 2 && (*(find + 1) == '\''
 						|| *(find + 1) == '\"')))))
 	{
 		new_str = ft_strdup(str);
-		// printf("new_str: %s\n", new_str);
 		return (new_str);
 	}
-	// printf("end\n");
 	if (remained_dollar)
 	{
 		len1 = find - str;
@@ -170,7 +164,6 @@ char	*expand_dollar_helper(t_cmd *cmd, char *str , char *find, int type)
 				return (NULL);
 			}
 		}
-		// printf("expanded is %s\n", expanded);
 		new_str = malloc(len1 + ft_strlen(expanded) + ft_strlen(part2) + 1);
 		if (!new_str)
 		{
@@ -209,7 +202,7 @@ char	*inside_double_quote(char *location)
 	return (inside);
 }
 
-char	*replace_inside(char *str, char *location, char *inside, char *handled_inside)
+char	*replace_inside(char *str, char *location, char *inside, char *handled)
 {
 	char	*new_str;
 	char	*dst;
@@ -217,7 +210,7 @@ char	*replace_inside(char *str, char *location, char *inside, char *handled_insi
 	int		l;
 	int		new_len;
 
-	new_len = ft_strlen(str) - ft_strlen(inside) + ft_strlen(handled_inside);
+	new_len = ft_strlen(str) - ft_strlen(inside) + ft_strlen(handled);
 	new_str = malloc(new_len + 1);
 	new_str[new_len] = '\0';
 	dst = new_str;
@@ -225,8 +218,8 @@ char	*replace_inside(char *str, char *location, char *inside, char *handled_insi
 	l = location - str + 1;
 	ft_memcpy(dst, src, l);
 	dst = dst + l;
-	src = handled_inside;
-	l = ft_strlen(handled_inside);
+	src = handled;
+	l = ft_strlen(handled);
 	ft_memcpy(dst, src, l);
 	dst = dst + l;
 	src = location + ft_strlen(inside) + 1;
