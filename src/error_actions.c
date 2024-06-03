@@ -6,77 +6,107 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:16:17 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 10:23:34 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 12:06:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_env_pack	error_actions(t_env_pack env_pack, t_error error, char *raw_line)
+t_env_pack	not_handling_error(t_env_pack env_pack, t_error error)
 {
 	t_env_pack	env_pack_result;
-	int			index;
-	char        *token;
-	char		*heredoc_place;
-	int			printed = 0;
-	char		*sq;
-	char    	*dq;
 
-	sq = NULL;
-	dq = NULL;
 	env_pack_result = env_pack;
-	if (error.not_handling)
-	{
-		env_pack_result.original_env
-			= export_original(env_pack_result.original_env, 1);
-		ft_putstr_fd("ASAL: We are not handling `", 2);
-		ft_putstr_fd(error.error, 2);
-		ft_putendl_fd("\'", 2);
-		return (env_pack_result);
-	}
-	export_original(env_pack_result.original_env, 258);
-	index = 0;
-	token = NULL;
+	env_pack_result.original_env
+		= export_original(env_pack_result.original_env, 1);
+	ft_putstr_fd("ASAL: We are not handling `", 2);
+	ft_putstr_fd(error.error, 2);
+	ft_putendl_fd("\'", 2);
+	return (env_pack_result);
+}
+
+int	print_error_before(t_error error, char *raw_line)
+{
+	char	*heredoc_place;
+
 	heredoc_place = ft_strnstr(raw_line, "<<", error.index);
 	if (!heredoc_place || check_after_token(raw_line + error.index
 			+ ft_strlen(error.error) - 1))
 	{
-		printed = 1;
 		ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 		ft_putstr_fd(error.error, 2);
 		ft_putendl_fd("\'", 2);
+		return (1);
 	}
-	while (index <= error.index)
-	{
-		if (raw_line[index] == '\"' || raw_line[index] == '\'')
-		{
-			if (raw_line[index] == '\"' && dq == NULL)
-				dq = &raw_line[index];
-			else if (raw_line[index] == '\"')
-				dq = NULL;
-			else if (raw_line[index] == '\'' && sq == NULL)
-				sq = &raw_line[index];
-			else if (raw_line[index] == '\'')
-				sq = NULL;
-			index++;
-		}
-		else
-		{
-			if (sq || dq)
-			{
-				token = NULL;
-				index++;
-			}
-			else
-				token = change_token_heredoc(token, (raw_line + index),
-						&index, error);
-		}
-	}
+	return (0);
+}
+
+void	print_error_after(t_error error, int printed)
+{
 	if (!printed)
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 		ft_putstr_fd(error.error, 2);
 		ft_putendl_fd("\'", 2);
 	}
+}
+
+static int	update_sq_dq_index(char c, int *sq, int *dq, int index)
+{
+	if (c == '\"' && (*dq) == 0)
+		(*dq) = 1;
+	else if (c == '\"')
+		(*dq) = 0;
+	else if (c == '\'' && (*sq) == 0)
+		(*sq) = 1;
+	else if (c == '\'')
+		(*sq) = 0;
+	return (index + 1);
+}
+
+static int	open_sq_or_dq(char **token, int index)
+{
+	*token = NULL;
+	return (index + 1);
+}
+
+void	fake_heredoc(t_error error, char *raw_line)
+{
+	int		sq;
+	int		dq;
+	int		index;
+	char	*token;
+
+	sq = 0;
+	dq = 0;
+	index = 0;
+	token = NULL;
+	while (index <= error.index)
+	{
+		if (raw_line[index] == '\"' || raw_line[index] == '\'')
+			index = update_sq_dq_index(raw_line[index], &sq, &dq, index);
+		else
+		{
+			if (sq || dq)
+				index = open_sq_or_dq(&token, index);
+			else
+				token = change_token_heredoc(token, (raw_line + index),
+						&index, error);
+		}
+	}
+}
+
+t_env_pack	error_actions(t_env_pack env_pack, t_error error, char *raw_line)
+{
+	t_env_pack	env_pack_result;
+	int			printed;
+
+	if (error.not_handling)
+		return (not_handling_error(env_pack, error));
+	printed = print_error_before(error, raw_line);
+	fake_heredoc(error, raw_line);
+	print_error_after(error, printed);
+	env_pack_result = env_pack;
+	export_original(env_pack_result.original_env, 258);
 	return (env_pack_result);
 }

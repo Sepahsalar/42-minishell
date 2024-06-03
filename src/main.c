@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 10:43:57 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:11:53 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {
-	t_env_pack	env_pack_result;
 	t_error		error;
 
 	error = find_error(raw_line);
 	if (error.error)
 		return (error_actions(env_pack, error, raw_line));
-	env_pack_result = execute_actions(raw_line, env_pack);
-	return (env_pack_result);
+	return (execute_actions(raw_line, env_pack));
 }
 
 void	sig_handler(int sig)
@@ -84,7 +82,7 @@ void	save_history(char *raw_line)
 	close(fd_history);
 }
 
-t_env_pack env_pack_at_start(char **envp, int fd_stdin, int fd_stdout)
+t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout)
 {
 	t_env_pack	env_pack;
 	char		*pid;
@@ -109,21 +107,10 @@ void	apply_custom_signal_handler(void)
 	signal(SIGINT, &sig_handler);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	minishell_process(t_env_pack env_pack, int fd_stdin, int fd_stdout)
 {
-	char		*raw_line;
-	int			exit_code;
-	int			fd_stdin;
-	int			fd_stdout;
-	t_env_pack	env_pack;
+	char	*raw_line;
 
-	(void)argc;
-	(void)argv;
-	fd_stdin = dup(STDIN_FILENO);
-	fd_stdout = dup(STDOUT_FILENO);
-	env_pack = env_pack_at_start(envp, fd_stdin, fd_stdout);
-	load_history();
-	apply_custom_signal_handler();
 	while (1)
 	{
 		change_mode(WAIT_FOR_COMMAND);
@@ -143,7 +130,24 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(raw_line);
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	int			fd_stdin;
+	int			fd_stdout;
+	t_env_pack	env_pack;
+
+	(void)argc;
+	(void)argv;
+	fd_stdin = dup(STDIN_FILENO);
+	fd_stdout = dup(STDOUT_FILENO);
+	env_pack = env_pack_at_start(envp, fd_stdin, fd_stdout);
+	load_history();
+	apply_custom_signal_handler();
+	minishell_process(env_pack, fd_stdin, fd_stdout);
+	//is there a need to apply the original signal handler???????? here and int the exit_eof_or any other exit
 	close(fd_stdin);
 	close(fd_stdout);
-	return (exit_code);
+	return (0);
 }
