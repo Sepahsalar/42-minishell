@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:19:09 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/13 17:42:05 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:02:12 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	**recreate_2d_env(t_env *env)
 	char	**env_2d;
 	char	*temp_str;
 
-    // Not sure about this edge case
 	if (!env)
 	{
 		env_2d = (char **)malloc(sizeof(char *));

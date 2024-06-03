@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:10:21 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 12:52:36 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:02:42 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static int	len_quote_pipe(char const *s, char ch)
 	char	temp;
 	int		triger_change;
 
-	// printf("str: %s\n",s);
 	triger_change = 1;
 	j = 0;
 	if ((*s != 34 && *s != 39))
@@ -86,7 +85,6 @@ static int	len_quote_pipe(char const *s, char ch)
 		while (s[j] && !((s[j] != temp)
 				&& (s[j + 1] == '\0' || s[j + 1] == temp)))
 		{
-			// printf("hi\n");
 			if ((s[j] == '\'') && triger_change)
 			{
 				temp = '\'';
@@ -99,11 +97,8 @@ static int	len_quote_pipe(char const *s, char ch)
 			}
 			j++;
 		}
-		// printf("[%d]:%c\n",j, s[j]);
-		// printf("triger_change = %d\n", triger_change);
 		while (!triger_change && s[j] && s[j] != ch)
 			j++;
-		// printf("[%d]:%c\n",j, s[j]);
 		if (s[j] == ch)
 			j--;
 	}
@@ -111,8 +106,6 @@ static int	len_quote_pipe(char const *s, char ch)
 		j = len_helper_pipe(s);
 	return (j + 1);
 }
-
-
 
 static char	*dup_char(char const *s, char ch)
 {
@@ -216,7 +209,6 @@ char	**split_pipex(char const *s)
 	char	**m;
 	char	**temp;
 
-	// printf("s: %s\n", s);
 	if (s == 0 || s[0] == '\0' || all_space((char *)s))
 	{
 		m = malloc(2 * sizeof (char *));

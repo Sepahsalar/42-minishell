@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:04:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/31 12:56:52 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:03:57 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**copy_2d_char(char **src)
 t_hd_file	*remove_update(t_hd_file *hd, char *ch)
 {
 	char	*temp_str;
-	char 	*temp_str2;
+	char	*temp_str2;
 	int		len;
 	t_file	*file;
 

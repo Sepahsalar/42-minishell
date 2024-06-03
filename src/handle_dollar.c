@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:07:18 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/29 14:39:36 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:00:49 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer)
 {
 	char			*temp;
 
-	
 	temp = hd_pointer->str;
 	if (hd_pointer->dollar->type != -1 && hd_pointer->dollar->type != 1)
 	{

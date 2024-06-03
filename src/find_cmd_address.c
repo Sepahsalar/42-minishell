@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd_address.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:31:28 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 15:32:58 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:00:14 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	check_accessibility(char *address, char mode)
 
 	if (!address)
 		return (0);
-	// if (address[0] == '\0')
-	// 	return (0);
 	if (mode == 'X')
 		result = access(address, X_OK);
 	else if (mode == 'R')
@@ -50,9 +48,6 @@ char	*find_address(t_cmd *cmd, char mode)
 	char	*temp;
 	int		i;
 
-	// I think it is handled in ft_find_cmd_address
-	// if (!cmd->cmd_name)
-	// 	return (NULL);
 	if (ft_strchr(cmd->cmd_name, '/'))
 	{
 		cmd->is_file = 1;
@@ -126,7 +121,6 @@ int	find_cmd_address(t_cmd *cmd)
 		cmd->dir = 0;
 		return (0);
 	}
-	// if (!cmd->cmd_name || !cmd->cmd_name[0])
 	if (!cmd->cmd_name)
 	{
 		cmd->address = 0;

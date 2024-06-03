@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:43:39 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/31 12:18:40 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:57:59 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,12 @@ t_cmd	*fill_cmd_list(char **raw_cmd, t_env *env, t_env *original_env)
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_last_out(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
-	// if (fill_last_out(&cmd))
-	// 	master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_last_in(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_fd_heredoc(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
-	
 	if (fill_args_cmd_list(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
-	// if (expand_all_dollar(cmd))
-	// 	master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (handle_quote_cmd(cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	fill_name_cmd_list(&cmd);

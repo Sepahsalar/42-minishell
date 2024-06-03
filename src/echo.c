@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:11:43 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 12:20:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:42:57 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,11 @@ t_env_pack	run_echo(t_cmd *cmd)
 	}
 	while (arg[index])
 	{
-		// printf("%s", arg[index]);
 		ft_putstr_fd(arg[index], 1);
 		if (arg[index + 1])
-			// printf(" ");
 			ft_putstr_fd(" ", 1);
 		index++;
 	}
-	// printf("%c", c);
 	ft_putchar_fd(c, 1);
 	env_pack.original_env = export_original(cmd->original_env, 0);
 	return (env_pack);

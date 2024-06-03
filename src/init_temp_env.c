@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_temp_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:56 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 11:55:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:01:41 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ t_env_pack	run_minishell(t_cmd *cmd)
 
 t_env	*set_start(t_env *env)
 {
-	char		*temp_str;
-	t_env       *temp_env;
+	char	*temp_str;
+	t_env	*temp_env;
 
 	temp_env = env;
 	while (temp_env && !same(temp_env->key, "SHLVL"))

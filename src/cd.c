@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/28 12:18:52 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:25:56 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_env	*custom_export(t_env *env, char *key, char *value)
 	return (env);
 }
 
-char *full_path_finder(char *pwd, char *arg, char *home)
+char	*full_path_finder(char *pwd, char *arg, char *home)
 {
 	char	*temp1;
 	char	*temp2;
@@ -67,23 +67,13 @@ char	*value_finder(t_env *env, char *key)
 	return (NULL);
 }
 
-t_env_pack	run_cd(t_cmd *cmd)
+t_env_pack	run_cd_helper(char *full_path, t_cmd *cmd, t_env_pack env_pack)
 {
-	char		*old_pwd;
-	t_env_pack	env_pack;
-	char		*full_path;
-	char		*new_pwd;
-	char		*home;
+	char	*new_pwd;
 
 	env_pack = init_env_pack(cmd);
-	old_pwd = getcwd(NULL, 0);
-	//protecion if(!old_pwd)
-	env_pack.env = custom_export(env_pack.env, "OLDPWD", old_pwd);
-	home = value_finder(cmd->original_env, "HOME");
-	full_path = full_path_finder(old_pwd, cmd->args[1], home);
 	if (chdir(full_path) == -1)
 	{
-		// printf("bash: %s: %s: %s\n",cmd->args[0], cmd->args[1], strerror(errno));
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(cmd->args[0], 2);
 		ft_putstr_fd(": ", 2);
@@ -95,10 +85,27 @@ t_env_pack	run_cd(t_cmd *cmd)
 	else
 	{
 		new_pwd = getcwd(NULL, 0);
-		//protecion if(!new_pwd)
+		//protecion
 		env_pack.env = custom_export(env_pack.env, "PWD", new_pwd);
 		env_pack.original_env = export_original(cmd->original_env, 0);
 	}
+	return (env_pack);
+}
+
+t_env_pack	run_cd(t_cmd *cmd)
+{
+	char		*old_pwd;
+	t_env_pack	env_pack;
+	char		*full_path;
+	char		*home;
+
+	env_pack = init_env_pack(cmd);
+	old_pwd = getcwd(NULL, 0);
+	//protecion
+	env_pack.env = custom_export(env_pack.env, "OLDPWD", old_pwd);
+	home = value_finder(cmd->original_env, "HOME");
+	full_path = full_path_finder(old_pwd, cmd->args[1], home);
+	env_pack = run_cd_helper(full_path, cmd, env_pack);
 	free(full_path);
 	return (env_pack);
 }

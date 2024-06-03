@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
+#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/06/03 10:40:39 by nnourine         ###   ########.fr        #
+#    Updated: 2024/06/03 14:27:39 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,12 +25,10 @@ LIBFT = lib/libft
 
 # Files
 SRCS =  $(SRCDIR)/atoi_file.c \
-		$(SRCDIR)/create_args.c \
 		$(SRCDIR)/create_cmd_list.c \
 		$(SRCDIR)/create_env_list.c \
 		$(SRCDIR)/create_file_list.c \
 		$(SRCDIR)/create_raw_cmd.c \
-		$(SRCDIR)/execution_package.c \
 		$(SRCDIR)/expand_dollar.c \
 		$(SRCDIR)/fd_heredoc.c \
 		$(SRCDIR)/fill_address_access.c \
@@ -71,7 +69,10 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/export_check.c \
 		$(SRCDIR)/change_mode.c \
 		$(SRCDIR)/error_actions.c \
+		$(SRCDIR)/error_actions_utils.c \
 		$(SRCDIR)/execute_actions.c \
+		$(SRCDIR)/error_handling_utils.c \
+		$(SRCDIR)/error_handling_heredoc.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

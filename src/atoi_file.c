@@ -6,19 +6,11 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:03:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 12:08:36 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:02:28 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-typedef struct s_atoi_file
-{
-	char	*str;
-	int		place;
-	long	res;
-	int		flag;
-}			t_atoi_file;
 
 static t_atoi_file	atoi_file_helper(char **input, int place, int def)
 {

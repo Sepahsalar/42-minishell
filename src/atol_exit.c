@@ -3,81 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   atol_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 11:01:19 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/23 11:28:01 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:12:23 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// static int	ft_putnum_exit(const char *str, int sign, int i)
-// {
-// 	long	a;
-
-// 	a = 0;
-// 	if (str[i] == '-' || str[i] == '+')
-// 	{
-// 		if (str[i] == '-')
-// 			sign = sign * -1;
-// 		i++;
-// 	}
-// 	while (str[i] >= '0' && str[i] <= '9')
-// 	{
-// 		a = a * 10 + (str[i] - '0');
-// 		if (a < 0 && sign == 1)
-// 			return (-1);
-// 		else if (a < 0 && sign == -1)
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (sign * (int)a);
-// }
-
-t_atol	atol_exit(char *str)
+static t_atol	atol_exit_helper(char *str)
 {
-	int		sign;
-	int		i;
-	long	a;
-	t_atol  res;
+	t_atol	res;
 
-	i = 0;
-	sign = 1;
-	a = 0;
+	res.i = 0;
+	res.sign = 1;
 	res.num = 0;
 	res.is_error = 0;
-	while (str[i])
+	while (str[res.i])
 	{
-		if (!(ft_isdigit(str[i]) || str[0] == '-' || str[0] == '+'))
+		if (!(ft_isdigit(str[res.i]) || str[0] == '-' || str[0] == '+'))
 		{
 			res.is_error = 1;
 			return (res);
 		}
-		i++;
+		res.i++;
 	}
-	i = 0;
-	if (str[i] == '-' || str[i] == '+')
+	res.i = 0;
+	if (str[res.i] == '-' || str[res.i] == '+')
 	{
-		if (str[i] == '-')
-			sign = sign * -1;
-		i++;
+		if (str[res.i] == '-')
+			res.sign *= -1;
+		res.i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	return (res);
+}
+
+t_atol	atol_exit(char *str)
+{
+	long	a;
+	t_atol	res;
+
+	res.i = 0;
+	res.sign = 1;
+	res.num = 0;
+	res.is_error = 0;
+	a = 0;
+	res = atol_exit_helper(str);
+	while (str[res.i] >= '0' && str[res.i] <= '9')
 	{
-		a = a * 10 + (str[i] - '0');
+		a = a * 10 + (str[res.i] - '0');
 		if (a < 0)
 		{
 			res.is_error = 1;
 			return (res);
 		}
-		// if (a < 0 && sign == 1)
-		// 	return (-1);
-		// else if (a < 0 && sign == -1)
-		// 	return (0);
-		i++;
+		res.i++;
 	}
-	res.num = sign * a;
-	// res.is_error = res.num;
+	res.num = res.sign * a;
 	return (res);
 }

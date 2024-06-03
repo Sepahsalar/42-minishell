@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_file_data.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:51:07 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/28 17:54:15 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:58:38 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	create_file_data(t_file *file)
 		return (0);
 	else
 		file->address = handling_quote(file->raw);
-	// else
-	// 	file->address = handle_quote_str(file->raw);
 	if (!file->address)
 		return (1);
 	file->exist = check_accessibility (file->address, 'F');
@@ -52,35 +50,7 @@ int	fill_file_data(t_cmd **cmd)
 				return (1);
 			temp_file = temp_file->next;
 		}
-		// temp_file = temp_cmd->output_trunc;
-		// while (temp_file)
-		// {
-		// 	if (ft_create_file_data(temp_file))
-		// 		return (1);
-		// 	temp_file = temp_file->next;
-		// }
 		temp_cmd = temp_cmd->next;
 	}
 	return (0);
 }
-
-// int	fill_file_data_all(t_cmd **cmd)
-// {
-// 	t_cmd	*temp_cmd;
-// 	t_file	*temp_file;
-
-// 	temp_cmd = *cmd;
-// 	while (temp_cmd)
-// 	{
-
-// 		temp_file = temp_cmd->all;
-// 		while (temp_file)
-// 		{
-// 			if (create_file_data(temp_file))
-// 				return (1);
-// 			temp_file = temp_file->next;
-// 		}
-// 		temp_cmd = temp_cmd->next;
-// 	}
-// 	return (0);
-// }
