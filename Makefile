@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/06/03 13:54:03 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/06/03 14:27:39 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,8 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/error_actions.c \
 		$(SRCDIR)/error_actions_utils.c \
 		$(SRCDIR)/execute_actions.c \
+		$(SRCDIR)/error_handling_utils.c \
+		$(SRCDIR)/error_handling_heredoc.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 

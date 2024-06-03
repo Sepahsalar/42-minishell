@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 13:48:14 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:24:33 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,7 @@ t_atol		atol_exit(char *str);
 void		run_exit_eof(t_env *env, int fd_stdin, int fd_stdout);
 t_error		find_error(char *line);
 char		*find_token(char *cur);
+char		*change_token(char *token, char *cur, int *index, int sq_dq);
 char		*change_token_heredoc(char *token, char *cur,
 				int *index, t_error error);
 int			check_after_token(char *str);
@@ -268,5 +269,6 @@ int			update_sq_dq_index(char c, int *sq, int *dq, int index);
 int			open_sq_or_dq(char **token, int index);
 t_env_pack	error_actions(t_env_pack env_pack, t_error error, char *raw_line);
 t_env_pack	execute_actions(char *raw_line, t_env_pack env_pack);
+int			accept_char(char *token, char *cur);
 
 #endif //MINISHELL_H
