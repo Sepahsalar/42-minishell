@@ -6,11 +6,16 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 14:46:27 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:00:00 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// check these out in bash: 
+// << USER cat
+// << $USER cat
+// also check if one of the line contain $PATH (it should be expanded)
 
 t_error	find_error_helper(char *token, char *cur, t_error error, int index)
 {
