@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 10:40:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:02:43 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,11 +132,21 @@ typedef struct s_quote
 	struct s_quote	*next;
 }					t_quote;
 
+typedef struct s_atoi_file
+{
+	char	*str;
+	int		place;
+	long	res;
+	int		flag;
+}			t_atoi_file;
+
 typedef struct s_atol
 {
 	long	num;
 	int		is_error;
-}		t_atol;
+	int		sign;
+	int		i;
+}			t_atol;
 
 typedef struct s_error
 {
