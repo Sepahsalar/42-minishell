@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 18:21:12 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:31:19 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,8 @@ void input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pa
 	}
 }
 
-void	output_redirect_builtin_helper(t_cmd *cmd_start, t_cmd *cmd_execution, t_last_file *last, t_env_pack env_pack)
+void	output_redirect_builtin_helper(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_last_file *last, t_env_pack env_pack)
 {
 	t_file		*last_output;
 
