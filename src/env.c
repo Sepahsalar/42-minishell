@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:40:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 15:30:39 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:44:49 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ t_env_pack	run_env(t_cmd *cmd)
 	env = cmd->env;
 	while (env)
 	{
-		printf("%s=%s\n", env->key, env->value);
-		// ft_putstr_fd(env->key, 1);
-		// ft_putstr_fd("=", 1);
-		// ft_putendl_fd(env->value, 1);
+		ft_putstr_fd(env->key, 1);
+		ft_putstr_fd("=", 1);
+		ft_putendl_fd(env->value, 1);
 		env = env->next;
 	}
 	export_original(env_pack.original_env, 0);

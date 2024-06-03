@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/31 13:39:37 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:50:50 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,6 @@ int	accept_char(char *token, char *cur)
 		if (*cur == '|' || *cur == '\0')
 			return (0);
 	}
-	// else if (same(token, "<"))
-	// {
-	// 	if ((find_token(cur) && !same(find_token(cur), ">")) || *cur == '\0')
-	// 		return (0);
-	// }
 	else
 	{
 		if (find_token(cur) || *cur == '\0')
@@ -175,12 +170,7 @@ t_error	find_error(char *line)
 					else
 					{
 						if (find_token(cur + index))
-						{
-							// if (same(token, "<") && same(find_token(cur + index) , ">>") && *(cur + index - 1) == '<')
-							// 	error.error = ft_strdup(">");
-							// else
-								error.error = ft_strdup(find_token(cur + index));
-						}
+							error.error = ft_strdup(find_token(cur + index));
 						else
 							error.error = sliced_str(cur, index, index);
 					}

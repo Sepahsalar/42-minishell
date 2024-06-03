@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_file_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:07:14 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/27 16:09:22 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:42:07 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_file	*clean_file_list(t_file *first)
 	return (0);
 }
 
-t_file	*create_file_node(int	place)
+t_file	*create_file_node(int place)
 {
 	t_file			*new;
 
@@ -55,28 +55,3 @@ t_file	*create_file_node(int	place)
 	new->place = place;
 	return (new);
 }
-
-// t_file	*create_file_list(int total_number)
-// {
-// 	t_file	*first;
-// 	t_file	*new;
-// 	t_file	*old;
-// 	int		index;
-
-// 	if (total_number <= 0)
-// 		return (0);
-// 	index = 0;
-// 	while (index < total_number)
-// 	{
-// 		new = create_file_node();
-// 		if (index == 0)
-// 			first = new;
-// 		else
-// 			old->next = new;
-// 		if (!new)
-// 			return (clean_file_list(first));
-// 		old = new;
-// 		index++;
-// 	}
-// 	return (first);
-// }
