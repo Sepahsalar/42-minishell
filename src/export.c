@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:44:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 13:25:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:34:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,11 @@ int	env_count(t_env *env)
 t_env	*sort_env(t_env *env)
 {
 	int		index;
-	int		count;
 	t_env	*temp_index;
 	t_env	*temp;
 
 	index = 1;
-	count = env_count(env);
-	while (index <= count)
+	while (index <= env_count(env))
 	{
 		temp = env;
 		while (temp && temp->index)
@@ -102,6 +100,29 @@ t_env	*handle_oldpwd(t_env *env)
 	return (env);
 }
 
+void custom_print_export(t_env *temp_env)
+{
+	int	i;
+
+	i = 0;
+	printf("declare -x %s", temp_env->key);
+	if (temp_env->value)
+	{
+		printf("=\"");
+		while (temp_env->value[i])
+		{
+			if (temp_env->value[i] == '\"')
+				printf("\\\"");
+			else
+				printf("%c", temp_env->value[i]);
+			i++;
+		}
+		printf("\"\n");
+	}
+	else
+		printf("\n");
+}
+
 void export_no_arg(t_cmd *cmd)
 {
 	int		index;
@@ -109,8 +130,6 @@ void export_no_arg(t_cmd *cmd)
 	t_env	*cpy;
 	int		count;
 	t_env	*temp_env;
-	int		i;
-
 
 	cpy = handle_oldpwd(cpy_env(cmd->env));
 	sorted = sort_env(cpy);
@@ -122,25 +141,7 @@ void export_no_arg(t_cmd *cmd)
 		while (temp_env && temp_env->index != index)
 			temp_env = temp_env->next;
 		if (temp_env && !same(temp_env->key, "_"))
-		{
-			i = 0;
-			printf("declare -x %s", temp_env->key);
-			if (temp_env->value)
-			{
-				printf("=\"");
-				while (temp_env->value[i])
-				{
-					if (temp_env->value[i] == '\"')
-						printf("\\\"");
-					else
-						printf("%c", temp_env->value[i]);
-					i++;
-				}
-				printf("\"\n");
-			}
-			else
-				printf("\n");
-		}
+			custom_print_export(temp_env);
 		index++;
 	}
 	clean_env_list(cpy);
@@ -154,89 +155,92 @@ static void print_export_error(char *arg, int *status)
 	*status = 1;
 }
 
+static void export_with_plus_helper(t_cmd *cmd, char *key, char *value)
+{
+	char	*temp;
+	t_env	*temp_env;
+
+	temp_env = cmd->env;
+	while (temp_env != NULL)
+	{
+		if (same(key, temp_env->key))
+			break ;
+		temp_env = temp_env->next;
+	}
+	if (!temp_env)
+		add_node_front(&cmd->env, key, value);
+	else
+	{
+		temp = temp_env->value;
+		temp_env->value = ft_strjoin(temp, value);
+		free(temp);
+	}
+}
+
 static void export_with_plus(t_cmd *cmd, char *arg, int *status)
 {
-	char 	*new_env;
-	char 	*temp_str_1;
-	char 	*temp_str_2;
-	char 	*find1;
-	char 	**split;
-	t_env 	*temp_env;
-	char 	*temp;
-	
+	char	*new_env;
+	char	*temp1;
+	char	*temp2;
+	char	*find1;
+
 	new_env = ft_strdup(arg);
 	// if (new_env == NULL)
 	// 	return (1);
 	find1 = ft_strchr(new_env, '=');
-	temp_str_1 = ft_substr(new_env, 0, (find1 - new_env - 1));
-	if (!export_check_key(temp_str_1))
+	temp1 = ft_substr(new_env, 0, (find1 - new_env - 1));
+	if (!export_check_key(temp1))
 		print_export_error(arg, status);
 	else
 	{
-		temp_str_2 = ft_substr(new_env, (find1 - new_env) + 1, ft_strlen(find1 + 1));
-		split = ft_split(new_env, '=');
-		temp_env = cmd->env;
-		while (temp_env != NULL)
-		{
-			if (ft_strlen(temp_str_1) == ft_strlen(temp_env->key)
-				&& !ft_strncmp(temp_env->key, temp_str_1,
-					ft_strlen(temp_str_1)))
-				break ;
-			temp_env = temp_env->next;
-		}
-		if (!temp_env)
-			add_node_front(&cmd->env, temp_str_1, temp_str_2);
-		else
-		{
-			temp = temp_env->value;
-			temp_env->value = ft_strjoin(temp, temp_str_2);
-			free(temp);
-		}
-		free(new_env);
+		temp2 = ft_substr(new_env, (find1 - new_env) + 1, ft_strlen(find1 + 1));
+		export_with_plus_helper(cmd, temp1, temp2);
+	}
+	free(new_env);
+}
+
+static void export_normal_helper(t_cmd *cmd, char *key, char *value)
+{
+	char	*temp;
+	t_env	*temp_env;
+
+	temp_env = cmd->env;
+	while (temp_env != NULL)
+	{
+		if (same(key, temp_env->key))
+			break ;
+		temp_env = temp_env->next;
+	}
+	if (!temp_env)
+		add_node_front(&cmd->env, key, value);
+	else
+	{
+		temp = temp_env->value;
+		temp_env->value = ft_strdup(value);
+		free(temp);
 	}
 }
 
 static void export_normal(t_cmd *cmd, char *arg, int *status)
 {
-	char 	*new_env;
-	char 	*temp_str_1;
-	char 	*temp_str_2;
-	char 	*find1;
-	char 	**split;
-	t_env 	*temp_env;
-	char 	*temp;
+	char	*new_env;
+	char	*temp1;
+	char	*temp2;
+	char	*find1;
 
 	new_env = ft_strdup(arg);
 	// if (new_env == NULL)
 	// 	return (1);
 	find1 = ft_strchr(new_env, '=');
-	temp_str_1 = ft_substr(new_env, 0, find1 - new_env);
-	if (!export_check_key(temp_str_1))
+	temp1 = ft_substr(new_env, 0, find1 - new_env);
+	if (!export_check_key(temp1))
 		print_export_error(arg, status);
 	else
 	{
-		temp_str_2 = ft_substr(new_env, find1 - new_env + 1, ft_strlen(find1 + 1));
-		split = ft_split(new_env, '=');
-		temp_env = cmd->env;
-		while (temp_env != NULL)
-		{
-			if (ft_strlen(temp_str_1) == ft_strlen(temp_env->key)
-				&& !ft_strncmp(temp_env->key, temp_str_1,
-					ft_strlen(temp_str_1)))
-				break ;
-			temp_env = temp_env->next;
-		}
-		if (!temp_env)
-			add_node_front(&cmd->env, temp_str_1, temp_str_2);
-		else
-		{
-			temp = temp_env->value;
-			temp_env->value = ft_strdup(temp_str_2);
-			free(temp);
-		}
-		free(new_env);
-		//clean_2d_char(split);
+		temp2 = ft_substr(new_env, find1 - new_env + 1, ft_strlen(find1 + 1));
+		export_normal_helper(cmd, temp1, temp2);
 	}
+	free(new_env);
 }
 
 static void export_helper(t_cmd *cmd, char *arg, int *status)
@@ -285,16 +289,14 @@ t_env	*export_original(t_env *env, int status)
 	char	*temp;
 	char	*status_str;
 
+	status_str = ft_itoa(status);
 	temp_env = env;
 	while (temp_env)
 	{
-		if (ft_strlen("exit_code") == ft_strlen(temp_env->key)
-			&& !ft_strncmp(temp_env->key, "exit_code",
-				ft_strlen("exit_code")))
+		if (same("exit_code", temp_env->key))
 			break ;
 		temp_env = temp_env->next;
 	}
-	status_str = ft_itoa(status);
 	if (!temp_env)
 		add_node_front(&env, "exit_code", status_str);
 	else
