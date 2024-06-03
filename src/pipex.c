@@ -3,32 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/05/31 12:57:11 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:51:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 // test just clear command
-t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
+
+void input_output_check(t_cmd *cmd_start, t_cmd *cmd_execution)
 {
-	char		*cmd_address;
-	char		**cmd_args;
-	char		**cmd_env;
 	t_file		*temp_file;
-	t_file		*last_input;
-	t_file		*last_output;
-	t_last_file	*last;
-	int			fd[2];
 	int     	status;
 	t_env_pack	env_pack;
-	t_cmd		*temp_cmd;
 
 	status = 0;
-	last_input = NULL;
-	last_output = NULL;
 	env_pack.env = cmd_execution->env;
 	env_pack.original_env = cmd_execution->original_env;
 	temp_file = cmd_execution->all;
@@ -77,12 +68,44 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 		}
 		temp_file = temp_file->next;
 	}
+}
+
+void	empty_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution)
+{
+	t_env_pack	env_pack;
+
+	env_pack.env = cmd_execution->env;
+	env_pack.original_env = cmd_execution->original_env;
+	(void)cmd_start;//if needed for clean up
 	if (cmd_execution->cmd_name == NULL
 		|| (*cmd_execution->cmd_name == '\0' && cmd_execution->empty_cmd != 1))
 	{
 		env_pack.original_env = export_original(env_pack.original_env, 0);
 		cmd_execution->file_error = 1;
 	}
+}
+t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
+{
+	char		*cmd_address;
+	char		**cmd_args;
+	char		**cmd_env;
+	t_file		*temp_file;
+	t_file		*last_input;
+	t_file		*last_output;
+	t_last_file	*last;
+	int			fd[2];
+	int     	status;
+	t_env_pack	env_pack;
+	t_cmd		*temp_cmd;
+
+	status = 0;
+	last_input = NULL;
+	last_output = NULL;
+	env_pack.env = cmd_execution->env;
+	env_pack.original_env = cmd_execution->original_env;
+	input_output_check(cmd_start, cmd_execution);
+	empty_cmd_check(cmd_start, cmd_execution);
+	
 	if ((!cmd_execution->exec || cmd_execution->dir)
 		&& is_builtin(cmd_execution) == -1 && !cmd_execution->file_error)
 	{
