@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:07:18 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 14:00:49 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:23:45 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	handle_dollar_struct(t_cmd *cmd)
 	str = cmd->current;
 	if (ft_strchr(str, '$'))
 	{
-		hd.dollar = create_fill_dollar_list(str);
+		hd.dollar = fill_dollar_list(str);
 		temp = hd.dollar;
 		hd.str = str;
 		while (hd.dollar)

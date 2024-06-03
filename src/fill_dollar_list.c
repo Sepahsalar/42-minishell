@@ -1,52 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_place_type_dollar.c                           :+:      :+:    :+:   */
+/*   fill_dollar_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/16 12:31:42 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 14:00:34 by asohrabi         ###   ########.fr       */
+/*   Created: 2024/06/03 19:18:55 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/06/03 19:22:59 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	clean_dollar_node(t_dollar *node)
-{
-	if (node)
-		free (node);
-}
-
-t_dollar	*clean_dollar_list(t_dollar *first)
-{
-	t_dollar	*node;
-	t_dollar	*temp;
-
-	node = first;
-	while (node)
-	{
-		temp = node->next;
-		clean_dollar_node(node);
-		node = temp;
-	}
-	return (0);
-}
-
-t_dollar	*create_dollar_node(int id, char *place, int type)
-{
-	t_dollar			*new;
-
-	new = malloc(sizeof(t_dollar));
-	if (!new)
-		return (0);
-	new->id = id;
-	new->place = place;
-	new->type = type;
-	new->next = NULL;
-	new->previous = NULL;
-	return (new);
-}
 
 void	sq_dq_updater(char *c, char **sq, char **dq)
 {
@@ -68,38 +32,7 @@ void	heredoc_updater(char *str, int *heredoc)
 		*heredoc = 0;
 }
 
-int	type_finder(char *sq, char *dq, int heredoc)
-{
-	if (heredoc)
-		return (-1);
-	if (!sq && !dq)
-		return (3);
-	else if (!sq && dq)
-		return (2);
-	else if (sq && !dq)
-		return (1);
-	else if (sq < dq)
-		return (1);
-	else
-		return (2);
-}
-
-void	remove_previous_node(t_dollar *current)
-{
-	t_dollar	*previous;
-
-	if (current)
-	{
-		previous = current->previous;
-		if (previous)
-		{
-			free(previous);
-			current->previous = NULL;
-		}
-	}
-}
-
-t_dollar	*create_fill_dollar_list(char *arg)
+t_dollar	*fill_dollar_list(char *arg)
 {
 	t_dollar	*first;
 	t_dollar	*new;
