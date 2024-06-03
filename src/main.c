@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 11:11:53 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:09:03 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// 1) check these out in bash: 
+// << USER cat
+// << $USER cat
+// also check if one of the line contain $PATH (it should be expanded)
+
+// 2) check builtins with capital letters like CD ..
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {
