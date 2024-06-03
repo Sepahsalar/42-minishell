@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 14:24:33 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:35:00 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,5 +270,18 @@ int			open_sq_or_dq(char **token, int index);
 t_env_pack	error_actions(t_env_pack env_pack, t_error error, char *raw_line);
 t_env_pack	execute_actions(char *raw_line, t_env_pack env_pack);
 int			accept_char(char *token, char *cur);
+t_env		*handle_oldpwd(t_env *env);
+t_env		*sort_env(t_env *env);
+int			env_count(t_env *env);
+void		export_with_plus(t_cmd *cmd, char *arg, int *status);
+void		print_export_error(char *arg, int *status);
+void		export_no_arg(t_cmd *cmd);
+t_quote		*create_and_fill_quote_list(char *str);
+t_quote		*clean_quote_list(t_quote *first);
+int			count_words(const char *s, char ch);
+int			len_quote(char const *s, char ch);
+int			len_quote_pipe(const char *s, char ch);
+t_hd_file	*remove_update(t_hd_file *hd, char *ch);
+t_hd_file	*remove_update_all(t_hd_file *hd);
 
 #endif //MINISHELL_H

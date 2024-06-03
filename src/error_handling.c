@@ -6,43 +6,40 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 15:00:00 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:15:46 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// check these out in bash: 
-// << USER cat
-// << $USER cat
-// also check if one of the line contain $PATH (it should be expanded)
-
-t_error	find_error_helper(char *token, char *cur, t_error error, int index)
-{
-	if (same(token, "<<<") || same(token, "&&") || same(token, "\\")
-		|| same(token, "||") || same(token, "*") || same(token, ";")
-		|| same(token, "&") || same(token, "(") || same(token, ")")
-		|| same(token, "<>") || same(token, "{") || same(token, "}")
-		|| same(token, "[") || same(token, "]"))
-	{
-		error.not_handling = 1;
-		error.error = ft_strdup(token);
-	}
-	else if (!accept_char(token, cur + index))
-	{
-		error.index = index;
-		if (cur[index] == '\0')
-			error.error = ft_strdup("newline");
-		else
-		{
-			if (find_token(cur + index))
-				error.error = ft_strdup(find_token(cur + index));
-			else
-				error.error = sliced_str(cur, index, index);
-		}
-	}
-	return (error);
-}
+// t_error	find_error_helper(char *token, char *cur, t_error error, int index)
+// {
+// 	if (same(token, "<<<") || same(token, "&&") || same(token, "\\")
+// 		|| same(token, "||") || same(token, "*") || same(token, ";")
+// 		|| same(token, "&") || same(token, "(") || same(token, ")")
+// 		|| same(token, "<>") || same(token, "{") || same(token, "}")
+// 		|| same(token, "[") || same(token, "]"))
+// 	{
+// 		error.not_handling = 1;
+// 		error.error = ft_strdup(token);
+// 		return (error);
+// 	}
+// 	else if (!accept_char(token, cur + index))
+// 	{
+// 		error.index = index;
+// 		if (cur[index] == '\0')
+// 			error.error = ft_strdup("newline");
+// 		else
+// 		{
+// 			if (find_token(cur + index))
+// 				error.error = ft_strdup(find_token(cur + index));
+// 			else
+// 				error.error = sliced_str(cur, index, index);
+// 		}
+// 		return (error);
+// 	}
+// 	return (error);
+// }
 
 t_error	find_error(char *line)
 {
@@ -97,7 +94,33 @@ t_error	find_error(char *line)
 		else
 		{
 			if (token && !sq && !dq)
-				return (find_error_helper(token, cur, error, index));
+				// return (find_error_helper(token, cur, error, index));
+			{
+				if (same(token, "<<<") || same(token, "&&") || same(token, "\\")
+					|| same(token, "||") || same(token, "*") || same(token, ";")
+					|| same(token, "&") || same(token, "(") || same(token, ")")
+					|| same(token, "<>") || same(token, "{") || same(token, "}")
+					|| same(token, "[") || same(token, "]"))
+				{
+					error.not_handling = 1;
+					error.error = ft_strdup(token);
+					return (error);
+				}
+				else if (!accept_char(token, cur + index))
+				{
+					error.index = index;
+					if (cur[index] == '\0')
+						error.error = ft_strdup("newline");
+					else
+					{
+						if (find_token(cur + index))
+							error.error = ft_strdup(find_token(cur + index));
+						else
+							error.error = sliced_str(cur, index, index);
+					}
+					return (error);
+				}
+			}
 			token = change_token(token, cur + index, &index, (sq || dq));
 		}
 	}

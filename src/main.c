@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 11:11:53 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:32:00 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// Norminette:
+// 1) error_handling
+// 2) expand dollar
+// 3) fd heredoc
+// 4) fill cmd list
+// 5) fill cmd address
+// 6) fill files helper
+// 7) find place type dollar
+// 8) recreate 2d env
+// 9) split pipex utils
+//10) split pipex
+//11) utility 1
+//12) utility 4
+
+// 1) check these out in bash: 
+// << USER cat
+// << $USER cat
+// also check if one of the line contain $PATH (it should be expanded)
+
+// 2) check builtins with capital letters like CD ..
+
+// 3) error handling on fd operators
+
+// 4) check cd with file name with too many characters
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {

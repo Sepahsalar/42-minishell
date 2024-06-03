@@ -6,11 +6,19 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:49:01 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 13:54:54 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:39:20 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static void	run_exit_error(t_cmd *cmd)
+{
+	ft_putstr_fd("bash: exit: ", 2);
+	ft_putstr_fd(cmd->args[1], 2);
+	ft_putendl_fd(": numeric argument required", 2);
+	exit(255);
+}
 
 t_env_pack	run_exit(t_cmd *cmd)
 {
@@ -35,12 +43,7 @@ t_env_pack	run_exit(t_cmd *cmd)
 	else
 		exit_code.num = ft_atoi(cmd->original_env->value);
 	if (exit_code.is_error == 1)
-	{
-		ft_putstr_fd("bash: exit: ", 2);
-		ft_putstr_fd(cmd->args[1], 2);
-		ft_putendl_fd(": numeric argument required", 2);
-		exit(255);
-	}
+		run_exit_error(cmd);
 	exit_code.num = exit_code.num % 256;
 	exit(exit_code.num);
 	return (env_pack);
