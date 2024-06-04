@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:59:53 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 19:00:54 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 11:46:25 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 		exit(1);
 	}
 	master_clean(0, cmd_start->env, cmd_start, -1);
-	if (execve(cmd_address, cmd_args, 0) == -1)
+	if (execve(cmd_address, cmd_args, cmd_env) == -1)
 	{
 		perror("bash");
 		free(cmd_address);
