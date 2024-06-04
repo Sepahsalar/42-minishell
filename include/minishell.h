@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 19:19:47 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:23:36 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,5 +335,10 @@ int			should_execute_in_parent(t_cmd *cmd_start, t_cmd *cmd_execution);
 int			type_finder(char *sq, char *dq, int heredoc);
 t_dollar	*create_dollar_node(int id, char *place, int type);
 void		run_execve(char *cmd_address, char **cmd_args, char **cmd_env);
+void		handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer);
+int			handle_dollar_string(t_cmd *cmd, char **string);
+int			heredoc_actions(t_cmd *cmd, char **line, char **heredoc_text);
+int			continue_heredoc(char *line, t_file *temp_input);
+int			create_heredoc_file(t_cmd *cmd, t_file *temp_input);
 
 #endif //MINISHELL_H

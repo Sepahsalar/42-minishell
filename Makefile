@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
+#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/06/04 19:20:57 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/06/04 20:24:02 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/execute_cmd.c \
 		$(SRCDIR)/expand_dollar.c \
 		$(SRCDIR)/fd_heredoc.c \
+		$(SRCDIR)/fd_heredoc_utils.c \
 		$(SRCDIR)/fill_address_access.c \
 		$(SRCDIR)/fill_cmd_list.c \
 		$(SRCDIR)/fill_env_cmd_list.c \
