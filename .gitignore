@@ -63,3 +63,5 @@ venv/
 # Local History File
 .history
 
+# Execution File
+minishell
