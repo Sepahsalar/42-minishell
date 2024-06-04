@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:49:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 18:50:40 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:15:22 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution,
 		temp_file = temp_file->next;
 	}
 	temp_file = cmd_execution->input;
-	while (temp_file && !temp_file->ignore && !temp_file->limiter)
+	while (temp_file && !temp_file->limiter)
 	{
 		temp_file->fd = open(temp_file->address, O_RDONLY);
 		if (temp_file->fd == -1)

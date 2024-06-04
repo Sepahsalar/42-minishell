@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 12:36:52 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:45:22 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 // Norminette:
 // 1) error_handling-----------big     --done
-// 2) expand dollar------------big
+// 2) expand dollar------------big     --done
 // 3) fd heredoc---------------big and has bugs to be fixed
-// 4) fill cmd list------------little  --done
-// 5) find cmd address---------big
-// 6) fill dollar list---------little
-// 7) fill files helper--------big
-// 8) recreate 2d env----------little  --done
-// 9) split pipex utils--------little  --done
-//10) split pipex--------------little  --done
-//11) utility 1----------------little
-//12) utility 4----------------little
+// 4) ft remove----------------little
+// 5) fill cmd list------------little  --done
+// 6) find cmd address---------big
+// 7) fill dollar list---------little
+// 8) fill files helper--------big
+// 9) recreate 2d env----------little  --done
+//10) split pipex utils--------little  --done
+//11) split pipex--------------little  --done
+//12) utility 1----------------little  --done
+//13) utility 4----------------little  --done
 
 // 1) check these out in bash: 
 // << USER cat

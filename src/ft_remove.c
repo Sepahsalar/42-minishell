@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:36:46 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 18:36:50 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:18:56 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ char	*ft_remove(char *str, char *del, t_file *file)
 
 	original_len = ft_strlen(str);
 	len1 = file->place;
-	if (file->ignore)
-		part2 = str + len1 + 1;
-	else
-		part2 = ft_strnstr(str + len1, del, ft_strlen(str)) + ft_strlen(del);
+	part2 = ft_strnstr(str + len1, del, ft_strlen(str)) + ft_strlen(del);
 	temp = part2;
 	len2 = 0;
 	while (*temp)

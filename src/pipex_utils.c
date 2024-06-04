@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:44:25 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 18:49:36 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:15:11 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static t_env_pack	output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
 static t_env_pack	input_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 	t_file *temp_file, t_env_pack env_pack)
 {
-	if (!temp_file->limiter && !temp_file->ignore)
+	if (!temp_file->limiter)
 	{
 		temp_file->fd = open(temp_file->address, O_RDONLY);
 		if (temp_file->fd == -1)
