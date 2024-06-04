@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:08:29 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 18:27:59 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 12:33:16 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**free_split(char ***m, int j)
 	return (0);
 }
 
-int	triger_maker_sp(int triger, char ch, char divider)
+int	triger_maker(int triger, char ch, char divider)
 {
 	if (ch == divider)
 	{
@@ -38,7 +38,7 @@ int	triger_maker_sp(int triger, char ch, char divider)
 	return (triger);
 }
 
-char	**split_all_delimiter(char const *s)
+char	**split_all_delimiter(const char *s)
 {
 	char	**m;
 

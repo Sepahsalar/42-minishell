@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/06/03 19:25:10 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/06/04 12:31:45 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/recreate_2d_env.c \
 		$(SRCDIR)/split_pipex.c \
 		$(SRCDIR)/split_pipex_utils.c \
+		$(SRCDIR)/split_pipex_utils2.c \
 		$(SRCDIR)/utility1.c \
 		$(SRCDIR)/utility2.c \
 		$(SRCDIR)/utility3.c \

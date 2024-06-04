@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 10:31:01 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:50:33 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_file
 	int				append;
 	int				trunc;
 	int				input;
-	int				ignore;
 	char			*limiter;
 	int				write;
 	int				fd;
@@ -170,6 +169,12 @@ typedef struct s_error_helper
 	t_error	error;
 }			t_error_helper;
 
+typedef struct s_open_quote
+{
+	int		sq;
+	int		dq;
+}			t_open_quote;
+
 void		rl_replace_line(const char *text, int clear_undo);
 void		rl_clear_history(void);
 void		clean_2d_char(char **array);
@@ -192,11 +197,15 @@ void		fill_env_cmd_list(t_cmd **cmd, t_env *env);
 void		fill_original_env_cmd_list(t_cmd **cmd, t_env *original_env);
 int			istoken(int c);
 int			fill_files(t_cmd **cmd, char *token);
-char		**split_pipex(char const *s);
-char		**split_pipex_pipe(char const *s);
-char		**split_all_delimiter(char const *s);
+char		*dup_char(const char *s, char ch);
+char		*dup_char_pipe(const char *s, char ch);
+char		**create(const char *s, char ch, int i, int j);
+char		**create_pipe(const char *s, char ch, int i, int j);
+char		**split_pipex(const char *s);
+char		**split_pipex_pipe(const char *s);
+char		**split_all_delimiter(const char *s);
 char		**free_split(char ***m, int j);
-int			triger_maker_sp(int triger, char ch, char divider);
+int			triger_maker(int triger, char ch, char divider);
 int			len_helper(const char *s);
 int			len_helper_pipe(const char *s);
 int			fill_args_cmd_list(t_cmd **cmd);
@@ -288,7 +297,7 @@ void		export_no_arg(t_cmd *cmd);
 t_quote		*create_and_fill_quote_list(char *str);
 t_quote		*clean_quote_list(t_quote *first);
 int			count_words(const char *s, char ch);
-int			len_quote(char const *s, char ch);
+int			len_quote(const char *s, char ch);
 int			len_quote_pipe(const char *s, char ch);
 t_hd_file	*remove_update(t_hd_file *hd, char *ch);
 t_hd_file	*remove_update_all(t_hd_file *hd);
