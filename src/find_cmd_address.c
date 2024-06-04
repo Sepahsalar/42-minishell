@@ -6,164 +6,89 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:31:28 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 14:00:14 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:05:41 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_accessibility(char *address, char mode)
+static int	set_cmd_spec(t_cmd *cmd, int exist, int exec, int dir)
 {
-	int			result;
-	struct stat	buf;
-
-	if (!address)
-		return (0);
-	if (mode == 'X')
-		result = access(address, X_OK);
-	else if (mode == 'R')
-		result = access(address, R_OK);
-	else if (mode == 'W')
-		result = access(address, W_OK);
-	else if (mode == 'F')
-		result = access(address, F_OK);
-	else
-	{
-		result = stat(address, &buf);
-		//protection
-		result = 1; //make it better
-		if (S_ISDIR(buf.st_mode))
-			result = 0;
-	}
-	if (result == 0)
-		return (1);
+	cmd->exist = exist;
+	cmd->exec = exec;
+	cmd->dir = dir;
 	return (0);
 }
 
-char	*find_address(t_cmd *cmd, char mode)
+static int	find_cmd_address_d(t_cmd *cmd)
 {
-	char	**all_path;
-	char	*address;
-	t_env	*temp_env;
-	char	*temp;
-	int		i;
+	char	*temp_address;
 
-	if (ft_strchr(cmd->cmd_name, '/'))
+	temp_address = find_address(cmd, 'D');
+	if (cmd->error == 1)
+		return (1);
+	if (temp_address)
 	{
-		cmd->is_file = 1;
-		if (check_accessibility(cmd->cmd_name, mode) == 1)
-		{
-			address = ft_strdup(cmd->cmd_name);
-			if (!address)
-			{
-				cmd->error = 1;
-				return (NULL);
-			}
-			return (address);
-		}
-		return (NULL);
+		cmd->address = temp_address;
+		return (set_cmd_spec(cmd, 0, 0, 1));
 	}
-	temp = ft_strjoin("/", cmd->cmd_name);
-	if (!temp)
+	return (0);
+}
+
+static int	find_cmd_address_f(t_cmd *cmd)
+{
+	char	*temp_address;
+
+	temp_address = find_address(cmd, 'F');
+	if (cmd->error == 1)
+		return (1);
+	if (temp_address)
 	{
-		cmd->error = 1;
-		return (NULL);
+		cmd->address = temp_address;
+		return (set_cmd_spec(cmd, 1, 0, 0));
 	}
-	temp_env = cmd->env;
-	while (temp_env && !ft_strnstr(temp_env->key, "PATH", 4))
-		temp_env = temp_env->next;
-	if (!temp_env)
+	return (0);
+}
+
+static int	find_cmd_address_x(t_cmd *cmd)
+{
+	char	*temp_address;
+
+	temp_address = find_address(cmd, 'X');
+	if (cmd->error == 1)
+		return (1);
+	// if (temp_address && check_accessibility(temp_address, 'R'))
+	if (temp_address)
 	{
-		cmd->is_file = 1;
-		return (0);
+		cmd->address = temp_address;
+		return (set_cmd_spec(cmd, 1, 1, 0));
 	}
-	all_path = ft_split(temp_env->value, ':');
-	if (!all_path)
-	{
-		cmd->error = 1;
-		free(temp);
-		return (NULL);
-	}
-	i = 0;
-	while (all_path[i])
-	{
-		address = ft_strjoin(all_path[i], temp);
-		if (!address)
-		{
-			cmd->error = 1;
-			free(temp);
-			clean_2d_char(all_path);
-			return (NULL);
-		}
-		if (check_accessibility(address, mode) == 1)
-		{
-			free(temp);
-			clean_2d_char(all_path);
-			return (address);
-		}
-		free (address);
-		i++;
-	}
-	free(temp);
-	clean_2d_char(all_path);
+	else
+		if (find_cmd_address_f(cmd))
+			return (1);
 	return (0);
 }
 
 int	find_cmd_address(t_cmd *cmd)
 {
-	char	*temp_address;
-
 	if (cmd->empty_cmd)
 	{
 		cmd->address = 0;
-		cmd->exist = 0;
-		cmd->exec = 0;
-		cmd->dir = 0;
-		return (0);
+		return (set_cmd_spec(cmd, 0, 0, 0));
 	}
 	if (!cmd->cmd_name)
 	{
 		cmd->address = 0;
-		cmd->exist = 0;
-		cmd->exec = 0;
-		cmd->dir = 0;
+		return (set_cmd_spec(cmd, 0, 0, 0));
 	}
 	else
 	{
-		temp_address = find_address(cmd, 'D');
-		if (cmd->error == 1)
+		if (find_cmd_address_d(cmd))
 			return (1);
-		if (temp_address)
-		{
-			cmd->address = temp_address;
-			cmd->exist = 0;
-			cmd->exec = 0;
-			cmd->dir = 1;
+		if (cmd->address)
 			return (0);
-		}
-		temp_address = find_address(cmd, 'X');
-		if (cmd->error == 1)
+		if (find_cmd_address_x(cmd))
 			return (1);
-		if (temp_address)
-		{
-			cmd->address = temp_address;
-			cmd->exist = 1;
-			cmd->exec = 1;
-			cmd->dir = 0;
-		}
-		else
-		{
-			temp_address = find_address(cmd, 'F');
-			if (cmd->error == 1)
-				return (1);
-			if (temp_address)
-			{
-				cmd->address = temp_address;
-				cmd->exist = 1;
-				cmd->exec = 0;
-				cmd->dir = 0;
-			}
-		}
 	}
 	return (0);
 }

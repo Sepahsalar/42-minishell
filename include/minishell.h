@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 13:50:33 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:19:47 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ int			len_helper(const char *s);
 int			len_helper_pipe(const char *s);
 int			fill_args_cmd_list(t_cmd **cmd);
 int			check_accessibility(char *address, char mode);
+char		*find_address(t_cmd *cmd, char mode);
 int			find_cmd_address(t_cmd *cmd);
 int			fill_address_access(t_cmd **cmd);
 int			create_file_data(t_file *file);
@@ -333,5 +334,6 @@ void		child_process(t_cmd *cmd_start, t_cmd *cmd_execution,
 int			should_execute_in_parent(t_cmd *cmd_start, t_cmd *cmd_execution);
 int			type_finder(char *sq, char *dq, int heredoc);
 t_dollar	*create_dollar_node(int id, char *place, int type);
+void		run_execve(char *cmd_address, char **cmd_args, char **cmd_env);
 
 #endif //MINISHELL_H

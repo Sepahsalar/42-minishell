@@ -6,11 +6,39 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:04:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 18:35:33 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:29:21 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	check_accessibility(char *address, char mode)
+{
+	int			result;
+	struct stat	buf;
+
+	if (!address)
+		return (0);
+	if (mode == 'X')
+		result = access(address, X_OK);
+	else if (mode == 'R')
+		result = access(address, R_OK);
+	else if (mode == 'W')
+		result = access(address, W_OK);
+	else if (mode == 'F')
+		result = access(address, F_OK);
+	else
+	{
+		result = stat(address, &buf);
+		//protection
+		result = 1; //make it better
+		if (S_ISDIR(buf.st_mode))
+			result = 0;
+	}
+	if (result == 0)
+		return (1);
+	return (0);
+}
 
 int	char_2d_count(char **array)
 {
