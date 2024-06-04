@@ -3,128 +3,142 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 17:15:46 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:59:40 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// t_error	find_error_helper(char *token, char *cur, t_error error, int index)
-// {
-// 	if (same(token, "<<<") || same(token, "&&") || same(token, "\\")
-// 		|| same(token, "||") || same(token, "*") || same(token, ";")
-// 		|| same(token, "&") || same(token, "(") || same(token, ")")
-// 		|| same(token, "<>") || same(token, "{") || same(token, "}")
-// 		|| same(token, "[") || same(token, "]"))
-// 	{
-// 		error.not_handling = 1;
-// 		error.error = ft_strdup(token);
-// 		return (error);
-// 	}
-// 	else if (!accept_char(token, cur + index))
-// 	{
-// 		error.index = index;
-// 		if (cur[index] == '\0')
-// 			error.error = ft_strdup("newline");
-// 		else
-// 		{
-// 			if (find_token(cur + index))
-// 				error.error = ft_strdup(find_token(cur + index));
-// 			else
-// 				error.error = sliced_str(cur, index, index);
-// 		}
-// 		return (error);
-// 	}
-// 	return (error);
-// }
+void	update_token_sq_dq(char **token, int *sq, int *dq, char c)
+{
+	if (c == '\"' && (*dq) == 0)
+	{
+		(*token) = NULL;
+		(*dq) = 1;
+	}
+	else if (c == '\"')
+		(*dq) = 0;
+	else if (c == '\'' && (*sq) == 0)
+	{
+		(*token) = NULL;
+		(*sq) = 1;
+	}
+	else if (c == '\'')
+		(*sq) = 0;
+}
+
+int	not_handling(char *token)
+{
+	return (same(token, "<<<") || same(token, "&&") || same(token, "\\")
+		|| same(token, "||") || same(token, "*") || same(token, ";")
+		|| same(token, "&") || same(token, "(") || same(token, ")")
+		|| same(token, "<>") || same(token, "{") || same(token, "}")
+		|| same(token, "[") || same(token, "]"));
+}
+
+t_error	init_error(void)
+{
+	t_error	error;
+
+	error.index = 0;
+	error.error = NULL;
+	error.not_handling = 0;
+	return (error);
+}
+
+t_error	find_error_helper(char *line, char *token, int index)
+{
+	t_error	error;
+
+	error = init_error();
+	if (not_handling(token))
+	{
+		error.not_handling = 1;
+		error.error = ft_strdup(token);
+	}
+	else if (!accept_char(token, line + index))
+	{
+		error.index = index;
+		if (line[index] == '\0')
+			error.error = ft_strdup("newline");
+		else
+		{
+			if (find_token(line + index))
+				error.error = ft_strdup(find_token(line + index));
+			else
+				error.error = sliced_str(line, index, index);
+		}
+	}
+	return (error);
+}
+
+t_error_helper	init_error_helper(void)
+{
+	t_error_helper	helper;
+
+	helper.token = NULL;
+	helper.index = 0;
+	helper.sq = 0;
+	helper.dq = 0;
+	helper.error = init_error();
+	return (helper);
+}
+
+t_error_helper	check_empty_first_command(char *line)
+{
+	t_error_helper	e;
+
+	e = init_error_helper();
+	while (line[e.index] && line[e.index] != '|')
+	{
+		if (line[e.index] != ' ')
+			break ;
+		(e.index)++;
+	}
+	if (line[e.index] == '|')
+	{
+		e.error.index = e.index;
+		e.error.error = ft_strdup("|");
+	}
+	return (e);
+}
+
+void update_helper_error(t_error_helper *e, char *line)
+{
+
+	update_token_sq_dq(&((*e).token), &((*e).sq), &((*e).dq), line[(*e).index]);
+	((*e).index)++;
+
+}
+
+char *change_helper_error(t_error_helper *e , char *line)
+{
+	return (change_token((*e).token, (line + ((*e).index)),
+			&((*e).index), ((*e).sq || (*e).dq)));
+}
 
 t_error	find_error(char *line)
 {
-	int		index;
-	char	*token;
-	char	*cur;
-	int		len;
-	t_error	error;
-	char	*sq;
-	char    *dq;
+	t_error_helper	e;
 
-	sq = NULL;
-	dq = NULL;
-	index = 0;
-	error.not_handling = 0;
-	cur = line;
-	len = (int)ft_strlen(line);
-	token = NULL;
-	while (line[index] && line[index] != '|')
+	e = check_empty_first_command(line);
+	if (e.error.error)
+		return (e.error);
+	while (e.index <= (int)ft_strlen(line))
 	{
-		if (line[index] != ' ')
-			break ;
-		index++;
-	}
-	if (line[index] == '|')
-	{
-		error.index = index;
-		error.error = ft_strdup("|");
-		return (error);
-	}
-	index = 0;
-	while (index <= len)
-	{
-		if (cur[index] == '\"' || cur[index] == '\'')
-		{
-			if (cur[index] == '\"' && dq == NULL)
-			{
-				token = NULL;
-				dq = &cur[index];
-			}
-			else if (cur[index] == '\"')
-				dq = NULL;
-			else if (cur[index] == '\'' && sq == NULL)
-			{
-				token = NULL;
-				sq = &cur[index];
-			}
-			else if (cur[index] == '\'')
-				sq = NULL;
-			index++;
-		}
+		if (line[e.index] == '\"' || line[e.index] == '\'')
+			update_helper_error(&e, line);
 		else
 		{
-			if (token && !sq && !dq)
-				// return (find_error_helper(token, cur, error, index));
-			{
-				if (same(token, "<<<") || same(token, "&&") || same(token, "\\")
-					|| same(token, "||") || same(token, "*") || same(token, ";")
-					|| same(token, "&") || same(token, "(") || same(token, ")")
-					|| same(token, "<>") || same(token, "{") || same(token, "}")
-					|| same(token, "[") || same(token, "]"))
-				{
-					error.not_handling = 1;
-					error.error = ft_strdup(token);
-					return (error);
-				}
-				else if (!accept_char(token, cur + index))
-				{
-					error.index = index;
-					if (cur[index] == '\0')
-						error.error = ft_strdup("newline");
-					else
-					{
-						if (find_token(cur + index))
-							error.error = ft_strdup(find_token(cur + index));
-						else
-							error.error = sliced_str(cur, index, index);
-					}
-					return (error);
-				}
-			}
-			token = change_token(token, cur + index, &index, (sq || dq));
+			if ((e.token) && !(e.sq) && !(e.dq))
+				e.error = find_error_helper(line, (e.token), e.index);
+			if (e.error.error)
+				return (e.error);
+			e.token = change_helper_error(&e, line);
 		}
 	}
-	error.index = 0;
-	error.error = NULL;
-	return (error);
+	return (e.error);
 }
