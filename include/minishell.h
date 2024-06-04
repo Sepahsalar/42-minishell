@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 13:12:27 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:50:33 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_file
 	int				append;
 	int				trunc;
 	int				input;
-	// int				ignore;
 	char			*limiter;
 	int				write;
 	int				fd;

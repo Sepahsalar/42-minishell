@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 13:45:22 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:54:13 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 // 1) error_handling-----------big     --done
 // 2) expand dollar------------big     --done
 // 3) fd heredoc---------------big and has bugs to be fixed
-// 4) ft remove----------------little
+// 4) ft remove----------------little  --done
 // 5) fill cmd list------------little  --done
 // 6) find cmd address---------big
-// 7) fill dollar list---------little
+// 7) fill dollar list---------little  --done
 // 8) fill files helper--------big
 // 9) recreate 2d env----------little  --done
 //10) split pipex utils--------little  --done

@@ -6,13 +6,13 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:29:11 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 18:30:22 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:54:59 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	fill_files_helper(char *str, char *ch , t_cmd *cmd)
+int	fill_files_helper(char *str, char *ch, t_cmd *cmd)
 {
 	int			index;
 	char		*sq;
