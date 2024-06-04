@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:43:39 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 11:02:13 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:55:44 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static void	fill_cmd_list_helper(t_cmd *cmd, char **raw_cmd, t_env *env)
 {
-	if (handle_dollar_struct(cmd))
-		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_files_all(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_files(&cmd, "<"))
@@ -27,6 +25,8 @@ static void	fill_cmd_list_helper(t_cmd *cmd, char **raw_cmd, t_env *env)
 	if (fill_last_in(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_fd_heredoc(&cmd))
+		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
+	if (handle_dollar_struct(cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);
 	if (fill_args_cmd_list(&cmd))
 		master_clean(raw_cmd, env, cmd, EXIT_FAILURE);

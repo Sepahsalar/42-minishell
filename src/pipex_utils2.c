@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:49:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/04 13:15:22 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:17:53 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution,
 		temp_file = temp_file->next;
 	}
 	temp_file = cmd_execution->input;
-	while (temp_file && !temp_file->limiter)
+	while (temp_file)
 	{
 		temp_file->fd = open(temp_file->address, O_RDONLY);
 		if (temp_file->fd == -1)
