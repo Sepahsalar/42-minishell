@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 13:07:42 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:57:09 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ static size_t	strlen_modified(char *s)
 			q = strlen_modified_helper(s, index, q);
 		else
 		{
-			if ((s[index] == ' ' || istoken(s[index])) && (!q.sq && !q.dq))
+			if ((s[index] == ' ' || (istoken(s[index]) && s[index] != '$'))
+				&& (!q.sq && !q.dq))
 				break ;
 		}
 		len++;
