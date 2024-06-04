@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 19:26:11 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:31:01 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,15 @@ typedef struct s_hd_file
 	char	*str;
 	t_file	*file;
 }			t_hd_file;
+
+typedef struct s_error_helper
+{
+	char	*token;
+	int		index;
+	int		sq;
+	int		dq;
+	t_error	error;
+}			t_error_helper;
 
 void		rl_replace_line(const char *text, int clear_undo);
 void		rl_clear_history(void);
