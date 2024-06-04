@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:18:55 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/04 13:52:25 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:21:38 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	should_create_node(char *arg, t_dollar_helper d)
 		&& (d.index < 1 || arg[d.index - 1] != '$'));
 }
 
-void	node_creating_process(char *arg, t_dollar_helper *d)
+int	node_creating_process(char *arg, t_dollar_helper *d)
 {
 	(*d).type = type_finder(((*d).sq), ((*d).dq), ((*d).heredoc));
 	((*d).id)++;
@@ -81,13 +81,17 @@ void	node_creating_process(char *arg, t_dollar_helper *d)
 	if (((*d).id) == 1)
 		(*d).first = (*d).new;
 	if (!(*d).new)
+	{
 		clean_dollar_list((*d).first);
+		return (1);
+	}
 	if (((*d).id) != 1)
 	{
 		((*d).new)->previous = (*d).old;
 		((*d).old)->next = (*d).new;
 	}
 	(*d).old = (*d).new;
+	return (0);
 }
 
 t_dollar	*fill_dollar_list(char *arg)
@@ -101,7 +105,10 @@ t_dollar	*fill_dollar_list(char *arg)
 	{
 		sq_dq_heredoc_update(arg, &d);
 		if (should_create_node(arg, d))
-			node_creating_process(arg, &d);
+		{
+			if (node_creating_process(arg, &d))
+				return (NULL);
+		}
 		d.index++;
 	}
 	return (d.first);
