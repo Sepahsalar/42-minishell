@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 13:11:18 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:25:59 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,15 @@ char	*get_current_pid(t_env *original_env)
 	return (pid_str);
 }
 
-void expand_two_dollars(t_cmd *cmd, char **str, char **find, int *remained_dollar)
+void	expand_two_dollars(t_cmd *cmd, char **str,
+	char **find, int *remained_dollar)
 {
-	t_env	*env;
 	int		index;
 	char	*temp;
 	int		count;
 	int		initial_length;
 	int		reletive_index;
 
-	env = cmd->env;
 	count = 0;
 	index = 0;
 	initial_length = ft_strlen((*str));
@@ -138,7 +137,6 @@ int	count_len_var(char *find)
 	len_var = 0;
 	while (it_is_var(find, len_var))
 		len_var++;
-	
 	if (find[0] == '?' && len_var == 0)
 		len_var = 1;
 	return (len_var);
@@ -178,7 +176,7 @@ char *find_expanded(t_cmd *cmd, char *variable)
 	return (expanded);
 }
 
-char *str_after_expansion(char *str, char *find, char *variable, char *expanded)
+char	*str_after_expansion(char *str, char *find, char *variable, char *expanded)
 {
 	char	*new_str;
 	char	*part2;
@@ -202,7 +200,7 @@ char *str_after_expansion(char *str, char *find, char *variable, char *expanded)
 }
 
 
-char *expand_one_dollar(t_cmd *cmd, char *str , char *find)
+char	*expand_one_dollar(t_cmd *cmd, char *str , char *find)
 {
 	char	*new_str;
 	char	*expanded;
@@ -245,7 +243,7 @@ char	*inside_double_quote(char *location)
 	return (inside);
 }
 
-char *replace_inside_helper(char *str, char *inside, char *handled)
+char	*replace_inside_helper(char *str, char *inside, char *handled)
 {
 	char	*new_str;
 	int		new_len;
