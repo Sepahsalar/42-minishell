@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 18:23:39 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:07:42 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,41 +33,41 @@ int	ft_isspace(int ch)
 	return (0);
 }
 
+static t_open_quote	strlen_modified_helper(char *s, int index, t_open_quote	q)
+{
+	if (s[index] == '\'' && q.sq)
+		q.sq = 0;
+	else if (s[index] == '\'')
+		q.sq = 1;
+	else if (s[index] == '\"' && q.dq)
+		q.dq = 0;
+	else if (s[index] == '\"')
+		q.dq = 1;
+	return (q);
+}
+
 static size_t	strlen_modified(char *s)
 {
-	size_t	len;
-	int		sq;
-	int		dq;
-	int		index;
+	size_t			len;
+	t_open_quote	q;
+	int				index;
 
 	len = 0;
-	sq = 0;
-	dq = 0;
+	q.sq = 0;
+	q.dq = 0;
 	index = 0;
 	if (s == 0 || *s == '\0')
 		return (0);
-	sq = 0;
-	dq = 0;
 	while (s[index])
 	{
 		if (s[index] == '\"' || s[index] == '\'')
-		{
-			if (s[index] == '\'' && sq)
-				sq = 0;
-			else if (s[index] == '\'')
-				sq = 1;
-			else if (s[index] == '\"' && dq)
-				dq = 0;
-			else if (s[index] == '\"')
-				dq = 1;
-			len++;
-		}
+			q = strlen_modified_helper(s, index, q);
 		else
 		{
-			if ((s[index] == ' ' || istoken(s[index])) && (!sq && !dq))
+			if ((s[index] == ' ' || istoken(s[index])) && (!q.sq && !q.dq))
 				break ;
-			len++;
 		}
+		len++;
 		index++;
 	}
 	return (len);

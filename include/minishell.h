@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 12:33:27 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:01:32 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,12 @@ typedef struct s_error_helper
 	int		dq;
 	t_error	error;
 }			t_error_helper;
+
+typedef struct s_open_quote
+{
+	int		sq;
+	int		dq;
+}			t_open_quote;
 
 void		rl_replace_line(const char *text, int clear_undo);
 void		rl_clear_history(void);
