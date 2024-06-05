@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/05 13:01:53 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:53:08 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@
 // before that directory anymore and it does not load from the one
 // that already exists in the repo
 
+// also when cd to a directory, OLDPWD becomes nothing
+// and it is not also in export
+
 // 2) check cd with file name with too many characters
+
 // also check if you delete a directory from a terminal,
 // which you were inside of it from other terminals,
 // what should "cd ." builtin do?
@@ -32,26 +36,16 @@
 	// cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
 	// bash-3.2$ pwd
 	// /Users/asohrabi/github/42-minishell/mi/.
-	// bash-3.2$ cd mi
-	// bash: cd: mi: No such file or directory
+
 // ex: ASAL
-	// [ASAL]$ pwd
-	// /Users/asohrabi/github/42-minishell/mi
-	// [ASAL]$ ls
 	// [ASAL]$ ls -la
 	// total 8
 	// drwxr-xr-x   3 asohrabi  2020  102 Jun  5 12:28 .
 	// drwxr-xr-x  16 asohrabi  2020  544 Jun  5 12:28 ..
 	// -rw-r--r--   1 asohrabi  2020   27 Jun  5 12:29 .history
-	// [ASAL]$ pwd
-	// /Users/asohrabi/github/42-minishell/mi
-	// [ASAL]$ cd mi
-	// bash: cd: mi: Bad address
 	// [ASAL]$ cd .
-	// bash: cd: .: Bad address
-	// [ASAL]$ pwd
-	//             --> Empty line
-	// also $OLDPWD returns nothing (it is also deleted from export)
+	// bash: cd: .: No such file or directory
+	// also $OLDPWD returns nothing
 
 t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout)
 {

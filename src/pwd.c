@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:26:11 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/05 13:00:25 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:13:10 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ t_env_pack	run_pwd(t_cmd *cmd)
 	path = getcwd(NULL, 0);
 	if (path)
 		ft_putendl_fd(path, 1);
-	else if (!path && errno == 2)
+	///
+	else if (!path && errno == ENOENT)
 		ft_putendl_fd(value_finder(env_pack.env, "PWD"), 1);
+	///
 	//maybe protection against failure
 	free(path);
 	export_original(env_pack.original_env, 0);

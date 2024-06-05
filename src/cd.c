@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 13:25:56 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:45:28 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,44 @@ char	*value_finder(t_env *env, char *key)
 
 t_env_pack	run_cd_helper(char *full_path, t_cmd *cmd, t_env_pack env_pack)
 {
-	char	*new_pwd;
+	char		*new_pwd;
+	// struct stat	buf;
 
 	env_pack = init_env_pack(cmd);
+	// printf("full_path: %s\n", full_path);
 	if (chdir(full_path) == -1)
 	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(cmd->args[0], 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(cmd->args[1], 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errno), 2);
-		env_pack.original_env = export_original(cmd->original_env, 1);
+		// printf("error: %d\n", errno);
+		// stat(full_path, &buf);
+		// if (errno == ENOENT && S_ISDIR(buf.st_mode))
+		// {
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(cmd->args[0], 2);
+			ft_putstr_fd(": ", 2);
+			ft_putstr_fd(cmd->args[1], 2);
+			ft_putstr_fd(": ", 2);
+			ft_putendl_fd(strerror(errno), 2);
+			env_pack.original_env = export_original(cmd->original_env, 1);
+		// }
+		// else if (errno == ENOENT && !S_ISDIR(buf.st_mode))
+		// {
+			///
+			// ft_putstr_fd("cd: error retrieving current directory: ", 2);
+			// ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
+			// ft_putendl_fd(strerror(ENOENT), 2);
+			// env_pack.original_env = export_original(cmd->original_env, 0);
+			///
+		// }
+		// else
+		// {
+		// 	ft_putstr_fd("bash: ", 2);
+		// 	ft_putstr_fd(cmd->args[0], 2);
+		// 	ft_putstr_fd(": ", 2);
+		// 	ft_putstr_fd(cmd->args[1], 2);
+		// 	ft_putstr_fd(": ", 2);
+		// 	ft_putendl_fd(strerror(errno), 2);
+		// 	env_pack.original_env = export_original(cmd->original_env, 1);
+		// }
 	}
 	else
 	{
@@ -102,6 +128,8 @@ t_env_pack	run_cd(t_cmd *cmd)
 	env_pack = init_env_pack(cmd);
 	old_pwd = getcwd(NULL, 0);
 	//protecion
+	if (!old_pwd && errno == ENOENT)
+		old_pwd = value_finder(env_pack.env, "PWD");
 	env_pack.env = custom_export(env_pack.env, "OLDPWD", old_pwd);
 	home = value_finder(cmd->original_env, "HOME");
 	full_path = full_path_finder(old_pwd, cmd->args[1], home);
