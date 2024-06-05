@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/05 11:33:38 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:46:52 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,8 @@ char			*ft_remove(char *str, char *del, t_file *file);
 void			master_clean(char **raw_cmd,
 					t_env *env, t_cmd *cmd, int exit_value);
 t_cmd			*fill_cmd_list(char **raw_cmd, t_env *env, t_env *original_env);
-t_env			*clean_env_list(t_env *first);
+// t_env			*clean_env_list(t_env *first);
+void			clean_env_list(t_env *first);
 t_env			*create_env_list(int total_number);
 t_env			*fill_env_list(char **envp);
 void			fill_env_cmd_list(t_cmd **cmd, t_env *env);

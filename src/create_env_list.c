@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:21:29 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/21 18:35:55 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:47:13 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	clean_env_node(t_env *node)
 	}
 }
 
-t_env	*clean_env_list(t_env *first)
+// t_env	*clean_env_list(t_env *first)
+void	clean_env_list(t_env *first)
 {
 	t_env	*node;
 	t_env	*temp;
@@ -36,7 +37,7 @@ t_env	*clean_env_list(t_env *first)
 		clean_env_node(node);
 		node = temp;
 	}
-	return (0);
+	// return (0);
 }
 
 t_env	*create_env_node(void)
@@ -68,7 +69,10 @@ t_env	*create_env_list(int total_number)
 		else
 			old->next = new;
 		if (!new)
-			return (clean_env_list(first));
+		{
+			clean_env_list(first);
+			return (0);
+		}
 		old = new;
 		index++;
 	}

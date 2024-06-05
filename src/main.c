@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/05 14:53:08 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 16:00:18 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,26 @@ t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout)
 {
 	t_env_pack	env_pack;
 	char		*pid;
+	char		*temp;
+	char		*temp_pid;
 	t_env		*original_env;
 
-	env_pack.env = set_start(fill_env_list(envp));
+	original_env = fill_env_list(envp);
+	env_pack.env = set_start(original_env);
 	pid = get_current_pid(env_pack.env);
 	dup(fd_stdin);
 	close(STDOUT_FILENO);
 	dup(fd_stdout);
-	original_env = fill_env_list(envp);
-	original_env = custom_export(original_env,
-			ft_strdup("pid"), ft_strdup(pid));
+	// original_env = fill_env_list(envp);
+	temp = ft_strdup("pid");
+	temp_pid = ft_strdup(pid);
+	free(pid);
+	original_env = custom_export(original_env, temp, temp_pid);
+	free(temp);
+	free(temp_pid);
 	original_env = export_original(original_env, 0);
 	env_pack.original_env = original_env;
+	// clean_env_list(original_env);
 	return (env_pack);
 }
 
@@ -76,6 +84,8 @@ void	minishell_process(t_env_pack env_pack, int fd_stdin, int fd_stdout)
 		raw_line = readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
 		if (!raw_line)
 			run_exit_eof(env_pack.original_env, fd_stdin, fd_stdout);
+		if (same(raw_line, "checkleaks"))
+			system("leaks -q minishell"); //remember to delete it
 		if (ft_strlen(raw_line) > 0 && !all_space(raw_line))
 		{
 			save_history(raw_line);
@@ -107,7 +117,10 @@ int	main(int argc, char **argv, char **envp)
 	minishell_process(env_pack, fd_stdin, fd_stdout);
 	// is there a need to apply the original signal handler here??
 	// and int the exit_eof_or any other exit
+	// system("leaks minishell");
 	close(fd_stdin);
 	close(fd_stdout);
+	// system("exit");
+	// system("leaks minishell");
 	return (0);
 }
