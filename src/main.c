@@ -6,40 +6,52 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/05 11:35:30 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:01:53 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// Norminette:
-// 1) error_handling-----------big     --done
-// 2) expand dollar------------big     --done
-// 3) fd heredoc---------------big     --done
-// 4) ft remove----------------little  --done
-// 5) fill cmd list------------little  --done
-// 6) find cmd address---------big     --done
-// 7) fill dollar list---------little  --done
-// 8) fill files helper--------big     --done
-// 9) recreate 2d env----------little  --done
-//10) split pipex utils--------little  --done
-//11) split pipex--------------little  --done
-//12) utility 1----------------little  --done
-//13) utility 4----------------little  --done
+// 1) error handling on fd operators
 
-// 1) check these out in bash: -- done
-// << USER cat
-// << $USER cat
-// also check if one of the line contain $PATH (it should be expanded)
+// 2) when cd to a directory, it will create a ".history" file
+// inside of that directory and it does not load previous commands
+// before that directory anymore and it does not load from the one
+// that already exists in the repo
 
-// 2) check builtins with capital letters like CD .. --done
-
-// 3) error handling on fd operators
-
-// 4) check cd with file name with too many characters
+// 2) check cd with file name with too many characters
 // also check if you delete a directory from a terminal,
 // which you were inside of it from other terminals,
-// what should "cd" builtin do?
+// what should "cd ." builtin do?
+// ex: bash
+	// bash-3.2$ ls -la
+	// total 0
+	// drwxr-xr-x   2 asohrabi  2020   68 Jun  5 12:26 .
+	// drwxr-xr-x  13 asohrabi  2020  442 Jun  5 12:27 ..
+	// bash-3.2$ cd .
+	// cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+	// bash-3.2$ pwd
+	// /Users/asohrabi/github/42-minishell/mi/.
+	// bash-3.2$ cd mi
+	// bash: cd: mi: No such file or directory
+// ex: ASAL
+	// [ASAL]$ pwd
+	// /Users/asohrabi/github/42-minishell/mi
+	// [ASAL]$ ls
+	// [ASAL]$ ls -la
+	// total 8
+	// drwxr-xr-x   3 asohrabi  2020  102 Jun  5 12:28 .
+	// drwxr-xr-x  16 asohrabi  2020  544 Jun  5 12:28 ..
+	// -rw-r--r--   1 asohrabi  2020   27 Jun  5 12:29 .history
+	// [ASAL]$ pwd
+	// /Users/asohrabi/github/42-minishell/mi
+	// [ASAL]$ cd mi
+	// bash: cd: mi: Bad address
+	// [ASAL]$ cd .
+	// bash: cd: .: Bad address
+	// [ASAL]$ pwd
+	//             --> Empty line
+	// also $OLDPWD returns nothing (it is also deleted from export)
 
 t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout)
 {
