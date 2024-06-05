@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:51:07 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 13:58:38 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:51:21 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	create_file_data(t_file *file)
 {
-
 	if (!file->raw || file->limiter)
 		return (0);
 	else
@@ -35,7 +34,6 @@ int	fill_file_data(t_cmd **cmd)
 	temp_cmd = *cmd;
 	while (temp_cmd)
 	{
-
 		temp_file = temp_cmd->input;
 		while (temp_file)
 		{

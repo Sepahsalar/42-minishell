@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fill_files_helper.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:29:11 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/04 16:16:34 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:52:51 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-typedef struct s_file_helper
-{
-	int		index;
-	int		sq;
-	int		dq;
-	int		len;
-	t_file	*start;
-	t_file	*new;
-	t_file	*old;
-}			t_file_helper;
 
 t_file_helper	init_file_helper(char *str)
 {
@@ -67,7 +56,7 @@ void	update_sq_dq_file(char *str, t_file_helper *fh)
 		((*fh).sq) = 0;
 }
 
-int handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
+int	handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
 {
 	t_hd_file	*hd;
 
@@ -130,8 +119,6 @@ int	fill_files_helper(char *str, char *ch, t_cmd *cmd)
 	return (0);
 }
 
-
-
 int	creating_all_node_process(char *str, t_file_helper *fh)
 {
 	(*fh).new = create_file_node((*fh).index);
@@ -151,7 +138,7 @@ int	creating_all_node_process(char *str, t_file_helper *fh)
 	return (0);
 }
 
-int handle_hd_all(t_cmd *cmd, t_file **file)
+int	handle_hd_all(t_cmd *cmd, t_file **file)
 {
 	t_hd_file		*hd;
 

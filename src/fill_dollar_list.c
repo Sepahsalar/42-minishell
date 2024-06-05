@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_dollar_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:18:55 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/04 15:21:38 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:49:55 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,6 @@ void	heredoc_updater(char *str, int *heredoc)
 	else if (*str == ' ' && *heredoc == 1)
 		*heredoc = 0;
 }
-
-typedef struct s_dollar_helper
-{
-	t_dollar	*first;
-	t_dollar	*new;
-	t_dollar	*old;
-	int			index;
-	char		*sq;
-	char		*dq;
-	int			heredoc;
-	int			type;
-	int			id;
-}			t_dollar_helper;
 
 t_dollar_helper	init_dollar_helper(void)
 {

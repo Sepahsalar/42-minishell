@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 20:23:36 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:51:43 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,18 @@
 # define ANSI_COLOR_GREEN "\001\x1b[32m\002"
 # define ANSI_COLOR_RESET "\001\x1b[0m\002"
 // # define ANSI_MOVE_UP "\033[1A"
-
 // # define ANSI_SAVE_CURSOR "\033[s"
 // # define ANSI_RESTORE_CURSOR "\033[u"
 // # define ANSI_MOVE_TO_END "\033[K"
 // # define ANSI_MOVE_LEFT "\033[8D"
 // # define ANSI_MOVE_RIGHT "\033[C"
 
-
 # define WAIT_FOR_COMMAND 10
 # define HEREDOC 20
 # define HEREDOC_INTERRUPTED 30
 # define RUNNING_COMMAND 0
 
-volatile int g_signal;
+volatile int	g_signal;
 
 typedef struct s_file
 {
@@ -174,6 +172,30 @@ typedef struct s_open_quote
 	int		sq;
 	int		dq;
 }			t_open_quote;
+
+typedef struct s_dollar_helper
+{
+	t_dollar	*first;
+	t_dollar	*new;
+	t_dollar	*old;
+	int			index;
+	char		*sq;
+	char		*dq;
+	int			heredoc;
+	int			type;
+	int			id;
+}				t_dollar_helper;
+
+typedef struct s_file_helper
+{
+	int		index;
+	int		sq;
+	int		dq;
+	int		len;
+	t_file	*start;
+	t_file	*new;
+	t_file	*old;
+}			t_file_helper;
 
 void		rl_replace_line(const char *text, int clear_undo);
 void		rl_clear_history(void);

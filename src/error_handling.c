@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/04 10:59:40 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:47:02 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,13 @@ t_error_helper	check_empty_first_command(char *line)
 	return (e);
 }
 
-void update_helper_error(t_error_helper *e, char *line)
+void	update_helper_error(t_error_helper *e, char *line)
 {
-
 	update_token_sq_dq(&((*e).token), &((*e).sq), &((*e).dq), line[(*e).index]);
 	((*e).index)++;
-
 }
 
-char *change_helper_error(t_error_helper *e , char *line)
+char	*change_helper_error(t_error_helper *e, char *line)
 {
 	return (change_token((*e).token, (line + ((*e).index)),
 			&((*e).index), ((*e).sq || (*e).dq)));

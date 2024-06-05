@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 20:25:59 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:53:35 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int	count_len_var(char *find)
 	return (len_var);
 }
 
-char *find_var(char *find)
+char	*find_var(char *find)
 {
 	char	*variable;
 	int		len_var;
@@ -156,7 +156,7 @@ char *find_var(char *find)
 	return (variable);
 }
 
-char *find_expanded(t_cmd *cmd, char *variable)
+char	*find_expanded(t_cmd *cmd, char *variable)
 {
 	char	*expanded;
 
@@ -176,11 +176,12 @@ char *find_expanded(t_cmd *cmd, char *variable)
 	return (expanded);
 }
 
-char	*str_after_expansion(char *str, char *find, char *variable, char *expanded)
+char	*str_after_expansion(char *str, char *find,
+	char *variable, char *expanded)
 {
 	char	*new_str;
 	char	*part2;
-	int     len1;
+	int		len1;
 
 	len1 = find - str -1;
 	part2 = find + ft_strlen(variable);
@@ -199,8 +200,7 @@ char	*str_after_expansion(char *str, char *find, char *variable, char *expanded)
 	return (new_str);
 }
 
-
-char	*expand_one_dollar(t_cmd *cmd, char *str , char *find)
+char	*expand_one_dollar(t_cmd *cmd, char *str, char *find)
 {
 	char	*new_str;
 	char	*expanded;
@@ -215,7 +215,7 @@ char	*expand_one_dollar(t_cmd *cmd, char *str , char *find)
 	return (new_str);
 }
 
-char	*expand_dollar_helper(t_cmd *cmd, char *str , char *find, int type)
+char	*expand_dollar_helper(t_cmd *cmd, char *str, char *find, int type)
 {
 	int		remained_dollar;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_mode.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:06:56 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 10:06:57 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:45:42 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ static void	heredoc_mode(void)
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
 }
 
 void	change_mode(int mode)
 {
-
 	if (mode == RUNNING_COMMAND)
 		running_command();
 	else if (mode == WAIT_FOR_COMMAND)

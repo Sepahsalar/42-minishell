@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:26:11 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 14:02:06 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:42:08 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,3 @@ t_env_pack	run_pwd(t_cmd *cmd)
 	export_original(env_pack.original_env, 0);
 	return (env_pack);
 }
-

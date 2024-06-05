@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 19:26:24 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:43:11 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,19 @@
 //12) utility 1----------------little  --done
 //13) utility 4----------------little  --done
 
-// 1) check these out in bash: 
+// 1) check these out in bash: -- done
 // << USER cat
 // << $USER cat
 // also check if one of the line contain $PATH (it should be expanded)
 
-// 2) check builtins with capital letters like CD ..
+// 2) check builtins with capital letters like CD .. --done
 
 // 3) error handling on fd operators
 
 // 4) check cd with file name with too many characters
+// also check if you delete a directory from a terminal,
+// which you were inside of it from other terminals,
+// what should "cd" builtin do?
 
 t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {
@@ -172,7 +175,8 @@ int	main(int argc, char **argv, char **envp)
 	load_history();
 	apply_custom_signal_handler();
 	minishell_process(env_pack, fd_stdin, fd_stdout);
-	//is there a need to apply the original signal handler???????? here and int the exit_eof_or any other exit
+	//is there a need to apply the original signal handler????????
+	// here and int the exit_eof_or any other exit
 	close(fd_stdin);
 	close(fd_stdout);
 	return (0);
