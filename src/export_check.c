@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:43:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/05/30 14:47:20 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:49:26 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,3 @@ int	export_check_key(char *str)
 	}
 	return (1);
 }
-

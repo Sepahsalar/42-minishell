@@ -1,58 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_files_helper.c                                :+:      :+:    :+:   */
+/*   fill_files_helper_all.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 18:29:11 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/05 11:27:16 by asohrabi         ###   ########.fr       */
+/*   Created: 2024/06/05 11:26:17 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/06/05 11:27:31 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
-{
-	t_hd_file	*hd;
-
-	hd = malloc(sizeof(t_hd_file));
-	ft_memset(hd, 0, sizeof(t_hd_file));
-	hd->file = *file;
-	hd->str = ft_strdup(str);
-	while (hd->file)
-	{
-		hd = remove_update(hd, ch);
-		//return 1 if failed
-		hd->file = hd->file->next;
-	}
-	cmd->current = ft_strdup(hd->str);
-	if (*ch == '>')
-		cmd->output = *file;
-	else
-		cmd->input = *file;
-	return (0);
-}
-
-int	creating_normal_node_process(char *str, char *ch, t_file_helper *fh)
+int	creating_all_node_process(char *str, t_file_helper *fh)
 {
 	(*fh).new = create_file_node((*fh).index);
-	if ((*fh).start == NULL)
-		(*fh).start = (*fh).new;
+	if (((*fh).start) == NULL)
+		((*fh).start) = (*fh).new;
 	else
 		(*fh).old->next = (*fh).new;
 	if (!(*fh).new)
 	{
-		clean_file_list((*fh).start);
+		clean_file_list(((*fh).start));
 		return (1);
 	}
 	(*fh).old = (*fh).new;
-	if (str[(*fh).index + 1] == *ch)
+	if ((str[(*fh).index] == '>' && str[(*fh).index + 1] == '>')
+		|| (str[(*fh).index] == '<' && str[(*fh).index + 1] == '<'))
 		(*fh).index++;
 	return (0);
 }
 
-int	fill_files_helper(char *str, char *ch, t_cmd *cmd)
+int	handle_hd_all(t_cmd *cmd, t_file **file)
+{
+	t_hd_file		*hd;
+
+	hd = malloc(sizeof(t_hd_file));
+	ft_memset(hd, 0, sizeof(t_hd_file));
+	hd->file = *file;
+	hd->str = ft_strdup(cmd->current);
+	while (hd->file)
+	{
+		hd = remove_update_all(hd);
+		//failiure return 1
+		hd->file = hd->file->next;
+	}
+	return (0);
+}
+
+int	fill_files_helper_all(t_cmd *cmd)
 {
 	t_file_helper	fh;
 
@@ -63,14 +59,15 @@ int	fill_files_helper(char *str, char *ch, t_cmd *cmd)
 	{
 		if (need_update_sq_dq(cmd->current, fh))
 			update_sq_dq_file(cmd->current, &fh);
-		else if (need_file_node_normal(str, ch, fh))
+		else if (need_file_node_all(cmd->current, fh))
 		{
-			if (creating_normal_node_process(str, ch, &fh))
+			if (creating_all_node_process(cmd->current, &fh))
 				return (1);
 		}
 		fh.index++;
 	}
-	if (handle_hd_normal(&(fh.start), str, ch, cmd))
+	if (handle_hd_all(cmd, &(fh.start)))
 		return (1);
+	cmd->all = fh.start;
 	return (0);
 }

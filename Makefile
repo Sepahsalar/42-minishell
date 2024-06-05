@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
+#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/06/04 20:24:02 by nnourine         ###   ########.fr        #
+#    Updated: 2024/06/05 11:33:56 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/create_raw_cmd.c \
 		$(SRCDIR)/execute_cmd.c \
 		$(SRCDIR)/expand_dollar.c \
+		$(SRCDIR)/expand_dollar_utils.c \
+		$(SRCDIR)/expand_dollar_utils2.c \
 		$(SRCDIR)/fd_heredoc.c \
 		$(SRCDIR)/fd_heredoc_utils.c \
 		$(SRCDIR)/fill_address_access.c \
@@ -40,11 +42,15 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/fill_file_data.c \
 		$(SRCDIR)/fill_files.c \
 		$(SRCDIR)/fill_files_helper.c \
+		$(SRCDIR)/fill_files_helper_utils.c \
+		$(SRCDIR)/fill_files_helper_all.c \
 		$(SRCDIR)/fill_index_cmd_list.c \
 		$(SRCDIR)/fill_last_file_utils.c \
 		$(SRCDIR)/fill_last_file.c \
 		$(SRCDIR)/fill_args_cmd_list.c \
 		$(SRCDIR)/fill_dollar_list.c \
+		$(SRCDIR)/fill_dollar_list_utils.c \
+		$(SRCDIR)/fill_dollar_list_utils2.c \
 		$(SRCDIR)/fill_raw_cmd_list.c \
 		$(SRCDIR)/find_cmd_address.c \
 		$(SRCDIR)/find_cmd_address_utils.c \
@@ -67,7 +73,6 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/utility4.c \
 		$(SRCDIR)/handle_quote.c \
 		$(SRCDIR)/handle_quote_utils.c \
-		$(SRCDIR)/fill_dollar_list_utils.c \
 		$(SRCDIR)/handle_dollar.c \
 		$(SRCDIR)/builtin.c \
 		$(SRCDIR)/env.c \
@@ -88,8 +93,11 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/error_actions_utils.c \
 		$(SRCDIR)/execute_actions.c \
 		$(SRCDIR)/error_handling_utils.c \
+		$(SRCDIR)/error_handling_utils2.c \
 		$(SRCDIR)/error_handling_heredoc.c \
 		$(SRCDIR)/ft_remove.c \
+		$(SRCDIR)/handle_history.c \
+		$(SRCDIR)/signal_handler.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
