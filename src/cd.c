@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/05 14:45:28 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:57:43 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 t_env	*custom_export(t_env *env, char *key, char *value)
 {
 	t_env	*temp;
+	char	*temp_key;
+	char	*temp_value;
 
 	temp = env;
 	while (temp)
@@ -26,10 +28,21 @@ t_env	*custom_export(t_env *env, char *key, char *value)
 	if (temp)
 	{
 		free(temp->value);
-		temp->value = ft_strdup(value);
+		temp_value = ft_strdup(value);
+		//protection
+		temp->value = temp_value;
+		free(temp_value);
 	}
 	else
-		add_node_front(&env, ft_strdup(key), ft_strdup(value));
+	{
+		temp_key = ft_strdup(key);
+		//protection
+		temp_value = ft_strdup(value);
+		//protection
+		add_node_front(&env, temp_key, temp_value);
+		free(temp_key);
+		free(temp_value);
+	}
 	return (env);
 }
 
@@ -45,7 +58,9 @@ char	*full_path_finder(char *pwd, char *arg, char *home)
 	else if (arg[0] != '/')
 	{
 		temp1 = ft_strjoin(pwd, "/");
+		//protection
 		temp2 = ft_strjoin(temp1, arg);
+		//protection
 		free(temp1);
 		return (temp2);
 	}
