@@ -6,37 +6,11 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:56 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 14:01:41 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:07:25 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// t_env_pack	run_minishell(t_cmd *cmd)
-// {
-// 	t_env_pack	env_pack;
-// 	t_env		*env;
-// 	int			level;
-// 	char		*temp;
-
-// 	env_pack = init_env_pack(cmd);
-// 	env = env_pack.env;
-// 	while (env && !same(env->key, "SHLVL"))
-// 		env = env->next;
-// 	if (env)
-// 	{
-// 		temp = env->value;
-// 		level = ft_atoi(env->value);
-// 		free(temp);
-// 		level = level + 1;
-// 		env->value = ft_itoa(level);
-// 	}
-// 	else
-// 		add_node_front(&env_pack.env, "SHLVL", ft_itoa(1));
-// 	//should we do anything more than increaing the level?????
-// 	env_pack.original_env = export_original(cmd->original_env, 0);
-// 	return (env_pack);
-// }
 
 t_env_pack	run_minishell(t_cmd *cmd)
 {

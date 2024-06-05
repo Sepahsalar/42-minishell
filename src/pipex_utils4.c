@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:59:53 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/04 19:20:21 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:36:29 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,27 +63,6 @@ void	non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 	}
 	master_clean(0, cmd_start->env, cmd_start, -1);
 	run_execve(cmd_address, cmd_args, cmd_env);
-	// if (execve(cmd_address, cmd_args, cmd_env) == -1)
-	// {
-	// 	clean_2d_char(cmd_args);
-	// 	clean_2d_char(cmd_env);
-	// 	if (same (strerror(errno), "Exec format error"))
-	// 	{
-	// 		if (!check_accessibility(cmd_address, 'R'))
-	// 		{
-	// 			ft_putstr_fd("bash: ", 2);
-	// 			ft_putstr_fd(cmd_address, 2);
-	// 			free(cmd_address);
-	// 			ft_putendl_fd(": Permission denied", 2);
-	// 			exit(126);
-	// 		}
-	// 		free(cmd_address);
-	// 		exit(0);
-	// 	}
-	// 	free(cmd_address);
-	// 	perror("bash");
-	// 	exit(1);
-	// }
 }
 
 void	builtin_child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,

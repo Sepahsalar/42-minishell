@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:02:20 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 19:02:21 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:31:45 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,14 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 			env_pack = after_child(cmd_start, cmd_execution, env_pack, fd);
 	}
 	return (env_pack);
+}
+
+t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
+{
+	t_error		error;
+
+	error = find_error(raw_line);
+	if (error.error)
+		return (error_actions(env_pack, error, raw_line));
+	return (execute_actions(raw_line, env_pack));
 }

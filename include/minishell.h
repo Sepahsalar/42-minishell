@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/05 10:51:43 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:33:38 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,170 +197,194 @@ typedef struct s_file_helper
 	t_file	*old;
 }			t_file_helper;
 
-void		rl_replace_line(const char *text, int clear_undo);
-void		rl_clear_history(void);
-void		clean_2d_char(char **array);
-t_cmd		*clean_cmd_list(t_cmd *first);
-t_cmd		*create_cmd_list(int total_number);
-t_file		*clean_file_list(t_file *first);
-char		**create_raw_cmd(const char *input);
-int			char_2d_count(char **array);
-int			fill_raw_cmd_list(t_cmd **cmd, char **raw_cmd);
-void		fill_index_cmd_list(t_cmd **cmd);
-char		*strdup_modified(char *s, char *token);
-char		*ft_remove(char *str, char *del, t_file *file);
-void		master_clean(char **raw_cmd,
-				t_env *env, t_cmd *cmd, int exit_value);
-t_cmd		*fill_cmd_list(char **raw_cmd, t_env *env, t_env *original_env);
-t_env		*clean_env_list(t_env *first);
-t_env		*create_env_list(int total_number);
-t_env		*fill_env_list(char **envp);
-void		fill_env_cmd_list(t_cmd **cmd, t_env *env);
-void		fill_original_env_cmd_list(t_cmd **cmd, t_env *original_env);
-int			istoken(int c);
-int			fill_files(t_cmd **cmd, char *token);
-char		*dup_char(const char *s, char ch);
-char		*dup_char_pipe(const char *s, char ch);
-char		**create(const char *s, char ch, int i, int j);
-char		**create_pipe(const char *s, char ch, int i, int j);
-char		**split_pipex(const char *s);
-char		**split_pipex_pipe(const char *s);
-char		**split_all_delimiter(const char *s);
-char		**free_split(char ***m, int j);
-int			triger_maker(int triger, char ch, char divider);
-int			len_helper(const char *s);
-int			len_helper_pipe(const char *s);
-int			fill_args_cmd_list(t_cmd **cmd);
-int			check_accessibility(char *address, char mode);
-char		*find_address(t_cmd *cmd, char mode);
-int			find_cmd_address(t_cmd *cmd);
-int			fill_address_access(t_cmd **cmd);
-int			create_file_data(t_file *file);
-int			fill_file_data(t_cmd **cmd);
-char		*handling_quote(char *str);
-t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution);
-int			ft_isspace(int ch);
-char		**recreate_2d_env(t_env *env);
-int			all_space(char *str);
-char		**copy_2d_char(char **src);
-void		execution_package(t_cmd *cmd,
-				char **cmd_address, char ***cmd_args, char ***cmd_env);
-int			cmd_count(t_cmd *cmd);
-long		atoi_file(char **input, int place, int def);
-int			fill_last_out(t_cmd **cmd);
-t_last_file	*clean_last_file_list(t_last_file *first);
-int			fill_last_in(t_cmd **cmd);
-int			fd_heredoc(t_cmd **cmd_address);
-int			fill_fd_heredoc(t_cmd **start_cmd);
-int			check_unique(t_last_file *first, t_file *temp);
-t_last_file	*create_last_file_node(t_file *file, t_file *temp);
-t_last_file	*create_last_file_list(t_file *file);
-int			handle_quote_cmd(t_cmd *start);
-t_env_pack	execute_all(char *raw_line, t_env_pack env_pack);
-void		fill_name_cmd_list(t_cmd **cmd);
-t_dollar	*fill_dollar_list(char *arg);
-char		*expand_dollar_helper(t_cmd *cmd, char *str, char *find, int type);
-int			handle_dollar_struct(t_cmd *cmd);
-char		*inside_double_quote(char *location);
-char		*replace_inside(char *str, char *location,
-				char *inside, char *handled_inside);
-t_dollar	*clean_dollar_list(t_dollar *first);
-void		remove_previous_node(t_dollar *current);
-t_env_pack	run_env(t_cmd *cmd);
-int			is_builtin(t_cmd *cmd);
-t_env_pack	run_builtin(t_cmd *cmd);
-t_env_pack	run_export(t_cmd *cmd);
-t_env		*export_original(t_env *env, int status);
-t_env_pack	init_env_pack(t_cmd *cmd);
-int			same(char *s1, char *s2);
-t_env		*remove_node(t_env *start, t_env *node);
-t_env_pack	run_unset(t_cmd *cmd);
-t_env_pack	run_pwd(t_cmd *cmd);
-void		add_node_front(t_env **env, char *key, char *value);
-t_env_pack	run_minishell(t_cmd *cmd);
-t_env		*set_start(t_env *env);
-t_env		*cpy_env(t_env *env);
-char		*sliced_str(char *str, int start, int end);
-t_env_pack	run_cd(t_cmd *cmd);
-char		*value_finder(t_env *env, char *key);
-t_env		*custom_export(t_env *env, char *key, char *value);
-t_env_pack	run_echo(t_cmd *cmd);
-t_env_pack	run_exit(t_cmd *cmd);
-t_atol		atol_exit(char *str);
-void		run_exit_eof(t_env *env, int fd_stdin, int fd_stdout);
-t_error		find_error(char *line);
-char		*find_token(char *cur);
-char		*change_token(char *token, char *cur, int *index, int sq_dq);
-char		*change_token_heredoc(char *token, char *cur,
-				int *index, t_error error);
-int			check_after_token(char *str);
-t_file		*create_file_node(int place);
-int			fill_files_helper(char *str, char *ch, t_cmd *cmd);
-int			fill_files_helper_all(t_cmd *cmd);
-int			export_check(char *str);
-int			export_check_key(char *str);
-int			fill_files_all(t_cmd **cmd);
-char		*get_current_pid(t_env *original_env);
-void		sig_handler(int sig);
-void		change_mode(int mode);
-t_env_pack	not_handling_error(t_env_pack env_pack, t_error error);
-int			print_error_before(t_error error, char *raw_line);
-void		print_error_after(t_error error, int printed);
-int			update_sq_dq_index(char c, int *sq, int *dq, int index);
-int			open_sq_or_dq(char **token, int index);
-t_env_pack	error_actions(t_env_pack env_pack, t_error error, char *raw_line);
-t_env_pack	execute_actions(char *raw_line, t_env_pack env_pack);
-int			accept_char(char *token, char *cur);
-t_env		*handle_oldpwd(t_env *env);
-t_env		*sort_env(t_env *env);
-int			env_count(t_env *env);
-void		export_with_plus(t_cmd *cmd, char *arg, int *status);
-void		print_export_error(char *arg, int *status);
-void		export_no_arg(t_cmd *cmd);
-t_quote		*create_and_fill_quote_list(char *str);
-t_quote		*clean_quote_list(t_quote *first);
-int			count_words(const char *s, char ch);
-int			len_quote(const char *s, char ch);
-int			len_quote_pipe(const char *s, char ch);
-t_hd_file	*remove_update(t_hd_file *hd, char *ch);
-t_hd_file	*remove_update_all(t_hd_file *hd);
-t_env_pack	cmd_dir(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack);
-t_env_pack	empty_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack);
-t_env_pack	input_output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack);
-void		input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack);
-t_env_pack	full_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack);
-void		output_redirect_builtin(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack);
-void		output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack, int fd[2]);
-void		input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack);
-t_env_pack	waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack);
-t_env_pack	init_and_check(t_cmd *cmd_start, t_cmd *cmd_execution);
-t_env_pack	parent_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack);
-t_env_pack	after_child(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack, int fd[2]);
-void		input_output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack, int fd[2]);
-void		child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack);
-void		child_process(t_cmd *cmd_start, t_cmd *cmd_execution,
-				t_env_pack env_pack, int fd[2]);
-int			should_execute_in_parent(t_cmd *cmd_start, t_cmd *cmd_execution);
-int			type_finder(char *sq, char *dq, int heredoc);
-t_dollar	*create_dollar_node(int id, char *place, int type);
-void		run_execve(char *cmd_address, char **cmd_args, char **cmd_env);
-void		handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer);
-int			handle_dollar_string(t_cmd *cmd, char **string);
-int			heredoc_actions(t_cmd *cmd, char **line, char **heredoc_text);
-int			continue_heredoc(char *line, t_file *temp_input);
-int			create_heredoc_file(t_cmd *cmd, t_file *temp_input);
+void			rl_replace_line(const char *text, int clear_undo);
+void			rl_clear_history(void);
+void			clean_2d_char(char **array);
+t_cmd			*clean_cmd_list(t_cmd *first);
+t_cmd			*create_cmd_list(int total_number);
+t_file			*clean_file_list(t_file *first);
+char			**create_raw_cmd(const char *input);
+int				char_2d_count(char **array);
+int				fill_raw_cmd_list(t_cmd **cmd, char **raw_cmd);
+void			fill_index_cmd_list(t_cmd **cmd);
+char			*strdup_modified(char *s, char *token);
+char			*ft_remove(char *str, char *del, t_file *file);
+void			master_clean(char **raw_cmd,
+					t_env *env, t_cmd *cmd, int exit_value);
+t_cmd			*fill_cmd_list(char **raw_cmd, t_env *env, t_env *original_env);
+t_env			*clean_env_list(t_env *first);
+t_env			*create_env_list(int total_number);
+t_env			*fill_env_list(char **envp);
+void			fill_env_cmd_list(t_cmd **cmd, t_env *env);
+void			fill_original_env_cmd_list(t_cmd **cmd, t_env *original_env);
+int				istoken(int c);
+int				fill_files(t_cmd **cmd, char *token);
+char			*dup_char(const char *s, char ch);
+char			*dup_char_pipe(const char *s, char ch);
+char			**create(const char *s, char ch, int i, int j);
+char			**create_pipe(const char *s, char ch, int i, int j);
+char			**split_pipex(const char *s);
+char			**split_pipex_pipe(const char *s);
+char			**split_all_delimiter(const char *s);
+char			**free_split(char ***m, int j);
+int				triger_maker(int triger, char ch, char divider);
+int				len_helper(const char *s);
+int				len_helper_pipe(const char *s);
+int				fill_args_cmd_list(t_cmd **cmd);
+int				check_accessibility(char *address, char mode);
+char			*find_address(t_cmd *cmd, char mode);
+int				find_cmd_address(t_cmd *cmd);
+int				fill_address_access(t_cmd **cmd);
+int				create_file_data(t_file *file);
+int				fill_file_data(t_cmd **cmd);
+char			*handling_quote(char *str);
+t_env_pack		execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution);
+int				ft_isspace(int ch);
+char			**recreate_2d_env(t_env *env);
+int				all_space(char *str);
+char			**copy_2d_char(char **src);
+void			execution_package(t_cmd *cmd,
+					char **cmd_address, char ***cmd_args, char ***cmd_env);
+int				cmd_count(t_cmd *cmd);
+long			atoi_file(char **input, int place, int def);
+int				fill_last_out(t_cmd **cmd);
+t_last_file		*clean_last_file_list(t_last_file *first);
+int				fill_last_in(t_cmd **cmd);
+int				fd_heredoc(t_cmd **cmd_address);
+int				fill_fd_heredoc(t_cmd **start_cmd);
+int				check_unique(t_last_file *first, t_file *temp);
+t_last_file		*create_last_file_node(t_file *file, t_file *temp);
+t_last_file		*create_last_file_list(t_file *file);
+int				handle_quote_cmd(t_cmd *start);
+t_env_pack		execute_all(char *raw_line, t_env_pack env_pack);
+void			fill_name_cmd_list(t_cmd **cmd);
+t_dollar		*fill_dollar_list(char *arg);
+char			*expand_dollar_helper(t_cmd *cmd, char *str,
+					char *find, int type);
+int				handle_dollar_struct(t_cmd *cmd);
+char			*inside_double_quote(char *location);
+char			*replace_inside(char *str, char *location,
+					char *inside, char *handled_inside);
+t_dollar		*clean_dollar_list(t_dollar *first);
+void			remove_previous_node(t_dollar *current);
+t_env_pack		run_env(t_cmd *cmd);
+int				is_builtin(t_cmd *cmd);
+t_env_pack		run_builtin(t_cmd *cmd);
+t_env_pack		run_export(t_cmd *cmd);
+t_env			*export_original(t_env *env, int status);
+t_env_pack		init_env_pack(t_cmd *cmd);
+int				same(char *s1, char *s2);
+t_env			*remove_node(t_env *start, t_env *node);
+t_env_pack		run_unset(t_cmd *cmd);
+t_env_pack		run_pwd(t_cmd *cmd);
+void			add_node_front(t_env **env, char *key, char *value);
+t_env_pack		run_minishell(t_cmd *cmd);
+t_env			*set_start(t_env *env);
+t_env			*cpy_env(t_env *env);
+char			*sliced_str(char *str, int start, int end);
+t_env_pack		run_cd(t_cmd *cmd);
+char			*value_finder(t_env *env, char *key);
+t_env			*custom_export(t_env *env, char *key, char *value);
+t_env_pack		run_echo(t_cmd *cmd);
+t_env_pack		run_exit(t_cmd *cmd);
+t_atol			atol_exit(char *str);
+void			run_exit_eof(t_env *env, int fd_stdin, int fd_stdout);
+t_error			find_error(char *line);
+char			*find_token(char *cur);
+char			*change_token(char *token, char *cur, int *index, int sq_dq);
+char			*change_token_heredoc(char *token, char *cur,
+					int *index, t_error error);
+int				check_after_token(char *str);
+t_file			*create_file_node(int place);
+int				fill_files_helper(char *str, char *ch, t_cmd *cmd);
+int				fill_files_helper_all(t_cmd *cmd);
+int				export_check(char *str);
+int				export_check_key(char *str);
+int				fill_files_all(t_cmd **cmd);
+char			*get_current_pid(t_env *original_env);
+void			sig_handler(int sig);
+void			change_mode(int mode);
+t_env_pack		not_handling_error(t_env_pack env_pack, t_error error);
+int				print_error_before(t_error error, char *raw_line);
+void			print_error_after(t_error error, int printed);
+int				update_sq_dq_index(char c, int *sq, int *dq, int index);
+int				open_sq_or_dq(char **token, int index);
+t_env_pack		error_actions(t_env_pack env_pack,
+					t_error error, char *raw_line);
+t_env_pack		execute_actions(char *raw_line, t_env_pack env_pack);
+int				accept_char(char *token, char *cur);
+t_env			*handle_oldpwd(t_env *env);
+t_env			*sort_env(t_env *env);
+int				env_count(t_env *env);
+void			export_with_plus(t_cmd *cmd, char *arg, int *status);
+void			print_export_error(char *arg, int *status);
+void			export_no_arg(t_cmd *cmd);
+t_quote			*create_and_fill_quote_list(char *str);
+t_quote			*clean_quote_list(t_quote *first);
+int				count_words(const char *s, char ch);
+int				len_quote(const char *s, char ch);
+int				len_quote_pipe(const char *s, char ch);
+t_hd_file		*remove_update(t_hd_file *hd, char *ch);
+t_hd_file		*remove_update_all(t_hd_file *hd);
+t_env_pack		cmd_dir(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack);
+t_env_pack		empty_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack);
+t_env_pack		input_output_check_create(t_cmd *cmd_start,
+					t_cmd *cmd_execution, t_env_pack env_pack);
+void			input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack);
+t_env_pack		full_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack);
+void			output_redirect_builtin(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack);
+void			output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack, int fd[2]);
+void			input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack);
+t_env_pack		waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack);
+t_env_pack		init_and_check(t_cmd *cmd_start, t_cmd *cmd_execution);
+t_env_pack		parent_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack);
+t_env_pack		after_child(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack, int fd[2]);
+void			input_output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack, int fd[2]);
+void			child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack);
+void			child_process(t_cmd *cmd_start, t_cmd *cmd_execution,
+					t_env_pack env_pack, int fd[2]);
+int				should_execute_in_parent(t_cmd *cmd_start,
+					t_cmd *cmd_execution);
+int				type_finder(char *sq, char *dq, int heredoc);
+t_dollar		*create_dollar_node(int id, char *place, int type);
+void			run_execve(char *cmd_address, char **cmd_args, char **cmd_env);
+void			handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer);
+int				handle_dollar_string(t_cmd *cmd, char **string);
+int				heredoc_actions(t_cmd *cmd, char **line, char **heredoc_text);
+int				continue_heredoc(char *line, t_file *temp_input);
+int				create_heredoc_file(t_cmd *cmd, t_file *temp_input);
+t_error_helper	init_error_helper(void);
+t_error			find_error_helper(char *line, char *token, int index);
+void			update_token_sq_dq(char **token, int *sq, int *dq, char c);
+void			expand_two_dollars(t_cmd *cmd, char **str,
+					char **find, int *remained_dollar);
+int				no_need_more_expand(int remain_dollar, char *find, int type);
+char			*str_after_expansion(char *str, char *find,
+					char *variable, char *expanded);
+char			*find_expanded(t_cmd *cmd, char *variable);
+char			*find_var(char *find);
+t_dollar_helper	init_dollar_helper(void);
+void			sq_dq_heredoc_update(char *arg, t_dollar_helper *d);
+int				should_create_node(char *arg, t_dollar_helper d);
+t_file_helper	init_file_helper(char *str);
+int				need_file_node_all(char *str, t_file_helper fh);
+int				need_file_node_normal(char *str, char *ch, t_file_helper fh);
+void			update_sq_dq_file(char *str, t_file_helper *fh);
+int				need_update_sq_dq(char *str, t_file_helper fh);
+void			save_history(char *raw_line);
+void			load_history(void);
+void			apply_custom_signal_handler(void);
 
 #endif //MINISHELL_H
