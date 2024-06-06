@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_actions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:39:07 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 13:53:30 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:08:03 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ t_env_pack	execute_actions(char *raw_line, t_env_pack env_pack)
 	master_clean(raw_cmd, 0, 0, -1);
 	env_pack_result = running_actions(cmd);
 	del_herdoc_files(cmd);
+	clean_cmd_list(cmd); //added today
 	return (env_pack_result);
 }

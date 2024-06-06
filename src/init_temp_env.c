@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_temp_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:56 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/05 11:07:25 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:11:59 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_env	*set_start(t_env *env)
 		free(temp_str);
 	}
 	else
-		add_node_front(&env, "SHLVL", ft_itoa(1));
+		add_node_front(&env, ft_strdup("SHLVL"), ft_itoa(1));
 	temp_env = env;
 	while (temp_env && !same(temp_env->key, "OLDPWD"))
 		temp_env = temp_env->next;

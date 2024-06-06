@@ -1,0 +1,10 @@
+LICENSE
+Makefile
+README.md
+include
+lib
+minishell
+minishell_tester
+obj
+src
+test

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/05 15:57:43 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:24:41 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 t_env	*custom_export(t_env *env, char *key, char *value)
 {
 	t_env	*temp;
-	char	*temp_key;
-	char	*temp_value;
 
 	temp = env;
 	while (temp)
@@ -28,21 +26,11 @@ t_env	*custom_export(t_env *env, char *key, char *value)
 	if (temp)
 	{
 		free(temp->value);
-		temp_value = ft_strdup(value);
-		//protection
-		temp->value = temp_value;
-		free(temp_value);
+		temp->value = ft_strdup(value);
+		//protetcion
 	}
 	else
-	{
-		temp_key = ft_strdup(key);
-		//protection
-		temp_value = ft_strdup(value);
-		//protection
-		add_node_front(&env, temp_key, temp_value);
-		free(temp_key);
-		free(temp_value);
-	}
+		add_node_front(&env, ft_strdup(key), ft_strdup(value));
 	return (env);
 }
 
@@ -85,49 +73,23 @@ char	*value_finder(t_env *env, char *key)
 t_env_pack	run_cd_helper(char *full_path, t_cmd *cmd, t_env_pack env_pack)
 {
 	char		*new_pwd;
-	// struct stat	buf;
 
-	env_pack = init_env_pack(cmd);
-	// printf("full_path: %s\n", full_path);
 	if (chdir(full_path) == -1)
 	{
-		// printf("error: %d\n", errno);
-		// stat(full_path, &buf);
-		// if (errno == ENOENT && S_ISDIR(buf.st_mode))
-		// {
-			ft_putstr_fd("bash: ", 2);
-			ft_putstr_fd(cmd->args[0], 2);
-			ft_putstr_fd(": ", 2);
-			ft_putstr_fd(cmd->args[1], 2);
-			ft_putstr_fd(": ", 2);
-			ft_putendl_fd(strerror(errno), 2);
-			env_pack.original_env = export_original(cmd->original_env, 1);
-		// }
-		// else if (errno == ENOENT && !S_ISDIR(buf.st_mode))
-		// {
-			///
-			// ft_putstr_fd("cd: error retrieving current directory: ", 2);
-			// ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
-			// ft_putendl_fd(strerror(ENOENT), 2);
-			// env_pack.original_env = export_original(cmd->original_env, 0);
-			///
-		// }
-		// else
-		// {
-		// 	ft_putstr_fd("bash: ", 2);
-		// 	ft_putstr_fd(cmd->args[0], 2);
-		// 	ft_putstr_fd(": ", 2);
-		// 	ft_putstr_fd(cmd->args[1], 2);
-		// 	ft_putstr_fd(": ", 2);
-		// 	ft_putendl_fd(strerror(errno), 2);
-		// 	env_pack.original_env = export_original(cmd->original_env, 1);
-		// }
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(cmd->args[1], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
+		env_pack.original_env = export_original(cmd->original_env, 1);
 	}
 	else
 	{
 		new_pwd = getcwd(NULL, 0);
 		//protecion
 		env_pack.env = custom_export(env_pack.env, "PWD", new_pwd);
+		free(new_pwd);
 		env_pack.original_env = export_original(cmd->original_env, 0);
 	}
 	return (env_pack);
@@ -140,14 +102,48 @@ t_env_pack	run_cd(t_cmd *cmd)
 	char		*full_path;
 	char		*home;
 
+	full_path = NULL;
 	env_pack = init_env_pack(cmd);
 	old_pwd = getcwd(NULL, 0);
 	//protecion
-	if (!old_pwd && errno == ENOENT)
-		old_pwd = value_finder(env_pack.env, "PWD");
-	env_pack.env = custom_export(env_pack.env, "OLDPWD", old_pwd);
-	home = value_finder(cmd->original_env, "HOME");
-	full_path = full_path_finder(old_pwd, cmd->args[1], home);
+	if (!old_pwd)
+	{
+		if (same(cmd->args[1], ".") && errno == ENOENT)
+		{
+			ft_putstr_fd("cd: error retrieving current directory: ", 2);
+			ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
+			ft_putendl_fd(strerror(ENOENT), 2);
+			env_pack.original_env = export_original(cmd->original_env, 0);
+			return (env_pack);
+		}
+		else if (same (cmd->args[1], ".."))
+		{
+			old_pwd = value_finder(env_pack.env, "PWD");
+			full_path = sliced_str(old_pwd, 0,
+					(ft_strrchr(old_pwd, '/') - old_pwd));
+		}
+		else if (cmd->args[1] == NULL)
+			full_path = ft_strdup(value_finder(cmd->original_env, "HOME"));
+		else
+		{
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(cmd->args[0], 2);
+			ft_putstr_fd(": ", 2);
+			ft_putstr_fd(cmd->args[1], 2);
+			ft_putstr_fd(": ", 2);
+			ft_putendl_fd(strerror(errno), 2);
+			env_pack.original_env = export_original(cmd->original_env, 1);
+			return (env_pack);
+		}
+		//old_pwd = ft_strdup(value_finder(env_pack.env, "PWD"));
+	}
+	else
+	{
+		env_pack.env = custom_export(env_pack.env, "OLDPWD", old_pwd);
+		free(old_pwd);
+		home = value_finder(cmd->original_env, "HOME");
+		full_path = full_path_finder(old_pwd, cmd->args[1], home);
+	}
 	env_pack = run_cd_helper(full_path, cmd, env_pack);
 	free(full_path);
 	return (env_pack);

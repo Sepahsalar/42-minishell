@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:23:32 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 18:12:39 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:49:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*handling_quote(char *str)
 {
 	char	*result;
 	char	*temp_str;
+	char	*temp_str2;
 	t_quote	*temp;
 	t_quote	*head;
 
@@ -33,8 +34,10 @@ char	*handling_quote(char *str)
 	while (temp)
 	{
 		temp_str = result;
-		result = ft_strjoin(result, quote_helper(str, temp->start, temp->end));
+		temp_str2 = quote_helper(str, temp->start, temp->end);
+		result = ft_strjoin(result, temp_str2);
 		free(temp_str);
+		free(temp_str2);
 		temp = temp->next;
 	}
 	clean_quote_list(head);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/05 15:46:52 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:26:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,8 +384,9 @@ int				need_file_node_all(char *str, t_file_helper fh);
 int				need_file_node_normal(char *str, char *ch, t_file_helper fh);
 void			update_sq_dq_file(char *str, t_file_helper *fh);
 int				need_update_sq_dq(char *str, t_file_helper fh);
-void			save_history(char *raw_line);
-void			load_history(void);
+void			save_history(char *raw_line, char *root);
+void			load_history(char *root);
 void			apply_custom_signal_handler(void);
+
 
 #endif //MINISHELL_H

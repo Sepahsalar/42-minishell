@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:22:09 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 14:22:37 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:40:25 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*find_token(char *cur)
 {
 	char	**token;
 	int		index;
+	char    *res;
 
 	token = init_token();
 	//protection
@@ -58,10 +59,14 @@ char	*find_token(char *cur)
 	while (token[index])
 	{
 		if (ft_strncmp(cur, token[index], ft_strlen(token[index])) == 0)
-			return (token[index]);
+		{
+			res = ft_strdup(token[index]);
+			free(token);
+			return (res);
+		}
 		index++;
 	}
-	// clean_2d_char(token);
+	free(token);
 	return (NULL);
 }
 
@@ -89,6 +94,8 @@ char	*change_token(char *token, char *cur, int *index, int sq_dq)
 		new_token = find_token(cur);
 		if (new_token)
 		{
+			if (token)
+				free(token); //
 			*index = *index + ft_strlen(new_token);
 			return (new_token);
 		}
@@ -96,13 +103,19 @@ char	*change_token(char *token, char *cur, int *index, int sq_dq)
 		{
 			*index = *index + 1;
 			if (*cur != ' ')
+			{
+				if (token)
+					free(token); //
 				return (NULL);
+			}
 			else
 				return (token);
 		}
 	}
 	else
 	{
+		if (token)
+			free(token); //
 		*index = *index + 1;
 		return (NULL);
 	}

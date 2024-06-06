@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_utils5.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 19:09:28 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:43:33 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ t_env_pack	parent_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 {
 	input_output_open(cmd_start, cmd_execution, env_pack);
 	output_redirect_builtin(cmd_start, cmd_execution, env_pack);
-	return (env_pack = run_builtin(cmd_execution));
+	env_pack = run_builtin(cmd_execution);
+	return (env_pack);
 }
 
 void	child_process(t_cmd *cmd_start, t_cmd *cmd_execution,
