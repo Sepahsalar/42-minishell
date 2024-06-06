@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:21:29 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/05 15:47:13 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:23:44 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	clean_env_node(t_env *node)
 	if (node)
 	{
 		if (node->key)
-			free (node->key);
+			free(node->key);
 		if (node->value)
-			free (node->value);
-		free (node);
+			free(node->value);
+		free(node);
 	}
 }
 

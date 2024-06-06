@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_files_helper.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:29:11 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/05 11:27:16 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:06:15 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
 {
 	t_hd_file	*hd;
+	char		*temp;
 
 	hd = malloc(sizeof(t_hd_file));
 	ft_memset(hd, 0, sizeof(t_hd_file));
@@ -26,11 +27,15 @@ int	handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
 		//return 1 if failed
 		hd->file = hd->file->next;
 	}
+	temp = cmd->current;
 	cmd->current = ft_strdup(hd->str);
+	free(temp);
 	if (*ch == '>')
 		cmd->output = *file;
 	else
 		cmd->input = *file;
+	free(hd->str); // added today
+	free(hd); //added today
 	return (0);
 }
 

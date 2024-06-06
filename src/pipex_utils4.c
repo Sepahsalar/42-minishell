@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils4.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:59:53 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/05 11:36:29 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/06 09:56:46 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,14 @@ void	non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 		free(cmd_address);
 		clean_2d_char(cmd_args);
 		clean_2d_char(cmd_env);
+		clean_cmd_list(cmd_start); // added today
+		clean_env_list(cmd_execution->env); // added today
+		clean_env_list(cmd_execution->original_env); // added today
 		master_clean(0, cmd_start->env, cmd_start, 1);
 		exit(1);
 	}
-	master_clean(0, cmd_start->env, cmd_start, -1);
+	clean_cmd_list(cmd_start); // added today
+	//master_clean(0, cmd_start->env, cmd_start, -1);
 	run_execve(cmd_address, cmd_args, cmd_env);
 }
 

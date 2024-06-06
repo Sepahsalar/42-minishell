@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quote_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:07:19 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 18:11:09 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:04:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

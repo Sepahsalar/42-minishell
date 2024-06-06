@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:21:36 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/04 19:56:49 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:04:39 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static t_hd_file	*remove_update_con(t_hd_file *hd, char *ch, char *temp_str)
 		//protection
 		hd->file->limiter = handling_quote(temp_str2);
 		//protection
+		free(temp_str2); //added today
 		temp_str++;
 	}
 	else if (*ch == '<')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:49:01 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 17:39:20 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:36:11 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	run_exit_eof(t_env *env, int fd_stdin, int fd_stdout)
 	exit_code = ft_atoi(value_finder(env, "exit_code"));
 	close(fd_stdin);
 	close(fd_stdout);
+	clean_env_list(env);
 	//master_clean needed
 	exit(exit_code);
 }

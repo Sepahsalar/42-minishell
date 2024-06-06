@@ -65,3 +65,7 @@ venv/
 
 # Execution File
 minishell
+
+# Debug Files
+tasks.json
+launch.json
