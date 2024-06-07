@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:59:53 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 20:21:56 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 12:38:58 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,11 @@ int	fill_fd_heredoc(t_cmd **start_cmd)
 			return (1);
 		cmd = cmd->next;
 	}
+	// printf("g_signal: %d\n", g_signal);
 	if (g_signal == HEREDOC)
 		change_mode(RUNNING_COMMAND);
+	// else if (g_signal == HEREDOC_INTERRUPTED)
+	//     change_mode(WAIT_FOR_COMMAND);
+	// printf("g_signal: %d\n", g_signal);
 	return (0);
 }

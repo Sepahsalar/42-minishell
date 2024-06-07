@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_actions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:39:07 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/07 10:49:41 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 12:55:02 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ t_env_pack	running_actions(t_cmd *cmd)
 
 	cmd_counter = cmd_count(cmd);
 	temp_cmd = cmd;
-	while (temp_cmd)
+	env_pack_result = init_env_pack(cmd);
+	while (temp_cmd && g_signal == RUNNING_COMMAND) //check with tests
 	{
 		if (temp_cmd->index == cmd_counter)
-		{
 			env_pack_result = execute_cmd(cmd, temp_cmd);
-		}
 		else
 			execute_cmd(cmd, temp_cmd);
 		temp_cmd = temp_cmd->next;
