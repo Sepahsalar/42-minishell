@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/06 20:24:41 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 09:28:11 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,39 @@ t_env_pack	run_cd_helper(char *full_path, t_cmd *cmd, t_env_pack env_pack)
 	return (env_pack);
 }
 
+int	start_with_double_dot(char *arg)
+{
+	if (!arg || ft_strlen(arg) <= 2)
+		return (0);
+	if (arg[0] == '.' && arg[1] == '.')
+		return (1);
+	return (0);
+}
+
+char	*path_start_with_double_dot(t_cmd *cmd, t_env_pack env_pack)
+{
+	char	*old_pwd;
+	char	*part_one;
+	char	*part_two;
+	char	*full_path;
+
+	old_pwd = value_finder(env_pack.env, "PWD");
+	part_one = sliced_str(old_pwd, 0,
+			(ft_strrchr(old_pwd, '/') - old_pwd));
+	if (part_one == NULL)
+		return (NULL);
+	part_two = sliced_str(cmd->args[1], 2, ft_strlen(cmd->args[1]));
+	if (part_two == NULL)
+	{
+		free(part_one);
+		return (NULL);
+	}
+	full_path = ft_strjoin(part_one, part_two);
+	free(part_one);
+	free(part_two);
+	return (full_path);
+}
+
 t_env_pack	run_cd(t_cmd *cmd)
 {
 	char		*old_pwd;
@@ -116,11 +149,16 @@ t_env_pack	run_cd(t_cmd *cmd)
 			env_pack.original_env = export_original(cmd->original_env, 0);
 			return (env_pack);
 		}
-		else if (same (cmd->args[1], ".."))
+		else if (cmd->args[1] && same (cmd->args[1], ".."))
 		{
 			old_pwd = value_finder(env_pack.env, "PWD");
 			full_path = sliced_str(old_pwd, 0,
 					(ft_strrchr(old_pwd, '/') - old_pwd));
+		}
+		else if (start_with_double_dot(cmd->args[1]))
+		{
+			full_path = path_start_with_double_dot(cmd, env_pack);
+			//protection
 		}
 		else if (cmd->args[1] == NULL)
 			full_path = ft_strdup(value_finder(cmd->original_env, "HOME"));
