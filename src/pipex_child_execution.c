@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils4.c                                     :+:      :+:    :+:   */
+/*   pipex_child_execution.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:59:53 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/06 09:56:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:33:37 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../include/minishell.h"
+
+void	child_process(t_cmd *cmd_start, t_cmd *cmd_execution,
+		t_env_pack env_pack, int fd[2])
+{
+	input_output_open(cmd_start, cmd_execution, env_pack);
+	input_output_redirect(cmd_start, cmd_execution, env_pack, fd);
+	close(fd[0]);
+	close(fd[1]);
+	child_execution(cmd_start, cmd_execution, env_pack);
+}
 
 void	input_output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
 	t_env_pack env_pack, int fd[2])
@@ -19,28 +29,24 @@ void	input_output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
 	output_redirect(cmd_start, cmd_execution, env_pack, fd);
 }
 
-t_env_pack	waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution,
+void	child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 	t_env_pack env_pack)
 {
-	int		status;
-	t_cmd	*temp_cmd;
+	if (cmd_execution->file_error)
+		exit(ft_atoi(env_pack.original_env->value));
+	if (is_builtin(cmd_execution) != -1)
+		builtin_child_execution(cmd_start, cmd_execution, env_pack);
+	else if (is_builtin(cmd_execution) == -1)
+		non_builtin_execution(cmd_start, cmd_execution, env_pack);
+}
 
-	status = 0;
-	close(STDIN_FILENO);
-	waitpid(cmd_execution->pid, &status, 0);
-	temp_cmd = cmd_start;
-	while (temp_cmd != cmd_execution)
-	{
-		waitpid(temp_cmd->pid, NULL, 0);
-		temp_cmd = temp_cmd->next;
-	}
-	if (WIFEXITED(status))
-		status = WEXITSTATUS (status);
-	else if (WIFSIGNALED(status))
-		status = WTERMSIG(status) + 128;
-	env_pack.original_env
-		= export_original(env_pack.original_env, status);
-	return (env_pack);
+void	builtin_child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_env_pack env_pack)
+{
+	(void)cmd_start;
+	cmd_execution->child_builtin = 1;
+	env_pack = run_builtin(cmd_execution);
+	exit(ft_atoi(env_pack.original_env->value));
 }
 
 void	non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
@@ -67,24 +73,4 @@ void	non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 	clean_cmd_list(cmd_start); // added today
 	//master_clean(0, cmd_start->env, cmd_start, -1);
 	run_execve(cmd_address, cmd_args, cmd_env);
-}
-
-void	builtin_child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
-	t_env_pack env_pack)
-{
-	(void)cmd_start;
-	cmd_execution->child_builtin = 1;
-	env_pack = run_builtin(cmd_execution);
-	exit(ft_atoi(env_pack.original_env->value));
-}
-
-void	child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
-	t_env_pack env_pack)
-{
-	if (cmd_execution->file_error)
-		exit(ft_atoi(env_pack.original_env->value));
-	if (is_builtin(cmd_execution) != -1)
-		builtin_child_execution(cmd_start, cmd_execution, env_pack);
-	else if (is_builtin(cmd_execution) == -1)
-		non_builtin_execution(cmd_start, cmd_execution, env_pack);
 }
