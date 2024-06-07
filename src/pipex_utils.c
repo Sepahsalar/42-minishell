@@ -3,108 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 18:44:25 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 11:41:13 by nnourine         ###   ########.fr       */
+/*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/06/07 15:01:07 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../include/minishell.h"
 
-static t_env_pack	output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
-	t_file *temp_file, t_env_pack env_pack)
+t_env_pack	after_child(t_cmd *cmd_start, t_cmd *cmd_execution,
+		t_env_pack env_pack, int fd[2])
 {
-	if (temp_file->trunc)
-		temp_file->fd = open(temp_file->address,
-				O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (temp_file->append)
-		temp_file->fd = open(temp_file->address,
-				O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (temp_file->fd == -1)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(temp_file->address, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errno), 2);
-		master_clean(0, cmd_start->env, cmd_execution, -1);
-		env_pack.original_env
-			= export_original(env_pack.original_env, 1);
-		cmd_execution->file_error = 1;
-	}
+	close(fd[1]);
+	if (cmd_execution->index < cmd_count(cmd_start))
+		dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	if (cmd_execution->index == cmd_count(cmd_start))
+		env_pack = waiting_process(cmd_start, cmd_execution, env_pack);
 	return (env_pack);
 }
 
-static t_env_pack	input_check(t_cmd *cmd_start, t_cmd *cmd_execution,
-	t_file *temp_file, t_env_pack env_pack)
-{
-	if (!temp_file->limiter)
-	{
-		temp_file->fd = open(temp_file->address, O_RDONLY);
-		if (temp_file->fd == -1)
-		{
-			ft_putstr_fd("bash: ", 2);
-			ft_putstr_fd(temp_file->address, 2);
-			ft_putstr_fd(": ", 2);
-			ft_putendl_fd(strerror(errno), 2);
-			master_clean(0, cmd_start->env, cmd_execution, -1);
-			env_pack.original_env
-				= export_original(env_pack.original_env, 1);
-			cmd_execution->file_error = 1;
-		}
-	}
-	return (env_pack);
-}
-
-static t_env_pack	fd_operator_check(t_cmd *cmd_start, t_cmd *cmd_execution,
-	t_file *temp_file, t_env_pack env_pack)
-{
-	char	*fd_operator;
-
-	if (temp_file->fd_operator > RE_DUP_MAX)
-	{
-		env_pack.original_env
-			= export_original(env_pack.original_env, 1);
-		cmd_execution->file_error = 1;
-		ft_putstr_fd("bash: ", 2);
-		if (temp_file->fd_operator <= INT_MAX)
-		{
-			fd_operator = ft_itoa(temp_file->fd_operator);
-			//protection
-			(void)cmd_start;
-			ft_putstr_fd(fd_operator, 2);
-			free(fd_operator);
-		}
-		else
-			ft_putstr_fd("file descriptor out of range", 2);
-		ft_putendl_fd(": Bad file descriptor", 2);
-	}
-	return (env_pack);
-}
-
-t_env_pack	input_output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
+t_env_pack	waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution,
 	t_env_pack env_pack)
 {
-	t_file		*temp_file;
+	int		status;
+	t_cmd	*temp_cmd;
 
-	temp_file = cmd_execution->all;
-	while (temp_file)
+	status = 0;
+	close(STDIN_FILENO);
+	waitpid(cmd_execution->pid, &status, 0);
+	temp_cmd = cmd_start;
+	while (temp_cmd != cmd_execution)
 	{
-		env_pack = fd_operator_check(cmd_start, cmd_execution,
-				temp_file, env_pack);
-		if (cmd_execution->file_error)
-			break ;
-		if (temp_file->input)
-			env_pack = input_check(cmd_start, cmd_execution,
-					temp_file, env_pack);
-		else if (temp_file->trunc || temp_file->append)
-			env_pack = output_check_create(cmd_start, cmd_execution,
-					temp_file, env_pack);
-		if (temp_file->fd == -1)
-			break ;
-		// close(temp_file->fd);
-		temp_file = temp_file->next;
+		waitpid(temp_cmd->pid, NULL, 0);
+		temp_cmd = temp_cmd->next;
 	}
+	if (WIFEXITED(status))
+		status = WEXITSTATUS (status);
+	else if (WIFSIGNALED(status))
+		status = WTERMSIG(status) + 128;
+	env_pack.original_env
+		= export_original(env_pack.original_env, status);
 	return (env_pack);
 }
 
@@ -121,13 +61,27 @@ t_env_pack	empty_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 	return (env_pack);
 }
 
-t_env_pack	cmd_dir(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
+void	run_execve(char *cmd_address, char **cmd_args, char **cmd_env)
 {
-	ft_putstr_fd("bash: ", 2);
-	ft_putstr_fd(cmd_execution->cmd_name, 2);
-	ft_putendl_fd(": is a directory", 2);
-	master_clean(0, cmd_start->env, cmd_execution, -1);
-	env_pack.original_env = export_original(env_pack.original_env, 126);
-	cmd_execution->file_error = 1;
-	return (env_pack);
+	if (execve(cmd_address, cmd_args, cmd_env) == -1)
+	{
+		clean_2d_char(cmd_args);
+		clean_2d_char(cmd_env);
+		if (same (strerror(errno), "Exec format error"))
+		{
+			if (!check_accessibility(cmd_address, 'R'))
+			{
+				ft_putstr_fd("bash: ", 2);
+				ft_putstr_fd(cmd_address, 2);
+				free(cmd_address);
+				ft_putendl_fd(": Permission denied", 2);
+				exit(126);
+			}
+			free(cmd_address);
+			exit(0);
+		}
+		free(cmd_address);
+		perror("bash");
+		exit(1);
+	}
 }

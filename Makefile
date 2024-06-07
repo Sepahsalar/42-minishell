@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/06/07 12:21:48 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/06/07 15:01:22 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,18 +25,32 @@ LIBFT = lib/libft
 
 # Files
 SRCS =  $(SRCDIR)/atoi_file.c \
+		$(SRCDIR)/atol_exit.c \
+		$(SRCDIR)/builtin.c \
+		$(SRCDIR)/cd.c \
+		$(SRCDIR)/change_mode.c \
 		$(SRCDIR)/create_cmd_list.c \
 		$(SRCDIR)/create_env_list.c \
 		$(SRCDIR)/create_file_list.c \
 		$(SRCDIR)/create_raw_cmd.c \
-		$(SRCDIR)/execute_cmd.c \
+		$(SRCDIR)/echo.c \
+		$(SRCDIR)/env.c \
+		$(SRCDIR)/exit.c \
 		$(SRCDIR)/expand_dollar.c \
 		$(SRCDIR)/expand_dollar_utils.c \
 		$(SRCDIR)/expand_dollar_utils2.c \
+		$(SRCDIR)/export.c \
+		$(SRCDIR)/export_utils.c \
+		$(SRCDIR)/export_utils2.c \
+		$(SRCDIR)/export_check.c \
 		$(SRCDIR)/fd_heredoc.c \
 		$(SRCDIR)/fd_heredoc_utils.c \
 		$(SRCDIR)/fill_address_access.c \
+		$(SRCDIR)/fill_args_cmd_list.c \
 		$(SRCDIR)/fill_cmd_list.c \
+		$(SRCDIR)/fill_dollar_list.c \
+		$(SRCDIR)/fill_dollar_list_utils.c \
+		$(SRCDIR)/fill_dollar_list_utils2.c \
 		$(SRCDIR)/fill_env_cmd_list.c \
 		$(SRCDIR)/fill_env_list.c \
 		$(SRCDIR)/fill_file_data.c \
@@ -45,59 +59,45 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 		$(SRCDIR)/fill_files_helper_utils.c \
 		$(SRCDIR)/fill_files_helper_all.c \
 		$(SRCDIR)/fill_index_cmd_list.c \
-		$(SRCDIR)/fill_last_file_utils.c \
 		$(SRCDIR)/fill_last_file.c \
-		$(SRCDIR)/fill_args_cmd_list.c \
-		$(SRCDIR)/fill_dollar_list.c \
-		$(SRCDIR)/fill_dollar_list_utils.c \
-		$(SRCDIR)/fill_dollar_list_utils2.c \
+		$(SRCDIR)/fill_last_file_utils.c \
 		$(SRCDIR)/fill_raw_cmd_list.c \
 		$(SRCDIR)/find_cmd_address.c \
 		$(SRCDIR)/find_cmd_address_utils.c \
+		$(SRCDIR)/ft_remove.c \
+		$(SRCDIR)/handle_dollar.c \
+		$(SRCDIR)/handle_history.c \
+		$(SRCDIR)/handle_quote.c \
+		$(SRCDIR)/handle_quote_utils.c \
+		$(SRCDIR)/init_temp_env.c \
 		$(SRCDIR)/istoken.c \
 		$(SRCDIR)/main.c \
 		$(SRCDIR)/master_clean.c \
+		$(SRCDIR)/pipex.c \
 		$(SRCDIR)/pipex_utils.c \
-		$(SRCDIR)/pipex_utils2.c \
-		$(SRCDIR)/pipex_utils3.c \
-		$(SRCDIR)/pipex_utils4.c \
-		$(SRCDIR)/pipex_utils5.c \
+		$(SRCDIR)/pipex_child_dup_files.c \
+		$(SRCDIR)/pipex_child_execution.c \
+		$(SRCDIR)/pipex_parent_builtin_execution.c \
+		$(SRCDIR)/pipex_check_files.c \
+		$(SRCDIR)/pipex_cmd_errors.c \
+		$(SRCDIR)/pipex_error_actions.c \
+		$(SRCDIR)/pipex_error_actions_utils.c \
+		$(SRCDIR)/pipex_error_handling.c \
+		$(SRCDIR)/pipex_error_handling_utils.c \
+		$(SRCDIR)/pipex_error_handling_utils2.c \
+		$(SRCDIR)/pipex_error_handling_heredoc.c \
+		$(SRCDIR)/pipex_execute_actions.c \
+		$(SRCDIR)/pwd.c \
 		$(SRCDIR)/recreate_2d_env.c \
-		$(SRCDIR)/run_execve.c \
+		$(SRCDIR)/signal_handler.c \
 		$(SRCDIR)/split_pipex.c \
 		$(SRCDIR)/split_pipex_utils.c \
 		$(SRCDIR)/split_pipex_utils2.c \
+		$(SRCDIR)/unset.c \
 		$(SRCDIR)/utility1.c \
 		$(SRCDIR)/utility2.c \
 		$(SRCDIR)/utility3.c \
 		$(SRCDIR)/utility4.c \
-		$(SRCDIR)/handle_quote.c \
-		$(SRCDIR)/handle_quote_utils.c \
-		$(SRCDIR)/handle_dollar.c \
-		$(SRCDIR)/builtin.c \
-		$(SRCDIR)/env.c \
-		$(SRCDIR)/export.c \
-		$(SRCDIR)/export_utils.c \
-		$(SRCDIR)/export_utils2.c \
-		$(SRCDIR)/unset.c \
-		$(SRCDIR)/pwd.c \
-		$(SRCDIR)/init_temp_env.c \
-		$(SRCDIR)/cd.c \
-		$(SRCDIR)/echo.c \
-		$(SRCDIR)/exit.c \
-		$(SRCDIR)/atol_exit.c \
-		$(SRCDIR)/error_handling.c \
-		$(SRCDIR)/export_check.c \
-		$(SRCDIR)/change_mode.c \
-		$(SRCDIR)/error_actions.c \
-		$(SRCDIR)/error_actions_utils.c \
-		$(SRCDIR)/execute_actions.c \
-		$(SRCDIR)/error_handling_utils.c \
-		$(SRCDIR)/error_handling_utils2.c \
-		$(SRCDIR)/error_handling_heredoc.c \
-		$(SRCDIR)/ft_remove.c \
-		$(SRCDIR)/handle_history.c \
-		$(SRCDIR)/signal_handler.c \
 		
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
