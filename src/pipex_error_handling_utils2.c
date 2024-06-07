@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handling_utils2.c                            :+:      :+:    :+:   */
+/*   pipex_error_handling_utils2.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 10:55:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/06 12:31:09 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:37:33 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	not_handling(char *token)
 		|| same(token, "||") || same(token, "*") || same(token, ";")
 		|| same(token, "&") || same(token, "(") || same(token, ")")
 		|| same(token, "<>") || same(token, "{") || same(token, "}")
-		|| same(token, "[") || same(token, "]"));
+		|| same(token, "[") || same(token, "]") || same(token, ":"));
 }
 
 static t_error	init_error(void)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_actions.c                                  :+:      :+:    :+:   */
+/*   pipex_execute_actions.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:39:07 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/07 12:55:02 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:52:30 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_env_pack	running_actions(t_cmd *cmd)
 	cmd_counter = cmd_count(cmd);
 	temp_cmd = cmd;
 	env_pack_result = init_env_pack(cmd);
-	while (temp_cmd && g_signal == RUNNING_COMMAND) //check with tests
+	while (temp_cmd && g_signal == RUNNING_COMMAND)
 	{
 		if (temp_cmd->index == cmd_counter)
 			env_pack_result = execute_cmd(cmd, temp_cmd);
@@ -60,10 +60,7 @@ void	del_herdoc_files(t_cmd *cmd)
 		while (temp_file)
 		{
 			if (temp_file->limiter)
-			{
-				close(temp_file->fd); //maybe double close
 				unlink(temp_file->address);
-			}
 			temp_file = temp_file->next;
 		}
 		temp_cmd = temp_cmd->next;
@@ -79,10 +76,12 @@ t_env_pack	execute_actions(char *raw_line, t_env_pack env_pack)
 	env_pack_result = env_pack;
 	change_mode(RUNNING_COMMAND);
 	raw_cmd = create_raw_cmd(raw_line);
+	
 	cmd = fill_cmd_list(raw_cmd, env_pack.env, env_pack.original_env);
+	clean_2d_char(raw_cmd);
 	master_clean(raw_cmd, 0, 0, -1);
 	env_pack_result = running_actions(cmd);
 	del_herdoc_files(cmd);
-	clean_cmd_list(cmd); //added today
+	clean_cmd_list(cmd);
 	return (env_pack_result);
 }

@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 15:01:07 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:47:26 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,27 @@ void	run_execve(char *cmd_address, char **cmd_args, char **cmd_env)
 		free(cmd_address);
 		perror("bash");
 		exit(1);
+	}
+}
+
+void	close_all(t_cmd *cmd)
+{
+	t_file	*temp_file;
+
+	temp_file = cmd->output;
+	while (temp_file)
+	{
+		if (temp_file->fd > 2)
+			close(temp_file->fd);
+		temp_file->fd = -2;
+		temp_file = temp_file->next;
+	}
+	temp_file = cmd->input;
+	while (temp_file)
+	{
+		if (temp_file->fd > 2)
+			close(temp_file->fd);
+		temp_file->fd = -2;
+		temp_file = temp_file->next;
 	}
 }

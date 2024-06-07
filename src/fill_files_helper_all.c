@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_files_helper_all.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:26:17 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 09:59:25 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:56:24 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,10 @@ int	handle_hd_all(t_cmd *cmd, t_file **file)
 		//protection
 		hd = remove_update_all(hd);
 		//failiure return 1
-		
 		hd->file = hd->file->next;
 	}
-	free(hd->str); // added today
-	free(hd); // added today
+	free(hd->str);
+	free(hd);
 	return (0);
 }
 

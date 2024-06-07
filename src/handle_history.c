@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_history.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:29:05 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/06 20:26:57 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:24:55 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	load_history(char *root)
 	int		fd_history;
 	char	*line;
 	char	*temp;
-	char *address;
+	char	*address;
 
 	address = ft_strjoin(root, "/.history");
 
