@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:07:14 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/06 09:46:31 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:00:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	clean_cmd_node(t_cmd *node)
 		if (node->last_out)
 			clean_last_file_list(node->last_out);
 		if (node->last_in)
-			clean_last_file_list(node->last_out);
-		// all and std_error added today
+			clean_last_file_list(node->last_in);
+		// // all and std_error added today
 		if (node->all)
 			clean_file_list(node->all);
 		if (node->std_error)
