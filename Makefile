@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
+#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/06/06 20:26:10 by nnourine         ###   ########.fr        #
+#    Updated: 2024/06/07 12:21:48 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,6 +137,7 @@ clean:
 fclean:
 	@$(RM) -r $(OBJDIR)
 	@$(RM) $(NAME)
+	@$(RM) .history
 	@$(MAKE) -C $(LIBFT) fclean
 	@echo "$(COLOR)Full clean: done$(RESET_COLOR)"
 

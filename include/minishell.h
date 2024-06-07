@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/07 11:40:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 12:29:15 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 # define ANSI_COLOR_GREEN "\001\x1b[32m\002"
 # define ANSI_COLOR_RESET "\001\x1b[0m\002"
-// # define ANSI_MOVE_UP "\033[1A"
+# define ANSI_MOVE_UP "\033[1A"
 // # define ANSI_SAVE_CURSOR "\033[s"
 // # define ANSI_RESTORE_CURSOR "\033[u"
 // # define ANSI_MOVE_TO_END "\033[K"
@@ -198,11 +198,11 @@ typedef struct s_file_helper
 	t_file	*old;
 }			t_file_helper;
 
-typedef struct s_signal
-{
-	struct sigaction	sig_int;
-	struct sigaction	sig_quit;
-}						t_signal;
+// typedef struct s_signal
+// {
+// 	struct sigaction	sig_int;
+// 	struct sigaction	sig_quit;
+// }						t_signal;
 
 void			rl_replace_line(const char *text, int clear_undo);
 void			rl_clear_history(void);
@@ -393,7 +393,7 @@ void			update_sq_dq_file(char *str, t_file_helper *fh);
 int				need_update_sq_dq(char *str, t_file_helper fh);
 void			save_history(char *raw_line, char *root);
 void			load_history(char *root);
-t_signal		apply_custom_signal_handler(void);
+void			apply_custom_signal_handler(void);
 
 
 #endif //MINISHELL_H
