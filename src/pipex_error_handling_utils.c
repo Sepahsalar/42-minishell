@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handling_utils.c                             :+:      :+:    :+:   */
+/*   pipex_error_handling_utils.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:22:09 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/06 12:40:25 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:54:20 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**init_token(void)
 {
 	char	**token;
 
-	token = (char **)malloc(20 * sizeof(char *));
+	token = (char **)malloc(21 * sizeof(char *));
 	token[0] = "||";
 	token[1] = "<>";
 	token[2] = "<<<";
@@ -43,7 +43,8 @@ char	**init_token(void)
 	token[16] = "}";
 	token[17] = "[";
 	token[18] = "]";
-	token[19] = NULL;
+	token[19] = ":";
+	token[20] = NULL;
 	return (token);
 }
 
@@ -51,7 +52,7 @@ char	*find_token(char *cur)
 {
 	char	**token;
 	int		index;
-	char    *res;
+	char	*res;
 
 	token = init_token();
 	//protection
@@ -95,7 +96,7 @@ char	*change_token(char *token, char *cur, int *index, int sq_dq)
 		if (new_token)
 		{
 			if (token)
-				free(token); //
+				free(token);
 			*index = *index + ft_strlen(new_token);
 			return (new_token);
 		}
@@ -105,7 +106,7 @@ char	*change_token(char *token, char *cur, int *index, int sq_dq)
 			if (*cur != ' ')
 			{
 				if (token)
-					free(token); //
+					free(token);
 				return (NULL);
 			}
 			else
@@ -115,7 +116,7 @@ char	*change_token(char *token, char *cur, int *index, int sq_dq)
 	else
 	{
 		if (token)
-			free(token); //
+			free(token);
 		*index = *index + 1;
 		return (NULL);
 	}

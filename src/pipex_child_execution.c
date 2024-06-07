@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:59:53 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 14:33:37 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:55:34 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	child_process(t_cmd *cmd_start, t_cmd *cmd_execution,
 	input_output_redirect(cmd_start, cmd_execution, env_pack, fd);
 	close(fd[0]);
 	close(fd[1]);
+	close_all(cmd_execution);
 	child_execution(cmd_start, cmd_execution, env_pack);
 }
 
@@ -64,13 +65,13 @@ void	non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 		free(cmd_address);
 		clean_2d_char(cmd_args);
 		clean_2d_char(cmd_env);
-		clean_cmd_list(cmd_start); // added today
-		clean_env_list(cmd_execution->env); // added today
-		clean_env_list(cmd_execution->original_env); // added today
+		clean_cmd_list(cmd_start);
+		clean_env_list(cmd_execution->env);
+		clean_env_list(cmd_execution->original_env);
 		master_clean(0, cmd_start->env, cmd_start, 1);
 		exit(1);
 	}
-	clean_cmd_list(cmd_start); // added today
+	clean_cmd_list(cmd_start);
 	//master_clean(0, cmd_start->env, cmd_start, -1);
 	run_execve(cmd_address, cmd_args, cmd_env);
 }

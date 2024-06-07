@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:49:01 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/06 20:36:11 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:56:40 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,12 @@ t_env_pack	run_exit(t_cmd *cmd)
 	return (env_pack);
 }
 
-void	run_exit_eof(t_env *env, int fd_stdin, int fd_stdout)
+void	run_exit_eof(t_env *env)
 {
 	int	exit_code;
 
 	printf(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ exit\n");
 	exit_code = ft_atoi(value_finder(env, "exit_code"));
-	close(fd_stdin);
-	close(fd_stdout);
 	clean_env_list(env);
 	//master_clean needed
 	exit(exit_code);

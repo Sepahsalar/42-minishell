@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:08:29 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 12:33:16 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:54:58 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,16 @@ int	len_helper(const char *s)
 	j = 0;
 	if (*s == 34)
 	{
+		if (s[j + 1] == 34)
+			return (1);
 		while (s[j + 1] && ((s[j + 1] != 34)
 				|| (s[j + 2] && s[j + 1] == 34 && s[j + 2] != ' ')))
 			j++;
 	}
 	else
 	{
+		if (s[j + 1] == 39)
+			return (1);
 		while (s[j + 1] && ((s[j + 1] != 39)
 				|| (s[j + 2] && s[j + 1] == 39 && s[j + 2] != ' ')))
 			j++;
@@ -82,12 +86,16 @@ int	len_helper_pipe(const char *s)
 	j = 0;
 	if (*s == 34)
 	{
+		if (s[j + 1] == 34)
+			return (1);
 		while (s[j + 1] && ((s[j + 1] != 34)
 				|| (s[j + 2] && s[j + 1] == 34 && s[j + 2] != '|')))
 			j++;
 	}
 	else
 	{
+		if (s[j + 1] == 39)
+			return (1);
 		while (s[j + 1] && ((s[j + 1] != 39)
 				|| (s[j + 2] && s[j + 1] == 39 && s[j + 2] != '|')))
 			j++;

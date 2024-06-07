@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_builtin_execution_parent.c                   :+:      :+:    :+:   */
+/*   pipex_parent_builtin_execution.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:55:39 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 14:33:23 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:53:14 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_env_pack	parent_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 	input_output_open(cmd_start, cmd_execution, env_pack);
 	output_redirect_builtin(cmd_start, cmd_execution, env_pack);
 	env_pack = run_builtin(cmd_execution);
+	close_all(cmd_execution);
 	//close input output files
 	//full clean 
 	//current master
@@ -60,14 +61,6 @@ void	output_redirect_builtin_helper(t_cmd *cmd_start,
 	last_output = last->file;
 	if (last_output->fd_operator <= 2)
 	{
-		// if (last_output->trunc)
-		// 	last_output->fd = open(last_output->address,
-		// 			O_WRONLY | O_TRUNC, 0644);
-		// else if (last_output->append)
-		// 	last_output->fd = open(last_output->address,
-		// 			O_WRONLY | O_APPEND, 0644);
-		// if (last_output->fd == -1)
-		// 	master_clean(0, cmd_start->env, cmd_execution, 1);
 		if (dup2(last_output->fd,
 				last_output->fd_operator) == -1)
 			master_clean(0, cmd_start->env, cmd_execution, 1);

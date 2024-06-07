@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:13:23 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/05 11:15:21 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:26:49 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static int	it_is_var(char *find, int len_var)
 {
 	if (find[len_var] && find[len_var] != ' '
 		&& find[len_var] != '\"' && find[len_var] != '\''
-		&& find[len_var] != '?' && find[len_var] != '=')
+		&& find[len_var] != '?' && find[len_var] != '='
+		&& find[len_var] != '$')
 		return (1);
 	return (0);
 }

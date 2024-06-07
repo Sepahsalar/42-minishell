@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/07 15:00:15 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:04:41 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@
 # define ANSI_COLOR_GREEN "\001\x1b[32m\002"
 # define ANSI_COLOR_RESET "\001\x1b[0m\002"
 # define ANSI_MOVE_UP "\033[1A"
-// # define ANSI_SAVE_CURSOR "\033[s"
-// # define ANSI_RESTORE_CURSOR "\033[u"
-// # define ANSI_MOVE_TO_END "\033[K"
-// # define ANSI_MOVE_LEFT "\033[8D"
-// # define ANSI_MOVE_RIGHT "\033[C"
 
 # define WAIT_FOR_COMMAND 10
 # define HEREDOC 20
@@ -198,12 +193,6 @@ typedef struct s_file_helper
 	t_file	*old;
 }			t_file_helper;
 
-// typedef struct s_signal
-// {
-// 	struct sigaction	sig_int;
-// 	struct sigaction	sig_quit;
-// }						t_signal;
-
 void			rl_replace_line(const char *text, int clear_undo);
 void			rl_clear_history(void);
 void			clean_2d_char(char **array);
@@ -216,10 +205,9 @@ int				fill_raw_cmd_list(t_cmd **cmd, char **raw_cmd);
 void			fill_index_cmd_list(t_cmd **cmd);
 char			*strdup_modified(char *s, char *token);
 char			*ft_remove(char *str, char *del, t_file *file);
-void			master_clean(char **raw_cmd,
-					t_env *env, t_cmd *cmd, int exit_value);
+void			master_clean(char **raw_cmd, t_cmd *cmd,
+					int exit_value);
 t_cmd			*fill_cmd_list(char **raw_cmd, t_env *env, t_env *original_env);
-// t_env			*clean_env_list(t_env *first);
 void			clean_env_list(t_env *first);
 t_env			*create_env_list(int total_number);
 t_env			*fill_env_list(char **envp);
@@ -296,7 +284,7 @@ t_env			*custom_export(t_env *env, char *key, char *value);
 t_env_pack		run_echo(t_cmd *cmd);
 t_env_pack		run_exit(t_cmd *cmd);
 t_atol			atol_exit(char *str);
-void			run_exit_eof(t_env *env, int fd_stdin, int fd_stdout);
+void			run_exit_eof(t_env *env);
 t_error			find_error(char *line);
 char			*find_token(char *cur);
 char			*change_token(char *token, char *cur, int *index, int sq_dq);
@@ -404,7 +392,6 @@ void			update_sq_dq_file(char *str, t_file_helper *fh);
 int				need_update_sq_dq(char *str, t_file_helper fh);
 void			save_history(char *raw_line, char *root);
 void			load_history(char *root);
-void			apply_custom_signal_handler(void);
 t_env_pack		fd_operator_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_file *temp_file, t_env_pack env_pack);
 t_env_pack		input_check(t_cmd *cmd_start, t_cmd *cmd_execution,
@@ -415,5 +402,6 @@ t_env_pack		cmd_permission(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
 t_env_pack		cmd_not_found(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
+void			close_all(t_cmd *cmd);
 
 #endif //MINISHELL_H

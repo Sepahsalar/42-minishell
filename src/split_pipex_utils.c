@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:15:02 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/04 12:31:08 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:52:53 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,10 @@ int	len_quote_pipe(const char *s, char ch)
 			j--;
 	}
 	else
+	{
 		j = len_helper_pipe(s);
+		// if (*s == *(s + 1))
+		// 	return (j);
+	}
 	return (j + 1);
 }
