@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/07 09:28:11 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:31:42 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ t_env_pack	run_cd(t_cmd *cmd)
 			env_pack.original_env = export_original(cmd->original_env, 0);
 			return (env_pack);
 		}
-		else if (cmd->args[1] && same (cmd->args[1], ".."))
+		else if (cmd->args[1] && same(cmd->args[1], ".."))
 		{
 			old_pwd = value_finder(env_pack.env, "PWD");
 			full_path = sliced_str(old_pwd, 0,
