@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/06 20:43:24 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:27:17 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout)
 void	minishell_process(t_env_pack env_pack, int fd_stdin,
 				int fd_stdout, char *root)
 {
-	char	*raw_line;
+	char		*raw_line;
+	t_signal	old_signal;
+
+	old_signal = apply_custom_signal_handler();
 
 	while (1)
 	{
@@ -47,6 +50,8 @@ void	minishell_process(t_env_pack env_pack, int fd_stdin,
 		raw_line = readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
 		if (!raw_line)
 		{
+			sigaction(SIGINT, &old_signal.sig_int, NULL);
+			sigaction(SIGQUIT, &old_signal.sig_quit, NULL);
 			clean_env_list(env_pack.env);
 			free(root);
 			run_exit_eof(env_pack.original_env, fd_stdin, fd_stdout);
@@ -84,7 +89,7 @@ int	main(int argc, char **argv, char **envp)
 	fd_stdout = dup(STDOUT_FILENO);
 	env_pack = env_pack_at_start(envp, fd_stdin, fd_stdout);
 	load_history(root);
-	apply_custom_signal_handler();
+	// apply_custom_signal_handler();
 	minishell_process(env_pack, fd_stdin, fd_stdout, root);
 	//we messed up with system signals, we should fix it
 	close(fd_stdin);

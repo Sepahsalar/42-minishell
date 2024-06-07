@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:55:39 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 18:59:02 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:59:00 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ static void	output_redirect_helper(t_cmd *cmd_start, t_cmd *cmd_execution,
 	last = cmd_execution->last_out;
 	while (last && last->file->fd_operator != 1)
 		last = last->next;
-	if (!last || last->file->fd_operator != 1)
+	//should be done with cautious
+	if ((!last || last->file->fd_operator != 1)
+		&& (cmd_count(cmd_start) > cmd_execution->index))
 		dup2(fd[1], STDOUT_FILENO);
 }
 
