@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/06 20:26:05 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:18:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <readline/history.h>
 # include <sys/stat.h>
 # include <sys/ioctl.h>
+# include <limits.h> //maybe it is also somewhere else
 
 # define ANSI_COLOR_GREEN "\001\x1b[32m\002"
 # define ANSI_COLOR_RESET "\001\x1b[0m\002"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:44:25 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/04 13:15:11 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:30:04 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,32 @@ static t_env_pack	input_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 	return (env_pack);
 }
 
+static t_env_pack	fd_operator_check(t_cmd *cmd_start, t_cmd *cmd_execution,
+	t_file *temp_file, t_env_pack env_pack)
+{
+	char	*fd_operator;
+
+	if (temp_file->fd_operator >= OPEN_MAX)
+	{
+		env_pack.original_env
+			= export_original(env_pack.original_env, 1);
+		cmd_execution->file_error = 1;
+		ft_putstr_fd("bash: ", 2);
+		if (temp_file->fd_operator <= INT_MAX)
+		{
+			fd_operator = ft_itoa(temp_file->fd_operator);
+			//protection
+			(void)cmd_start;
+			ft_putstr_fd(fd_operator, 2);
+			free(fd_operator);
+		}
+		else
+			ft_putstr_fd("file descriptor out of range", 2);
+		ft_putendl_fd(": Bad file descriptor", 2);
+	}
+	return (env_pack);
+}
+
 t_env_pack	input_output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
 	t_env_pack env_pack)
 {
@@ -64,6 +90,10 @@ t_env_pack	input_output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
 	temp_file = cmd_execution->all;
 	while (temp_file)
 	{
+		env_pack = fd_operator_check(cmd_start, cmd_execution,
+				temp_file, env_pack);
+		if (cmd_execution->file_error)
+			break ;
 		if (temp_file->input)
 			env_pack = input_check(cmd_start, cmd_execution,
 					temp_file, env_pack);

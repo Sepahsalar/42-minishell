@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:09:24 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/06 17:35:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:43:17 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ char	*get_current_pid(t_env *original_env)
 	execute_all(raw_line, env_pack);
 	fd = open(".pid", O_RDONLY);
 	pid_str = get_next_line(fd);
-	pid_str[ft_strlen(pid_str) - 1] = '\0';
+	//if (pid_str && ft_strlen(pid_str) > 1) i added this because debuger complained. should we prtotect it?
+	if (pid_str && ft_strlen(pid_str) > 1)
+		pid_str[ft_strlen(pid_str) - 1] = '\0';
 	close(fd);
 	unlink(".pid");
 	clean_env_list(cpy);
