@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:29:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 18:30:11 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:39:18 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	fill_files(t_cmd **cmd, char *token)
 	temp = *cmd;
 	while (temp)
 	{
-		if (fill_files_helper(temp->current, token, temp))
+		if (temp && fill_files_helper(temp->current, token, temp))
 			return (1);
 		temp = temp->next;
 	}

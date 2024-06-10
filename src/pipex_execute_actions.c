@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:39:07 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/10 18:54:31 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:44:18 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ t_env_pack	execute_actions(char *raw_line, t_env_pack env_pack)
 	
 	cmd = fill_cmd_list(raw_cmd, env_pack.env, env_pack.original_env);
 	clean_2d_char(raw_cmd);
-	master_clean(raw_cmd, 0, -1);
 	env_pack_result = running_actions(cmd);
 	del_herdoc_files(cmd);
 	clean_cmd_list(cmd);

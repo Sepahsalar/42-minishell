@@ -5,152 +5,116 @@
 #                                                     +:+ +:+         +:+      #
 #    By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/06/10 19:45:21 by asohrabi         ###   ########.fr        #
+#    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
+#    Updated: 2024/06/10 20:46:30 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Color
-COLOR = \033[0;34m
-RESET_COLOR = \033[0m
-
-# Executable name
 NAME = minishell
 
-# Directories
-SRCDIR = src
-OBJDIR = obj
-INCDIR = include
-LIBFT = lib/libft
+HEADER	= -I ./include
 
-# Files
-SRCS =  $(SRCDIR)/atoi_file.c \
-		$(SRCDIR)/atol_exit.c \
-		$(SRCDIR)/builtin.c \
-		$(SRCDIR)/cd.c \
-		$(SRCDIR)/change_mode.c \
-		$(SRCDIR)/create_cmd_list.c \
-		$(SRCDIR)/create_env_list.c \
-		$(SRCDIR)/create_file_list.c \
-		$(SRCDIR)/create_raw_cmd.c \
-		$(SRCDIR)/echo.c \
-		$(SRCDIR)/env.c \
-		$(SRCDIR)/exit.c \
-		$(SRCDIR)/expand_dollar.c \
-		$(SRCDIR)/expand_dollar_utils.c \
-		$(SRCDIR)/expand_dollar_utils2.c \
-		$(SRCDIR)/export.c \
-		$(SRCDIR)/export_utils.c \
-		$(SRCDIR)/export_utils2.c \
-		$(SRCDIR)/export_check.c \
-		$(SRCDIR)/fd_heredoc.c \
-		$(SRCDIR)/fd_heredoc_utils.c \
-		$(SRCDIR)/fill_address_access.c \
-		$(SRCDIR)/fill_args_cmd_list.c \
-		$(SRCDIR)/fill_cmd_list.c \
-		$(SRCDIR)/fill_dollar_list.c \
-		$(SRCDIR)/fill_dollar_list_utils.c \
-		$(SRCDIR)/fill_dollar_list_utils2.c \
-		$(SRCDIR)/fill_env_cmd_list.c \
-		$(SRCDIR)/fill_env_list.c \
-		$(SRCDIR)/fill_file_data.c \
-		$(SRCDIR)/fill_files.c \
-		$(SRCDIR)/fill_files_helper.c \
-		$(SRCDIR)/fill_files_helper_utils.c \
-		$(SRCDIR)/fill_files_helper_all.c \
-		$(SRCDIR)/fill_index_cmd_list.c \
-		$(SRCDIR)/fill_last_file.c \
-		$(SRCDIR)/fill_last_file_utils.c \
-		$(SRCDIR)/fill_raw_cmd_list.c \
-		$(SRCDIR)/find_cmd_address.c \
-		$(SRCDIR)/find_cmd_address_utils.c \
-		$(SRCDIR)/ft_remove.c \
-		$(SRCDIR)/handle_dollar.c \
-		$(SRCDIR)/handle_history.c \
-		$(SRCDIR)/handle_quote.c \
-		$(SRCDIR)/handle_quote_utils.c \
-		$(SRCDIR)/init_temp_env.c \
-		$(SRCDIR)/istoken.c \
-		$(SRCDIR)/main.c \
-		$(SRCDIR)/master_clean.c \
-		$(SRCDIR)/pipex.c \
-		$(SRCDIR)/pipex_utils.c \
-		$(SRCDIR)/pipex_child_dup_files.c \
-		$(SRCDIR)/pipex_child_execution.c \
-		$(SRCDIR)/pipex_parent_builtin_execution.c \
-		$(SRCDIR)/pipex_check_files.c \
-		$(SRCDIR)/pipex_cmd_errors.c \
-		$(SRCDIR)/pipex_error_actions.c \
-		$(SRCDIR)/pipex_error_actions_utils.c \
-		$(SRCDIR)/pipex_error_handling.c \
-		$(SRCDIR)/pipex_error_handling_utils.c \
-		$(SRCDIR)/pipex_error_handling_utils2.c \
-		$(SRCDIR)/pipex_error_handling_heredoc.c \
-		$(SRCDIR)/pipex_execute_actions.c \
-		$(SRCDIR)/pwd.c \
-		$(SRCDIR)/recreate_2d_env.c \
-		$(SRCDIR)/signal_handler.c \
-		$(SRCDIR)/split_pipex.c \
-		$(SRCDIR)/split_pipex_utils.c \
-		$(SRCDIR)/split_pipex_utils2.c \
-		$(SRCDIR)/unset.c \
-		$(SRCDIR)/utility1.c \
-		$(SRCDIR)/utility2.c \
-		$(SRCDIR)/utility3.c \
-		$(SRCDIR)/utility4.c \
-		
-OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+# FUNC =  srcs/check_args.c srcs/ft_sort.c srcs/ft_atoi_m.c srcs/cal_rotate.c \
+# 			srcs/ft_sort_utils.c srcs/apply_rr_rrr.c  srcs/apply_rarrb_rrarb.c \
+# 			srcs/list_utils.c srcs/parse_args.c srcs/rules_a.c srcs/rules_b.c \
+# 			srcs/rules_both.c srcs/cal_push.c srcs/main.c \
 
-# Compiler and flags
-CC = cc
-RM = rm -f
-CFLAGS = -Wall -Wextra -Werror
-GENERAL_LIB_FLAGS = -L$(LIBFT) -lft
-ADDRESS_SANITIZE = -fsanitize=address
-LLDB = -g
-READLINE = -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
+FUNC =  src/atoi_file.c \
+		src/atol_exit.c \
+		src/builtin.c \
+		src/cd.c \
+		src/change_mode.c \
+		src/create_cmd_list.c \
+		src/create_env_list.c \
+		src/create_file_list.c \
+		src/create_raw_cmd.c \
+		src/echo.c \
+		src/env.c \
+		src/exit.c \
+		src/expand_dollar.c \
+		src/expand_dollar_utils.c \
+		src/expand_dollar_utils2.c \
+		src/export.c \
+		src/export_utils.c \
+		src/export_utils2.c \
+		src/export_check.c \
+		src/fd_heredoc.c \
+		src/fd_heredoc_utils.c \
+		src/fill_address_access.c \
+		src/fill_args_cmd_list.c \
+		src/fill_cmd_list.c \
+		src/fill_dollar_list.c \
+		src/fill_dollar_list_utils.c \
+		src/fill_dollar_list_utils2.c \
+		src/fill_env_cmd_list.c \
+		src/fill_env_list.c \
+		src/fill_file_data.c \
+		src/fill_files.c \
+		src/fill_files_helper.c \
+		src/fill_files_helper_utils.c \
+		src/fill_files_helper_all.c \
+		src/fill_index_cmd_list.c \
+		src/fill_last_file.c \
+		src/fill_last_file_utils.c \
+		src/fill_raw_cmd_list.c \
+		src/find_cmd_address.c \
+		src/find_cmd_address_utils.c \
+		src/ft_remove.c \
+		src/handle_dollar.c \
+		src/handle_history.c \
+		src/handle_quote.c \
+		src/handle_quote_utils.c \
+		src/init_temp_env.c \
+		src/istoken.c \
+		src/main.c \
+		src/master_clean.c \
+		src/pipex.c \
+		src/pipex_utils.c \
+		src/pipex_child_dup_files.c \
+		src/pipex_child_execution.c \
+		src/pipex_parent_builtin_execution.c \
+		src/pipex_check_files.c \
+		src/pipex_cmd_errors.c \
+		src/pipex_error_actions.c \
+		src/pipex_error_actions_utils.c \
+		src/pipex_error_handling.c \
+		src/pipex_error_handling_utils.c \
+		src/pipex_error_handling_utils2.c \
+		src/pipex_error_handling_heredoc.c \
+		src/pipex_execute_actions.c \
+		src/pwd.c \
+		src/recreate_2d_env.c \
+		src/signal_handler.c \
+		src/split_pipex.c \
+		src/split_pipex_utils.c \
+		src/split_pipex_utils2.c \
+		src/unset.c \
+		src/utility1.c \
+		src/utility2.c \
+		src/utility3.c \
+		src/utility4.c \
 
-# Phony targets
-.PHONY: all clean fclean re address lldb
+OBJ = ${FUNC:.c=.o}
 
-# Default target
-all: $(NAME)
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
-# Linking
-$(NAME): $(OBJS)
-	@$(MAKE) -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(GENERAL_LIB_FLAGS) $(READLINE) $(OBJS) -o $@
-	@echo "$(COLOR)Compiling and linking: done$(RESET_COLOR)"
+%.o: %.c
+	@cc ${CFLAGS} ${HEADER} -c $< -o $@
 
-# Compiling
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@mkdir -p $(OBJDIR)
-	@$(CC) $(CFLAGS) -I$(INCDIR) -c $< -o $@
+all: ${NAME}
 
-# Clean-up
+${NAME}: ${OBJ}
+	@make -C ./lib/libft
+	@cc ${CFLAGS} ${OBJ} -L./lib/libft -lft ${HEADER} -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include -o ${NAME}
+
 clean:
-	@$(RM) -r $(OBJDIR)
-	@$(MAKE) -C $(LIBFT) clean
-	@echo "$(COLOR)Clean-up: done$(RESET_COLOR)"
+	@rm -f ${OBJ} ${OBJ_BONUS}
+	@make clean -C ./lib/libft
 
-# Full clean
-fclean:
-	@$(RM) -r $(OBJDIR)
-	@$(RM) $(NAME)
-	@$(RM) .history
-	@$(MAKE) -C $(LIBFT) fclean
-	@echo "$(COLOR)Full clean: done$(RESET_COLOR)"
+fclean: clean
+	@rm -f ${NAME}
+	@make fclean -C ./lib/libft
 
-# Recompile
 re: fclean all
 
-# Address sanitizer
-address: fclean
-address: CFLAGS += $(ADDRESS_SANITIZE)
-address: all
-
-# LLDB
-lldb: fclean
-lldb: CFLAGS += $(LLDB)
-lldb: CC = clang
-lldb: all
+.PHONY: all, clean, fclean, re

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_files_helper_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:22:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 17:34:39 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:41:17 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ t_file_helper	init_file_helper(char *str)
 
 int	need_update_sq_dq(char *str, t_file_helper fh)
 {
-	if (str[fh.index] == '\'' || str[fh.index] == '\"')
+	if (str && str[fh.index] && fh.index < (int)ft_strlen(str)
+		&& (str[fh.index] == '\'' || str[fh.index] == '\"'))
 		return (1);
 	return (0);
 }
