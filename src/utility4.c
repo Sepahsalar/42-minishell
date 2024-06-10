@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:21:36 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/10 21:36:48 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:51:03 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ t_hd_file	*remove_update_all(t_hd_file *hd)
 		hd->file->input = 1;
 		hd->file->raw = strdup_modified(temp_str, "<");
 	}
+	if (hd && hd->file && !hd->file->raw)
+		return (0);
 	// if (hd && hd->file && !hd->file->raw)
 	// 	return (0);
 	return (hd);
@@ -67,19 +69,19 @@ static t_hd_file	*remove_update_con(t_hd_file *hd, char *ch, char *temp_str)
 	else if (*ch == '<' && *(temp_str + 1) == '<')
 	{
 		temp_str2 = strdup_modified(temp_str, "<<");
-		// if (!temp_str2)
-		// 	return (0);
+		if (!temp_str2)
+			return (0);
 		hd->file->limiter = handling_quote(temp_str2);
-		// if (!hd->file->limiter)
-		// 	return (0);
+		if (!hd->file->limiter)
+			return (0);
 		free(temp_str2);
 		temp_str++;
 	}
 	else if (*ch == '<')
 		hd->file->input = 1;
 	hd->file->raw = strdup_modified(temp_str, ch);
-	// if (!hd->file->raw)
-	// 	return (0);
+	if (!hd->file->raw)
+		return (0);
 	return (hd);
 }
 
@@ -89,8 +91,6 @@ static t_hd_file	*fd_operator(t_hd_file *hd, char *ch)
 		hd->file->fd_operator = atoi_file(&(hd->str), hd->file->place, 1);
 	else if (*ch == '<')
 		hd->file->fd_operator = atoi_file(&(hd->str), hd->file->place, 0);
-	// if (!hd->file->fd_operator)
-	// 	return (0);
 	return (hd);
 }
 
@@ -102,8 +102,6 @@ t_hd_file	*remove_update(t_hd_file *hd, char *ch)
 
 	len = ft_strlen(hd->str);
 	hd = fd_operator(hd, ch);
-	// if (!hd)
-	// 	return (0);
 	hd->file->place = hd->file->place + ft_strlen(hd->str) - len;
 	temp_str = hd->str + hd->file->place;
 	file = hd->file->next;
