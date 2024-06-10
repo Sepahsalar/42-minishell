@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/10 19:33:17 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:45:10 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define HEREDOC_INTERRUPTED 30
 # define RUNNING_COMMAND 0
 
-extern	int g_signal;
+extern	volatile int g_signal;
 
 typedef struct s_file
 {
