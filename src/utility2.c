@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:04:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 18:29:21 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:27:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ int	check_accessibility(char *address, char mode)
 	else
 	{
 		result = stat(address, &buf);
-		//protection
-		result = 1; //make it better
+		if (result == -1)
+			return (result);
+		result = 1;
 		if (S_ISDIR(buf.st_mode))
 			result = 0;
 	}
+	if (result == -1)
+		return (result);
 	if (result == 0)
 		return (1);
 	return (0);
@@ -94,7 +97,10 @@ char	**copy_2d_char(char **src)
 	{
 		dest[i] = ft_strdup(src[i]);
 		if (!dest[i])
+		{
+			clean_2d_char(dest);
 			return (0);
+		}
 		i++;
 	}
 	dest[i] = 0;
