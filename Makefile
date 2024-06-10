@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
+#    By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/06/07 15:01:22 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/06/10 19:37:41 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,7 @@ SRCS =  $(SRCDIR)/atoi_file.c \
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 # Compiler and flags
-CC = cc
+CC = clang
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 GENERAL_LIB_FLAGS = -L$(LIBFT) -lft
