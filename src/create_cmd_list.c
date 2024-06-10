@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:07:14 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/07 11:00:37 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:50:16 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ t_cmd	*create_cmd_list(int total_number)
 		if (index == 0)
 			first = new;
 		else
+		{
 			old->next = new;
+			new->previous = old;
+		}
 		if (!new)
 			return (clean_cmd_list(first));
 		old = new;
