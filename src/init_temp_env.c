@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_temp_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:56 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/06 17:11:59 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:46:35 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_env_pack	run_minishell(t_cmd *cmd)
 t_env	*set_start(t_env *env)
 {
 	char	*temp_str;
+	char	*temp_str1;
 	t_env	*temp_env;
 
 	temp_env = env;
@@ -33,10 +34,17 @@ t_env	*set_start(t_env *env)
 	{
 		temp_str = temp_env->value;
 		temp_env->value = ft_itoa(2);
+		//protection
 		free(temp_str);
 	}
 	else
-		add_node_front(&env, ft_strdup("SHLVL"), ft_itoa(1));
+	{
+		temp_str1 = ft_itoa(1);
+		//protection
+		temp_str = ft_strdup("SHLVL");
+		//protection
+		add_node_front(&env, temp_str, temp_str1);
+	}
 	temp_env = env;
 	while (temp_env && !same(temp_env->key, "OLDPWD"))
 		temp_env = temp_env->next;
