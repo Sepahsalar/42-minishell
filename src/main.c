@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/10 19:49:55 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:38:23 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout, char *roo
 	env = set_start(env);
 	env_pack.env = env;
 	pid = get_current_pid(env_pack.env);
+	// pid = ft_strdup("");
 	// (void)fd_stdin;
 	// (void)fd_stdout;
 	dup(fd_stdin);

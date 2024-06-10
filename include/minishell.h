@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/10 19:45:10 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:57:29 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_cmd
 	int				dir;
 	int				error;
 	pid_t			pid;
+	struct s_cmd	*previous;
 	struct s_cmd	*next;
 }					t_cmd;
 
