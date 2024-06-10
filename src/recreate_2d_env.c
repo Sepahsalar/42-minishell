@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   recreate_2d_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:19:09 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 11:59:50 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:34:36 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,28 @@ static char	**recreate_2d_env_helper(t_env *temp_env, char **env_2d, int index)
 	while (temp_env)
 	{
 		if (!temp_env->key)
+		{
 			temp_str = ft_strdup("=");
+			if(!temp_str)
+				return (0);
+		}
 		else
 			temp_str = ft_strjoin(temp_env->key, "=");
 		if (!temp_str)
+		{
+			clean_2d_char(env_2d);
 			return (0); //it needs to free env_2d
+		}
 		if (!temp_env->value)
 			env_2d[index] = ft_strdup(temp_str);
 		else
 			env_2d[index] = ft_strjoin(temp_str, temp_env->value);
 		free(temp_str);
 		if (!env_2d[index])
+		{
+			clean_2d_char(env_2d);
 			return (0); //it needs to free env_2d
+		}
 		index++;
 		temp_env = temp_env->next;
 	}
