@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/17 10:10:21 by nnourine          #+#    #+#             */
+/*   Updated: 2024/06/10 18:55:30 by asohrabi         ###   ########.fr       */
+=======
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:10:21 by nnourine          #+#    #+#             */
 /*   Updated: 2024/06/10 18:29:41 by nnourine         ###   ########.fr       */
+>>>>>>> d3c743c7cd58d36662eb39f8ebeb74d84430d0dc
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +22,6 @@
 char	**split_pipex(const char *s)
 {
 	char	**m;
-	// char	**temp;
 
 	if (s == 0 || s[0] == '\0' || all_space((char *)s))
 	{
@@ -33,14 +39,12 @@ char	**split_pipex(const char *s)
 		return (m);
 	}
 	m = create(s, ' ', 0, 0);
-	// temp = m ;
 	return (m);
 }
 
 char	**split_pipex_pipe(const char *s)
 {
 	char	**m;
-	// char	**temp;
 
 	if (s == 0 || s[0] == '\0' || all_space((char *)s))
 	{
@@ -58,6 +62,5 @@ char	**split_pipex_pipe(const char *s)
 		return (m);
 	}
 	m = create_pipe(s, '|', 0, 0);
-	// temp = m ;
 	return (m);
 }

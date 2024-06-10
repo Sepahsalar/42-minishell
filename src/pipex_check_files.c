@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_check_files.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:44:25 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 18:55:15 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:02:13 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_env_pack	input_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 			ft_putstr_fd(temp_file->address, 2);
 			ft_putstr_fd(": ", 2);
 			ft_putendl_fd(strerror(errno), 2);
-			master_clean(0, cmd_start->env, cmd_execution, -1);
+			master_clean(0, cmd_start, -1);
 			env_pack.original_env
 				= export_original(env_pack.original_env, 1);
 			cmd_execution->file_error = 1;
@@ -111,7 +111,7 @@ t_env_pack	output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
 		ft_putstr_fd(temp_file->address, 2);
 		ft_putstr_fd(": ", 2);
 		ft_putendl_fd(strerror(errno), 2);
-		master_clean(0, cmd_start->env, cmd_execution, -1);
+		master_clean(0, cmd_start, -1);
 		env_pack.original_env
 			= export_original(env_pack.original_env, 1);
 		cmd_execution->file_error = 1;

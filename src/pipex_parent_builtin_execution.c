@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_parent_builtin_execution.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:55:39 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 18:53:14 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:49:27 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	should_execute_in_parent(t_cmd *cmd_start, t_cmd *cmd_execution)
 t_env_pack	parent_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 		t_env_pack env_pack)
 {
-	input_output_open(cmd_start, cmd_execution, env_pack);
-	output_redirect_builtin(cmd_start, cmd_execution, env_pack);
+	input_output_open(cmd_start, cmd_execution);
+	output_redirect_builtin(cmd_start, cmd_execution);
 	env_pack = run_builtin(cmd_execution);
 	close_all(cmd_execution);
 	//close input output files
@@ -35,8 +35,7 @@ t_env_pack	parent_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 	return (env_pack);
 }
 
-void	output_redirect_builtin(t_cmd *cmd_start, t_cmd *cmd_execution,
-	t_env_pack env_pack)
+void	output_redirect_builtin(t_cmd *cmd_start, t_cmd *cmd_execution)
 {
 	t_last_file	*last;
 
@@ -45,24 +44,21 @@ void	output_redirect_builtin(t_cmd *cmd_start, t_cmd *cmd_execution,
 	{
 		while (last)
 		{
-			output_redirect_builtin_helper(cmd_start, cmd_execution,
-				last, env_pack);
+			output_redirect_builtin_helper(cmd_start, last);
 			last = last->next;
 		}
 	}
 }
 
-void	output_redirect_builtin_helper(t_cmd *cmd_start,
-	t_cmd *cmd_execution, t_last_file *last, t_env_pack env_pack)
+void	output_redirect_builtin_helper(t_cmd *cmd_start, t_last_file *last)
 {
 	t_file		*last_output;
 
-	(void)env_pack;
 	last_output = last->file;
 	if (last_output->fd_operator <= 2)
 	{
 		if (dup2(last_output->fd,
 				last_output->fd_operator) == -1)
-			master_clean(0, cmd_start->env, cmd_execution, 1);
+			master_clean(0, cmd_start, 1);
 	}
 }

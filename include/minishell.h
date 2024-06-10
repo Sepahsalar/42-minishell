@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/07 20:04:41 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:45:10 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define HEREDOC_INTERRUPTED 30
 # define RUNNING_COMMAND 0
 
-volatile int	g_signal;
+extern	volatile int g_signal;
 
 typedef struct s_file
 {
@@ -328,23 +328,15 @@ t_env_pack		empty_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
 t_env_pack		input_output_check_create(t_cmd *cmd_start,
 					t_cmd *cmd_execution, t_env_pack env_pack);
-void			input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution,
-					t_env_pack env_pack);
-void			input_output_open_helper(t_cmd *cmd_start, t_cmd *cmd_execution,
-					t_file *temp_file, t_env_pack env_pack);
+void			input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution);
+void			input_output_open_helper(t_cmd *cmd_start, t_file *temp_file);
 t_env_pack		full_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
-void			output_redirect_builtin(t_cmd *cmd_start, t_cmd *cmd_execution,
-					t_env_pack env_pack);
-void			output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
-					t_env_pack env_pack, int fd[2]);
-void			output_redirect_builtin_helper(t_cmd *cmd_start,
-					t_cmd *cmd_execution, t_last_file *last,
-					t_env_pack env_pack);
-void			output_redirect_helper(t_cmd *cmd_start, t_cmd *cmd_execution,
-					t_env_pack env_pack, int fd[2]);
-void			input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
-					t_env_pack env_pack);
+void			output_redirect_builtin(t_cmd *cmd_start, t_cmd *cmd_execution);
+void			output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution, int fd[2]);
+void			output_redirect_builtin_helper(t_cmd *cmd_start, t_last_file *last);
+void			output_redirect_helper(t_cmd *cmd_start, t_cmd *cmd_execution, int fd[2]);
+void			input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution);
 t_env_pack		waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
 t_env_pack		init_and_check(t_cmd *cmd_start, t_cmd *cmd_execution);
@@ -352,14 +344,12 @@ t_env_pack		parent_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
 t_env_pack		after_child(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack, int fd[2]);
-void			input_output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
-					t_env_pack env_pack, int fd[2]);
+void			input_output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution, int fd[2]);
 void			child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
 void			builtin_child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
-void			non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
-					t_env_pack env_pack);
+void			non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution);
 void			child_process(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack, int fd[2]);
 int				should_execute_in_parent(t_cmd *cmd_start,
