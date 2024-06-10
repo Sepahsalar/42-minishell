@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:07:18 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 19:23:45 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:10:35 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	update_dollar_list(t_handle_dollar *hd_pointer, char *old_str)
 {
 	t_dollar		*last;
 	t_dollar		*temp_dollar;
-	char			*temp_str;
+	// char			*temp_str;
 	int				rel;
 	int				changed_len;
 
@@ -34,12 +34,12 @@ void	update_dollar_list(t_handle_dollar *hd_pointer, char *old_str)
 		last = last->next;
 	temp_dollar = last;
 	changed_len = ft_strlen(hd_pointer->str) - ft_strlen(old_str);
-	temp_str = hd_pointer->str;
+	// temp_str = hd_pointer->str;
 	while (temp_dollar)
 	{
 		rel = temp_dollar->place - old_str;
 		temp_dollar->place = hd_pointer->str + rel + changed_len;
-		temp_str = temp_dollar->place - 1;
+		// temp_str = temp_dollar->place - 1;
 		temp_dollar = temp_dollar->previous;
 	}
 	hd_pointer->dollar = hd_pointer->dollar->next;
@@ -67,14 +67,14 @@ void	handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer)
 int	handle_dollar_struct(t_cmd *cmd)
 {
 	t_handle_dollar	hd;
-	t_dollar		*temp;
+	// t_dollar		*temp;
 	char			*str;
 
 	str = cmd->current;
 	if (ft_strchr(str, '$'))
 	{
 		hd.dollar = fill_dollar_list(str);
-		temp = hd.dollar;
+		// temp = hd.dollar;
 		hd.str = str;
 		while (hd.dollar)
 		{

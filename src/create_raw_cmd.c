@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_raw_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:06:38 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/07 17:29:09 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:04:45 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ char	**create_raw_cmd(const char *input)
 
 	raw_cmd = split_pipex_pipe(input);
 	if (!raw_cmd)
-		master_clean(0, 0, 0, EXIT_FAILURE);
+		master_clean(0, 0, EXIT_FAILURE);
 	return (raw_cmd);
 }

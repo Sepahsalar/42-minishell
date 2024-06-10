@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:09:24 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 10:43:17 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:05:17 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,12 @@ void	expand_two_dollars(t_cmd *cmd, char **str,
 	int		index;
 	char	*temp;
 	int		count;
-	int		initial_length;
+	// int		initial_length;
 	int		reletive_index;
 
 	count = 0;
 	index = 0;
-	initial_length = ft_strlen((*str));
+	// initial_length = ft_strlen((*str));
 	temp = cmd->original_env->next->value;
 	while ((*find)[index] && (*find)[index] == '$')
 	{

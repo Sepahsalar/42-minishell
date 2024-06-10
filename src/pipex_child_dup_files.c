@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_dup_files_child.c                            :+:      :+:    :+:   */
+/*   pipex_child_dup_files.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:11:01 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 14:33:54 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:14:42 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution,
 	{
 		temp_file->fd = open(temp_file->address, O_RDONLY);
 		if (temp_file->fd == -1)
-			master_clean(0, cmd_start->env, cmd_execution, 1);
+			master_clean(0, cmd_execution, 1);
 		temp_file = temp_file->next;
 	}
 }
@@ -44,7 +44,7 @@ void	input_output_open_helper(t_cmd *cmd_start, t_cmd *cmd_execution,
 		temp_file->fd = open(temp_file->address,
 				O_WRONLY | O_APPEND, 0644);
 	if (temp_file->fd == -1)
-		master_clean(0, cmd_start->env, cmd_execution, 1);
+		master_clean(0, cmd_execution, 1);
 }
 
 void	input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
@@ -63,7 +63,7 @@ void	input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
 			if (last_input->fd_operator <= 2)
 			{
 				if (dup2(last_input->fd, last_input->fd_operator) == -1)
-					master_clean(0, cmd_start->env, cmd_execution, 1);
+					master_clean(0, cmd_start, 1);
 				close(last_input->fd);
 			}
 			last = last->next;
@@ -83,7 +83,7 @@ void	output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution,
 		&& !cmd_execution->file_error)
 	{
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
-			master_clean(0, cmd_start->env, cmd_execution, 1);
+			master_clean(0, cmd_execution, 1);
 	}
 }
 
@@ -102,7 +102,7 @@ void	output_redirect_helper(t_cmd *cmd_start, t_cmd *cmd_execution,
 		{
 			if (dup2(last_output->fd,
 					last_output->fd_operator) == -1)
-				master_clean(0, cmd_start->env, cmd_execution, 1);
+				master_clean(0, cmd_execution, 1);
 		}
 		last = last->next;
 	}

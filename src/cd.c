@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/07 11:31:42 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:04:15 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,9 +178,9 @@ t_env_pack	run_cd(t_cmd *cmd)
 	else
 	{
 		env_pack.env = custom_export(env_pack.env, "OLDPWD", old_pwd);
-		free(old_pwd);
 		home = value_finder(cmd->original_env, "HOME");
 		full_path = full_path_finder(old_pwd, cmd->args[1], home);
+		free(old_pwd);
 	}
 	env_pack = run_cd_helper(full_path, cmd, env_pack);
 	free(full_path);
