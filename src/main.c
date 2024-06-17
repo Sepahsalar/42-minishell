@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 18:53:48 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:27:49 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout, char *roo
 	pid = get_current_pid(env_pack.env);
 	if (!pid)
 		clean_all(original_env, env, root, NULL);
-	dup(fd_stdin);
+	if (dup(fd_stdin) == -1)
+		clean_all(original_env, env, root, pid);
 	close(STDOUT_FILENO);
-	dup(fd_stdout);
+	if (dup(fd_stdout) == -1)
+		clean_all(original_env, env, root, pid);
 	close(fd_stdin);
 	close(fd_stdout);
 	original_env = custom_export(original_env, "fd_stdin", "-2");
@@ -61,8 +63,6 @@ t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout, char *roo
 	return (env_pack);
 }
 
-// void	minishell_process(t_env_pack env_pack, int fd_stdin,
-// 				int fd_stdout, char *root)
 void	minishell_process(t_env_pack env_pack)
 {
 	char	*raw_line;
@@ -131,6 +131,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	env_pack = env_pack_at_start(envp, fd_stdin, fd_stdout, root);
+	//till here
 	load_history(value_finder(env_pack.original_env, "root"));
 	minishell_process(env_pack);
 	free(root);

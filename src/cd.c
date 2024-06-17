@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 14:56:44 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:26:38 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 t_env	*custom_export(t_env *env, char *key, char *value)
 {
 	t_env	*temp;
+	char	*temp_key;
+	char	*temp_value;
 
 	temp = env;
 	while (temp)
@@ -27,10 +29,19 @@ t_env	*custom_export(t_env *env, char *key, char *value)
 	{
 		free(temp->value);
 		temp->value = ft_strdup(value);
-		//protetcion
+		if (!temp->value)
+			clean_all(env, NULL, NULL, NULL);
 	}
 	else
-		add_node_front(&env, ft_strdup(key), ft_strdup(value));
+	{
+		temp_key = ft_strdup(key);
+		temp_value = ft_strdup(value);
+		if (!temp_key || !temp_value)
+			clean_all(env, NULL, temp_key, temp_value);
+		add_node_front(&env, temp_key, temp_value);
+		if (!env)
+			clean_all(env, NULL, temp_key, temp_value);
+	}
 	return (env);
 }
 

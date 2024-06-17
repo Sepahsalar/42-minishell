@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:09:24 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/17 18:53:41 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:55:04 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ t_env	*cpy_env(t_env *env)
 	while (env)
 	{
 		new = malloc(sizeof(t_env));
-		// if (!new)
-		// 	clean_all(start, NULL, NULL, NULL);
+		if (!new)
+			clean_all(start, NULL, NULL, NULL);
 		ft_memset(new, 0, sizeof(t_env));
 		new->key = ft_strdup(env->key);
 		new->value = ft_strdup(env->value);
-		// if (!new->key || !new->value)
-		// 	clean_all(start, NULL, new->key, new->value);
+		if (!new->key || !new->value)
+			clean_all(start, NULL, new->key, new->value);
 		if (!start)
 			start = new;
 		else

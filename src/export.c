@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:44:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 18:29:03 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:22:08 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ t_env	*export_original(t_env *env, int status)
 	char	*status_str;
 
 	status_str = ft_itoa(status);
-	// if (!status_str)
-	// 	clean_all(env, NULL, NULL, NULL);
+	if (!status_str)
+		clean_all(env, NULL, NULL, NULL);
 	temp_env = env;
 	while (temp_env)
 	{
@@ -114,11 +114,11 @@ t_env	*export_original(t_env *env, int status)
 	if (!temp_env)
 	{
 		temp = ft_strdup("exit_code");
-		// if (!temp)
-		// 	clean_all(env, NULL, status_str, NULL);
+		if (!temp)
+			clean_all(env, NULL, status_str, NULL);
 		add_node_front(&env, temp, status_str);
-		// if (!env)
-		// 	clean_all(env, NULL, temp, status_str);
+		if (!env)
+			clean_all(env, NULL, temp, status_str);
 	}
 	else
 	{
