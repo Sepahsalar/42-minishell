@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:56 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 17:44:16 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:47:57 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,14 @@ t_env	*set_start(t_env *env)
 		if (!temp_str || !temp_str1)
 			return (NULL);
 		add_node_front(&env, temp_str, temp_str1);
+		if (!env)
+		{
+			free(temp_str);
+			free(temp_str1);
+		    return (NULL);
+		}
 	}
-	temp_env = env;
+	// temp_env = env;
 	// while (temp_env && !same(temp_env->key, "OLDPWD"))
 	// 	temp_env = temp_env->next;
 	// if (temp_env)

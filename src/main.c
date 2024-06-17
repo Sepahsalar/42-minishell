@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 17:27:42 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:48:53 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout, char *roo
 		exit(1);
 	}
 	env = set_start(env);
+	if (!env)
+	{
+		free(root);
+		exit(1);
+	}
 	env_pack.env = env;
 	pid = get_current_pid(env_pack.env);
 	dup(fd_stdin);

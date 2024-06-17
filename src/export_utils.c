@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:43:06 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 17:49:26 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:47:11 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	add_node_front(t_env **env, char *key, char *value)
 	t_env	*new;
 
 	new = malloc(sizeof(t_env));
+	if (!new)
+	{
+		*env = NULL;
+		return ;
+	}
 	new->key = key;
 	new->value = value;
 	new->next = *env;
