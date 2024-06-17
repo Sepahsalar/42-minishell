@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_files_helper.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:29:11 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/10 21:41:08 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:03:50 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
 	temp = cmd->current;
 	if (hd)
 		cmd->current = ft_strdup(hd->str);
-	printf("cmd->current: %s\n", cmd->current);
 	free(temp);
 	if (*ch == '>')
 		cmd->output = *file;

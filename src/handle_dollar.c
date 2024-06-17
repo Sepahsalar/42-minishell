@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:07:18 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/10 18:10:35 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:27:53 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ void	handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer)
 int	handle_dollar_struct(t_cmd *cmd)
 {
 	t_handle_dollar	hd;
-	// t_dollar		*temp;
+	t_dollar		*temp;
 	char			*str;
 
 	str = cmd->current;
 	if (ft_strchr(str, '$'))
 	{
 		hd.dollar = fill_dollar_list(str);
-		// temp = hd.dollar;
+		temp = hd.dollar;
 		hd.str = str;
 		while (hd.dollar)
 		{
@@ -82,7 +82,7 @@ int	handle_dollar_struct(t_cmd *cmd)
 			if (hd.str == NULL)
 				return (1);
 		}
-		//clean_dollar_list(temp);
+		clean_dollar_list(temp);
 		cmd->current = hd.str;
 	}
 	return (0);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+         #
+#    By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/10 20:46:30 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/06/17 11:13:13 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,7 @@ FUNC =  src/atoi_file.c \
 
 OBJ = ${FUNC:.c=.o}
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 
 %.o: %.c
 	@cc ${CFLAGS} ${HEADER} -c $< -o $@

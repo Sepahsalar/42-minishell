@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:09:24 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/10 18:05:17 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:07:39 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*get_current_pid(t_env *original_env)
 	t_env_pack	env_pack;
 	t_env		*cpy;	
 
-	raw_line = "ps|awk '$4==\"./minishell\"'|tail -n 1|awk '{print $1}' >.pid";
+	raw_line = "ps|awk '$4==\"minishell\"'|tail -n 1|awk '{print $1}' >.pid";
 	cpy = cpy_env(original_env);
 	cpy = export_original(cpy, 0);
 	env_pack.env = cpy;
