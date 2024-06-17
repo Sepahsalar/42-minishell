@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:56 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 14:50:57 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:44:16 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_env	*set_start(t_env *env)
 	{
 		temp_str = temp_env->value;
 		temp_env->value = ft_itoa(2);
+		if (!temp_env->value)
+			return (NULL);
 		//protection
 		free(temp_str);
 	}
@@ -43,6 +45,8 @@ t_env	*set_start(t_env *env)
 		//protection
 		temp_str = ft_strdup("SHLVL");
 		//protection
+		if (!temp_str || !temp_str1)
+			return (NULL);
 		add_node_front(&env, temp_str, temp_str1);
 	}
 	temp_env = env;
