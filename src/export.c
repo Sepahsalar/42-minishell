@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:44:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/06 17:29:52 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:29:03 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ t_env_pack	run_export(t_cmd *cmd)
 t_env	*export_original(t_env *env, int status)
 {
 	t_env	*temp_env;
-	// char	*temp;
+	char	*temp;
 	char	*status_str;
 
 	status_str = ft_itoa(status);
-	// printf("1\n");
-	// system("leaks -q minishell");
+	// if (!status_str)
+	// 	clean_all(env, NULL, NULL, NULL);
 	temp_env = env;
 	while (temp_env)
 	{
@@ -112,16 +112,18 @@ t_env	*export_original(t_env *env, int status)
 		temp_env = temp_env->next;
 	}
 	if (!temp_env)
-		add_node_front(&env, ft_strdup("exit_code"), status_str);
+	{
+		temp = ft_strdup("exit_code");
+		// if (!temp)
+		// 	clean_all(env, NULL, status_str, NULL);
+		add_node_front(&env, temp, status_str);
+		// if (!env)
+		// 	clean_all(env, NULL, temp, status_str);
+	}
 	else
 	{
 		free(temp_env->value);
-		// temp = temp_env->value;
 		temp_env->value = status_str;
-		// free(temp);
 	}
-	// printf("2\n");
-	// system("leaks -q minishell");
-	// free(status_str); //added today
 	return (env);
 }

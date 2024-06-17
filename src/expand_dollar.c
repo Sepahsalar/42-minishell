@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/05 11:13:52 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:52:21 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ char	*expand_dollar_helper(t_cmd *cmd, char *str, char *find, int type)
 
 	expand_two_dollars(cmd, &str, &find, &remained_dollar);
 	if (no_need_more_expand(remained_dollar, find, type))
-		return (ft_strdup(str));
+		return (str);
+		// return (ft_strdup(str));
 	return (expand_one_dollar(cmd, str, find));
 }
 
