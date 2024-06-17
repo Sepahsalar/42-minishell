@@ -3,16 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 17:48:53 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:07:09 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 volatile int	g_signal;
+
+void	clean_all(t_env *env1, t_env *env2, char *str1, char *str2)
+{
+	if (env1)
+		clean_env_list(env1);
+	if (env2)
+		clean_env_list(env2);
+	if (str1)
+		free(str1);
+	if (str2)
+		free(str2);
+	exit(1);
+}
 
 t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout, char *root)
 {
@@ -24,18 +37,14 @@ t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout, char *roo
 	original_env = fill_env_list(envp);
 	env = fill_env_list(envp);
 	if (!original_env || !env)
-	{
-		free(root);
-		exit(1);
-	}
+		clean_all(original_env, env, root, NULL);
 	env = set_start(env);
 	if (!env)
-	{
-		free(root);
-		exit(1);
-	}
+		clean_all(original_env, env, root, NULL);
 	env_pack.env = env;
 	pid = get_current_pid(env_pack.env);
+	if (!pid)
+		clean_all(original_env, env, root, NULL);
 	dup(fd_stdin);
 	close(STDOUT_FILENO);
 	dup(fd_stdout);

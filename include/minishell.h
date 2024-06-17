@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/10 19:57:29 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:13:44 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,5 +394,6 @@ t_env_pack		cmd_permission(t_cmd *cmd_start, t_cmd *cmd_execution,
 t_env_pack		cmd_not_found(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
 void			close_all(t_cmd *cmd);
+void			clean_all(t_env *env1, t_env *env2, char *str1, char *str2);
 
 #endif //MINISHELL_H
