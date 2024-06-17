@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_heredoc_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 20:21:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 20:22:51 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:43:28 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	heredoc_actions(t_cmd *cmd, char **line, char **heredoc_text)
 	if (!*heredoc_text)
 	{
 		*heredoc_text = ft_strdup(*line);
+		free(*line);
 		if (!*heredoc_text)
 			return (free_heredoc(*line, *heredoc_text));
 	}
@@ -89,6 +90,7 @@ int	heredoc_actions(t_cmd *cmd, char **line, char **heredoc_text)
 		temp_str = *heredoc_text;
 		*heredoc_text = ft_strjoin(*heredoc_text, *line);
 		free(temp_str);
+		free(*line);
 		if (!*heredoc_text)
 			return (free_heredoc(*line, *heredoc_text));
 	}

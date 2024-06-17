@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility4.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:21:36 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/10 21:51:03 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:55:21 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,29 @@ int	check_unique(t_last_file *first, t_file *temp)
 t_hd_file	*remove_update_all(t_hd_file *hd)
 {
 	char	*temp_str;
-
+	
 	temp_str = hd->str + hd->file->place;
 	if (*(temp_str) == '>' && *(temp_str + 1) == '>')
 	{
 		hd->file->append = 1;
 		hd->file->raw = strdup_modified(temp_str, ">>");
+		if (!hd->file->raw)
+		    return (0);
 	}
 	else if (*(temp_str) == '>')
 	{
 		hd->file->trunc = 1;
 		hd->file->raw = strdup_modified(temp_str, ">");
+		if (!hd->file->raw)
+		    return (0);
 	}
 	else if (*(temp_str) == '<' && *(temp_str + 1) != '<')
 	{
 		hd->file->input = 1;
 		hd->file->raw = strdup_modified(temp_str, "<");
+		if (!hd->file->raw)
+		    return (0);
 	}
-	if (hd && hd->file && !hd->file->raw)
-		return (0);
-	// if (hd && hd->file && !hd->file->raw)
-	// 	return (0);
 	return (hd);
 }
 

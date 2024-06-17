@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/10 18:04:15 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:56:44 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,12 @@ t_env_pack	run_cd(t_cmd *cmd)
 
 	full_path = NULL;
 	env_pack = init_env_pack(cmd);
+	if (cmd->args[2])
+	{
+        ft_putendl_fd("bash: cd: too many arguments", 2);
+        env_pack.original_env = export_original(cmd->original_env, 1);
+        return (env_pack);
+    }
 	old_pwd = getcwd(NULL, 0);
 	//protecion
 	if (!old_pwd)

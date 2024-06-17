@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:59:53 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/07 12:38:58 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:39:48 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,17 @@ int	get_user_text(t_cmd *cmd, t_file *temp_input)
 			return (1);
 		line = readline("> ");
 	}
+	if (line)
+	    free(line);
 	ft_putstr_fd(heredoc_text, temp_input->fd);
+	free(heredoc_text);
 	return (0);
 }
 
 void	close_heredoc_file(t_file *temp_input)
 {
-	close(temp_input->fd);
+	if (temp_input->fd > 2)
+		close(temp_input->fd);
 	temp_input->fd = -2;
 }
 
@@ -73,11 +77,7 @@ int	fill_fd_heredoc(t_cmd **start_cmd)
 			return (1);
 		cmd = cmd->next;
 	}
-	// printf("g_signal: %d\n", g_signal);
 	if (g_signal == HEREDOC)
 		change_mode(RUNNING_COMMAND);
-	// else if (g_signal == HEREDOC_INTERRUPTED)
-	//     change_mode(WAIT_FOR_COMMAND);
-	// printf("g_signal: %d\n", g_signal);
 	return (0);
 }

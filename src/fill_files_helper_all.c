@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_files_helper_all.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:26:17 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/10 21:41:44 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:09:25 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,22 @@ static long	fd_operator_all(t_hd_file *hd)
 int	handle_hd_all(t_cmd *cmd, t_file **file)
 {
 	t_hd_file		*hd;
+	char			*temp;
 
 	hd = malloc(sizeof(t_hd_file));
 	ft_memset(hd, 0, sizeof(t_hd_file));
 	hd->file = *file;
 	hd->str = ft_strdup(cmd->current);
+	temp = hd->str;
 	while (hd && hd->file)
 	{
 		hd->file->fd_operator = fd_operator_all(hd);
-		//protection
 		hd = remove_update_all(hd);
 		//failiure return 1
 		if (hd)
 			hd->file = hd->file->next;
 	}
-	if (hd)
-		free(hd->str);
+	free(temp);
 	free(hd);
 	return (0);
 }

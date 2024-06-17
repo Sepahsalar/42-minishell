@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/17 11:13:13 by nnourine         ###   ########.fr        #
+#    Updated: 2024/06/17 15:06:38 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,6 +113,7 @@ clean:
 
 fclean: clean
 	@rm -f ${NAME}
+# @rm -f .history
 	@make fclean -C ./lib/libft
 
 re: fclean all

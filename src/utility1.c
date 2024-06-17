@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 19:57:09 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:20:15 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*strdup_modified(char *s, char *token)
 	while (*s != '\0' && ft_isspace(*s))
 		++s;
 	l = strlen_modified(s);
-	d = malloc((l + 1) * sizeof (char));
+	d = malloc((l + 1) * sizeof(char));
 	if (d == 0)
 		return (0);
 	ft_memcpy (d, s, l);

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:07:18 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 11:27:53 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:18:56 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,18 @@ void	update_dollar_list(t_handle_dollar *hd_pointer, char *old_str)
 		// temp_str = temp_dollar->place - 1;
 		temp_dollar = temp_dollar->previous;
 	}
-	hd_pointer->dollar = hd_pointer->dollar->next;
-	remove_previous_node(hd_pointer->dollar);
+	// hd_pointer->dollar = hd_pointer->dollar->next;
+	// remove_previous_node(hd_pointer->dollar);
+	if (hd_pointer->dollar->next)
+	{
+		hd_pointer->dollar = hd_pointer->dollar->next;
+		remove_previous_node(hd_pointer->dollar);
+	}
+	else
+	{
+		free(hd_pointer->dollar);
+		hd_pointer->dollar = NULL;
+	}
 }
 
 void	handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer)
@@ -59,22 +69,30 @@ void	handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer)
 	}
 	else
 	{
-		hd_pointer->dollar = hd_pointer->dollar->next;
-		remove_previous_node(hd_pointer->dollar);
+		if (hd_pointer->dollar->next)
+		{
+			hd_pointer->dollar = hd_pointer->dollar->next;
+			remove_previous_node(hd_pointer->dollar);
+		}
+		else
+		{
+		    free(hd_pointer->dollar);
+			hd_pointer->dollar = NULL;
+		}
 	}
 }
 
 int	handle_dollar_struct(t_cmd *cmd)
 {
 	t_handle_dollar	hd;
-	t_dollar		*temp;
+	// t_dollar		*temp;
 	char			*str;
 
 	str = cmd->current;
 	if (ft_strchr(str, '$'))
 	{
 		hd.dollar = fill_dollar_list(str);
-		temp = hd.dollar;
+		// temp = hd.dollar;
 		hd.str = str;
 		while (hd.dollar)
 		{
@@ -82,7 +100,8 @@ int	handle_dollar_struct(t_cmd *cmd)
 			if (hd.str == NULL)
 				return (1);
 		}
-		clean_dollar_list(temp);
+		// // free(hd.dollar);
+		// clean_dollar_list(temp);
 		cmd->current = hd.str;
 	}
 	return (0);
