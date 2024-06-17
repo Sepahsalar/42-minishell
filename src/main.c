@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 11:08:12 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:27:42 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,9 @@ t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout, char *roo
 		free(root);
 		exit(1);
 	}
-	//till here
 	env = set_start(env);
 	env_pack.env = env;
 	pid = get_current_pid(env_pack.env);
-	// pid = ft_strdup("");
-	// (void)fd_stdin;
-	// (void)fd_stdout;
 	dup(fd_stdin);
 	close(STDOUT_FILENO);
 	dup(fd_stdout);
@@ -72,8 +68,6 @@ void	minishell_process(t_env_pack env_pack)
 			clean_env_list(env_pack.env);
 			run_exit_eof(env_pack.original_env);
 		}
-		if (same(raw_line, "checkleaks"))
-			system("leaks -q minishell"); //remember to delete it
 		if (ft_strlen(raw_line) > 0 && !all_space(raw_line))
 		{
 			fd_stdin = dup(STDIN_FILENO);
@@ -124,10 +118,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	env_pack = env_pack_at_start(envp, fd_stdin, fd_stdout, root);
 	load_history(value_finder(env_pack.original_env, "root"));
-	// apply_custom_signal_handler();
 	minishell_process(env_pack);
-	// close(fd_stdin);
-	// close(fd_stdout);
 	free(root);
 	return (0);
 }
