@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:07:18 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 16:28:35 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:50:42 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ void	handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer)
 	{
 		hd_pointer->str = handle_dollar_str(cmd, *hd_pointer);
 		update_dollar_list(hd_pointer, temp);
-		// if (!same(temp, "$"))
-		free(temp); //check more
+		free(temp);
 	}
 	else
 	{

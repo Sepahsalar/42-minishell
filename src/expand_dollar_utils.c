@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:09:24 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 16:52:47 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:53:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static char	*expand_pid(char *str, char *start, char *temp, int count)
 		return (str);
 	len = ft_strlen(str) + (count *(ft_strlen(temp) - 2));
 	new = malloc(len + 1);
+	if (!new)
+		return (NULL);
 	new[len] = '\0';
 	dst = new;
 	ft_memcpy(dst, str, (start - str));
@@ -119,12 +121,15 @@ void	expand_two_dollars(t_cmd *cmd, char **str,
 	if (count)
 	{
 		(*str) = expand_pid((*str), (*find), temp, count);
-	// if (count)
+		if (!*str)
+			master_clean(NULL, cmd, EXIT_FAILURE);
 		(*find) = (*str) + reletive_index + (ft_strlen(temp) * count);
 	}
 	else
 	{
 	    *str = ft_strdup(*str);
+		if (!*str)
+			master_clean(NULL, cmd, EXIT_FAILURE);
 		(*find) = (*str) + reletive_index;
 	}
 }

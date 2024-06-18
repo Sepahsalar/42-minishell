@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:18:55 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/17 14:09:13 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:48:41 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 int	node_creating_process(char *arg, t_dollar_helper *dh)
 {
-	(*dh).type = type_finder(((*dh).sq), ((*dh).dq), ((*dh).heredoc));
-	((*dh).id)++;
-	(*dh).new = create_dollar_node(((*dh).id), &arg[(*dh).index], (*dh).type);
-	if (((*dh).id) == 1)
-		(*dh).first = (*dh).new;
-	if (!(*dh).new)
+	dh->type = type_finder((dh->sq), (dh->dq), (dh->heredoc));
+	(dh->id)++;
+	dh->new = create_dollar_node((dh->id), &arg[dh->index], dh->type);
+	if ((dh->id) == 1)
+		dh->first = dh->new;
+	if (!dh->new)
 	{
-		clean_dollar_list((*dh).first);
+		clean_dollar_list(dh->first);
 		return (1);
 	}
-	if (((*dh).id) != 1)
+	if ((dh->id) != 1)
 	{
-		((*dh).new)->previous = (*dh).old;
-		((*dh).old)->next = (*dh).new;
+		(dh->new)->previous = dh->old;
+		(dh->old)->next = dh->new;
 	}
-	(*dh).old = (*dh).new;
+	dh->old = dh->new;
 	return (0);
 }
 
