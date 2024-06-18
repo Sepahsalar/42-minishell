@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:26:17 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 16:37:05 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:07:29 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,21 @@ int	handle_hd_all(t_cmd *cmd, t_file **file)
 	hd->file = *file;
 	hd->str = ft_strdup(cmd->current);
 	if (cmd->current && !hd->str)
+	{
+		clean_file_list(hd->file);
 	    master_clean(NULL, cmd, EXIT_FAILURE);
+	}
 	temp = hd->str;
 	while (hd && hd->file)
 	{
 		hd->file->fd_operator = fd_operator_all(hd);
+		if (hd->file->fd_operator == -3)
+		{
+			free(temp);
+			clean_file_list(hd->file);
+			free(hd);
+			master_clean(NULL, cmd, EXIT_FAILURE);
+		}
 		hd = remove_update_all(hd);
 		if (!hd)
 			master_clean(NULL, cmd, EXIT_FAILURE);

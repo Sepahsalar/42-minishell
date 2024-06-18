@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:29:11 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 15:53:32 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:02:23 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,19 @@ int	handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
 
 int	creating_normal_node_process(char *str, char *ch, t_file_helper *fh)
 {
-	(*fh).new = create_file_node((*fh).index);
-	if ((*fh).start == NULL)
-		(*fh).start = (*fh).new;
+	fh->new = create_file_node(fh->index);
+	if (fh->start == NULL)
+		fh->start = fh->new;
 	else
-		(*fh).old->next = (*fh).new;
-	if (!(*fh).new)
+		fh->old->next = fh->new;
+	if (!fh->new)
 	{
-		clean_file_list((*fh).start);
+		clean_file_list(fh->start);
 		return (1);
 	}
-	(*fh).old = (*fh).new;
-	if (str[(*fh).index + 1] == *ch)
-		(*fh).index++;
+	fh->old = fh->new;
+	if (str[fh->index + 1] == *ch)
+		fh->index++;
 	return (0);
 }
 
