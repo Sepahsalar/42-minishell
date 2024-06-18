@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:13:23 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 16:55:56 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:59:58 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,13 @@ char	*find_expanded(t_cmd *cmd, char *variable)
 		if (!expanded)
 		{
 			free(variable);
-			return (NULL);
+			master_clean(NULL, cmd, EXIT_FAILURE);
 		}
+	}
+	if (!expanded)
+	{
+		free(variable);
+		master_clean(NULL, cmd, EXIT_FAILURE);
 	}
 	return (expanded);
 }
