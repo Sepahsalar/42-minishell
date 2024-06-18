@@ -3,26 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   fd_heredoc_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 20:21:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 17:50:23 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:32:43 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// int	clean_str(char *s1, char *s2, char *s3, char *s4)
 int	clean_str(char *s1)
 {
 	if (s1)
         free(s1);
-    // if (s2)
-    //     free(s2);
-    // if (s3)
-    //     free(s3);
-    // if (s4)
-    //     free(s4);
     return (1);
 }
 

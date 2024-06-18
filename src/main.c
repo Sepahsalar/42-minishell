@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 20:02:06 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:56:26 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,29 @@ volatile int	g_signal;
 // 1) > 2>>
 // 2) > 2a>> temp
 
-// convince nima to protect close
+// search for all voids in functions and delete them
+
+// norminette:
+// 1) cd ---------------------------- medium->nima
+// 2) expand_dollar_utils.c --------- short
+// 3) export_utils2.c --------------- short
+// 4) export.c ---------------------- short
+// 5) fd_heredoc_utils.c------------- short
+// 6) fill_env_list.c---------------- short
+// 7) fill_files_helper_all.c-------- short
+// 8) fill_files_helper.c------------ short
+// 9) find_cmd_address_utils.c------- short
+//10) handle_dollar.c --------------- short
+//11) handle_history.c -------------- short
+//12) handle_quote.c ---------------- short
+//13) init_temp_env.c --------------- short
+//14) main.c ------------------------ long  ->nima
+//15) master_clean.c ---------------- short
+//16) pipex_error_handling_heredoc.c- short
+//17) pipex_error_handling_utils.c--- short ->nima
+//18) pipex_error_handling_utils2.c-- short
+//19) recreate_2d_env.c ------------- short
+//20) utility4.c -------------------- medium->nima
 
 void	clean_all(t_env *env1, t_env *env2, char *str1, char *str2)
 {

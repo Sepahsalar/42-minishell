@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_handling_utils2.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 10:55:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 13:11:17 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:50:43 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,9 @@ t_error	find_error_helper(char *line, char *token, int index, t_env_pack env_pac
 	{
 		error.not_handling = 1;
 		error.error = token;
-		// error.error = ft_strdup(token);
-		// if (!error.error)
-		//     clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 	}
 	else if (!accept_char(token, line + index, env_pack))
 	{
-		// if (token)
-		// 	free(token);
 		error.index = index;
 		if (line[index] == '\0')
 		{

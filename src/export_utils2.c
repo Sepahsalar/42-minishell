@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:54:43 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 19:52:09 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:31:13 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,6 @@ void	custom_print_export(t_env *temp_env)
 	else
 		ft_putendl_fd("", 1);
 }
-
-// void	export_no_arg(t_cmd *cmd)
-// {
-// 	int		index;
-// 	t_env	*sorted;
-// 	t_env	*cpy;
-// 	int		count;
-// 	t_env	*temp_env;
-
-// 	cpy = handle_oldpwd(cpy_env(cmd->env));
-// 	sorted = sort_env(cpy);
-// 	index = 1;
-// 	count = env_count(cpy);
-// 	while (index <= count)
-// 	{
-// 		temp_env = sorted;
-// 		while (temp_env && temp_env->index != index)
-// 			temp_env = temp_env->next;
-// 		if (temp_env && !same(temp_env->key, "_"))
-// 			custom_print_export(temp_env);
-// 		index++;
-// 	}
-// 	clean_env_list(cpy);
-// }
 
 void	export_no_arg(t_cmd *cmd)
 {

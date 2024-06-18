@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_handling_utils.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:22:09 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 15:25:15 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:49:07 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char	*find_token(char *cur, t_env_pack env_pack)
 	{
 		if (ft_strncmp(cur, token[index], ft_strlen(token[index])) == 0)
 		{
-			// res = ft_strdup(token[index]);
 			res = token[index];
 			free(token);
 			if (!res)
@@ -102,18 +101,11 @@ int is_fd_operator(char *str)
 {
 	int	index;
 	
-	// printf("str:%s\n", str);
 	if (!ft_isdigit(*str))
 	    return (0);
 	index = 1;
 	while (str[index] && ft_isdigit(str[index]))
 		index++;
-	// printf("%s\n", str+index);
-	// if (!str[index])
-	//     return (0);
-	// if (index < (int)ft_strlen(str) && str[index] != ' '
-	// 	&& (same(str + index + 1, "<") || same(str + index + 1, ">")))
-	// 	return (1);
 	if (str[index] == '>' || str[index] == '<')
 		return (1);
 	return (0);
@@ -127,8 +119,6 @@ char	*change_token(char *token, char *cur, int *index, int sq_dq, t_env_pack env
 		new_token = find_token(cur, env_pack);
 		if (new_token)
 		{
-			// if (token)
-			// 	free(token);
 			*index = *index + ft_strlen(new_token);
 			return (new_token);
 		}
@@ -137,8 +127,6 @@ char	*change_token(char *token, char *cur, int *index, int sq_dq, t_env_pack env
 			*index = *index + 1;
 			if (*cur != ' ' && !is_fd_operator(cur))
 			{
-				// if (token)
-				// 	free(token);
 				return (NULL);
 			}
 			else
@@ -147,8 +135,6 @@ char	*change_token(char *token, char *cur, int *index, int sq_dq, t_env_pack env
 	}
 	else
 	{
-		// if (token)
-		// 	free(token);
 		*index = *index + 1;
 		return (NULL);
 	}

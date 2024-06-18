@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   recreate_2d_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:19:09 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/10 18:34:36 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:52:35 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	**recreate_2d_env_helper(t_env *temp_env, char **env_2d, int index)
 		if (!temp_str)
 		{
 			clean_2d_char(env_2d);
-			return (0); //it needs to free env_2d
+			return (0);
 		}
 		if (!temp_env->value)
 			env_2d[index] = ft_strdup(temp_str);
@@ -67,7 +67,7 @@ static char	**recreate_2d_env_helper(t_env *temp_env, char **env_2d, int index)
 		if (!env_2d[index])
 		{
 			clean_2d_char(env_2d);
-			return (0); //it needs to free env_2d
+			return (0);
 		}
 		index++;
 		temp_env = temp_env->next;

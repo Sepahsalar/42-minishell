@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:07:14 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/10 18:50:16 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:29:00 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	clean_cmd_node(t_cmd *node)
 			clean_last_file_list(node->last_out);
 		if (node->last_in)
 			clean_last_file_list(node->last_in);
-		// // all and std_error added today
 		if (node->all)
 			clean_file_list(node->all);
 		if (node->std_error)

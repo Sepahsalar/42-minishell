@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_files_helper_all.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:26:17 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 17:07:29 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:36:14 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 int	creating_all_node_process(char *str, t_file_helper *fh)
 {
-	(*fh).new = create_file_node((*fh).index);
-	if (((*fh).start) == NULL)
-		((*fh).start) = (*fh).new;
+	fh->new = create_file_node(fh->index);
+	if ((fh->start) == NULL)
+		(fh->start) = fh->new;
 	else
-		(*fh).old->next = (*fh).new;
-	if (!(*fh).new)
+		fh->old->next = fh->new;
+	if (!fh->new)
 	{
-		clean_file_list(((*fh).start));
+		clean_file_list((fh->start));
 		return (1);
 	}
-	(*fh).old = (*fh).new;
-	if ((str[(*fh).index] == '>' && str[(*fh).index + 1] == '>')
-		|| (str[(*fh).index] == '<' && str[(*fh).index + 1] == '<'))
-		(*fh).index++;
+	fh->old = fh->new;
+	if ((str[fh->index] == '>' && str[fh->index + 1] == '>')
+		|| (str[fh->index] == '<' && str[fh->index + 1] == '<'))
+		fh->index++;
 	return (0);
 }
 

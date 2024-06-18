@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:55:39 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 18:44:10 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:51:58 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ t_env_pack	parent_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 	output_redirect_builtin(cmd_start, cmd_execution);
 	env_pack = run_builtin(cmd_execution);
 	close_all(cmd_execution);
-	//full clean 
-	//current master
 	return (env_pack);
 }
 

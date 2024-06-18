@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_handling_heredoc.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:26:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 13:09:36 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:46:45 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ void	handle_heredoc_error(char *token, char *cur, t_error error, t_env_pack env_
 		ft_memcpy(limiter, cur, limiter_len);
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		line = get_next_line(0);
-		// use return
-		// if (!limiter)
-		//     clean_all(env_pack.env, env_pack.original_env, limiter, NULL);
 		while (!same(line, limiter))
 		{
 			free(line);
@@ -62,8 +59,6 @@ char	*change_token_heredoc(char *token, char *cur, int *index, t_error error, t_
 	new_token = find_token(cur, env_pack);
 	if (new_token)
 	{
-		// if (token)
-		// 	free(token);
 		*index = *index + ft_strlen(new_token);
 		return (new_token);
 	}
@@ -73,8 +68,6 @@ char	*change_token_heredoc(char *token, char *cur, int *index, t_error error, t_
 		if (*cur != ' ')
 		{
 			handle_heredoc_error(token, cur, error, env_pack);
-			// if (token)
-			// 	free(token);
 			return (NULL);
 		}
 		else
