@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_execute_actions.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:39:07 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 13:50:36 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:26:27 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	del_herdoc_files(t_cmd *cmd)
 		while (temp_file)
 		{
 			if (temp_file->limiter)
-				unlink(temp_file->address);
+				if (unlink(temp_file->address) == -1)
+					master_clean(NULL, cmd, EXIT_FAILURE);
 			temp_file = temp_file->next;
 		}
 		temp_cmd = temp_cmd->next;
@@ -80,7 +81,6 @@ t_env_pack	execute_actions(char *raw_line, t_env_pack env_pack)
 	if (!raw_cmd)
 		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 	cmd = fill_cmd_list(raw_cmd, env_pack.env, env_pack.original_env);
-	// clean_2d_char(raw_cmd);
 	env_pack_result = running_actions(cmd);
 	del_herdoc_files(cmd);
 	clean_cmd_list(cmd);

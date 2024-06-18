@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:55:39 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/10 18:49:27 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:44:10 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_env_pack	parent_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 	output_redirect_builtin(cmd_start, cmd_execution);
 	env_pack = run_builtin(cmd_execution);
 	close_all(cmd_execution);
-	//close input output files
 	//full clean 
 	//current master
 	return (env_pack);
@@ -59,6 +58,6 @@ void	output_redirect_builtin_helper(t_cmd *cmd_start, t_last_file *last)
 	{
 		if (dup2(last_output->fd,
 				last_output->fd_operator) == -1)
-			master_clean(0, cmd_start, 1);
+			master_clean(NULL, cmd_start, EXIT_FAILURE);
 	}
 }

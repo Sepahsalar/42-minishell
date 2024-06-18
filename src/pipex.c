@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:02:20 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 11:21:10 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:59:00 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	else
 	{
 		if (pipe(fd) == -1)
-			master_clean(0, cmd_execution, 1);
+			master_clean(NULL, cmd_start, EXIT_FAILURE);
 		cmd_execution->pid = fork();
 		if (cmd_execution->pid == -1)
-			master_clean(0, cmd_execution, 1);
+			master_clean(NULL, cmd_start, EXIT_FAILURE);
 		if (cmd_execution->pid == 0)
 			child_process(cmd_start, cmd_execution, env_pack, fd);
 		else

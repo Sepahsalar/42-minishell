@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:59:53 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/10 18:46:35 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 19:00:39 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 void	child_process(t_cmd *cmd_start, t_cmd *cmd_execution,
 		t_env_pack env_pack, int fd[2])
 {
-	input_output_open(cmd_start, cmd_execution);
-	input_output_redirect(cmd_start, cmd_execution, fd);
+	if (!cmd_execution->file_error)
+	{
+		input_output_open(cmd_start, cmd_execution);
+		input_output_redirect(cmd_start, cmd_execution, fd);
+		close_all(cmd_execution);
+	}
 	close(fd[0]);
 	close(fd[1]);
-	close_all(cmd_execution);
 	child_execution(cmd_start, cmd_execution, env_pack);
 }
 
@@ -69,6 +72,5 @@ void	non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution)
 		exit(1);
 	}
 	clean_cmd_list(cmd_start);
-	//master_clean(0, cmd_start, -1);
 	run_execve(cmd_address, cmd_args, cmd_env);
 }

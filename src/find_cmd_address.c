@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd_address.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:31:28 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/04 19:05:41 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:22:10 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	find_cmd_address_x(t_cmd *cmd)
 	temp_address = find_address(cmd, 'X');
 	if (cmd->error == 1)
 		return (1);
-	// if (temp_address && check_accessibility(temp_address, 'R'))
 	if (temp_address)
 	{
 		cmd->address = temp_address;

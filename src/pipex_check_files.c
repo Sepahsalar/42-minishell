@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_check_files.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:44:25 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/17 12:44:13 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:39:15 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ t_env_pack	fd_operator_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 		if (temp_file->fd_operator <= INT_MAX)
 		{
 			fd_operator = ft_itoa(temp_file->fd_operator);
-			//protection
-			(void)cmd_start;
+			if (!fd_operator)
+				master_clean(NULL, cmd_start, EXIT_FAILURE);
 			ft_putstr_fd(fd_operator, 2);
 			free(fd_operator);
 		}
@@ -88,10 +88,10 @@ t_env_pack	input_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 			ft_putstr_fd(temp_file->address, 2);
 			ft_putstr_fd(": ", 2);
 			ft_putendl_fd(strerror(errno), 2);
-			master_clean(0, cmd_start, -1);
 			env_pack.original_env
 				= export_original(env_pack.original_env, 1);
 			cmd_execution->file_error = 1;
+			(void)cmd_start;
 		}
 	}
 	return (env_pack);
@@ -112,7 +112,7 @@ t_env_pack	output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
 		ft_putstr_fd(temp_file->address, 2);
 		ft_putstr_fd(": ", 2);
 		ft_putendl_fd(strerror(errno), 2);
-		master_clean(0, cmd_start, -1);
+		(void)cmd_start;
 		env_pack.original_env
 			= export_original(env_pack.original_env, 1);
 		cmd_execution->file_error = 1;

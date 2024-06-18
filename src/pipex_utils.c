@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 17:47:26 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 19:00:58 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	run_execve(char *cmd_address, char **cmd_args, char **cmd_env)
 	{
 		clean_2d_char(cmd_args);
 		clean_2d_char(cmd_env);
-		if (same (strerror(errno), "Exec format error"))
+		if (same(strerror(errno), "Exec format error"))
 		{
 			if (!check_accessibility(cmd_address, 'R'))
 			{

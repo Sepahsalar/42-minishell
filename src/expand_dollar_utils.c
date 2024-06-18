@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:09:24 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 17:53:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:29:16 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,10 @@ char	*get_current_pid(t_env *original_env)
 		pid_str = ft_strdup("$$");
 	else if (pid_str && ft_strlen(pid_str) > 1)
 		pid_str[ft_strlen(pid_str) - 1] = '\0';
-	close(fd);
-	unlink(".pid");
 	clean_env_list(cpy);
+	close(fd);
+	if (unlink(".pid") == -1)
+		exit(1);
 	return (pid_str);
 }
 
