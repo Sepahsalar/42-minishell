@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 19:00:58 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:12:20 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 t_env_pack	after_child(t_cmd *cmd_start, t_cmd *cmd_execution,
 		t_env_pack env_pack, int fd[2])
 {
-	close(fd[1]);
+	if (close(fd[1]) == -1)
+		master_clean(NULL, cmd_start, EXIT_FAILURE);
 	if (cmd_execution->index < cmd_count(cmd_start))
-		dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
+		if (dup2(fd[0], STDIN_FILENO) == -1)
+			master_clean(NULL, cmd_start, EXIT_FAILURE);
+	if (close(fd[0]) == -1)
+		master_clean(NULL, cmd_start, EXIT_FAILURE);
 	if (cmd_execution->index == cmd_count(cmd_start))
 		env_pack = waiting_process(cmd_start, cmd_execution, env_pack);
 	return (env_pack);
@@ -31,12 +34,15 @@ t_env_pack	waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution,
 	t_cmd	*temp_cmd;
 
 	status = 0;
-	close(STDIN_FILENO);
-	waitpid(cmd_execution->pid, &status, 0);
+	if (close(STDIN_FILENO) == -1)
+		master_clean(NULL, cmd_start, EXIT_FAILURE);
+	if (waitpid(cmd_execution->pid, &status, 0) == -1)
+		master_clean(NULL, cmd_start, EXIT_FAILURE);
 	temp_cmd = cmd_start;
 	while (temp_cmd != cmd_execution)
 	{
-		waitpid(temp_cmd->pid, NULL, 0);
+		if (waitpid(temp_cmd->pid, NULL, 0) == -1)
+			master_clean(NULL, cmd_start, EXIT_FAILURE);
 		temp_cmd = temp_cmd->next;
 	}
 	if (WIFEXITED(status))
@@ -94,7 +100,8 @@ void	close_all(t_cmd *cmd)
 	while (temp_file)
 	{
 		if (temp_file->fd > 2)
-			close(temp_file->fd);
+			if (close(temp_file->fd) == -1)
+				master_clean(NULL, cmd, EXIT_FAILURE);
 		temp_file->fd = -2;
 		temp_file = temp_file->next;
 	}
@@ -102,7 +109,8 @@ void	close_all(t_cmd *cmd)
 	while (temp_file)
 	{
 		if (temp_file->fd > 2)
-			close(temp_file->fd);
+			if (close(temp_file->fd) == -1)
+				master_clean(NULL, cmd, EXIT_FAILURE);
 		temp_file->fd = -2;
 		temp_file = temp_file->next;
 	}

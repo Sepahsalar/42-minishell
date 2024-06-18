@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:44:25 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 18:39:15 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:04:37 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ t_env_pack	input_output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
 		if (temp_file->fd == -1)
 			break ;
 		if (temp_file->fd > 2)
-			close(temp_file->fd);
+			if (close(temp_file->fd) == -1)
+				master_clean(NULL, cmd_start, EXIT_FAILURE);
 		temp_file = temp_file->next;
 	}
 	return (env_pack);

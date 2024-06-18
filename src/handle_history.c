@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_history.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:29:05 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 10:52:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:00:50 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	load_history(char *root)
 			}
 		}
 	}
-	close(fd_history);
+	if (close(fd_history) == -1)
+	    return (1);
 	free(address);
 	return (0);
 }
@@ -67,7 +68,8 @@ int	save_history(char *raw_line, char *root)
 	if (fd_history == -1)
 	    return (1);
 	ft_putendl_fd(raw_line, fd_history);
-	close(fd_history);
+	if (close(fd_history) == -1)
+	    return (1);
 	free(address);
 	return (0);
 }

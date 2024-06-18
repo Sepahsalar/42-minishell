@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 18:26:51 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:02:06 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,14 @@ t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout, char *roo
 		clean_all(original_env, env, root, NULL);
 	if (dup(fd_stdin) == -1)
 		clean_all(original_env, env, root, pid);
-	close(STDOUT_FILENO);
+	if (close(STDOUT_FILENO) == -1)
+		clean_all(original_env, env, root, pid);
 	if (dup(fd_stdout) == -1)
 		clean_all(original_env, env, root, pid);
-	close(fd_stdin);
-	close(fd_stdout);
+	if (close(fd_stdin) == -1)
+		clean_all(original_env, env, root, pid);
+	if (close(fd_stdout) == -1)
+		clean_all(original_env, env, root, pid);
 	original_env = custom_export(original_env, "fd_stdin", "-2");
 	original_env = custom_export(original_env, "fd_stdout", "-2");
 	original_env = custom_export(original_env, "root", root);
@@ -118,11 +121,14 @@ void	minishell_process(t_env_pack env_pack)
 			env_pack = execute_all(raw_line, env_pack);
 			if (dup(fd_stdin) == -1)
 			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-			close(STDOUT_FILENO);
+			if (close(STDOUT_FILENO) == -1)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			if (dup(fd_stdout) == -1)
 			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-			close(fd_stdin);
-			close(fd_stdout);
+			if (close(fd_stdin) == -1)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
+			if (close(fd_stdout) == -1)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 		}
 		free(raw_line);
 	}

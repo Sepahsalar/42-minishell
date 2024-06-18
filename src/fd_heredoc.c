@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:59:53 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 17:40:37 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:16:51 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ int	get_user_text(t_cmd *cmd, t_file *temp_input)
 	return (0);
 }
 
-void	close_heredoc_file(t_file *temp_input)
+int	close_heredoc_file(t_file *temp_input)
 {
 	if (temp_input->fd > 2)
-		close(temp_input->fd);
+		if (close(temp_input->fd) == -1)
+			return (1);
 	temp_input->fd = -2;
+	return (0);
 }
 
 int	fd_heredoc(t_cmd **cmd_pointer)
@@ -56,7 +58,8 @@ int	fd_heredoc(t_cmd **cmd_pointer)
 				return (1);
 			if (get_user_text(cmd, temp_input))
 				return (1);
-			close_heredoc_file(temp_input);
+			if (close_heredoc_file(temp_input))
+				return (1);
 		}
 		temp_input = temp_input->next;
 	}

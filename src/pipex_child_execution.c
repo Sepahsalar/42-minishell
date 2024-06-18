@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:59:53 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 19:00:39 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:18:07 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	child_process(t_cmd *cmd_start, t_cmd *cmd_execution,
 		input_output_redirect(cmd_start, cmd_execution, fd);
 		close_all(cmd_execution);
 	}
-	close(fd[0]);
-	close(fd[1]);
+	if (close(fd[0]) == -1 || close(fd[1]) == -1)
+		master_clean(NULL, cmd_start, EXIT_FAILURE);
 	child_execution(cmd_start, cmd_execution, env_pack);
 }
 

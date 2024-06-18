@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:11:01 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 18:55:51 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:12:56 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution)
 			{
 				if (dup2(last_input->fd, last_input->fd_operator) == -1)
 					master_clean(NULL, cmd_start, EXIT_FAILURE);
-				close(last_input->fd);
+				if (close(last_input->fd) == -1)
+					master_clean(NULL, cmd_start, EXIT_FAILURE);
 			}
 			last = last->next;
 		}

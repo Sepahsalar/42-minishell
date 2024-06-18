@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:21:29 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 11:10:05 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:14:30 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	clean_env_node(t_env *node)
 	}
 }
 
-// t_env	*clean_env_list(t_env *first)
 void	clean_env_list(t_env *first)
 {
 	t_env	*node;
@@ -44,7 +43,6 @@ void	clean_env_list(t_env *first)
 		clean_env_node(node);
 		node = temp;
 	}
-	// return (0);
 }
 
 t_env	*create_env_node(void)

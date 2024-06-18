@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:09:24 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 18:29:16 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:13:17 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ char	*get_current_pid(t_env *original_env)
 	else if (pid_str && ft_strlen(pid_str) > 1)
 		pid_str[ft_strlen(pid_str) - 1] = '\0';
 	clean_env_list(cpy);
-	close(fd);
+	if (close(fd) == -1)
+		exit(1);
 	if (unlink(".pid") == -1)
 		exit(1);
 	return (pid_str);
