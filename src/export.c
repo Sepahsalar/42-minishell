@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:44:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 19:22:08 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 19:55:06 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ static void	export_normal_helper(t_cmd *cmd, char *key, char *value)
 	else
 	{
 		temp = temp_env->value;
-		temp_env->value = ft_strdup(value);
+		temp_env->value = value;
 		free(temp);
+		free(key);
 	}
 }
 
@@ -42,15 +43,22 @@ static void	export_normal(t_cmd *cmd, char *arg, int *status)
 	char	*find1;
 
 	new_env = ft_strdup(arg);
-	// if (new_env == NULL)
-	// 	return (1);
+	if (!new_env)
+		master_clean(NULL, cmd, EXIT_FAILURE);
 	find1 = ft_strchr(new_env, '=');
 	temp1 = ft_substr(new_env, 0, find1 - new_env);
+	if (!temp1)
+		master_clean(NULL, cmd, EXIT_FAILURE);
 	if (!export_check_key(temp1))
+	{
+		free(temp1);
 		print_export_error(arg, status);
+	}
 	else
 	{
 		temp2 = ft_substr(new_env, find1 - new_env + 1, ft_strlen(find1 + 1));
+		if (!temp2)
+			master_clean(NULL, cmd, EXIT_FAILURE);
 		export_normal_helper(cmd, temp1, temp2);
 	}
 	free(new_env);
@@ -58,6 +66,9 @@ static void	export_normal(t_cmd *cmd, char *arg, int *status)
 
 static void	export_helper(t_cmd *cmd, char *arg, int *status)
 {
+	t_env	*temp_env;
+
+	temp_env = cmd->env;
 	if (!export_check(arg))
 		print_export_error(arg, status);
 	else if (ft_strchr(arg, '='))
@@ -68,6 +79,8 @@ static void	export_helper(t_cmd *cmd, char *arg, int *status)
 		else
 			export_normal(cmd, arg, status);
 	}
+	if (temp_env && !cmd->env)
+		master_clean(NULL, cmd, EXIT_FAILURE);
 }
 
 t_env_pack	run_export(t_cmd *cmd)

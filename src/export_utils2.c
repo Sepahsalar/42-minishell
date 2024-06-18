@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:54:43 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 18:03:02 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 19:52:09 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,30 @@ void	custom_print_export(t_env *temp_env)
 		ft_putendl_fd("", 1);
 }
 
+// void	export_no_arg(t_cmd *cmd)
+// {
+// 	int		index;
+// 	t_env	*sorted;
+// 	t_env	*cpy;
+// 	int		count;
+// 	t_env	*temp_env;
+
+// 	cpy = handle_oldpwd(cpy_env(cmd->env));
+// 	sorted = sort_env(cpy);
+// 	index = 1;
+// 	count = env_count(cpy);
+// 	while (index <= count)
+// 	{
+// 		temp_env = sorted;
+// 		while (temp_env && temp_env->index != index)
+// 			temp_env = temp_env->next;
+// 		if (temp_env && !same(temp_env->key, "_"))
+// 			custom_print_export(temp_env);
+// 		index++;
+// 	}
+// 	clean_env_list(cpy);
+// }
+
 void	export_no_arg(t_cmd *cmd)
 {
 	int		index;
@@ -44,7 +68,12 @@ void	export_no_arg(t_cmd *cmd)
 	int		count;
 	t_env	*temp_env;
 
-	cpy = handle_oldpwd(cpy_env(cmd->env));
+	temp_env = cpy_env(cmd->env);
+	if (!temp_env)
+		master_clean(NULL, cmd, EXIT_FAILURE);
+	cpy = handle_oldpwd(temp_env);
+	if (!cpy)
+		master_clean(NULL, cmd, EXIT_FAILURE);
 	sorted = sort_env(cpy);
 	index = 1;
 	count = env_count(cpy);
@@ -87,6 +116,10 @@ static void	export_with_plus_helper(t_cmd *cmd, char *key, char *value)
 		temp = temp_env->value;
 		temp_env->value = ft_strjoin(temp, value);
 		free(temp);
+		free(key);
+		free(value);
+		if (!temp_env->value)
+			master_clean(NULL, cmd, EXIT_FAILURE);
 	}
 }
 
@@ -98,15 +131,25 @@ void	export_with_plus(t_cmd *cmd, char *arg, int *status)
 	char	*find1;
 
 	new_env = ft_strdup(arg);
-	// if (new_env == NULL)
-	// 	return (1);
+	if(!new_env)
+		master_clean(NULL, cmd, EXIT_FAILURE);
 	find1 = ft_strchr(new_env, '=');
 	temp1 = ft_substr(new_env, 0, (find1 - new_env - 1));
+	if (!temp1)
+	{
+		free(new_env);
+		master_clean(NULL, cmd, EXIT_FAILURE);
+	}
 	if (!export_check_key(temp1))
+	{
+		free(temp1);
 		print_export_error(arg, status);
+	}
 	else
 	{
 		temp2 = ft_substr(new_env, (find1 - new_env) + 1, ft_strlen(find1 + 1));
+		if (!temp2)
+			master_clean(NULL, cmd, EXIT_FAILURE);
 		export_with_plus_helper(cmd, temp1, temp2);
 	}
 	free(new_env);
