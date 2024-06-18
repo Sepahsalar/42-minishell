@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 18:52:21 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:56:18 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ char	*expand_one_dollar(t_cmd *cmd, char *str, char *find)
 
 	find++;
 	variable = find_var(find);
+	if (!variable)
+		master_clean(NULL, cmd, EXIT_FAILURE);
 	expanded = find_expanded(cmd, variable);
 	new_str = str_after_expansion(str, find, variable, expanded);
+	free(str);
 	free(variable);
 	free(expanded);
 	return (new_str);

@@ -6,11 +6,25 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 20:21:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 11:43:28 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:50:23 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// int	clean_str(char *s1, char *s2, char *s3, char *s4)
+int	clean_str(char *s1)
+{
+	if (s1)
+        free(s1);
+    // if (s2)
+    //     free(s2);
+    // if (s3)
+    //     free(s3);
+    // if (s4)
+    //     free(s4);
+    return (1);
+}
 
 int	create_heredoc_file(t_cmd *cmd, t_file *temp_input)
 {
@@ -19,18 +33,26 @@ int	create_heredoc_file(t_cmd *cmd, t_file *temp_input)
 	char	*temp_str2;
 
 	temp_str = ft_itoa(cmd->index);
+	if (!temp_str)
+	    return (1);
 	file_name = ft_strjoin(".temp_heredoc_", temp_str);
 	free(temp_str);
+	if (!file_name)
+		return (1);
 	temp_str2 = ft_itoa(temp_input->fd_operator);
+	if (!temp_str2)
+	    return (clean_str(file_name));
 	temp_str = file_name;
 	file_name = ft_strjoin(file_name, temp_str2);
 	free(temp_str);
 	free(temp_str2);
+	if (!file_name)
+		return (1);
 	temp_input->fd = open(file_name,
 			O_RDWR | O_CREAT | O_TRUNC, 0644);
 	temp_input->address = file_name;
 	if (temp_input->fd < 0)
-		return (1);
+		return (clean_str(file_name));
 	return (0);
 }
 
@@ -55,6 +77,8 @@ int	handle_dollar_string(t_cmd *cmd, char **string)
 	if (ft_strchr(*string, '$'))
 	{
 		hd.dollar = fill_dollar_list(*string);
+		if (!hd.dollar)
+			master_clean(NULL, cmd, EXIT_FAILURE);
 		hd.str = *string;
 		while (hd.dollar)
 		{

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:22:09 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 13:13:22 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:25:15 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,26 @@ int	accept_char(char *token, char *cur, t_env_pack env_pack)
 	return (1);
 }
 
+int is_fd_operator(char *str)
+{
+	int	index;
+	
+	// printf("str:%s\n", str);
+	if (!ft_isdigit(*str))
+	    return (0);
+	index = 1;
+	while (str[index] && ft_isdigit(str[index]))
+		index++;
+	// printf("%s\n", str+index);
+	// if (!str[index])
+	//     return (0);
+	// if (index < (int)ft_strlen(str) && str[index] != ' '
+	// 	&& (same(str + index + 1, "<") || same(str + index + 1, ">")))
+	// 	return (1);
+	if (str[index] == '>' || str[index] == '<')
+		return (1);
+	return (0);
+}
 char	*change_token(char *token, char *cur, int *index, int sq_dq, t_env_pack env_pack)
 {
 	char	*new_token;
@@ -115,7 +135,7 @@ char	*change_token(char *token, char *cur, int *index, int sq_dq, t_env_pack env
 		else
 		{
 			*index = *index + 1;
-			if (*cur != ' ')
+			if (*cur != ' ' && !is_fd_operator(cur))
 			{
 				// if (token)
 				// 	free(token);

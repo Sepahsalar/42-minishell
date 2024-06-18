@@ -6,13 +6,17 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 11:14:40 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:42:23 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 volatile int	g_signal;
+
+// test this in bash macOS:
+// 1) > 2>>
+// 2) > 2a>> temp
 
 void	clean_all(t_env *env1, t_env *env2, char *str1, char *str2)
 {

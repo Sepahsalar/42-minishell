@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atoi_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:03:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 13:02:28 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:55:41 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,21 @@ static t_atoi_file	atoi_file_helper(char **input, int place, int def)
 	return (af);
 }
 
-static void	atoi_file_remove(char **input, t_atoi_file	af, char *part, int len)
+static int	atoi_file_remove(char **input, t_atoi_file	af, char *part, int len)
 {
 	char	*new;
 	char	*temp_str;
 
 	new = malloc(len + ft_strlen(part) + 1);
-	//protection
+	if (!new)
+	    return (1);
 	new[len + ft_strlen(part)] = '\0';
 	ft_memcpy(new, af.str, len);
 	ft_memcpy(new + len, part, ft_strlen(part));
 	temp_str = *input;
 	*input = new;
 	free(temp_str);
+	return (0);
 }
 
 long	atoi_file(char **input, int place, int def)
@@ -77,6 +79,7 @@ long	atoi_file(char **input, int place, int def)
 		a = a * 10 + (af.str[af.place] - '0');
 		af.place++;
 	}
-	atoi_file_remove(input, af, part2, len);
+	if (atoi_file_remove(input, af, part2, len))
+	    return (-3);
 	return (a);
 }

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:59:53 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 12:39:48 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:40:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int	fill_fd_heredoc(t_cmd **start_cmd)
 
 	if (!start_cmd)
 		return (0);
-	change_mode(HEREDOC);
+	if (change_mode(HEREDOC))
+		master_clean(NULL, *start_cmd, EXIT_FAILURE);
 	cmd = *start_cmd;
 	while (cmd && g_signal == HEREDOC)
 	{
@@ -78,6 +79,7 @@ int	fill_fd_heredoc(t_cmd **start_cmd)
 		cmd = cmd->next;
 	}
 	if (g_signal == HEREDOC)
-		change_mode(RUNNING_COMMAND);
+		if (change_mode(RUNNING_COMMAND))
+			master_clean(NULL, *start_cmd, EXIT_FAILURE);
 	return (0);
 }
