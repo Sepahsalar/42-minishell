@@ -3,60 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   change_mode.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:06:56 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/07 16:50:06 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:31:08 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	running_command(void)
+static int	running_command(void)
 {
 	struct termios	term;
 
 	g_signal = RUNNING_COMMAND;
-	signal(SIGINT, &sig_handler);
-	signal(SIGQUIT, &sig_handler);
+	if (signal(SIGINT, &sig_handler) == SIG_ERR)
+	    return (1);
+	if (signal(SIGQUIT, &sig_handler) == SIG_ERR)
+	    return (1);
 	ft_bzero(&term, sizeof(term));
-	tcgetattr(STDIN_FILENO, &term);
+	if (tcgetattr(STDIN_FILENO, &term) == -1)
+	    return (1);
 	term.c_lflag |= ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
+	    return (1);
+	return (0);
 }
 
-static void	wait_for_command(void)
+static int	wait_for_command(void)
 {
 	struct termios	term;
 
 	g_signal = WAIT_FOR_COMMAND;
-	signal(SIGINT, &sig_handler);
-	signal(SIGQUIT, SIG_IGN);
+	if (signal(SIGINT, &sig_handler) == SIG_ERR)
+	    return (1);
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+	    return (1);
 	ft_bzero(&term, sizeof(term));
-	tcgetattr(STDIN_FILENO, &term);
+	if (tcgetattr(STDIN_FILENO, &term) == -1)
+	    return (1);
 	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
+	    return (1);
+	return (0);
+	
 }
 
-static void	heredoc_mode(void)
+static int	heredoc_mode(void)
 {
 	struct termios	term;
 
 	g_signal = HEREDOC;
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, &sig_handler);
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+	    return (1);
+	if (signal(SIGINT, &sig_handler) == SIG_ERR)
+	    return (1);
 	ft_bzero(&term, sizeof(term));
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	if (tcgetattr(STDIN_FILENO, &term) == -1)
+	    return (1);
+	term.c_lflag &= ~ECHOCTL; ///why it does not know this
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
+	    return (1);
+	return (0);
 }
 
-void	change_mode(int mode)
+int	change_mode(int mode)
 {
 	if (mode == RUNNING_COMMAND)
-		running_command();
+	{
+		if (running_command())
+		    return (1);
+	}
 	else if (mode == WAIT_FOR_COMMAND)
-		wait_for_command();
+	{
+		if (wait_for_command())
+			return (1);
+	}
 	else if (mode == HEREDOC)
-		heredoc_mode();
+	{
+	    if (heredoc_mode())
+		    return (1);
+	}
+	return (0);
 }

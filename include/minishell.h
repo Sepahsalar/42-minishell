@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 18:13:44 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:41:00 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,11 +286,11 @@ t_env_pack		run_echo(t_cmd *cmd);
 t_env_pack		run_exit(t_cmd *cmd);
 t_atol			atol_exit(char *str);
 void			run_exit_eof(t_env *env);
-t_error			find_error(char *line);
-char			*find_token(char *cur);
-char			*change_token(char *token, char *cur, int *index, int sq_dq);
+t_error			find_error(char *line, t_env_pack env_pack);
+char			*find_token(char *cur, t_env_pack env_pack);
+char			*change_token(char *token, char *cur, int *index, int sq_dq, t_env_pack env_pack);
 char			*change_token_heredoc(char *token, char *cur,
-					int *index, t_error error);
+					int *index, t_error error, t_env_pack env_pack);
 int				check_after_token(char *str);
 t_file			*create_file_node(int place);
 int				fill_files_helper(char *str, char *ch, t_cmd *cmd);
@@ -300,7 +300,7 @@ int				export_check_key(char *str);
 int				fill_files_all(t_cmd **cmd);
 char			*get_current_pid(t_env *original_env);
 void			sig_handler(int sig);
-void			change_mode(int mode);
+int			change_mode(int mode);
 t_env_pack		not_handling_error(t_env_pack env_pack, t_error error);
 int				print_error_before(t_error error, char *raw_line);
 void			print_error_after(t_error error, int printed);
@@ -309,7 +309,7 @@ int				open_sq_or_dq(char **token, int index);
 t_env_pack		error_actions(t_env_pack env_pack,
 					t_error error, char *raw_line);
 t_env_pack		execute_actions(char *raw_line, t_env_pack env_pack);
-int				accept_char(char *token, char *cur);
+int				accept_char(char *token, char *cur, t_env_pack env_pack);
 t_env			*handle_oldpwd(t_env *env);
 t_env			*sort_env(t_env *env);
 int				env_count(t_env *env);
@@ -364,7 +364,7 @@ int				heredoc_actions(t_cmd *cmd, char **line, char **heredoc_text);
 int				continue_heredoc(char *line, t_file *temp_input);
 int				create_heredoc_file(t_cmd *cmd, t_file *temp_input);
 t_error_helper	init_error_helper(void);
-t_error			find_error_helper(char *line, char *token, int index);
+t_error			find_error_helper(char *line, char *token, int index, t_env_pack env_pack);
 void			update_token_sq_dq(char **token, int *sq, int *dq, char c);
 void			expand_two_dollars(t_cmd *cmd, char **str,
 					char **find, int *remained_dollar);
@@ -381,8 +381,8 @@ int				need_file_node_all(char *str, t_file_helper fh);
 int				need_file_node_normal(char *str, char *ch, t_file_helper fh);
 void			update_sq_dq_file(char *str, t_file_helper *fh);
 int				need_update_sq_dq(char *str, t_file_helper fh);
-void			save_history(char *raw_line, char *root);
-void			load_history(char *root);
+int				save_history(char *raw_line, char *root);
+int				load_history(char *root);
 t_env_pack		fd_operator_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_file *temp_file, t_env_pack env_pack);
 t_env_pack		input_check(t_cmd *cmd_start, t_cmd *cmd_execution,

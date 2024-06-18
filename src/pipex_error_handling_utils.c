@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_handling_utils.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:22:09 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 18:54:20 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:13:22 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,22 @@
 
 int	check_after_token(char *str)
 {
+	if (!str)
+		return (0);
+	if (str && !str[0])
+		return (0);
 	return (ft_strchr(str, '|') || ft_strchr(str, '<') || ft_strchr(str, '>')
-		|| ((ft_strchr(str, '<') && ft_strchr(str, '<' + 1 == '<')))
-		|| ((ft_strchr(str, '>') && ft_strchr(str, '>' + 1 == '>'))));
+		|| ((ft_strchr(str, '<') && *(ft_strchr(str, '<') + 1) == '<'))
+		|| ((ft_strchr(str, '>') && *(ft_strchr(str, '>') + 1) == '>')));
 }
 
-char	**init_token(void)
+char	**init_token(t_env_pack env_pack)
 {
 	char	**token;
 
 	token = (char **)malloc(21 * sizeof(char *));
+	if (!token)
+		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 	token[0] = "||";
 	token[1] = "<>";
 	token[2] = "<<<";
@@ -48,21 +54,23 @@ char	**init_token(void)
 	return (token);
 }
 
-char	*find_token(char *cur)
+char	*find_token(char *cur, t_env_pack env_pack)
 {
 	char	**token;
 	int		index;
 	char	*res;
 
-	token = init_token();
-	//protection
+	token = init_token(env_pack);
 	index = 0;
 	while (token[index])
 	{
 		if (ft_strncmp(cur, token[index], ft_strlen(token[index])) == 0)
 		{
-			res = ft_strdup(token[index]);
+			// res = ft_strdup(token[index]);
+			res = token[index];
 			free(token);
+			if (!res)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			return (res);
 		}
 		index++;
@@ -71,8 +79,11 @@ char	*find_token(char *cur)
 	return (NULL);
 }
 
-int	accept_char(char *token, char *cur)
+int	accept_char(char *token, char *cur, t_env_pack env_pack)
 {
+	char	*temp;
+
+    temp = NULL;
 	if (same(token, "|"))
 	{
 		if (*cur == '|' || *cur == '\0')
@@ -80,23 +91,24 @@ int	accept_char(char *token, char *cur)
 	}
 	else
 	{
-		if (find_token(cur) || *cur == '\0')
+		temp = find_token(cur, env_pack);
+		if (temp || *cur == '\0')
 			return (0);
 	}
 	return (1);
 }
 
-char	*change_token(char *token, char *cur, int *index, int sq_dq)
+char	*change_token(char *token, char *cur, int *index, int sq_dq, t_env_pack env_pack)
 {
 	char	*new_token;
 
 	if (!sq_dq)
 	{
-		new_token = find_token(cur);
+		new_token = find_token(cur, env_pack);
 		if (new_token)
 		{
-			if (token)
-				free(token);
+			// if (token)
+			// 	free(token);
 			*index = *index + ft_strlen(new_token);
 			return (new_token);
 		}
@@ -105,8 +117,8 @@ char	*change_token(char *token, char *cur, int *index, int sq_dq)
 			*index = *index + 1;
 			if (*cur != ' ')
 			{
-				if (token)
-					free(token);
+				// if (token)
+				// 	free(token);
 				return (NULL);
 			}
 			else
@@ -115,8 +127,8 @@ char	*change_token(char *token, char *cur, int *index, int sq_dq)
 	}
 	else
 	{
-		if (token)
-			free(token);
+		// if (token)
+		// 	free(token);
 		*index = *index + 1;
 		return (NULL);
 	}

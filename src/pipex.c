@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:02:20 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/10 18:12:18 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:21:10 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_env_pack	execute_all(char *raw_line, t_env_pack env_pack)
 {
 	t_error		error;
 
-	error = find_error(raw_line);
+	error = find_error(raw_line, env_pack);
 	if (error.error)
 		return (error_actions(env_pack, error, raw_line));
 	return (execute_actions(raw_line, env_pack));

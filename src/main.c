@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 19:27:49 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:14:40 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ void	clean_all(t_env *env1, t_env *env2, char *str1, char *str2)
 		free(str1);
 	if (str2)
 		free(str2);
+	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
+		exit(1);
+	if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
+	    exit(1);
+	if (change_mode(RUNNING_COMMAND))
+		exit(1);
 	exit(1);
 }
 
@@ -72,43 +78,48 @@ void	minishell_process(t_env_pack env_pack)
 
 	while (1)
 	{
-		change_mode(WAIT_FOR_COMMAND);
+		if (change_mode(WAIT_FOR_COMMAND))
+			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 		raw_line = readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
 		if (!raw_line)
 		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
-			change_mode(RUNNING_COMMAND);
 			clean_env_list(env_pack.env);
 			run_exit_eof(env_pack.original_env);
 		}
 		if (ft_strlen(raw_line) > 0 && !all_space(raw_line))
 		{
 			fd_stdin = dup(STDIN_FILENO);
+			if (fd_stdin == -1)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			itoa = ft_itoa(fd_stdin);
-			//protect
+			if (!itoa)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			env_pack.original_env = custom_export(env_pack.original_env, "fd_stdin", itoa);
 			free(itoa);
 			fd_stdout = dup(STDOUT_FILENO);
+			if (fd_stdout == -1)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			itoa = ft_itoa(fd_stdout);
-			//protect
+			if (!itoa)
+                clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			env_pack.original_env = custom_export(env_pack.original_env, "fd_stdout", itoa);
 			free(itoa);
-			save_history(raw_line, value_finder(env_pack.original_env, "root"));
+			if (save_history(raw_line, value_finder(env_pack.original_env, "root")))
+                clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			rl_clear_history();
-			load_history(value_finder(env_pack.original_env, "root"));
+			if (load_history(value_finder(env_pack.original_env, "root")))
+                clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			env_pack = execute_all(raw_line, env_pack);
-			// close(STDIN_FILENO);
-			dup(fd_stdin);
+			if (dup(fd_stdin) == -1)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			close(STDOUT_FILENO);
-			dup(fd_stdout);
+			if (dup(fd_stdout) == -1)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			close(fd_stdin);
 			close(fd_stdout);
 		}
 		free(raw_line);
 	}
-	clean_env_list(env_pack.original_env);
-	clean_env_list(env_pack.env);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -131,8 +142,8 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	env_pack = env_pack_at_start(envp, fd_stdin, fd_stdout, root);
-	//till here
-	load_history(value_finder(env_pack.original_env, "root"));
+	if (load_history(value_finder(env_pack.original_env, "root")))
+	    clean_all(env_pack.original_env, env_pack.env, root, NULL);
 	minishell_process(env_pack);
 	free(root);
 	return (0);
