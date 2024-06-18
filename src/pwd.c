@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:26:11 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/10 18:37:47 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 19:09:30 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@ t_env_pack	run_pwd(t_cmd *cmd)
 	path = getcwd(NULL, 0);
 	if (path)
 		ft_putendl_fd(path, 1);
-	///
 	else if (!path && errno == ENOENT)
 		ft_putendl_fd(value_finder(env_pack.env, "PWD"), 1);
-	///
-	//maybe protection against failure
+	else
+		perror("bash");
 	free(path);
 	export_original(env_pack.original_env, 0);
 	return (env_pack);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:49:01 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 10:45:34 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 19:05:57 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	run_exit_error(t_cmd *cmd)
 	ft_putstr_fd("bash: exit: ", 2);
 	ft_putstr_fd(cmd->args[1], 2);
 	ft_putendl_fd(": numeric argument required", 2);
-	exit(2);
+	exit(255);
 }
 
 t_env_pack	run_exit(t_cmd *cmd)
