@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:49:01 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 15:03:58 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:45:34 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ void	run_exit_eof(t_env *env)
 	printf(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ exit\n");
 	exit_code = ft_atoi(value_finder(env, "exit_code"));
 	clean_env_list(env);
-	//master_clean needed
+	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
+		exit(1);
+	if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
+		exit(1);
+	if (change_mode(RUNNING_COMMAND))
+		exit(1);
 	exit(exit_code);
 }
