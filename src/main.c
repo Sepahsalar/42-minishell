@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 10:05:05 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:19:55 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,13 @@ void	minishell_process(t_env_pack env_pack)
 
 	while (1)
 	{
-		change_mode(WAIT_FOR_COMMAND);
+		if (change_mode(WAIT_FOR_COMMAND))
+		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
+			change_mode(RUNNING_COMMAND);
+			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
+		}
 		raw_line = readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
 		if (!raw_line)
 		{
