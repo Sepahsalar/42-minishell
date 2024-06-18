@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 18:13:44 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 09:44:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -382,7 +382,7 @@ int				need_file_node_normal(char *str, char *ch, t_file_helper fh);
 void			update_sq_dq_file(char *str, t_file_helper *fh);
 int				need_update_sq_dq(char *str, t_file_helper fh);
 void			save_history(char *raw_line, char *root);
-void			load_history(char *root);
+int			load_history(char *root);
 t_env_pack		fd_operator_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_file *temp_file, t_env_pack env_pack);
 t_env_pack		input_check(t_cmd *cmd_start, t_cmd *cmd_execution,

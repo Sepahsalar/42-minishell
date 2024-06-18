@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 19:27:49 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:05:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	env_pack = env_pack_at_start(envp, fd_stdin, fd_stdout, root);
-	//till here
-	load_history(value_finder(env_pack.original_env, "root"));
+	if (load_history(value_finder(env_pack.original_env, "root")))
+	    clean_all(env_pack.original_env, env_pack.env, root, NULL);
 	minishell_process(env_pack);
 	free(root);
 	return (0);
