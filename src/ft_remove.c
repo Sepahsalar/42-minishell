@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_remove.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:36:46 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/04 14:51:09 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:42:42 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char	*ft_remove(char *str, char *del, t_file *file)
 	ft_memcpy(result, str, len);
 	ft_memcpy(result + len, part2, ft_strlen(part2));
 	result[len + ft_strlen(part2)] = '\0';
-	free(str);
+	// // if (str)
+	// 	free(str);
 	file = file->next;
 	while (file)
 	{

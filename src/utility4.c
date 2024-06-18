@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:21:36 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 13:58:32 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:41:32 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,9 @@ t_hd_file	*remove_update(t_hd_file *hd, char *ch)
 	hd = remove_update_con(hd, ch, temp_str);
 	// if (!hd)
 	// 	return (0);
+	temp_str = hd->str;
 	hd->str = ft_remove(hd->str, hd->file->raw, hd->file);
+	free(temp_str);
 	// if (!hd->str)
 	// 	return (0);
 	return (hd);
