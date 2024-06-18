@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:15:35 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/17 14:58:29 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:05:31 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ t_env_pack	cmd_dir(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(cmd_execution->cmd_name, 2);
 	ft_putendl_fd(": Is a directory", 2);
-	master_clean(0, cmd_start, -1);
+	// master_clean(0, cmd_start, -1);
+	(void)cmd_start;
 	env_pack.original_env = export_original(env_pack.original_env, 126);
 	cmd_execution->file_error = 1;
 	return (env_pack);
@@ -48,7 +49,8 @@ t_env_pack	cmd_permission(t_cmd *cmd_start, t_cmd *cmd_execution,
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(cmd_execution->cmd_name, 2);
 	ft_putendl_fd(": Permission denied", 2);
-	master_clean(0, cmd_start, -1);
+	// master_clean(0, cmd_start, -1);
+	(void)cmd_start;
 	env_pack.original_env
 		= export_original(env_pack.original_env, 126);
 	cmd_execution->file_error = 1;
@@ -64,7 +66,8 @@ t_env_pack	cmd_not_found(t_cmd *cmd_start, t_cmd *cmd_execution,
 		ft_putendl_fd(": No such file or directory", 2);
 	else
 		ft_putendl_fd(": command not found", 2);
-	master_clean(0, cmd_start, -1);
+	// master_clean(0, cmd_start, -1);
+	(void)cmd_start;
 	env_pack.original_env
 		= export_original(env_pack.original_env, 127);
 	cmd_execution->file_error = 1;

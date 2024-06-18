@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_execute_actions.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:39:07 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/10 20:44:18 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:50:36 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,13 @@ t_env_pack	execute_actions(char *raw_line, t_env_pack env_pack)
 	t_env_pack	env_pack_result;
 
 	env_pack_result = env_pack;
-	change_mode(RUNNING_COMMAND);
+	if (change_mode(RUNNING_COMMAND))
+	    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 	raw_cmd = create_raw_cmd(raw_line);
-	
+	if (!raw_cmd)
+		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 	cmd = fill_cmd_list(raw_cmd, env_pack.env, env_pack.original_env);
-	clean_2d_char(raw_cmd);
+	// clean_2d_char(raw_cmd);
 	env_pack_result = running_actions(cmd);
 	del_herdoc_files(cmd);
 	clean_cmd_list(cmd);

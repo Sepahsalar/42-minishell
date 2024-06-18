@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:21:36 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/17 12:55:21 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:58:32 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ static t_hd_file	*fd_operator(t_hd_file *hd, char *ch)
 		hd->file->fd_operator = atoi_file(&(hd->str), hd->file->place, 1);
 	else if (*ch == '<')
 		hd->file->fd_operator = atoi_file(&(hd->str), hd->file->place, 0);
+	// if (hd->file->fd_operator == -3)
+	//     return (NULL);
 	return (hd);
 }
 
@@ -104,6 +106,8 @@ t_hd_file	*remove_update(t_hd_file *hd, char *ch)
 
 	len = ft_strlen(hd->str);
 	hd = fd_operator(hd, ch);
+	// if (!hd)
+	//     return (NULL);
 	hd->file->place = hd->file->place + ft_strlen(hd->str) - len;
 	temp_str = hd->str + hd->file->place;
 	file = hd->file->next;

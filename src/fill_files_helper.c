@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:29:11 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/17 11:03:50 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:57:55 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,21 @@ int	handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
 	char		*temp;
 
 	hd = malloc(sizeof(t_hd_file));
+	if (!hd)
+		master_clean(NULL, cmd, EXIT_FAILURE);
 	ft_memset(hd, 0, sizeof(t_hd_file));
 	hd->file = *file;
 	hd->str = ft_strdup(str);
+	if(!hd->str)
+	{
+		free(hd);
+		master_clean(NULL, cmd, EXIT_FAILURE);
+	}
 	while (hd && hd->file)
 	{
 		hd = remove_update(hd, ch);
-		//return 1 if failed
+		// if (!hd)
+		// 	master_clean(NULL, cmd, EXIT_FAILURE);
 		if (hd && hd->file)
 			hd->file = hd->file->next;
 	}
