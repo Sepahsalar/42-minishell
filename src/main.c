@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 20:56:26 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:58:07 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ volatile int	g_signal;
 // 2) > 2a>> temp
 
 // search for all voids in functions and delete them
+
+// delete .history in makefile
 
 // norminette:
 // 1) cd ---------------------------- medium->nima
