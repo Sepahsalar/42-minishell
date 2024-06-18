@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_actions_utils.c                              :+:      :+:    :+:   */
+/*   pipex_error_actions_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:46:17 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 13:48:04 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 12:37:09 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ int	print_error_before(t_error error, char *raw_line)
 	char	*heredoc_place;
 
 	heredoc_place = ft_strnstr(raw_line, "<<", error.index);
-	if (!heredoc_place || check_after_token(raw_line + error.index
-			+ ft_strlen(error.error) - 1))
+	if (!heredoc_place || (ft_strlen(raw_line) >=  (error.index
+			+ ft_strlen(error.error) - 1)
+			&& check_after_token(raw_line + error.index + ft_strlen(error.error) - 1)))
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 		ft_putstr_fd(error.error, 2);
+		free(error.error);
 		ft_putendl_fd("\'", 2);
 		return (1);
 	}
@@ -47,6 +49,7 @@ void	print_error_after(t_error error, int printed)
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 		ft_putstr_fd(error.error, 2);
+		free(error.error);
 		ft_putendl_fd("\'", 2);
 	}
 }
