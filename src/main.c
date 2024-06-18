@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 10:19:55 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:38:09 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ void	clean_all(t_env *env1, t_env *env2, char *str1, char *str2)
 		free(str1);
 	if (str2)
 		free(str2);
+	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
+		exit(1);
+	if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
+	    exit(1);
+	if (change_mode(RUNNING_COMMAND))
+		exit(1);
 	exit(1);
 }
 
@@ -73,12 +79,7 @@ void	minishell_process(t_env_pack env_pack)
 	while (1)
 	{
 		if (change_mode(WAIT_FOR_COMMAND))
-		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
-			change_mode(RUNNING_COMMAND);
 			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-		}
 		raw_line = readline(ANSI_COLOR_GREEN "[ASAL]" ANSI_COLOR_RESET"$ ");
 		if (!raw_line)
 		{
