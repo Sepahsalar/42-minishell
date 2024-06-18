@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 16:27:40 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:54:18 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*expand_one_dollar(t_cmd *cmd, char *str, char *find)
 	variable = find_var(find);
 	expanded = find_expanded(cmd, variable);
 	new_str = str_after_expansion(str, find, variable, expanded);
+	free(str);
 	free(variable);
 	free(expanded);
 	return (new_str);

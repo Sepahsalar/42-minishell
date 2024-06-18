@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:26:17 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 15:59:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:37:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ static long	fd_operator_all(t_hd_file *hd)
 	place = hd->file->place;
 	c = hd->str[place];
 	str_dup = ft_strdup(hd->str);
-	//protection
+	if (!str_dup)
+		return (-3);
 	if (c == '>')
 		fd_operator = atoi_file(&str_dup, place, 1);
 	else if (c == '<')
 		fd_operator = atoi_file(&str_dup, place, 0);
-	//protection
 	free(str_dup);
 	return (fd_operator);
 }

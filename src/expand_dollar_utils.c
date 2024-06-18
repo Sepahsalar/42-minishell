@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:09:24 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 16:27:29 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:52:47 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,10 @@ void	expand_two_dollars(t_cmd *cmd, char **str,
 		(*find) = (*str) + reletive_index + (ft_strlen(temp) * count);
 	}
 	else
+	{
 	    *str = ft_strdup(*str);
+		(*find) = (*str) + reletive_index;
+	}
 }
 
 int	no_need_more_expand(int remain_dollar, char *find, int type)
