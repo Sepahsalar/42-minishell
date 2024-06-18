@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:29:11 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 14:12:31 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:53:32 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,38 @@ int	handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
 	char		*temp;
 
 	hd = malloc(sizeof(t_hd_file));
-	// if (!hd)
-	// 	master_clean(NULL, cmd, EXIT_FAILURE);
+	if (!hd)
+		master_clean(NULL, cmd, EXIT_FAILURE);
 	ft_memset(hd, 0, sizeof(t_hd_file));
 	hd->file = *file;
 	hd->str = ft_strdup(str);
-	// if(!hd->str)
-	// {
-	// 	free(hd);
-	// 	master_clean(NULL, cmd, EXIT_FAILURE);
-	// }
+	if(str && !hd->str)
+	{
+		free(hd);
+		master_clean(NULL, cmd, EXIT_FAILURE);
+	}
 	while (hd && hd->file)
 	{
 		hd = remove_update(hd, ch);
-		// if (!hd)
-		// 	master_clean(NULL, cmd, EXIT_FAILURE);
+		if (!hd)
+			master_clean(NULL, cmd, EXIT_FAILURE);
 		if (hd && hd->file)
 			hd->file = hd->file->next;
 	}
 	temp = cmd->current;
-	if (hd)
-		cmd->current = ft_strdup(hd->str);
+	cmd->current = ft_strdup(hd->str);
 	free(temp);
+	if (hd->str && !cmd->current)
+	{
+        free(hd->str);
+        free(hd);
+        master_clean(NULL, cmd, EXIT_FAILURE);
+    }
 	if (*ch == '>')
 		cmd->output = *file;
 	else
 		cmd->input = *file;
-	if (hd)
-		free(hd->str);
+	free(hd->str);
 	free(hd);
 	return (0);
 }

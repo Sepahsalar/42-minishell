@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:26:17 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/17 13:09:25 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:59:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,21 @@ int	handle_hd_all(t_cmd *cmd, t_file **file)
 	char			*temp;
 
 	hd = malloc(sizeof(t_hd_file));
+	if (!hd)
+	    master_clean(NULL, cmd, EXIT_FAILURE);
 	ft_memset(hd, 0, sizeof(t_hd_file));
 	hd->file = *file;
 	hd->str = ft_strdup(cmd->current);
+	if (cmd->current && !hd->str)
+	    master_clean(NULL, cmd, EXIT_FAILURE);
 	temp = hd->str;
 	while (hd && hd->file)
 	{
 		hd->file->fd_operator = fd_operator_all(hd);
 		hd = remove_update_all(hd);
-		//failiure return 1
-		if (hd)
-			hd->file = hd->file->next;
+		if (!hd)
+			master_clean(NULL, cmd, EXIT_FAILURE);
+		hd->file = hd->file->next;
 	}
 	free(temp);
 	free(hd);

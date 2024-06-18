@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:09:24 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/17 18:55:04 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:27:29 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,14 @@ void	expand_two_dollars(t_cmd *cmd, char **str,
 	(*remained_dollar) = count % 2;
 	count = count / 2;
 	reletive_index = (*find) - (*str);
-	(*str) = expand_pid((*str), (*find), temp, count);
 	if (count)
+	{
+		(*str) = expand_pid((*str), (*find), temp, count);
+	// if (count)
 		(*find) = (*str) + reletive_index + (ft_strlen(temp) * count);
+	}
+	else
+	    *str = ft_strdup(*str);
 }
 
 int	no_need_more_expand(int remain_dollar, char *find, int type)

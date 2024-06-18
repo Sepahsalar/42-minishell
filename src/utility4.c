@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:21:36 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 15:41:32 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:01:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,36 @@ t_hd_file	*remove_update_all(t_hd_file *hd)
 		hd->file->append = 1;
 		hd->file->raw = strdup_modified(temp_str, ">>");
 		if (!hd->file->raw)
+		{
+			clean_file_list(hd->file);
+			free(hd->str);
+			free(hd);
 		    return (0);
+		}
 	}
 	else if (*(temp_str) == '>')
 	{
 		hd->file->trunc = 1;
 		hd->file->raw = strdup_modified(temp_str, ">");
 		if (!hd->file->raw)
+		{
+			clean_file_list(hd->file);
+			free(hd->str);
+			free(hd);
 		    return (0);
+		}
 	}
 	else if (*(temp_str) == '<' && *(temp_str + 1) != '<')
 	{
 		hd->file->input = 1;
 		hd->file->raw = strdup_modified(temp_str, "<");
 		if (!hd->file->raw)
+		{
+			clean_file_list(hd->file);
+			free(hd->str);
+			free(hd);
 		    return (0);
+		}
 	}
 	return (hd);
 }
