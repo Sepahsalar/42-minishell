@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_handling.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 16:37:38 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:23:27 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_error_helper	check_empty_first_command(char *line)
+t_error_helper	check_empty_first_command(char *line, t_env_pack env_pack)
 {
 	t_error_helper	e;
 
@@ -27,6 +27,8 @@ t_error_helper	check_empty_first_command(char *line)
 	{
 		e.error.index = e.index;
 		e.error.error = ft_strdup("|");
+		if (!e.error.error)
+		    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 	}
 	return (e);
 }
@@ -43,11 +45,11 @@ char	*change_helper_error(t_error_helper *e, char *line)
 			&((*e).index), ((*e).sq || (*e).dq)));
 }
 
-t_error	find_error(char *line)
+t_error	find_error(char *line, t_env_pack env_pack)
 {
 	t_error_helper	e;
 
-	e = check_empty_first_command(line);
+	e = check_empty_first_command(line, env_pack);
 	if (e.error.error)
 		return (e.error);
 	while (e.index <= (int)ft_strlen(line))

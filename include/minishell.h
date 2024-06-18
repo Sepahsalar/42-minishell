@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 10:53:31 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:24:06 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,7 @@ t_env_pack		run_echo(t_cmd *cmd);
 t_env_pack		run_exit(t_cmd *cmd);
 t_atol			atol_exit(char *str);
 void			run_exit_eof(t_env *env);
-t_error			find_error(char *line);
+t_error			find_error(char *line, t_env_pack env_pack);
 char			*find_token(char *cur);
 char			*change_token(char *token, char *cur, int *index, int sq_dq);
 char			*change_token_heredoc(char *token, char *cur,
