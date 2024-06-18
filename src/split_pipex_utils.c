@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipex_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:15:02 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 18:52:53 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:11:35 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ int	len_quote(const char *s, char ch)
 	int		j;
 
 	if ((*s != 34 && *s != 39))
-	{
 		j = len_quote_helper(s, ch);
-	}
 	else
 		j = len_helper(s);
 	return (j + 1);

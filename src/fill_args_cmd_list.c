@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args_cmd_list.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:34:04 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 13:38:17 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:12:22 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	fill_args_cmd_list(t_cmd **cmd)
 	while (temp)
 	{
 		temp->args = split_pipex(temp->current);
-		if (temp->args == NULL)
+		if (!temp->args)
 			return (1);
 		temp = temp->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd_address_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:00:12 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/05 10:44:43 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:19:04 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*find_address_abs(t_cmd *cmd, char mode)
 		if (!address)
 		{
 			cmd->error = 1;
-			return (NULL);
+			master_clean(NULL, cmd, EXIT_FAILURE);
 		}
 	}
 	return (address);
@@ -43,7 +43,7 @@ static char	*find_address_rel(t_cmd *cmd, char mode,
 		if (!address)
 		{
 			cmd->error = 1;
-			return (NULL);
+			master_clean(NULL, cmd, EXIT_FAILURE);
 		}
 		if (check_accessibility(address, mode) == 1)
 			return (address);
@@ -81,24 +81,21 @@ char	*find_address(t_cmd *cmd, char mode)
 	if (!temp)
 	{
 		cmd->error = 1;
-		return (NULL);
+		master_clean(NULL, cmd, EXIT_FAILURE);
 	}
-	//should be replaced with one master clean function
 	temp_env = find_path(cmd);
 	if (!temp_env)
 	{
 		free(temp);
-		return (0);
+		master_clean(NULL, cmd, EXIT_FAILURE);
 	}
-	//should be replaced with one master clean function
 	all_path = ft_split(temp_env->value, ':');
 	if (!all_path)
 	{
 		cmd->error = 1;
 		free(temp);
-		return (NULL);
+		master_clean(NULL, cmd, EXIT_FAILURE);
 	}
-	//should be replaced with one master clean function
 	address = find_address_rel(cmd, mode, all_path, temp);
 	free(temp);
 	clean_2d_char(all_path);
