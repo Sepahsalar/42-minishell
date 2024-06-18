@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:07:19 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 11:45:18 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:11:16 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static t_quote	*create_and_fill_quote_node(int start, int end)
 	t_quote	*quote;
 
 	quote = malloc(sizeof(t_quote));
+	if (!quote)
+	    return (NULL);
 	ft_memset(quote, 0, sizeof(t_quote));
 	quote->start = start;
 	quote->end = end;
@@ -82,7 +84,10 @@ t_quote	*create_and_fill_quote_list(char *str)
 		else
 			old->next = new;
 		if (!new)
+		{
 			clean_quote_list(head);
+			return (NULL);
+		}
 		old = new;
 		index = end + 1;
 	}

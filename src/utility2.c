@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:04:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/10 18:27:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:35:48 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	check_accessibility(char *address, char mode)
 		if (S_ISDIR(buf.st_mode))
 			result = 0;
 	}
-	if (result == -1)
-		return (result);
 	if (result == 0)
 		return (1);
 	return (0);
