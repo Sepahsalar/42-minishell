@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 10:45:58 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:14:40 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,30 +89,37 @@ void	minishell_process(t_env_pack env_pack)
 		if (ft_strlen(raw_line) > 0 && !all_space(raw_line))
 		{
 			fd_stdin = dup(STDIN_FILENO);
+			if (fd_stdin == -1)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			itoa = ft_itoa(fd_stdin);
-			//protect
+			if (!itoa)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			env_pack.original_env = custom_export(env_pack.original_env, "fd_stdin", itoa);
 			free(itoa);
 			fd_stdout = dup(STDOUT_FILENO);
+			if (fd_stdout == -1)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			itoa = ft_itoa(fd_stdout);
-			//protect
+			if (!itoa)
+                clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			env_pack.original_env = custom_export(env_pack.original_env, "fd_stdout", itoa);
 			free(itoa);
-			save_history(raw_line, value_finder(env_pack.original_env, "root"));
+			if (save_history(raw_line, value_finder(env_pack.original_env, "root")))
+                clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			rl_clear_history();
-			load_history(value_finder(env_pack.original_env, "root"));
+			if (load_history(value_finder(env_pack.original_env, "root")))
+                clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			env_pack = execute_all(raw_line, env_pack);
-			// close(STDIN_FILENO);
-			dup(fd_stdin);
+			if (dup(fd_stdin) == -1)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			close(STDOUT_FILENO);
-			dup(fd_stdout);
+			if (dup(fd_stdout) == -1)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			close(fd_stdin);
 			close(fd_stdout);
 		}
 		free(raw_line);
 	}
-	clean_env_list(env_pack.original_env);
-	clean_env_list(env_pack.env);
 }
 
 int	main(int argc, char **argv, char **envp)

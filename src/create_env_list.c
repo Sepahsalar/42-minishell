@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:21:29 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/17 18:12:10 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:10:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,14 @@ void	clean_env_list(t_env *first)
 {
 	t_env	*node;
 	t_env	*temp;
+	char	*value;
 
+	value = value_finder(first, "fd_stdin");
+	if (value && ft_atoi(value) > 2)
+		close(ft_atoi(value));
+	value = value_finder(first, "fd_stdout");
+	if (value && ft_atoi(value) > 2)
+		close(ft_atoi(value));
 	node = first;
 	while (node)
 	{
