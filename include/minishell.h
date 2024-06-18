@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 11:24:06 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:41:00 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,10 +287,10 @@ t_env_pack		run_exit(t_cmd *cmd);
 t_atol			atol_exit(char *str);
 void			run_exit_eof(t_env *env);
 t_error			find_error(char *line, t_env_pack env_pack);
-char			*find_token(char *cur);
-char			*change_token(char *token, char *cur, int *index, int sq_dq);
+char			*find_token(char *cur, t_env_pack env_pack);
+char			*change_token(char *token, char *cur, int *index, int sq_dq, t_env_pack env_pack);
 char			*change_token_heredoc(char *token, char *cur,
-					int *index, t_error error);
+					int *index, t_error error, t_env_pack env_pack);
 int				check_after_token(char *str);
 t_file			*create_file_node(int place);
 int				fill_files_helper(char *str, char *ch, t_cmd *cmd);
@@ -309,7 +309,7 @@ int				open_sq_or_dq(char **token, int index);
 t_env_pack		error_actions(t_env_pack env_pack,
 					t_error error, char *raw_line);
 t_env_pack		execute_actions(char *raw_line, t_env_pack env_pack);
-int				accept_char(char *token, char *cur);
+int				accept_char(char *token, char *cur, t_env_pack env_pack);
 t_env			*handle_oldpwd(t_env *env);
 t_env			*sort_env(t_env *env);
 int				env_count(t_env *env);
@@ -364,7 +364,7 @@ int				heredoc_actions(t_cmd *cmd, char **line, char **heredoc_text);
 int				continue_heredoc(char *line, t_file *temp_input);
 int				create_heredoc_file(t_cmd *cmd, t_file *temp_input);
 t_error_helper	init_error_helper(void);
-t_error			find_error_helper(char *line, char *token, int index);
+t_error			find_error_helper(char *line, char *token, int index, t_env_pack env_pack);
 void			update_token_sq_dq(char **token, int *sq, int *dq, char c);
 void			expand_two_dollars(t_cmd *cmd, char **str,
 					char **find, int *remained_dollar);

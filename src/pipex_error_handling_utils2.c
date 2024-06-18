@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_handling_utils2.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 10:55:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/07 16:37:33 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:45:00 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static t_error	init_error(void)
 	return (error);
 }
 
-t_error	find_error_helper(char *line, char *token, int index)
+t_error	find_error_helper(char *line, char *token, int index, t_env_pack env_pack)
 {
 	t_error	error;
 
@@ -58,18 +58,26 @@ t_error	find_error_helper(char *line, char *token, int index)
 	{
 		error.not_handling = 1;
 		error.error = ft_strdup(token);
+		if (error.error == NULL)
+		    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 	}
-	else if (!accept_char(token, line + index))
+	else if (!accept_char(token, line + index, env_pack))
 	{
 		error.index = index;
 		if (line[index] == '\0')
+		{
 			error.error = ft_strdup("newline");
+			if (error.error == NULL)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
+		}
 		else
 		{
-			if (find_token(line + index))
-				error.error = ft_strdup(find_token(line + index));
+			if (find_token(line + index, env_pack))
+				error.error = ft_strdup(find_token(line + index, env_pack));
 			else
 				error.error = sliced_str(line, index, index);
+			if (error.error == NULL)
+			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 		}
 	}
 	return (error);

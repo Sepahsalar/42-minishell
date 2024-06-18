@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 11:23:27 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:37:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	update_helper_error(t_error_helper *e, char *line)
 	((*e).index)++;
 }
 
-char	*change_helper_error(t_error_helper *e, char *line)
+char	*change_helper_error(t_error_helper *e, char *line, t_env_pack env_pack)
 {
 	return (change_token((*e).token, (line + ((*e).index)),
-			&((*e).index), ((*e).sq || (*e).dq)));
+			&((*e).index), ((*e).sq || (*e).dq),  env_pack));
 }
 
 t_error	find_error(char *line, t_env_pack env_pack)
@@ -59,10 +59,10 @@ t_error	find_error(char *line, t_env_pack env_pack)
 		else
 		{
 			if ((e.token) && !(e.sq) && !(e.dq))
-				e.error = find_error_helper(line, (e.token), e.index);
+				e.error = find_error_helper(line, (e.token), e.index, env_pack);
 			if (e.error.error)
 				return (e.error);
-			e.token = change_helper_error(&e, line);
+			e.token = change_helper_error(&e, line, env_pack);
 		}
 	}
 	return (e.error);

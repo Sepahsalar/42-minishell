@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quote_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:07:19 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/06 10:04:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:45:18 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ char	*sliced_str(char *str, int start, int end)
 
 	len = end - start + 1;
 	result = malloc(len + 1);
+	if (!result)
+	    return (NULL);
 	result[len] = '\0';
 	ft_memcpy(result, str + start, len);
 	return (result);

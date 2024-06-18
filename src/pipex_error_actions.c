@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_actions.c                                    :+:      :+:    :+:   */
+/*   pipex_error_actions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:16:17 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 13:48:33 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:42:28 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@
 // 	return (index + 1);
 // }
 
-static void	fake_heredoc(t_error error, char *raw_line)
+static void	fake_heredoc(t_error error, char *raw_line, t_env_pack env_pack)
 {
 	int		sq;
 	int		dq;
@@ -91,7 +91,7 @@ static void	fake_heredoc(t_error error, char *raw_line)
 				index = open_sq_or_dq(&token, index);
 			else
 				token = change_token_heredoc(token, (raw_line + index),
-						&index, error);
+						&index, error, env_pack);
 		}
 	}
 }
@@ -104,7 +104,7 @@ t_env_pack	error_actions(t_env_pack env_pack, t_error error, char *raw_line)
 	if (error.not_handling)
 		return (not_handling_error(env_pack, error));
 	printed = print_error_before(error, raw_line);
-	fake_heredoc(error, raw_line);
+	fake_heredoc(error, raw_line, env_pack);
 	print_error_after(error, printed);
 	env_pack_result = env_pack;
 	export_original(env_pack_result.original_env, 258);

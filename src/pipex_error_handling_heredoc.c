@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handling_heredoc.c                           :+:      :+:    :+:   */
+/*   pipex_error_handling_heredoc.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:26:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/03 14:27:07 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:40:25 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	handle_heredoc_error(char *token, char *cur, t_error error)
+void	handle_heredoc_error(char *token, char *cur, t_error error, t_env_pack env_pack)
 {
 	int		limiter_len;
 	char	*line;
@@ -22,7 +22,7 @@ void	handle_heredoc_error(char *token, char *cur, t_error error)
 	{
 		limiter_len = 0;
 		while (cur[limiter_len] != ' ' && cur[limiter_len] != '\0'
-			&& !find_token(cur + limiter_len))
+			&& !find_token(cur + limiter_len, env_pack))
 			limiter_len++;
 		limiter = malloc(limiter_len + 2);
 		limiter[limiter_len] = '\n';
@@ -41,11 +41,11 @@ void	handle_heredoc_error(char *token, char *cur, t_error error)
 	}
 }
 
-char	*change_token_heredoc(char *token, char *cur, int *index, t_error error)
+char	*change_token_heredoc(char *token, char *cur, int *index, t_error error, t_env_pack env_pack)
 {
 	char	*new_token;
 
-	new_token = find_token(cur);
+	new_token = find_token(cur, env_pack);
 	if (new_token)
 	{
 		*index = *index + ft_strlen(new_token);
@@ -56,7 +56,7 @@ char	*change_token_heredoc(char *token, char *cur, int *index, t_error error)
 		*index = *index + 1;
 		if (*cur != ' ')
 		{
-			handle_heredoc_error(token, cur, error);
+			handle_heredoc_error(token, cur, error, env_pack);
 			return (NULL);
 		}
 		else
