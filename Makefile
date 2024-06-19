@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
+#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/19 13:16:06 by nnourine         ###   ########.fr        #
+#    Updated: 2024/06/19 12:36:50 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ HEADER	= -I ./include
 FUNC =  src/atoi_utils.c \
 		src/builtin.c \
 		src/cd.c \
-		src/cd_utils.c \
 		src/change_mode.c \
 		src/create_cmd_list.c \
 		src/create_env_list.c \
@@ -32,6 +31,7 @@ FUNC =  src/atoi_utils.c \
 		src/export.c \
 		src/export_utils.c \
 		src/export_utils2.c \
+		src/export_utils3.c \
 		src/export_check.c \
 		src/fd_heredoc.c \
 		src/fd_heredoc_utils.c \
