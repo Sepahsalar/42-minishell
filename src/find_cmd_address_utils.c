@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:00:12 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:35:09 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:26:07 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,15 @@ static t_env	*find_path(t_cmd *cmd)
 	return (temp_env);
 }
 
+static void	find_address_error(t_cmd *cmd, char *temp, int mode)
+{
+	if (mode == 1)
+		cmd->error = 1;
+	if (temp)
+		free(temp);
+	master_clean(NULL, cmd, EXIT_FAILURE);
+}
+
 char	*find_address(t_cmd *cmd, char mode)
 {
 	char	**all_path;
@@ -79,23 +88,13 @@ char	*find_address(t_cmd *cmd, char mode)
 		return (find_address_abs(cmd, mode));
 	temp = ft_strjoin("/", cmd->cmd_name);
 	if (!temp)
-	{
-		cmd->error = 1;
-		master_clean(NULL, cmd, EXIT_FAILURE);
-	}
+		find_address_error(cmd, temp, 1);
 	temp_env = find_path(cmd);
 	if (!temp_env)
-	{
-		free(temp);
-		master_clean(NULL, cmd, EXIT_FAILURE);
-	}
+		find_address_error(cmd, temp, 0);
 	all_path = ft_split(temp_env->value, ':');
 	if (!all_path)
-	{
-		cmd->error = 1;
-		free(temp);
-		master_clean(NULL, cmd, EXIT_FAILURE);
-	}
+		find_address_error(cmd, temp, 1);
 	address = find_address_rel(cmd, mode, all_path, temp);
 	free(temp);
 	clean_2d_char(all_path);
