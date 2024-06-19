@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/19 17:03:32 by nnourine         ###   ########.fr        #
+#    Updated: 2024/06/19 17:17:37 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,7 @@ FUNC =  src/atoi_utils.c \
 		src/utility3.c \
 		src/utility4.c \
 		src/utility5.c \
+		src/utility6.c \
 
 OBJ = ${FUNC:.c=.o}
 
