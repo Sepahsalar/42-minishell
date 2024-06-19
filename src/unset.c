@@ -6,26 +6,22 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:05:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/03 14:02:55 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 12:03:25 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_env_pack	init_env_pack(t_cmd *cmd)
+t_env	*unset_oldpwd(t_env *env)
 {
-	t_env_pack	env_pack;
+	t_env	*temp_env;
 
-	env_pack.original_env = cmd->original_env;
-	env_pack.env = cmd->env;
-	return (env_pack);
-}
-
-int	same(char *s1, char *s2)
-{
-	if (ft_strlen(s1) == ft_strlen(s2) && !ft_strncmp(s1, s2, ft_strlen(s1)))
-		return (1);
-	return (0);
+	temp_env = env;
+	while (temp_env && !same(temp_env->key, "OLDPWD"))
+		temp_env = temp_env->next;
+	if (temp_env)
+		env = remove_node(env, temp_env);
+	return (env);
 }
 
 t_env	*remove_node(t_env *start, t_env *node)

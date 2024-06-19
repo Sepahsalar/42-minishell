@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:09:24 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:06:33 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 12:00:46 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static char	*expand_pid(char *str, char *start, char *temp, int count)
 	}
 	ft_memcpy(dst, start + (2 * temp_count),
 		ft_strlen(start + (2 * temp_count)));
-	// free(str);
 	return (new);
 }
 
