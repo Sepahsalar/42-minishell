@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:07:18 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 11:35:32 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:37:20 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,23 @@ char	*handle_dollar_str(t_cmd *cmd, t_handle_dollar hd)
 	return (new_str);
 }
 
-void	update_dollar_list(t_handle_dollar *hd_pointer, char *old_str)
+static t_dollar	*init_dollar_last(t_handle_dollar *hd_pointer)
 {
-	t_dollar		*last;
-	t_dollar		*temp_dollar;
-	int				rel;
-	int				changed_len;
+	t_dollar	*last;
 
 	last = hd_pointer->dollar;
 	while (last->next)
 		last = last->next;
-	temp_dollar = last;
+	return (last);
+}
+
+void	update_dollar_list(t_handle_dollar *hd_pointer, char *old_str)
+{
+	t_dollar	*temp_dollar;
+	int			rel;
+	int			changed_len;
+
+	temp_dollar = init_dollar_last(hd_pointer);
 	changed_len = ft_strlen(hd_pointer->str) - ft_strlen(old_str);
 	while (temp_dollar)
 	{
