@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:26:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 17:22:30 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:35:06 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*limiter_maker_in_error(char *cur, t_env_pack env_pack)
 {
 	char	*limiter;
 	int		limiter_len;
-	char    *temp;
+	char	*temp;
 
 	temp = find_token(cur, env_pack);
 	limiter_len = 0;
@@ -34,7 +34,7 @@ char	*limiter_maker_in_error(char *cur, t_env_pack env_pack)
 	limiter[limiter_len] = '\n';
 	limiter[limiter_len + 1] = '\0';
 	ft_memcpy(limiter, cur, limiter_len);
-	return (limiter);	
+	return (limiter);
 }
 
 void	handle_heredoc_error(char *token, char *cur, t_env_pack env_pack)
@@ -58,7 +58,8 @@ void	handle_heredoc_error(char *token, char *cur, t_env_pack env_pack)
 	}
 }
 
-char	*change_token_heredoc(char *token, char *cur, int *index, t_env_pack env_pack)
+char	*change_token_heredoc(char *token, char *cur,
+	int *index, t_env_pack env_pack)
 {
 	char	*new_token;
 

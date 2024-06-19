@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:46:17 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:37:46 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:33:44 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,15 @@ int	print_error_before(t_error error, char *raw_line)
 	char	*heredoc_place;
 
 	heredoc_place = ft_strnstr(raw_line, "<<", error.index);
-	if (!heredoc_place || (ft_strlen(raw_line) >=  (error.index
-			+ ft_strlen(error.error) - 1)
-			&& check_after_token(raw_line + error.index + ft_strlen(error.error) - 1)))
+	if (!heredoc_place || (ft_strlen(raw_line) >= (error.index
+				+ ft_strlen(error.error) - 1)
+			&& check_after_token(raw_line + error.index
+				+ ft_strlen(error.error) - 1)))
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 		if (error.fd)
 		{
-		    ft_putstr_fd(error.fd, 2);
+			ft_putstr_fd(error.fd, 2);
 			free(error.fd);
 		}
 		else
@@ -56,7 +57,7 @@ void	print_error_after(t_error error, int printed)
 		ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 		if (error.fd)
 		{
-		    ft_putstr_fd(error.fd, 2);
+			ft_putstr_fd(error.fd, 2);
 			free(error.fd);
 		}
 		else

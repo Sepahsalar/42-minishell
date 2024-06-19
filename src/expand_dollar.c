@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:23:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 11:32:51 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:29:39 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char	*expand_dollar_helper(t_cmd *cmd, char *str, char *find, int type)
 	expand_two_dollars(cmd, &str, &find, &remained_dollar);
 	if (no_need_more_expand(remained_dollar, find, type))
 		return (str);
-		// return (ft_strdup(str));
 	return (expand_one_dollar(cmd, str, find));
 }
 
@@ -91,6 +90,5 @@ char	*replace_inside(char *str, char *location, char *inside, char *handled)
 	src = location + ft_strlen(inside) + 1;
 	l = ft_strlen(src);
 	ft_memcpy(dst, src, l);
-	//free(str);
 	return (new_str);
 }

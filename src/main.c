@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 17:02:28 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:31:26 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ volatile int	g_signal;
 // 4) > & not_handling or unexpected token
 // 5) || has a leak                            done
 // 6) << hi cat -> has error                   done
- 
 
 // search for all voids in functions ("(void)...") and delete them
 
@@ -63,17 +62,17 @@ void	clean_all(t_env *env1, t_env *env2, char *str1, char *str2)
 	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
 		exit(1);
 	if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
-	    exit(1);
+		exit(1);
 	if (change_mode(RUNNING_COMMAND))
 		exit(1);
 	exit(1);
 }
 
-t_env *env_pack_at_start_pid(t_env *original_env, t_env *env, int fd_stdin, int fd_stdout)
+t_env	*env_pack_at_start_pid(t_env *original_env, t_env *env,
+	int fd_stdin, int fd_stdout)
 {
 	char		*pid;
-	
-	
+
 	pid = get_current_pid(env);
 	if (!pid)
 		clean_all(original_env, env, NULL, NULL);
@@ -92,7 +91,8 @@ t_env *env_pack_at_start_pid(t_env *original_env, t_env *env, int fd_stdin, int 
 	return (original_env);
 }
 
-t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout, char *root)
+t_env_pack	env_pack_at_start(char **envp, int fd_stdin,
+	int fd_stdout, char *root)
 {
 	t_env_pack	env_pack;
 	t_env		*original_env;
@@ -110,7 +110,8 @@ t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout, char *roo
 	original_env = custom_export(original_env, "fd_stdout", "-2");
 	original_env = custom_export(original_env, "root", root);
 	free(root);
-	original_env = env_pack_at_start_pid(original_env, env, fd_stdin, fd_stdout);
+	original_env = env_pack_at_start_pid(original_env, env,
+			fd_stdin, fd_stdout);
 	original_env = export_original(original_env, 0);
 	env_pack.original_env = original_env;
 	return (env_pack);
@@ -137,7 +138,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	env_pack = env_pack_at_start(envp, fd_stdin, fd_stdout, root);
 	if (load_history(value_finder(env_pack.original_env, "root")))
-	    clean_all(env_pack.original_env, env_pack.env, root, NULL);
+		clean_all(env_pack.original_env, env_pack.env, root, NULL);
 	minishell_process(env_pack);
 	free(root);
 	return (0);
