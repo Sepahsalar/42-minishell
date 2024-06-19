@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 17:06:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:33:45 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define HEREDOC_INTERRUPTED 103
 # define RUNNING_COMMAND 0
 
-extern	volatile int	g_signal;
+extern volatile int	g_signal;
 
 typedef struct s_file
 {
@@ -289,7 +289,8 @@ t_atol			atol_exit(char *str);
 void			run_exit_eof(t_env *env);
 t_error			find_error(char *line, t_env_pack env_pack);
 char			*find_token(char *cur, t_env_pack env_pack);
-char			*change_token(t_error_helper *e, char *cur, int *index, t_env_pack env_pack);
+char			*change_token(t_error_helper *e, char *cur,
+					int *index, t_env_pack env_pack);
 char			*change_token_heredoc(char *token, char *cur,
 					int *index, t_env_pack env_pack);
 int				check_after_token(char *str);
@@ -305,7 +306,7 @@ void			sig_handler_running_command(int sig);
 void			sig_handler_wait_for_command(int sig);
 void			sig_handler_heredoc(int sig);
 
-int			change_mode(int mode);
+int				change_mode(int mode);
 t_env_pack		not_handling_error(t_env_pack env_pack, t_error error);
 int				print_error_before(t_error error, char *raw_line);
 void			print_error_after(t_error error, int printed);
@@ -338,10 +339,14 @@ void			input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution);
 void			input_output_open_helper(t_cmd *cmd_start, t_file *temp_file);
 t_env_pack		full_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
-void			output_redirect_builtin(t_cmd *cmd_start, t_cmd *cmd_execution);
-void			output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution, int fd[2]);
-void			output_redirect_builtin_helper(t_cmd *cmd_start, t_last_file *last);
-void			output_redirect_helper(t_cmd *cmd_start, t_cmd *cmd_execution, int fd[2]);
+void			output_redirect_builtin(t_cmd *cmd_start,
+					t_cmd *cmd_execution);
+void			output_redirect(t_cmd *cmd_start,
+					t_cmd *cmd_execution, int fd[2]);
+void			output_redirect_builtin_helper(t_cmd *cmd_start,
+					t_last_file *last);
+void			output_redirect_helper(t_cmd *cmd_start,
+					t_cmd *cmd_execution, int fd[2]);
 void			input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution);
 t_env_pack		waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
@@ -350,7 +355,8 @@ t_env_pack		parent_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
 t_env_pack		after_child(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack, int fd[2]);
-void			input_output_redirect(t_cmd *cmd_start, t_cmd *cmd_execution, int fd[2]);
+void			input_output_redirect(t_cmd *cmd_start,
+					t_cmd *cmd_execution, int fd[2]);
 void			child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
 void			builtin_child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
@@ -366,9 +372,11 @@ void			run_execve(char *cmd_address, char **cmd_args, char **cmd_env);
 void			handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer);
 int				handle_dollar_string(t_cmd *cmd, char **string);
 int				heredoc_actions(t_cmd *cmd, char **line, char **heredoc_text);
-int				create_heredoc_file(t_cmd *cmd, t_file *temp_input);
+int				create_heredoc_file(t_cmd *cmd,
+					t_file *temp_input);
 t_error_helper	init_error_helper(void);
-t_error			find_error_helper(char *line, char *token, int index, t_env_pack env_pack);
+t_error			find_error_helper(char *line, char *token,
+					int index, t_env_pack env_pack);
 void			update_token_sq_dq(char **token, int *sq, int *dq, char c);
 void			expand_two_dollars(t_cmd *cmd, char **str,
 					char **find, int *remained_dollar);
@@ -407,13 +415,11 @@ t_env_pack		del_folder_one_dot(t_env_pack env_pack, t_cmd *cmd);
 t_env_pack		del_folder_else(t_env_pack env_pack, t_cmd *cmd);
 char			**init_token(t_env_pack env_pack);
 t_error			init_error(void);
-int 			should_execute(char *raw_line);
+int				should_execute(char *raw_line);
 t_env_pack		export_std_fd(t_env_pack env_pack);
-void 			history_management(t_env_pack env_pack, char *raw_line);
-void 			reset_std_fd(t_env_pack env_pack);
+void			history_management(t_env_pack env_pack, char *raw_line);
+void			reset_std_fd(t_env_pack env_pack);
 void			process_to_exit(t_env_pack env_pack);
 void			minishell_process(t_env_pack env_pack);
-
-
 
 #endif //MINISHELL_H
