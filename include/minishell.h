@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 13:28:28 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:21:55 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@
 # define ANSI_COLOR_RESET "\001\x1b[0m\002"
 # define ANSI_MOVE_UP "\033[1A"
 
-# define WAIT_FOR_COMMAND 10
-# define HEREDOC 20
-# define HEREDOC_INTERRUPTED 30
+# define WAIT_FOR_COMMAND 101
+# define HEREDOC 102
+# define HEREDOC_INTERRUPTED 103
 # define RUNNING_COMMAND 0
 
 extern	volatile int g_signal;
@@ -300,7 +300,11 @@ int				export_check(char *str);
 int				export_check_key(char *str);
 int				fill_files_all(t_cmd **cmd);
 char			*get_current_pid(t_env *original_env);
-void			sig_handler(int sig);
+// void			sig_handler(int sig);
+void			sig_handler_running_command(int sig);
+void			sig_handler_wait_for_command(int sig);
+void			sig_handler_heredoc(int sig);
+
 int			change_mode(int mode);
 t_env_pack		not_handling_error(t_env_pack env_pack, t_error error);
 int				print_error_before(t_error error, char *raw_line);

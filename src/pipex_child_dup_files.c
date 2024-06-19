@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_child_dup_files.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:11:01 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:37:05 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:30:52 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution)
 			{
 				if (dup2(last_input->fd, last_input->fd_operator) == -1)
 					master_clean(NULL, cmd_start, EXIT_FAILURE);
-				if (close(last_input->fd) == -1)
-					master_clean(NULL, cmd_start, EXIT_FAILURE);
+				// if (close(last_input->fd) == -1)
+				// 	master_clean(NULL, cmd_start, EXIT_FAILURE);
 			}
 			last = last->next;
 		}
