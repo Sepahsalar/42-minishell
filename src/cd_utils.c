@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:16:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 13:19:45 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:27:37 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*path_start_with_double_dot(t_cmd *cmd, t_env_pack env_pack)
 	return (full_path);
 }
 
-t_env_pack  del_folder_one_dot(t_env_pack env_pack, t_cmd *cmd)
+t_env_pack	del_folder_one_dot(t_env_pack env_pack, t_cmd *cmd)
 {
 	ft_putstr_fd("cd: error retrieving current directory: ", 2);
 	ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
@@ -65,7 +65,7 @@ t_env_pack  del_folder_one_dot(t_env_pack env_pack, t_cmd *cmd)
 	return (env_pack);
 }
 
-t_env_pack  del_folder_else(t_env_pack env_pack, t_cmd *cmd)
+t_env_pack	del_folder_else(t_env_pack env_pack, t_cmd *cmd)
 {
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(cmd->args[0], 2);

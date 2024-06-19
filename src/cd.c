@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 13:17:44 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:29:07 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,13 @@ t_env_pack	run_cd_helper(char *full_path, t_cmd *cmd, t_env_pack env_pack)
 
 char	*del_folder_double_dot(t_cmd *cmd, t_env_pack env_pack)
 {
-	char *full_path;
-	
+	char	*full_path;
+
 	if (cmd->args[1] && same(cmd->args[1], ".."))
 		full_path = path_only_one_double_dot(env_pack);
 	else
 		full_path = path_start_with_double_dot(cmd, env_pack);
 	return (full_path);
-	
 }
 
 t_env_pack	run_cd(t_cmd *cmd)
@@ -88,7 +87,7 @@ t_env_pack	run_cd(t_cmd *cmd)
 	if (!old_pwd)
 	{
 		if (same(cmd->args[1], ".") && errno == ENOENT)
-		    return (del_folder_one_dot(env_pack, cmd));
+			return (del_folder_one_dot(env_pack, cmd));
 		else if (start_with_double_dot(cmd->args[1]))
 			full_path = del_folder_double_dot(cmd, env_pack);
 		else if (cmd->args[1] == NULL)

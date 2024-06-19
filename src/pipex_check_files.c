@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:44:25 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:36:33 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:34:18 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_env_pack	fd_operator_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 {
 	char	*fd_operator;
 
-	if (temp_file->fd_operator > RE_DUP_MAX) //find sth for it
+	if (temp_file->fd_operator > RE_DUP_MAX)
 	{
 		env_pack.original_env
 			= export_original(env_pack.original_env, 1);
