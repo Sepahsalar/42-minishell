@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/19 11:20:38 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/06/19 12:24:17 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ FUNC =  src/atoi_utils.c \
 		src/expand_dollar.c \
 		src/expand_dollar_utils.c \
 		src/expand_dollar_utils2.c \
+		src/expand_dollar_utils3.c \
 		src/export.c \
 		src/export_utils.c \
 		src/export_utils2.c \
