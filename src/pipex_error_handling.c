@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 11:37:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:33:21 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,32 @@ char	*change_helper_error(t_error_helper *e, char *line, t_env_pack env_pack)
 			&((*e).index), ((*e).sq || (*e).dq),  env_pack));
 }
 
+int should_be_replaced_with_fd(char *line, t_error error)
+{
+	if (!line || !error.error || error.index == 0
+		|| (error.error[0] != '<' && error.error[0] != '>'))
+		return (0);
+	if (ft_isdigit(line[error.index - 1]))
+		return (1);
+	return (0);
+	
+}
+
+char	*find_fd_of_error(char *line, t_error error)
+{
+	int 	i;
+	char    *fd;
+	int		len;
+
+	i = error.index - 1;
+	while (i >= 0 && ft_isdigit(line[i]))
+		i--;
+	len = error.index - i - 1;
+	fd = ft_substr(line, i + 1, len);
+	return (fd);
+	
+}
+
 t_error	find_error(char *line, t_env_pack env_pack)
 {
 	t_error_helper	e;
@@ -61,7 +87,11 @@ t_error	find_error(char *line, t_env_pack env_pack)
 			if ((e.token) && !(e.sq) && !(e.dq))
 				e.error = find_error_helper(line, (e.token), e.index, env_pack);
 			if (e.error.error)
+			{
+				if (should_be_replaced_with_fd(line, e.error))
+					e.error.fd = find_fd_of_error(line, e.error);
 				return (e.error);
+			}
 			e.token = change_helper_error(&e, line, env_pack);
 		}
 	}
