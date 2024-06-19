@@ -3,47 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:43:06 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:15:35 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:06:19 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-t_env	*custom_export(t_env *env, char *key, char *value)
-{
-	t_env	*temp;
-	char	*temp_key;
-	char	*temp_value;
-
-	temp = env;
-	while (temp)
-	{
-		if (same(temp->key, key))
-			break ;
-		temp = temp->next;
-	}
-	if (temp)
-	{
-		free(temp->value);
-		temp->value = ft_strdup(value);
-		if (!temp->value)
-			clean_all(env, NULL, NULL, NULL);
-	}
-	else
-	{
-		temp_key = ft_strdup(key);
-		temp_value = ft_strdup(value);
-		if (!temp_key || !temp_value)
-			clean_all(env, NULL, temp_key, temp_value);
-		add_node_front(&env, temp_key, temp_value);
-		if (!env)
-			clean_all(env, NULL, temp_key, temp_value);
-	}
-	return (env);
-}
 
 int	is_higher(char *s1, char *s2)
 {
