@@ -6,16 +6,28 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:29:11 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:34:23 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:15:54 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
+static t_hd_file	*handle_hd_normal_file(t_cmd *cmd, t_hd_file *hd, char *ch)
+{
+	while (hd && hd->file)
+	{
+		hd = remove_update(hd, ch);
+		if (!hd)
+			master_clean(NULL, cmd, EXIT_FAILURE);
+		if (hd && hd->file)
+			hd->file = hd->file->next;
+	}
+	return (hd);
+}
+
+static t_hd_file	*init_hd(t_file **file, char *str, t_cmd *cmd)
 {
 	t_hd_file	*hd;
-	char		*temp;
 
 	hd = malloc(sizeof(t_hd_file));
 	if (!hd)
@@ -28,14 +40,16 @@ int	handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
 		free(hd);
 		master_clean(NULL, cmd, EXIT_FAILURE);
 	}
-	while (hd && hd->file)
-	{
-		hd = remove_update(hd, ch);
-		if (!hd)
-			master_clean(NULL, cmd, EXIT_FAILURE);
-		if (hd && hd->file)
-			hd->file = hd->file->next;
-	}
+	return (hd);
+}
+
+int	handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
+{
+	t_hd_file	*hd;
+	char		*temp;
+
+	hd = init_hd(file, str, cmd);
+	hd = handle_hd_normal_file(cmd, hd, ch);
 	temp = cmd->current;
 	cmd->current = ft_strdup(hd->str);
 	free(temp);
