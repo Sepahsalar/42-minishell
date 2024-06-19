@@ -6,11 +6,59 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 12:36:10 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 12:36:32 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 12:44:50 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static t_env	*export_original_helper(t_env *env)
+{
+	t_env	*temp_env;
+
+	temp_env = env;
+	while (temp_env)
+	{
+		if (same("exit_code", temp_env->key))
+			break ;
+		temp_env = temp_env->next;
+	}
+	return (temp_env);
+}
+
+t_env	*export_original(t_env *env, int status)
+{
+	t_env	*temp_env;
+	char	*temp;
+	char	*status_str;
+
+	status_str = ft_itoa(status);
+	if (!status_str)
+		clean_all(env, NULL, NULL, NULL);
+	temp_env = export_original_helper(env);
+	// temp_env = env;
+	// while (temp_env)
+	// {
+	// 	if (same("exit_code", temp_env->key))
+	// 		break ;
+	// 	temp_env = temp_env->next;
+	// }
+	if (!temp_env)
+	{
+		temp = ft_strdup("exit_code");
+		if (!temp)
+			clean_all(env, NULL, status_str, NULL);
+		add_node_front(&env, temp, status_str);
+		if (!env)
+			clean_all(env, NULL, temp, status_str);
+	}
+	else
+	{
+		free(temp_env->value);
+		temp_env->value = status_str;
+	}
+	return (env);
+}
 
 void	custom_print_export(t_env *temp_env)
 {
