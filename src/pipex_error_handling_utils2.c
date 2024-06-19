@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 10:55:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 10:15:47 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:28:41 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_error	init_error(void)
 
 	error.index = 0;
 	error.error = NULL;
-	error.fd = '\0';
+	error.fd = NULL;
 	error.not_handling = 0;
 	return (error);
 }

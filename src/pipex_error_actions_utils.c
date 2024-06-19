@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:46:17 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 10:20:26 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:29:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int	print_error_before(t_error error, char *raw_line)
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 		if (error.fd)
-		    write(2, &error.fd, 1);
+		{
+		    ft_putstr_fd(error.fd, 2);
+			free(error.fd);
+		}
 		else
 			ft_putstr_fd(error.error, 2);
 		free(error.error);
@@ -52,7 +55,10 @@ void	print_error_after(t_error error, int printed)
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 		if (error.fd)
-		    write(2, &error.fd, 1);
+		{
+		    ft_putstr_fd(error.fd, 2);
+			free(error.fd);
+		}
 		else
 			ft_putstr_fd(error.error, 2);
 		free(error.error);

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 10:18:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:33:21 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,18 @@ int should_be_replaced_with_fd(char *line, t_error error)
 	
 }
 
-char	find_fd_of_error(char *line, t_error error)
+char	*find_fd_of_error(char *line, t_error error)
 {
 	int 	i;
+	char    *fd;
+	int		len;
 
 	i = error.index - 1;
 	while (i >= 0 && ft_isdigit(line[i]))
 		i--;
-	return (line[i + 1]);
+	len = error.index - i - 1;
+	fd = ft_substr(line, i + 1, len);
+	return (fd);
 	
 }
 

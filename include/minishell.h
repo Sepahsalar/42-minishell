@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 10:14:36 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:28:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ typedef struct s_atol
 typedef struct s_error
 {
 	char	*error;
-	char	fd;
+	char	*fd;
 	int		index;
 	int		not_handling;
 }			t_error;
