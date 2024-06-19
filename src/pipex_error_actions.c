@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_actions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:16:17 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 11:37:53 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:18:10 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	fake_heredoc(t_error error, char *raw_line, t_env_pack env_pack)
 				index = open_sq_or_dq(&token, index);
 			else
 				token = change_token_heredoc(token, (raw_line + index),
-						&index, error, env_pack);
+						&index, env_pack);
 		}
 	}
 }

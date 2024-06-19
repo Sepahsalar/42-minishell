@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 14:21:55 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:18:29 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ t_error			find_error(char *line, t_env_pack env_pack);
 char			*find_token(char *cur, t_env_pack env_pack);
 char			*change_token(char *token, char *cur, int *index, int sq_dq, t_env_pack env_pack);
 char			*change_token_heredoc(char *token, char *cur,
-					int *index, t_error error, t_env_pack env_pack);
+					int *index, t_env_pack env_pack);
 int				check_after_token(char *str);
 t_file			*create_file_node(int place);
 int				fill_files_helper(char *str, char *ch, t_cmd *cmd);

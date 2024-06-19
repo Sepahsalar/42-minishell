@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 10:55:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:54:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:05:27 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,36 @@ static t_error	init_error(void)
 	return (error);
 }
 
-t_error	find_error_helper(char *line, char *token, int index, t_env_pack env_pack)
+t_error find_exact_error(char *line, int index, t_env_pack env_pack)
 {
 	t_error	error;
 	char	*temp;
+	
+    error = init_error();
+	error.index = index;
+	if (line[index] == '\0')
+	{
+		error.error = ft_strdup("newline");
+		if (!error.error)
+			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
+	}
+	else
+	{
+		temp = find_token(line + index, env_pack);
+		if (temp)
+			error.error = ft_strdup(temp);
+		else
+			error.error = sliced_str(line, index, index);
+		if (error.error == NULL)
+			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
+	}
+	return (error);
+	
+}
+
+t_error	find_error_helper(char *line, char *token, int index, t_env_pack env_pack)
+{
+	t_error	error;
 	
 	error = init_error();
 	if (not_handling(token))
@@ -62,25 +88,7 @@ t_error	find_error_helper(char *line, char *token, int index, t_env_pack env_pac
 		error.error = token;
 	}
 	else if (!accept_char(token, line + index, env_pack))
-	{
-		error.index = index;
-		if (line[index] == '\0')
-		{
-			error.error = ft_strdup("newline");
-			if (!error.error)
-			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-		}
-		else
-		{
-			temp = find_token(line + index, env_pack);
-			if (temp)
-				error.error = ft_strdup(temp);
-			else
-				error.error = sliced_str(line, index, index);
-			if (error.error == NULL)
-			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-		}
-	}
+		error = find_exact_error(line, index, env_pack);
 	return (error);
 }
 

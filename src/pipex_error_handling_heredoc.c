@@ -3,41 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_handling_heredoc.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:26:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:38:00 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:23:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	handle_heredoc_error(char *token, char *cur, t_error error, t_env_pack env_pack)
+char	*limiter_maker_in_error(char *cur, t_env_pack env_pack)
 {
-	int		limiter_len;
-	char	*line;
 	char	*limiter;
+	int		limiter_len;
 	char    *temp;
 
-	temp = NULL;
+	temp = find_token(cur, env_pack);
+	limiter_len = 0;
+	while (cur[limiter_len] != ' ' && cur[limiter_len] != '\0'
+		&& !temp)
+	{
+		limiter_len++;
+		temp = find_token(cur + limiter_len, env_pack);
+	}
+	if (temp)
+		free(temp);
+	limiter = malloc(limiter_len + 2);
+	if (!limiter)
+		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
+	limiter[limiter_len] = '\n';
+	limiter[limiter_len + 1] = '\0';
+	ft_memcpy(limiter, cur, limiter_len);
+	return (limiter);	
+}
+
+void	handle_heredoc_error(char *token, char *cur, t_env_pack env_pack)
+{
+	// int		limiter_len;
+	char	*line;
+	char	*limiter;
+	// char    *temp;
+
+	// temp = NULL;
 	if (same(token, "<<"))
 	{
-		temp = find_token(cur, env_pack);
-		limiter_len = 0;
-		while (cur[limiter_len] != ' ' && cur[limiter_len] != '\0'
-			&& !temp)
-		{
-			limiter_len++;
-			temp = find_token(cur + limiter_len, env_pack);
-		}
-		if (temp)
-		    free(temp);
-		limiter = malloc(limiter_len + 2);
-		if (!limiter)
-		    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-		limiter[limiter_len] = '\n';
-		limiter[limiter_len + 1] = '\0';
-		ft_memcpy(limiter, cur, limiter_len);
+		// temp = find_token(cur, env_pack);
+		// limiter_len = 0;
+		// while (cur[limiter_len] != ' ' && cur[limiter_len] != '\0'
+		// 	&& !temp)
+		// {
+		// 	limiter_len++;
+		// 	temp = find_token(cur + limiter_len, env_pack);
+		// }
+		// if (temp)
+		//     free(temp);
+		// limiter = malloc(limiter_len + 2);
+		// if (!limiter)
+		//     clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
+		// limiter[limiter_len] = '\n';
+		// limiter[limiter_len + 1] = '\0';
+		// ft_memcpy(limiter, cur, limiter_len);
+		limiter = limiter_maker_in_error(cur, env_pack);
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		line = get_next_line(0);
 		while (!same(line, limiter))
@@ -48,11 +74,10 @@ void	handle_heredoc_error(char *token, char *cur, t_error error, t_env_pack env_
 		}
 		free(line);
 		free(limiter);
-		(void)error;
 	}
 }
 
-char	*change_token_heredoc(char *token, char *cur, int *index, t_error error, t_env_pack env_pack)
+char	*change_token_heredoc(char *token, char *cur, int *index, t_env_pack env_pack)
 {
 	char	*new_token;
 
@@ -67,7 +92,7 @@ char	*change_token_heredoc(char *token, char *cur, int *index, t_error error, t_
 		*index = *index + 1;
 		if (*cur != ' ')
 		{
-			handle_heredoc_error(token, cur, error, env_pack);
+			handle_heredoc_error(token, cur, env_pack);
 			return (NULL);
 		}
 		else
