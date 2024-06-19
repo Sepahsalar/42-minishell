@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 10:55:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 15:05:27 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:50:14 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	not_handling(char *token)
 		|| same(token, "[") || same(token, "]") || same(token, ":"));
 }
 
-static t_error	init_error(void)
+t_error	init_error(void)
 {
 	t_error	error;
 
@@ -90,16 +90,4 @@ t_error	find_error_helper(char *line, char *token, int index, t_env_pack env_pac
 	else if (!accept_char(token, line + index, env_pack))
 		error = find_exact_error(line, index, env_pack);
 	return (error);
-}
-
-t_error_helper	init_error_helper(void)
-{
-	t_error_helper	helper;
-
-	helper.token = NULL;
-	helper.index = 0;
-	helper.sq = 0;
-	helper.dq = 0;
-	helper.error = init_error();
-	return (helper);
 }

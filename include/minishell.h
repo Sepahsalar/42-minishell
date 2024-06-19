@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 16:24:04 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:49:59 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,8 +289,7 @@ t_atol			atol_exit(char *str);
 void			run_exit_eof(t_env *env);
 t_error			find_error(char *line, t_env_pack env_pack);
 char			*find_token(char *cur, t_env_pack env_pack);
-char			*change_token(char *token, char *cur, int *index,
-					int sq_dq, t_env_pack env_pack);
+char			*change_token(t_error_helper *e, char *cur, int *index, t_env_pack env_pack);
 char			*change_token_heredoc(char *token, char *cur,
 					int *index, t_env_pack env_pack);
 int				check_after_token(char *str);
@@ -406,6 +405,9 @@ char			*path_only_one_double_dot(t_env_pack env_pack);
 char			*path_start_with_double_dot(t_cmd *cmd, t_env_pack env_pack);
 t_env_pack		del_folder_one_dot(t_env_pack env_pack, t_cmd *cmd);
 t_env_pack		del_folder_else(t_env_pack env_pack, t_cmd *cmd);
+char			**init_token(t_env_pack env_pack);
+t_error	init_error(void);
+
 
 
 #endif //MINISHELL_H
