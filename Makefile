@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/19 12:24:17 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/06/19 12:36:50 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ FUNC =  src/atoi_utils.c \
 		src/export.c \
 		src/export_utils.c \
 		src/export_utils2.c \
+		src/export_utils3.c \
 		src/export_check.c \
 		src/fd_heredoc.c \
 		src/fd_heredoc_utils.c \

@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 12:25:41 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 12:39:09 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ volatile int	g_signal;
 // norminette:
 // 1) cd ---------------------------- medium->nima
 // 2) expand_dollar_utils.c --------- short        done
-// 3) export_utils2.c --------------- short
+// 3) export_utils2.c --------------- short        done
 // 4) export.c ---------------------- short
 // 5) fd_heredoc_utils.c------------- short
 // 6) fill_env_list.c---------------- short
