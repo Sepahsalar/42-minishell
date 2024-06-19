@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 13:33:42 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:41:58 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	update_helper_error(t_error_helper *e, char *line)
 
 char	*change_helper_error(t_error_helper *e, char *line, t_env_pack env_pack)
 {
-	return (change_token((*e).token, (line + ((*e).index)),
-			&((*e).index), ((*e).sq || (*e).dq),  env_pack));
+	return (change_token(e, (line + e->index),
+			&(e->index), env_pack));
 }
 
 int should_be_replaced_with_fd(char *line, t_error error)

@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/19 13:28:42 by nnourine         ###   ########.fr        #
+#    Updated: 2024/06/19 16:50:48 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ FUNC =  src/atoi_utils.c \
 		src/pipex_error_handling.c \
 		src/pipex_error_handling_utils.c \
 		src/pipex_error_handling_utils2.c \
+		src/pipex_error_handling_utils3.c \
 		src/pipex_error_handling_heredoc.c \
 		src/pipex_execute_actions.c \
 		src/pwd.c \
