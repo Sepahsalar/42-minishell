@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   recreate_2d_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:19:09 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 11:39:26 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:56:43 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,24 @@ static char	**allocate_2d_env(t_env *env)
 	return (env_2d);
 }
 
+char	*key_and_equal_sign_maker(t_env *temp_env)
+{
+	char    *temp_str;
+	
+	if (!temp_env->key)
+		temp_str = ft_strdup("=");
+	else
+		temp_str = ft_strjoin(temp_env->key, "=");
+	return (temp_str);
+}
+
 static char	**recreate_2d_env_helper(t_env *temp_env, char **env_2d, int index)
 {
 	char	*temp_str;
 
 	while (temp_env)
 	{
-		if (!temp_env->key)
-		{
-			temp_str = ft_strdup("=");
-			if(!temp_str)
-				return (0);
-		}
-		else
-			temp_str = ft_strjoin(temp_env->key, "=");
+		temp_str = key_and_equal_sign_maker(temp_env);
 		if (!temp_str)
 		{
 			clean_2d_char(env_2d);
