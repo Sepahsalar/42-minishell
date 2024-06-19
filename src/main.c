@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 11:36:20 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:56:18 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ volatile int	g_signal;
 // 1) > 2>>
 // 2) > 2a>> temp
 // 3) < 2a <<
+// 4) > & not_handling or unexpected token
 
 
 // search for all voids in functions and delete them
@@ -41,7 +42,7 @@ volatile int	g_signal;
 //14) main.c ------------------------ long  ->nima done
 //15) master_clean.c ---------------- short
 //16) pipex_error_handling_heredoc.c- short
-//17) pipex_error_handling_utils.c--- short ->nima
+//17) pipex_error_handling_utils.c--- short ->nima done
 //18) pipex_error_handling_utils2.c-- short
 //19) recreate_2d_env.c ------------- short
 //20) utility4.c -------------------- medium->nima

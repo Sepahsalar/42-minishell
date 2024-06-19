@@ -6,15 +6,11 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:22:09 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:40:19 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:55:58 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-// [ASAL]$ ||
-// bash: syntax error near unexpected token `|'
-//why?? Alireza was working on hive headers so did not mess with other files. to be checked later. it should say we are not handling ||
-
 
 int	check_after_token(char *str)
 {
