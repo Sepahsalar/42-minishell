@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_handling.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 16:41:58 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:43:10 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ t_error_helper	check_empty_first_command(char *line, t_env_pack env_pack)
 		if (line[e.index + 1] == '|')
 		{
 			e.error.not_handling = 1;
-		    e.error.error = "||";
+			e.error.error = "||";
 		}
 		else
 			e.error.error = ft_strdup("|");
 		if (!e.error.error)
-		    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
+			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 	}
 	return (e);
 }
@@ -45,13 +45,7 @@ void	update_helper_error(t_error_helper *e, char *line)
 	((*e).index)++;
 }
 
-char	*change_helper_error(t_error_helper *e, char *line, t_env_pack env_pack)
-{
-	return (change_token(e, (line + e->index),
-			&(e->index), env_pack));
-}
-
-int should_be_replaced_with_fd(char *line, t_error error)
+int	should_be_replaced_with_fd(char *line, t_error error)
 {
 	if (!line || !error.error || error.index == 0
 		|| (error.error[0] != '<' && error.error[0] != '>'))
@@ -59,13 +53,12 @@ int should_be_replaced_with_fd(char *line, t_error error)
 	if (ft_isdigit(line[error.index - 1]))
 		return (1);
 	return (0);
-	
 }
 
 char	*find_fd_of_error(char *line, t_error error)
 {
-	int 	i;
-	char    *fd;
+	int		i;
+	char	*fd;
 	int		len;
 
 	i = error.index - 1;
@@ -74,7 +67,6 @@ char	*find_fd_of_error(char *line, t_error error)
 	len = error.index - i - 1;
 	fd = ft_substr(line, i + 1, len);
 	return (fd);
-	
 }
 
 t_error	find_error(char *line, t_env_pack env_pack)
@@ -98,7 +90,8 @@ t_error	find_error(char *line, t_env_pack env_pack)
 					e.error.fd = find_fd_of_error(line, e.error);
 				return (e.error);
 			}
-			e.token = change_helper_error(&e, line, env_pack);
+			e.token = change_token(&e, (line + e.index),
+					&(e.index), env_pack);
 		}
 	}
 	return (e.error);
