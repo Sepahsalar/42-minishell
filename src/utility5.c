@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:06:03 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 12:03:48 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:05:58 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	add_node_front(t_env **env, char *key, char *value)
 int	clean_str(char *s1)
 {
 	if (s1)
-        free(s1);
-    return (1);
+		free(s1);
+	return (1);
 }
 
 int	same(char *s1, char *s2)
