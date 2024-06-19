@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_execute_actions.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:39:07 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 14:37:48 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:18:41 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_env_pack	execute_actions(char *raw_line, t_env_pack env_pack)
 
 	env_pack_result = env_pack;
 	if (change_mode(RUNNING_COMMAND))
-	    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
+		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 	raw_cmd = create_raw_cmd(raw_line);
 	if (!raw_cmd)
 		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);

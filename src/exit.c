@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:49:01 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 17:02:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:16:24 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,5 @@ void	run_exit_eof(t_env *env)
 void	process_to_exit(t_env_pack env_pack)
 {
 	clean_env_list(env_pack.env);
-    run_exit_eof(env_pack.original_env);
+	run_exit_eof(env_pack.original_env);
 }

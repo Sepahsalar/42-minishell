@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_handling_utils2.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 10:55:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 16:50:14 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:20:01 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ t_error	init_error(void)
 	return (error);
 }
 
-t_error find_exact_error(char *line, int index, t_env_pack env_pack)
+t_error	find_exact_error(char *line, int index, t_env_pack env_pack)
 {
 	t_error	error;
 	char	*temp;
-	
-    error = init_error();
+
+	error = init_error();
 	error.index = index;
 	if (line[index] == '\0')
 	{
@@ -74,13 +74,13 @@ t_error find_exact_error(char *line, int index, t_env_pack env_pack)
 			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 	}
 	return (error);
-	
 }
 
-t_error	find_error_helper(char *line, char *token, int index, t_env_pack env_pack)
+t_error	find_error_helper(char *line, char *token,
+	int index, t_env_pack env_pack)
 {
 	t_error	error;
-	
+
 	error = init_error();
 	if (not_handling(token))
 	{

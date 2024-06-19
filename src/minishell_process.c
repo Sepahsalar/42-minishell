@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_process.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 17:00:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 17:04:35 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:18:05 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	minishell_process(t_env_pack env_pack)
 {
 	char	*raw_line;
-	
+
 	while (1)
 	{
 		if (change_mode(WAIT_FOR_COMMAND))
@@ -34,12 +34,12 @@ void	minishell_process(t_env_pack env_pack)
 	}
 }
 
-int should_execute(char *raw_line)
+int	should_execute(char *raw_line)
 {
 	return (ft_strlen(raw_line) > 0 && !all_space(raw_line));
 }
 
-t_env_pack  export_std_fd(t_env_pack env_pack)
+t_env_pack	export_std_fd(t_env_pack env_pack)
 {
 	char	*itoa;
 	int		fd_stdin;
@@ -54,17 +54,19 @@ t_env_pack  export_std_fd(t_env_pack env_pack)
 	itoa = ft_itoa(fd_stdin);
 	if (!itoa)
 		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-	env_pack.original_env = custom_export(env_pack.original_env, "fd_stdin", itoa);
+	env_pack.original_env = custom_export(env_pack.original_env,
+			"fd_stdin", itoa);
 	free(itoa);
 	itoa = ft_itoa(fd_stdout);
 	if (!itoa)
 		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-	env_pack.original_env = custom_export(env_pack.original_env, "fd_stdout", itoa);
+	env_pack.original_env = custom_export(env_pack.original_env,
+			"fd_stdout", itoa);
 	free(itoa);
 	return (env_pack);
 }
 
-void history_management(t_env_pack env_pack, char *raw_line)
+void	history_management(t_env_pack env_pack, char *raw_line)
 {
 	if (save_history(raw_line, value_finder(env_pack.original_env, "root")))
 		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
@@ -73,11 +75,11 @@ void history_management(t_env_pack env_pack, char *raw_line)
 		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 }
 
-void reset_std_fd(t_env_pack env_pack)
+void	reset_std_fd(t_env_pack env_pack)
 {
-	int fd_stdin;
-	int fd_stdout;
-	char *value;
+	int		fd_stdin;
+	int		fd_stdout;
+	char	*value;
 
 	value = value_finder(env_pack.original_env, "fd_stdin");
 	if (value && ft_atoi(value) >= 0)
