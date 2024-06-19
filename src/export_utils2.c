@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:54:43 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 16:10:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:43:58 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	export_with_plus(t_cmd *cmd, char *arg, int *status)
 	char	*find1;
 
 	new_env = ft_strdup(arg);
-	if(!new_env)
+	if (!new_env)
 		master_clean(NULL, cmd, EXIT_FAILURE);
 	find1 = ft_strchr(new_env, '=');
 	temp1 = ft_substr(new_env, 0, (find1 - new_env - 1));
@@ -75,10 +75,10 @@ void	export_with_plus(t_cmd *cmd, char *arg, int *status)
 	free(new_env);
 }
 
-t_env *node_finder(t_env *env, char *key)
+t_env	*node_finder(t_env *env, char *key)
 {
 	t_env	*temp;
-	
+
 	temp = env;
 	while (temp)
 	{

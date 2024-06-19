@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:03:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:31:46 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:47:10 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	atoi_file_remove(char **input, t_atoi_file	af, char *part, int len)
 
 	new = malloc(len + ft_strlen(part) + 1);
 	if (!new)
-	    return (1);
+		return (1);
 	new[len + ft_strlen(part)] = '\0';
 	ft_memcpy(new, af.str, len);
 	ft_memcpy(new + len, part, ft_strlen(part));
@@ -80,7 +80,7 @@ long	atoi_file(char **input, int place, int def)
 		af.place++;
 	}
 	if (atoi_file_remove(input, af, part2, len))
-	    return (-3);
+		return (-3);
 	return (a);
 }
 

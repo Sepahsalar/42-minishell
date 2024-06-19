@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_temp_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:56 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 15:46:28 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:28:58 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_env_pack	run_minishell(t_cmd *cmd)
 t_env	*set_start(t_env *env)
 {
 	t_env	*temp_env;
-	
+
 	if (value_finder(env, "SHLVL"))
 		env = custom_export(env, "SHLVL", "2");
 	else

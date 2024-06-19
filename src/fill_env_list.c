@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:34:31 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 14:57:12 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:46:40 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_env	*fill_env_list_helper(t_env *temp_env, char **envp,
 {
 	temp_env->key = ft_strdup(temp[0]);
 	temp_env->value = ft_substr(envp[index], ft_strlen(temp[0]) + 1,
-		ft_strlen(envp[index] + ft_strlen(temp[0]) + 1));
+			ft_strlen(envp[index] + ft_strlen(temp[0]) + 1));
 	return (temp_env);
 }
 

@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 20:21:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 13:03:42 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:43:22 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ int	create_heredoc_file(t_cmd *cmd, t_file *temp_input)
 
 	temp_str = ft_itoa(cmd->index);
 	if (!temp_str)
-	    return (1);
+		return (1);
 	file_name = ft_strjoin(".temp_heredoc_", temp_str);
 	free(temp_str);
 	if (!file_name)
 		return (1);
 	temp_str2 = ft_itoa(temp_input->fd_operator);
 	if (!temp_str2)
-	    return (clean_str(file_name));
+		return (clean_str(file_name));
 	temp_str = file_name;
 	file_name = ft_strjoin(file_name, temp_str2);
 	free(temp_str);

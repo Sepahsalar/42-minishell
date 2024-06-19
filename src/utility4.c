@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility4.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:21:36 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 12:21:36 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:38:15 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_unique(t_last_file *first, t_file *temp)
 t_hd_file	*remove_update_all_helper_1(t_hd_file *hd)
 {
 	char	*temp_str;
-	
+
 	temp_str = hd->str + hd->file->place;
 	hd->file->append = 1;
 	hd->file->raw = strdup_modified(temp_str, ">>");
@@ -45,30 +45,29 @@ t_hd_file	*remove_update_all_helper_1(t_hd_file *hd)
 	return (hd);
 }
 
-t_hd_file    *remove_update_all_helper_2(t_hd_file *hd)
+t_hd_file	*remove_update_all_helper_2(t_hd_file *hd)
 {
-	char    *temp_str;
-    
-    temp_str = hd->str + hd->file->place;
-    hd->file->trunc = 1;
-    hd->file->raw = strdup_modified(temp_str, ">");
-    if (!hd->file->raw)
-    {
-        clean_file_list(hd->file);
-        free(hd->str);
-        free(hd);
-        return (0);
-    }
-    return (hd);
+	char	*temp_str;
+
+	temp_str = hd->str + hd->file->place;
+	hd->file->trunc = 1;
+	hd->file->raw = strdup_modified(temp_str, ">");
+	if (!hd->file->raw)
+	{
+		clean_file_list(hd->file);
+		free(hd->str);
+		free(hd);
+		return (0);
+	}
+	return (hd);
 }
 
-
-t_hd_file    *remove_update_all_helper_3(t_hd_file *hd)
+t_hd_file	*remove_update_all_helper_3(t_hd_file *hd)
 {
-	char    *temp_str;
-    
-    temp_str = hd->str + hd->file->place;
-    hd->file->input = 1;
+	char	*temp_str;
+
+	temp_str = hd->str + hd->file->place;
+	hd->file->input = 1;
 	hd->file->raw = strdup_modified(temp_str, "<");
 	if (!hd->file->raw)
 	{
@@ -77,13 +76,13 @@ t_hd_file    *remove_update_all_helper_3(t_hd_file *hd)
 		free(hd);
 		return (0);
 	}
-    return (hd);
+	return (hd);
 }
 
 t_hd_file	*remove_update_all(t_hd_file *hd)
 {
 	char	*temp_str;
-	
+
 	temp_str = hd->str + hd->file->place;
 	if (*(temp_str) == '>' && *(temp_str + 1) == '>')
 		return (remove_update_all_helper_1(hd));
@@ -94,12 +93,13 @@ t_hd_file	*remove_update_all(t_hd_file *hd)
 	return (hd);
 }
 
-t_hd_file	*remove_update_con_raw_maker(t_hd_file *hd, char *ch, char *temp_str)
+t_hd_file	*remove_update_con_raw_maker(t_hd_file *hd, char *ch,
+	char *temp_str)
 {
 	hd->file->raw = strdup_modified(temp_str, ch);
 	if (!hd->file->raw)
 		return (0);
-	return (hd);	
+	return (hd);
 }
 
 static t_hd_file	*remove_update_con(t_hd_file *hd, char *ch, char *temp_str)
@@ -150,7 +150,7 @@ t_hd_file	*remove_update(t_hd_file *hd, char *ch)
 	len = ft_strlen(hd->str);
 	hd = fd_operator(hd, ch);
 	if (!hd)
-	    return (NULL);
+		return (NULL);
 	hd->file->place = hd->file->place + ft_strlen(hd->str) - len;
 	temp_str = hd->str + hd->file->place;
 	file = hd->file->next;
