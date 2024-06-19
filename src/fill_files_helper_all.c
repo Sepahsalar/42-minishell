@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:26:17 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:34:09 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:05:40 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,21 @@ static long	fd_operator_all(t_hd_file *hd)
 	return (fd_operator);
 }
 
+static void	handle_hd_all_helper(t_cmd *cmd, t_hd_file *hd, char *temp)
+{
+	hd->file->fd_operator = fd_operator_all(hd);
+	if (hd->file->fd_operator == -3)
+	{
+		free(temp);
+		clean_file_list(hd->file);
+		free(hd);
+		master_clean(NULL, cmd, EXIT_FAILURE);
+	}
+	hd = remove_update_all(hd);
+	if (!hd)
+		master_clean(NULL, cmd, EXIT_FAILURE);
+}
+
 int	handle_hd_all(t_cmd *cmd, t_file **file)
 {
 	t_hd_file		*hd;
@@ -71,17 +86,7 @@ int	handle_hd_all(t_cmd *cmd, t_file **file)
 	temp = hd->str;
 	while (hd && hd->file)
 	{
-		hd->file->fd_operator = fd_operator_all(hd);
-		if (hd->file->fd_operator == -3)
-		{
-			free(temp);
-			clean_file_list(hd->file);
-			free(hd);
-			master_clean(NULL, cmd, EXIT_FAILURE);
-		}
-		hd = remove_update_all(hd);
-		if (!hd)
-			master_clean(NULL, cmd, EXIT_FAILURE);
+		handle_hd_all_helper(cmd, hd, temp);
 		hd->file = hd->file->next;
 	}
 	free(temp);
