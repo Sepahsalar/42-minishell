@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 15:26:39 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:13:46 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,19 @@ volatile int	g_signal;
 // 6) fill_env_list.c---------------- short        done
 // 7) fill_files_helper_all.c-------- short        done
 // 8) fill_files_helper.c------------ short        done
-// 9) find_cmd_address_utils.c------- short
-//10) handle_dollar.c --------------- short
-//11) handle_history.c -------------- short
-//12) handle_quote.c ---------------- short
-//13) init_temp_env.c --------------- short
+// 9) find_cmd_address_utils.c------- short        done
+//10) handle_dollar.c --------------- short        done
+//11) handle_history.c -------------- short        done
+//12) handle_quote.c ---------------- short ->nima done
+//13) init_temp_env.c --------------- short ->nima done
 //14) main.c ------------------------ long  ->nima done
-//15) master_clean.c ---------------- short
+//15) master_clean.c ---------------- short ->nima done
 //16) pipex_error_handling_heredoc.c- short ->nima done
 //17) pipex_error_handling_utils.c--- short ->nima done
 //18) pipex_error_handling_utils2.c-- short ->nima done
 //19) recreate_2d_env.c ------------- short ->nima done
 //20) utility4.c -------------------- medium->nima done
+//21) export_utils.c ---------------- short ->nima done
 
 void	clean_all(t_env *env1, t_env *env2, char *str1, char *str2)
 {
