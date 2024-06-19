@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fd_heredoc_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 20:21:30 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 20:32:43 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:17:04 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	clean_str(char *s1)
-{
-	if (s1)
-        free(s1);
-    return (1);
-}
 
 int	create_heredoc_file(t_cmd *cmd, t_file *temp_input)
 {

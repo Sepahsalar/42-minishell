@@ -6,11 +6,21 @@
 /*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:39:07 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 18:26:27 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:00:35 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+char	**create_raw_cmd(const char *input)
+{
+	char	**raw_cmd;
+
+	raw_cmd = split_pipex_pipe(input);
+	if (!raw_cmd)
+		return (NULL);
+	return (raw_cmd);
+}
 
 void	execution_package(t_cmd *cmd,
 	char **cmd_address, char ***cmd_args, char ***cmd_env)
