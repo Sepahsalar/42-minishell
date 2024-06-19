@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 10:25:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:46:21 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,32 @@ void	clean_all(t_env *env1, t_env *env2, char *str1, char *str2)
 	exit(1);
 }
 
+t_env *env_pack_at_start_pid(t_env *original_env, t_env *env, int fd_stdin, int fd_stdout)
+{
+	char		*pid;
+	
+	
+	pid = get_current_pid(env);
+	if (!pid)
+		clean_all(original_env, env, NULL, NULL);
+	if (dup(fd_stdin) == -1)
+		clean_all(original_env, env, pid, NULL);
+	if (close(STDOUT_FILENO) == -1)
+		clean_all(original_env, env, pid, NULL);
+	if (dup(fd_stdout) == -1)
+		clean_all(original_env, env, pid, NULL);
+	if (close(fd_stdin) == -1)
+		clean_all(original_env, env, pid, NULL);
+	if (close(fd_stdout) == -1)
+		clean_all(original_env, env, pid, NULL);
+	original_env = custom_export(original_env, "pid", pid);
+	free(pid);
+	return (original_env);
+}
+
 t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout, char *root)
 {
 	t_env_pack	env_pack;
-	char		*pid;
 	t_env		*original_env;
 	t_env		*env;
 
@@ -80,25 +102,11 @@ t_env_pack	env_pack_at_start(char **envp, int fd_stdin, int fd_stdout, char *roo
 	if (!env)
 		clean_all(original_env, env, root, NULL);
 	env_pack.env = env;
-	pid = get_current_pid(env_pack.env);
-	if (!pid)
-		clean_all(original_env, env, root, NULL);
-	if (dup(fd_stdin) == -1)
-		clean_all(original_env, env, root, pid);
-	if (close(STDOUT_FILENO) == -1)
-		clean_all(original_env, env, root, pid);
-	if (dup(fd_stdout) == -1)
-		clean_all(original_env, env, root, pid);
-	if (close(fd_stdin) == -1)
-		clean_all(original_env, env, root, pid);
-	if (close(fd_stdout) == -1)
-		clean_all(original_env, env, root, pid);
 	original_env = custom_export(original_env, "fd_stdin", "-2");
 	original_env = custom_export(original_env, "fd_stdout", "-2");
 	original_env = custom_export(original_env, "root", root);
-	original_env = custom_export(original_env, "pid", pid);
 	free(root);
-	free(pid);
+	original_env = env_pack_at_start_pid(original_env, env, fd_stdin, fd_stdout);
 	original_env = export_original(original_env, 0);
 	env_pack.original_env = original_env;
 	return (env_pack);
