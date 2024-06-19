@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_child_dup_files.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:11:01 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 20:12:56 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:37:05 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
