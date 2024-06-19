@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:07:19 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:35:47 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:45:08 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static t_quote	*create_and_fill_quote_node(int start, int end)
 
 	quote = malloc(sizeof(t_quote));
 	if (!quote)
-	    return (NULL);
+		return (NULL);
 	ft_memset(quote, 0, sizeof(t_quote));
 	quote->start = start;
 	quote->end = end;
@@ -102,7 +102,7 @@ char	*sliced_str(char *str, int start, int end)
 	len = end - start + 1;
 	result = malloc(len + 1);
 	if (!result)
-	    return (NULL);
+		return (NULL);
 	result[len] = '\0';
 	ft_memcpy(result, str + start, len);
 	return (result);

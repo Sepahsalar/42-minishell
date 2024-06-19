@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:29:11 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 15:15:54 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:41:35 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_hd_file	*init_hd(t_file **file, char *str, t_cmd *cmd)
 	ft_memset(hd, 0, sizeof(t_hd_file));
 	hd->file = *file;
 	hd->str = ft_strdup(str);
-	if(str && !hd->str)
+	if (str && !hd->str)
 	{
 		free(hd);
 		master_clean(NULL, cmd, EXIT_FAILURE);
@@ -55,10 +55,10 @@ int	handle_hd_normal(t_file **file, char *str, char *ch, t_cmd *cmd)
 	free(temp);
 	if (hd->str && !cmd->current)
 	{
-        free(hd->str);
-        free(hd);
-        master_clean(NULL, cmd, EXIT_FAILURE);
-    }
+		free(hd->str);
+		free(hd);
+		master_clean(NULL, cmd, EXIT_FAILURE);
+	}
 	if (*ch == '>')
 		cmd->output = *file;
 	else

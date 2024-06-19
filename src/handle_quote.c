@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:23:32 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 15:51:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:45:50 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ char	*quote_helper(char *str, int start, int end)
 		return (sliced_str(str, start + 1, end - 1));
 }
 
-char *q_clean(t_quote *head, char *s1, char *s2)
+char	*q_clean(t_quote *head, char *s1, char *s2)
 {
 	if (head)
 		clean_quote_list(head);
 	if (s1)
-	    free(s1);
+		free(s1);
 	if (s2)
-	    free(s2);
+		free(s2);
 	return (NULL);
 }
 
@@ -49,7 +49,7 @@ char	*handling_quote(char *str)
 		temp_str = result;
 		temp_str2 = quote_helper(str, temp->start, temp->end);
 		if (!temp_str2)
-		    return (q_clean(head, result, NULL));
+			return (q_clean(head, result, NULL));
 		result = ft_strjoin(result, temp_str2);
 		if (!result)
 			return (q_clean(head, temp_str, NULL));

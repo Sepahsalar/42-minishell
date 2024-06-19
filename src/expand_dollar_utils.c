@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:09:24 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 12:23:34 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:44:27 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	expand_two_dollars_helper(t_cmd *cmd, char **str,
 	}
 	else
 	{
-	    *str = ft_strdup(*str);
+		*str = ft_strdup(*str);
 		if (!*str)
 			master_clean(NULL, cmd, EXIT_FAILURE);
 		(*find) = (*str) + reletive_index;

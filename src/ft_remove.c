@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:36:46 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:35:23 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:30:47 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ char	*ft_remove(char *str, char *del, t_file *file)
 	ft_memcpy(result, str, len);
 	ft_memcpy(result + len, part2, ft_strlen(part2));
 	result[len + ft_strlen(part2)] = '\0';
-	// // if (str)
-	// 	free(str);
 	file = file->next;
 	while (file)
 	{

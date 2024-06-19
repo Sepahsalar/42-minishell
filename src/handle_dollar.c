@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:07:18 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 15:37:20 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:39:23 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer)
 		}
 		else
 		{
-		    free(hd_pointer->dollar);
+			free(hd_pointer->dollar);
 			hd_pointer->dollar = NULL;
 		}
 	}
