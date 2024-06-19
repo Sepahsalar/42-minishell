@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_temp_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:56 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 12:03:57 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:46:28 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,39 +59,16 @@ t_env_pack	run_minishell(t_cmd *cmd)
 
 t_env	*set_start(t_env *env)
 {
-	char	*temp_str;
-	char	*temp_str1;
 	t_env	*temp_env;
-
+	
+	if (value_finder(env, "SHLVL"))
+		env = custom_export(env, "SHLVL", "2");
+	else
+		env = custom_export(env, "SHLVL", "1");
 	temp_env = env;
-	while (temp_env && !same(temp_env->key, "SHLVL"))
+	while (temp_env && !same(temp_env->key, "OLDPWD"))
 		temp_env = temp_env->next;
 	if (temp_env)
-	{
-		temp_str = temp_env->value;
-		temp_env->value = ft_itoa(2);
-		if (!temp_env->value)
-			return (NULL);
-		free(temp_str);
-	}
-	else
-	{
-		temp_str1 = ft_itoa(1);
-		temp_str = ft_strdup("SHLVL");
-		if (!temp_str || !temp_str1)
-			return (NULL);
-		add_node_front(&env, temp_str, temp_str1);
-		if (!env)
-		{
-			free(temp_str);
-			free(temp_str1);
-		    return (NULL);
-		}
-	}
-	// temp_env = env;
-	// while (temp_env && !same(temp_env->key, "OLDPWD"))
-	// 	temp_env = temp_env->next;
-	// if (temp_env)
-	// 	env = remove_node(env, temp_env);
+		env = remove_node(env, temp_env);
 	return (env);
 }

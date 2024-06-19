@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:23:32 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 11:35:52 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:51:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ char	*quote_helper(char *str, int start, int end)
 		return (sliced_str(str, start + 1, end - 1));
 }
 
-char *q_clean(t_quote *head, char *s1)
+char *q_clean(t_quote *head, char *s1, char *s2)
 {
 	if (head)
 		clean_quote_list(head);
 	if (s1)
 	    free(s1);
+	if (s2)
+	    free(s2);
 	return (NULL);
 }
 
@@ -40,19 +42,18 @@ char	*handling_quote(char *str)
 	head = create_and_fill_quote_list(str);
 	result = ft_strdup("");
 	if (!head || !result)
-		return (q_clean(head, result));
+		return (q_clean(head, result, NULL));
 	temp = head;
 	while (temp)
 	{
 		temp_str = result;
 		temp_str2 = quote_helper(str, temp->start, temp->end);
 		if (!temp_str2)
-		    return (q_clean(head, result));
+		    return (q_clean(head, result, NULL));
 		result = ft_strjoin(result, temp_str2);
 		if (!result)
-		return (q_clean(head, temp_str));
-		free(temp_str);
-		free(temp_str2);
+			return (q_clean(head, temp_str, NULL));
+		q_clean(NULL, temp_str, temp_str2);
 		temp = temp->next;
 	}
 	clean_quote_list(head);
