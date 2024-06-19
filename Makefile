@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/19 16:50:48 by nnourine         ###   ########.fr        #
+#    Updated: 2024/06/19 17:03:32 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ FUNC =  src/atoi_utils.c \
 		src/istoken.c \
 		src/main.c \
 		src/master_clean.c \
+		src/minishell_process.c \
 		src/pipex.c \
 		src/pipex_utils.c \
 		src/pipex_child_dup_files.c \
