@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:06:03 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:18:46 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 12:03:48 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,6 @@ int	fill_address_access(t_cmd **cmd)
 		temp = temp->next;
 	}
 	return (0);
-}
-
-t_env	*cpy_env(t_env *env)
-{
-	t_env	*new;
-	t_env	*old;
-	t_env	*start;
-
-	start = NULL;
-	while (env)
-	{
-		new = malloc(sizeof(t_env));
-		if (!new)
-			clean_all(start, NULL, NULL, NULL);
-		ft_memset(new, 0, sizeof(t_env));
-		new->key = ft_strdup(env->key);
-		new->value = ft_strdup(env->value);
-		if (!new->key || !new->value)
-			clean_all(start, NULL, new->key, new->value);
-		if (!start)
-			start = new;
-		else
-			old->next = new;
-		old = new;
-		env = env->next;
-	}
-	return (start);
 }
 
 char	*value_finder(t_env *env, char *key)
@@ -88,4 +61,11 @@ int	clean_str(char *s1)
 	if (s1)
         free(s1);
     return (1);
+}
+
+int	same(char *s1, char *s2)
+{
+	if (ft_strlen(s1) == ft_strlen(s2) && !ft_strncmp(s1, s2, ft_strlen(s1)))
+		return (1);
+	return (0);
 }
