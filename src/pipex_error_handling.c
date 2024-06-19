@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_handling.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:00:59 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:38:54 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:51:38 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,13 @@ t_error_helper	check_empty_first_command(char *line, t_env_pack env_pack)
 	if (line[e.index] == '|')
 	{
 		e.error.index = e.index;
-		e.error.error = ft_strdup("|");
+		if (line[e.index + 1] == '|')
+		{
+			e.error.not_handling = 1;
+		    e.error.error = ft_strdup("||");
+		}
+		else
+			e.error.error = ft_strdup("|");
 		if (!e.error.error)
 		    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 	}
