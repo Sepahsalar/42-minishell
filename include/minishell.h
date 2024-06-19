@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 11:17:30 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 12:56:34 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -362,7 +362,6 @@ void			run_execve(char *cmd_address, char **cmd_args, char **cmd_env);
 void			handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer);
 int				handle_dollar_string(t_cmd *cmd, char **string);
 int				heredoc_actions(t_cmd *cmd, char **line, char **heredoc_text);
-int				continue_heredoc(char *line, t_file *temp_input);
 int				create_heredoc_file(t_cmd *cmd, t_file *temp_input);
 t_error_helper	init_error_helper(void);
 t_error			find_error_helper(char *line, char *token, int index, t_env_pack env_pack);

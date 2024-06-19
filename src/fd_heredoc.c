@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:59:53 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 11:33:26 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 12:53:30 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	get_user_text(t_cmd *cmd, t_file *temp_input)
 
 	heredoc_text = NULL;
 	line = readline("> ");
-	while (continue_heredoc(line, temp_input))
+	while (line && !same(line, temp_input->limiter) && g_signal == HEREDOC)
 	{
 		if (heredoc_actions(cmd, &line, &heredoc_text))
 			return (1);
