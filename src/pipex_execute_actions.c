@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_execute_actions.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:39:07 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 11:38:58 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:37:48 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_env_pack	running_actions(t_cmd *cmd)
 	cmd_counter = cmd_count(cmd);
 	temp_cmd = cmd;
 	env_pack_result = init_env_pack(cmd);
-	while (temp_cmd && g_signal == RUNNING_COMMAND)
+	while (temp_cmd && g_signal == 0)
 	{
 		if (temp_cmd->index == cmd_counter)
 			env_pack_result = execute_cmd(cmd, temp_cmd);

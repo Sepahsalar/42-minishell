@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_mode.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:06:56 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 11:32:00 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:40:10 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static int	running_command(void)
 {
 	struct termios	term;
 
-	g_signal = RUNNING_COMMAND;
-	if (signal(SIGINT, &sig_handler) == SIG_ERR)
+	g_signal = 0;
+	if (signal(SIGINT, &sig_handler_running_command) == SIG_ERR)
 	    return (1);
-	if (signal(SIGQUIT, &sig_handler) == SIG_ERR)
+	if (signal(SIGQUIT, &sig_handler_running_command) == SIG_ERR)
 	    return (1);
 	ft_bzero(&term, sizeof(term));
 	if (tcgetattr(STDIN_FILENO, &term) == -1)
@@ -34,8 +34,8 @@ static int	wait_for_command(void)
 {
 	struct termios	term;
 
-	g_signal = WAIT_FOR_COMMAND;
-	if (signal(SIGINT, &sig_handler) == SIG_ERR)
+	// g_signal = WAIT_FOR_COMMAND;
+	if (signal(SIGINT, &sig_handler_wait_for_command) == SIG_ERR)
 	    return (1);
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 	    return (1);
@@ -53,15 +53,15 @@ static int	heredoc_mode(void)
 {
 	struct termios	term;
 
-	g_signal = HEREDOC;
+	// g_signal = HEREDOC;
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 	    return (1);
-	if (signal(SIGINT, &sig_handler) == SIG_ERR)
+	if (signal(SIGINT, &sig_handler_heredoc) == SIG_ERR)
 	    return (1);
 	ft_bzero(&term, sizeof(term));
 	if (tcgetattr(STDIN_FILENO, &term) == -1)
 	    return (1);
-	term.c_lflag &= ~ECHOCTL; ///why it does not know this
+	term.c_lflag &= ~ECHOCTL;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
 	    return (1);
 	return (0);

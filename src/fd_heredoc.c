@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:59:53 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 12:53:30 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:17:09 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	get_user_text(t_cmd *cmd, t_file *temp_input)
 
 	heredoc_text = NULL;
 	line = readline("> ");
-	while (line && !same(line, temp_input->limiter) && g_signal == HEREDOC)
+	while (line && !same(line, temp_input->limiter) && g_signal != SIGINT)
 	{
 		if (heredoc_actions(cmd, &line, &heredoc_text))
 			return (1);
@@ -50,7 +50,7 @@ int	fd_heredoc(t_cmd **cmd_pointer)
 		return (0);
 	cmd = *cmd_pointer;
 	temp_input = cmd->input;
-	while (temp_input && g_signal == HEREDOC)
+	while (temp_input && g_signal != SIGINT)
 	{
 		if (temp_input->limiter)
 		{
@@ -75,13 +75,13 @@ int	fill_fd_heredoc(t_cmd **start_cmd)
 	if (change_mode(HEREDOC))
 		master_clean(NULL, *start_cmd, EXIT_FAILURE);
 	cmd = *start_cmd;
-	while (cmd && g_signal == HEREDOC)
+	while (cmd && g_signal != SIGINT)
 	{
 		if (fd_heredoc(&cmd))
 			return (1);
 		cmd = cmd->next;
 	}
-	if (g_signal == HEREDOC)
+	if (g_signal != SIGINT)
 		if (change_mode(RUNNING_COMMAND))
 			master_clean(NULL, *start_cmd, EXIT_FAILURE);
 	return (0);
