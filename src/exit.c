@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:49:01 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 11:32:31 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:02:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,10 @@ void	run_exit_eof(t_env *env)
 	if (change_mode(RUNNING_COMMAND))
 		exit(1);
 	exit(exit_code);
+}
+
+void	process_to_exit(t_env_pack env_pack)
+{
+	clean_env_list(env_pack.env);
+    run_exit_eof(env_pack.original_env);
 }

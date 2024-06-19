@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 16:49:59 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:06:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,7 +406,13 @@ char			*path_start_with_double_dot(t_cmd *cmd, t_env_pack env_pack);
 t_env_pack		del_folder_one_dot(t_env_pack env_pack, t_cmd *cmd);
 t_env_pack		del_folder_else(t_env_pack env_pack, t_cmd *cmd);
 char			**init_token(t_env_pack env_pack);
-t_error	init_error(void);
+t_error			init_error(void);
+int 			should_execute(char *raw_line);
+t_env_pack		export_std_fd(t_env_pack env_pack);
+void 			history_management(t_env_pack env_pack, char *raw_line);
+void 			reset_std_fd(t_env_pack env_pack);
+void			process_to_exit(t_env_pack env_pack);
+void			minishell_process(t_env_pack env_pack);
 
 
 
