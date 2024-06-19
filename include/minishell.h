@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 12:56:34 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 13:28:28 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,5 +396,11 @@ t_env_pack		cmd_not_found(t_cmd *cmd_start, t_cmd *cmd_execution,
 void			close_all(t_cmd *cmd);
 void			clean_all(t_env *env1, t_env *env2, char *str1, char *str2);
 int				clean_str(char *s1);
+int				start_with_double_dot(char *arg);
+char			*path_only_one_double_dot(t_env_pack env_pack);
+char			*path_start_with_double_dot(t_cmd *cmd, t_env_pack env_pack);
+t_env_pack		del_folder_one_dot(t_env_pack env_pack, t_cmd *cmd);
+t_env_pack		del_folder_else(t_env_pack env_pack, t_cmd *cmd);
+
 
 #endif //MINISHELL_H
