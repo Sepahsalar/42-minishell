@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 15:16:23 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:26:39 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ volatile int	g_signal;
 //13) init_temp_env.c --------------- short
 //14) main.c ------------------------ long  ->nima done
 //15) master_clean.c ---------------- short
-//16) pipex_error_handling_heredoc.c- short
+//16) pipex_error_handling_heredoc.c- short ->nima done
 //17) pipex_error_handling_utils.c--- short ->nima done
 //18) pipex_error_handling_utils2.c-- short ->nima done
 //19) recreate_2d_env.c ------------- short ->nima done
