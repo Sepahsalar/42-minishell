@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:59:53 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 14:17:09 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:06:37 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_user_text(t_cmd *cmd, t_file *temp_input)
 		line = readline("> ");
 	}
 	if (line)
-	    free(line);
+		free(line);
 	ft_putstr_fd(heredoc_text, temp_input->fd);
 	free(heredoc_text);
 	return (0);

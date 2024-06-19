@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_handling_utils3.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:48:05 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 16:48:06 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:02:24 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,33 @@ t_error_helper	init_error_helper(void)
 	return (helper);
 }
 
-void init_token_part1(char ***token)
+void	init_token_part1(char ***token)
 {
-    (*token)[0] = "||";
-    (*token)[1] = "<>";
-    (*token)[2] = "<<<";
-    (*token)[3] = "<<";
-    (*token)[4] = "<";
-    (*token)[5] = ">>";
-    (*token)[6] = ">";
-    (*token)[7] = "|";
-    (*token)[8] = "&&";
-    (*token)[9] = "&";
-    (*token)[10] = "*";
+	(*token)[0] = "||";
+	(*token)[1] = "<>";
+	(*token)[2] = "<<<";
+	(*token)[3] = "<<";
+	(*token)[4] = "<";
+	(*token)[5] = ">>";
+	(*token)[6] = ">";
+	(*token)[7] = "|";
+	(*token)[8] = "&&";
+	(*token)[9] = "&";
+	(*token)[10] = "*";
 }
 
-void init_token_part2(char ***token)
+void	init_token_part2(char ***token)
 {
 	(*token)[11] = "\\";
-    (*token)[12] = ";";
-    (*token)[13] = "(";
-    (*token)[14] = ")";
-    (*token)[15] = "{";
-    (*token)[16] = "}";
-    (*token)[17] = "[";
-    (*token)[18] = "]";
-    (*token)[19] = ":";
-    (*token)[20] = NULL;
+	(*token)[12] = ";";
+	(*token)[13] = "(";
+	(*token)[14] = ")";
+	(*token)[15] = "{";
+	(*token)[16] = "}";
+	(*token)[17] = "[";
+	(*token)[18] = "]";
+	(*token)[19] = ":";
+	(*token)[20] = NULL;
 }
 
 char	**init_token(t_env_pack env_pack)

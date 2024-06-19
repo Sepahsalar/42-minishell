@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   recreate_2d_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:19:09 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 14:56:43 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:07:42 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ static char	**allocate_2d_env(t_env *env)
 
 char	*key_and_equal_sign_maker(t_env *temp_env)
 {
-	char    *temp_str;
-	
+	char	*temp_str;
+
 	if (!temp_env->key)
 		temp_str = ft_strdup("=");
 	else

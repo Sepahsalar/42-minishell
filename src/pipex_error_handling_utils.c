@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_error_handling_utils.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:22:09 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 16:47:26 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:03:46 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*find_token(char *cur, t_env_pack env_pack)
 			res = token[index];
 			free(token);
 			if (!res)
-			    clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
+				clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 			return (res);
 		}
 		index++;
@@ -51,7 +51,7 @@ int	accept_char(char *token, char *cur, t_env_pack env_pack)
 {
 	char	*temp;
 
-    temp = NULL;
+	temp = NULL;
 	if (same(token, "|"))
 	{
 		if (*cur == '|' || *cur == '\0')
@@ -66,12 +66,12 @@ int	accept_char(char *token, char *cur, t_env_pack env_pack)
 	return (1);
 }
 
-int is_fd_operator(char *str)
+int	is_fd_operator(char *str)
 {
 	int	index;
-	
+
 	if (!ft_isdigit(*str))
-	    return (0);
+		return (0);
 	index = 1;
 	while (str[index] && ft_isdigit(str[index]))
 		index++;
@@ -80,7 +80,8 @@ int is_fd_operator(char *str)
 	return (0);
 }
 
-char	*change_token(t_error_helper *e, char *cur, int *index, t_env_pack env_pack)
+char	*change_token(t_error_helper *e, char *cur,
+	int *index, t_env_pack env_pack)
 {
 	char	*new_token;
 
