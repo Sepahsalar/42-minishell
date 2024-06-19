@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:54:43 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 12:38:28 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:10:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,45 @@ void	export_with_plus(t_cmd *cmd, char *arg, int *status)
 	else
 		process_export_key(cmd, new_env, find1, temp1);
 	free(new_env);
+}
+
+t_env *node_finder(t_env *env, char *key)
+{
+	t_env	*temp;
+	
+	temp = env;
+	while (temp)
+	{
+		if (same(temp->key, key))
+			break ;
+		temp = temp->next;
+	}
+	return (temp);
+}
+
+t_env	*custom_export(t_env *env, char *key, char *value)
+{
+	t_env	*temp;
+	char	*temp_key;
+	char	*temp_value;
+
+	temp = node_finder(env, key);
+	if (temp)
+	{
+		free(temp->value);
+		temp->value = ft_strdup(value);
+		if (!temp->value)
+			clean_all(env, NULL, NULL, NULL);
+	}
+	else
+	{
+		temp_key = ft_strdup(key);
+		temp_value = ft_strdup(value);
+		if (!temp_key || !temp_value)
+			clean_all(env, NULL, temp_key, temp_value);
+		add_node_front(&env, temp_key, temp_value);
+		if (!env)
+			clean_all(env, NULL, temp_key, temp_value);
+	}
+	return (env);
 }

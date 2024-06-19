@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 12:36:10 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 12:44:50 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:04:38 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,6 @@ t_env	*export_original(t_env *env, int status)
 	if (!status_str)
 		clean_all(env, NULL, NULL, NULL);
 	temp_env = export_original_helper(env);
-	// temp_env = env;
-	// while (temp_env)
-	// {
-	// 	if (same("exit_code", temp_env->key))
-	// 		break ;
-	// 	temp_env = temp_env->next;
-	// }
 	if (!temp_env)
 	{
 		temp = ft_strdup("exit_code");
