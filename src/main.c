@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 11:22:06 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:36:20 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ volatile int	g_signal;
 //11) handle_history.c -------------- short
 //12) handle_quote.c ---------------- short
 //13) init_temp_env.c --------------- short
-//14) main.c ------------------------ long  ->nima
+//14) main.c ------------------------ long  ->nima done
 //15) master_clean.c ---------------- short
 //16) pipex_error_handling_heredoc.c- short
 //17) pipex_error_handling_utils.c--- short ->nima
