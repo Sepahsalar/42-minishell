@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:09:24 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 20:13:17 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:06:33 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,33 +40,6 @@ static char	*expand_pid(char *str, char *start, char *temp, int count)
 		ft_strlen(start + (2 * temp_count)));
 	// free(str);
 	return (new);
-}
-
-t_env	*cpy_env(t_env *env)
-{
-	t_env	*new;
-	t_env	*old;
-	t_env	*start;
-
-	start = NULL;
-	while (env)
-	{
-		new = malloc(sizeof(t_env));
-		if (!new)
-			clean_all(start, NULL, NULL, NULL);
-		ft_memset(new, 0, sizeof(t_env));
-		new->key = ft_strdup(env->key);
-		new->value = ft_strdup(env->value);
-		if (!new->key || !new->value)
-			clean_all(start, NULL, new->key, new->value);
-		if (!start)
-			start = new;
-		else
-			old->next = new;
-		old = new;
-		env = env->next;
-	}
-	return (start);
 }
 
 char	*get_current_pid(t_env *original_env)

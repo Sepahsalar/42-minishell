@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   atoi_file.c                                        :+:      :+:    :+:   */
+/*   atoi_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:03:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/18 13:55:41 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:57:05 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,56 @@ long	atoi_file(char **input, int place, int def)
 	if (atoi_file_remove(input, af, part2, len))
 	    return (-3);
 	return (a);
+}
+
+static t_atol	atol_exit_helper(char *str)
+{
+	t_atol	res;
+
+	res.i = 0;
+	res.sign = 1;
+	res.num = 0;
+	res.is_error = 0;
+	while (str[res.i])
+	{
+		if (!(ft_isdigit(str[res.i]) || str[0] == '-' || str[0] == '+'))
+		{
+			res.is_error = 1;
+			return (res);
+		}
+		res.i++;
+	}
+	res.i = 0;
+	if (str[res.i] == '-' || str[res.i] == '+')
+	{
+		if (str[res.i] == '-')
+			res.sign *= -1;
+		res.i++;
+	}
+	return (res);
+}
+
+t_atol	atol_exit(char *str)
+{
+	long	a;
+	t_atol	res;
+
+	res.i = 0;
+	res.sign = 1;
+	res.num = 0;
+	res.is_error = 0;
+	a = 0;
+	res = atol_exit_helper(str);
+	while (str[res.i] >= '0' && str[res.i] <= '9')
+	{
+		a = a * 10 + (str[res.i] - '0');
+		if (a < 0)
+		{
+			res.is_error = 1;
+			return (res);
+		}
+		res.i++;
+	}
+	res.num = res.sign * a;
+	return (res);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 10:28:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:17:30 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,5 +396,6 @@ t_env_pack		cmd_not_found(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
 void			close_all(t_cmd *cmd);
 void			clean_all(t_env *env1, t_env *env2, char *str1, char *str2);
+int				clean_str(char *s1);
 
 #endif //MINISHELL_H

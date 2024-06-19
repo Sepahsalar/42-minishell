@@ -3,47 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:56:25 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/18 19:20:48 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:09:35 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-t_env	*custom_export(t_env *env, char *key, char *value)
-{
-	t_env	*temp;
-	char	*temp_key;
-	char	*temp_value;
-
-	temp = env;
-	while (temp)
-	{
-		if (same(temp->key, key))
-			break ;
-		temp = temp->next;
-	}
-	if (temp)
-	{
-		free(temp->value);
-		temp->value = ft_strdup(value);
-		if (!temp->value)
-			clean_all(env, NULL, NULL, NULL);
-	}
-	else
-	{
-		temp_key = ft_strdup(key);
-		temp_value = ft_strdup(value);
-		if (!temp_key || !temp_value)
-			clean_all(env, NULL, temp_key, temp_value);
-		add_node_front(&env, temp_key, temp_value);
-		if (!env)
-			clean_all(env, NULL, temp_key, temp_value);
-	}
-	return (env);
-}
 
 char	*full_path_finder(char *pwd, char *arg, char *home)
 {
@@ -65,20 +32,6 @@ char	*full_path_finder(char *pwd, char *arg, char *home)
 	}
 	else
 		return (ft_strdup(arg));
-}
-
-char	*value_finder(t_env *env, char *key)
-{
-	t_env	*temp;
-
-	temp = env;
-	while (temp)
-	{
-		if (same(temp->key, key))
-			return (temp->value);
-		temp = temp->next;
-	}
-	return (NULL);
 }
 
 t_env_pack	run_cd_helper(char *full_path, t_cmd *cmd, t_env_pack env_pack)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nnourine <nnourine@student.42.fr>          +#+  +:+       +#+         #
+#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/17 15:06:38 by nnourine         ###   ########.fr        #
+#    Updated: 2024/06/19 11:20:38 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,20 +14,13 @@ NAME = minishell
 
 HEADER	= -I ./include
 
-# FUNC =  srcs/check_args.c srcs/ft_sort.c srcs/ft_atoi_m.c srcs/cal_rotate.c \
-# 			srcs/ft_sort_utils.c srcs/apply_rr_rrr.c  srcs/apply_rarrb_rrarb.c \
-# 			srcs/list_utils.c srcs/parse_args.c srcs/rules_a.c srcs/rules_b.c \
-# 			srcs/rules_both.c srcs/cal_push.c srcs/main.c \
-
-FUNC =  src/atoi_file.c \
-		src/atol_exit.c \
+FUNC =  src/atoi_utils.c \
 		src/builtin.c \
 		src/cd.c \
 		src/change_mode.c \
 		src/create_cmd_list.c \
 		src/create_env_list.c \
 		src/create_file_list.c \
-		src/create_raw_cmd.c \
 		src/echo.c \
 		src/env.c \
 		src/exit.c \
@@ -40,8 +33,6 @@ FUNC =  src/atoi_file.c \
 		src/export_check.c \
 		src/fd_heredoc.c \
 		src/fd_heredoc_utils.c \
-		src/fill_address_access.c \
-		src/fill_args_cmd_list.c \
 		src/fill_cmd_list.c \
 		src/fill_dollar_list.c \
 		src/fill_dollar_list_utils.c \
@@ -93,6 +84,7 @@ FUNC =  src/atoi_file.c \
 		src/utility2.c \
 		src/utility3.c \
 		src/utility4.c \
+		src/utility5.c \
 
 OBJ = ${FUNC:.c=.o}
 
