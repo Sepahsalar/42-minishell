@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 12:49:39 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/19 13:04:15 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ volatile int	g_signal;
 // 3) < 2a <<
 // 4) > & not_handling or unexpected token
 // 5) || has a leak
-
+// 6) << hi cat -> has error
+ 
 
 // search for all voids in functions and delete them
 
@@ -31,7 +32,7 @@ volatile int	g_signal;
 // 2) expand_dollar_utils.c --------- short        done
 // 3) export_utils2.c --------------- short        done
 // 4) export.c ---------------------- short        done
-// 5) fd_heredoc_utils.c------------- short
+// 5) fd_heredoc_utils.c------------- short        done
 // 6) fill_env_list.c---------------- short
 // 7) fill_files_helper_all.c-------- short
 // 8) fill_files_helper.c------------ short
