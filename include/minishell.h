@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 15:18:29 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:24:04 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define HEREDOC_INTERRUPTED 103
 # define RUNNING_COMMAND 0
 
-extern	volatile int g_signal;
+extern	volatile int	g_signal;
 
 typedef struct s_file
 {
@@ -289,7 +289,8 @@ t_atol			atol_exit(char *str);
 void			run_exit_eof(t_env *env);
 t_error			find_error(char *line, t_env_pack env_pack);
 char			*find_token(char *cur, t_env_pack env_pack);
-char			*change_token(char *token, char *cur, int *index, int sq_dq, t_env_pack env_pack);
+char			*change_token(char *token, char *cur, int *index,
+					int sq_dq, t_env_pack env_pack);
 char			*change_token_heredoc(char *token, char *cur,
 					int *index, t_env_pack env_pack);
 int				check_after_token(char *str);
