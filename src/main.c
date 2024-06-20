@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 17:31:26 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/20 11:17:31 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,6 @@ volatile int	g_signal;
 // search for all voids in functions ("(void)...") and delete them
 
 // delete .history in makefile
-
-// norminette:
-// 1) cd ---------------------------- medium->nima done
-// 2) expand_dollar_utils.c --------- short        done
-// 3) export_utils2.c --------------- short        done
-// 4) export.c ---------------------- short        done
-// 5) fd_heredoc_utils.c------------- short        done
-// 6) fill_env_list.c---------------- short        done
-// 7) fill_files_helper_all.c-------- short        done
-// 8) fill_files_helper.c------------ short        done
-// 9) find_cmd_address_utils.c------- short        done
-//10) handle_dollar.c --------------- short        done
-//11) handle_history.c -------------- short        done
-//12) handle_quote.c ---------------- short ->nima done
-//13) init_temp_env.c --------------- short ->nima done
-//14) main.c ------------------------ long  ->nima done
-//15) master_clean.c ---------------- short ->nima done
-//16) pipex_error_handling_heredoc.c- short ->nima done
-//17) pipex_error_handling_utils.c--- short ->nima done
-//18) pipex_error_handling_utils2.c-- short ->nima done
-//19) recreate_2d_env.c ------------- short ->nima done
-//20) utility4.c -------------------- medium->nima done
-//21) export_utils.c ---------------- short ->nima done
 
 void	clean_all(t_env *env1, t_env *env2, char *str1, char *str2)
 {
@@ -108,6 +85,7 @@ t_env_pack	env_pack_at_start(char **envp, int fd_stdin,
 	env_pack.env = env;
 	original_env = custom_export(original_env, "fd_stdin", "-2");
 	original_env = custom_export(original_env, "fd_stdout", "-2");
+	original_env = custom_export(original_env, "fd_stderr", "-2");
 	original_env = custom_export(original_env, "root", root);
 	free(root);
 	original_env = env_pack_at_start_pid(original_env, env,

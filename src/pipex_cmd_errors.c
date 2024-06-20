@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_cmd_errors.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:15:35 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:37:39 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:51:48 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_env_pack	full_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 
 t_env_pack	cmd_dir(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
 {
+	dup_error(cmd_execution);
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(cmd_execution->cmd_name, 2);
 	ft_putendl_fd(": Is a directory", 2);
@@ -45,6 +46,7 @@ t_env_pack	cmd_dir(t_cmd *cmd_start, t_cmd *cmd_execution, t_env_pack env_pack)
 t_env_pack	cmd_permission(t_cmd *cmd_start, t_cmd *cmd_execution,
 	t_env_pack env_pack)
 {
+	dup_error(cmd_execution);
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(cmd_execution->cmd_name, 2);
 	ft_putendl_fd(": Permission denied", 2);
@@ -58,6 +60,7 @@ t_env_pack	cmd_permission(t_cmd *cmd_start, t_cmd *cmd_execution,
 t_env_pack	cmd_not_found(t_cmd *cmd_start, t_cmd *cmd_execution,
 	t_env_pack env_pack)
 {
+	dup_error(cmd_execution);
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(cmd_execution->cmd_name, 2);
 	if (cmd_execution->is_file)

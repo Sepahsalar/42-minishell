@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 17:33:45 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:47:21 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,5 +421,6 @@ void			history_management(t_env_pack env_pack, char *raw_line);
 void			reset_std_fd(t_env_pack env_pack);
 void			process_to_exit(t_env_pack env_pack);
 void			minishell_process(t_env_pack env_pack);
+void			dup_error(t_cmd *cmd);
 
 #endif //MINISHELL_H

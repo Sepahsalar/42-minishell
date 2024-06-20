@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd_address_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:00:12 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 15:26:07 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/20 12:10:41 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,12 @@ char	*find_address(t_cmd *cmd, char mode)
 		find_address_error(cmd, temp, 1);
 	temp_env = find_path(cmd);
 	if (!temp_env)
-		find_address_error(cmd, temp, 0);
+	{
+		free(temp);
+		return (NULL);
+	}
 	all_path = ft_split(temp_env->value, ':');
-	if (!all_path)
+	if (temp_env && temp_env->value && !all_path)
 		find_address_error(cmd, temp, 1);
 	address = find_address_rel(cmd, mode, all_path, temp);
 	free(temp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_check_files.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:44:25 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 17:34:18 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:50:55 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_env_pack	fd_operator_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 
 	if (temp_file->fd_operator > RE_DUP_MAX)
 	{
+		dup_error(cmd_execution);
 		env_pack.original_env
 			= export_original(env_pack.original_env, 1);
 		cmd_execution->file_error = 1;
@@ -85,6 +86,7 @@ t_env_pack	input_check(t_cmd *cmd_start, t_cmd *cmd_execution,
 		temp_file->fd = open(temp_file->address, O_RDONLY);
 		if (temp_file->fd == -1)
 		{
+			dup_error(cmd_execution);
 			ft_putstr_fd("bash: ", 2);
 			ft_putstr_fd(temp_file->address, 2);
 			ft_putstr_fd(": ", 2);
@@ -109,6 +111,7 @@ t_env_pack	output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
 				O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (temp_file->fd == -1)
 	{
+		dup_error(cmd_execution);
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(temp_file->address, 2);
 		ft_putstr_fd(": ", 2);
