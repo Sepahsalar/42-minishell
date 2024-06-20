@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/20 11:17:31 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/20 13:02:44 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ void	clean_all(t_env *env1, t_env *env2, char *str1, char *str2)
 t_env	*env_pack_at_start_pid(t_env *original_env, t_env *env,
 	int fd_stdin, int fd_stdout)
 {
-	char		*pid;
+	char	*pid;
 
 	pid = get_current_pid(env);
+	if (!pid)
+		pid = ft_strdup("$$");
 	if (!pid)
 		clean_all(original_env, env, NULL, NULL);
 	if (dup(fd_stdin) == -1)

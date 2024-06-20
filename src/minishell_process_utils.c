@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_process_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 11:17:07 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/20 11:46:31 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/20 12:41:50 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	reset_std(t_env_pack env_pack, int fd_std, char *key)
 	if (value && ft_atoi(value) >= 0)
 	{
 		fd = ft_atoi(value);
-        if (fd_std != STDIN_FILENO)
-        {
-            if (close(fd_std) == -1)
-                clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-        }
+		if (fd_std != STDIN_FILENO)
+		{
+			if (close(fd_std) == -1)
+				clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
+		}
 		if (dup(fd) == -1)
 			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 		if (close(fd) == -1)

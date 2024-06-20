@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility4.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:21:36 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 17:17:11 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/20 12:46:00 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static t_hd_file	*fd_operator(t_hd_file *hd, char *ch)
 		hd->file->fd_operator = atoi_file(&(hd->str), hd->file->place, 1);
 	else if (*ch == '<')
 		hd->file->fd_operator = atoi_file(&(hd->str), hd->file->place, 0);
-	// if (hd->file->fd_operator == -3)
-	//     return (NULL);
+	if (hd->file->fd_operator == -3)
+		return (NULL); //delete this comment
 	return (hd);
 }
 
