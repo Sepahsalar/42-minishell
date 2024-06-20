@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/19 17:17:37 by nnourine         ###   ########.fr        #
+#    Updated: 2024/06/20 11:56:44 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ FUNC =  src/atoi_utils.c \
 		src/create_cmd_list.c \
 		src/create_env_list.c \
 		src/create_file_list.c \
+		src/dup_error.c \
 		src/echo.c \
 		src/env.c \
 		src/exit.c \
@@ -63,6 +64,7 @@ FUNC =  src/atoi_utils.c \
 		src/main.c \
 		src/master_clean.c \
 		src/minishell_process.c \
+		src/minishell_process_utils.c \
 		src/pipex.c \
 		src/pipex_utils.c \
 		src/pipex_child_dup_files.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_process.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 17:00:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/19 17:18:05 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/20 11:46:45 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,28 @@ int	should_execute(char *raw_line)
 	return (ft_strlen(raw_line) > 0 && !all_space(raw_line));
 }
 
-t_env_pack	export_std_fd(t_env_pack env_pack)
+t_env_pack	export_std_fd_helper(t_env_pack env_pack, int fd_std, char *key)
 {
 	char	*itoa;
-	int		fd_stdin;
-	int		fd_stdout;
+	int		fd;
 
-	fd_stdin = dup(STDIN_FILENO);
-	if (fd_stdin == -1)
+	fd = dup(fd_std);
+	if (fd == -1)
 		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-	fd_stdout = dup(STDOUT_FILENO);
-	if (fd_stdout == -1)
-		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-	itoa = ft_itoa(fd_stdin);
+	itoa = ft_itoa(fd);
 	if (!itoa)
 		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
 	env_pack.original_env = custom_export(env_pack.original_env,
-			"fd_stdin", itoa);
+			key, itoa);
 	free(itoa);
-	itoa = ft_itoa(fd_stdout);
-	if (!itoa)
-		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-	env_pack.original_env = custom_export(env_pack.original_env,
-			"fd_stdout", itoa);
-	free(itoa);
+	return (env_pack);
+}
+
+t_env_pack	export_std_fd(t_env_pack env_pack)
+{
+	env_pack = export_std_fd_helper(env_pack, STDIN_FILENO, "fd_stdin");
+	env_pack = export_std_fd_helper(env_pack, STDOUT_FILENO, "fd_stdout");
+	env_pack = export_std_fd_helper(env_pack, STDERR_FILENO, "fd_stderr");
 	return (env_pack);
 }
 
@@ -73,32 +71,4 @@ void	history_management(t_env_pack env_pack, char *raw_line)
 	rl_clear_history();
 	if (load_history(value_finder(env_pack.original_env, "root")))
 		clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-}
-
-void	reset_std_fd(t_env_pack env_pack)
-{
-	int		fd_stdin;
-	int		fd_stdout;
-	char	*value;
-
-	value = value_finder(env_pack.original_env, "fd_stdin");
-	if (value && ft_atoi(value) >= 0)
-	{
-		fd_stdin = ft_atoi(value);
-		if (dup(fd_stdin) == -1)
-			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-		if (close(fd_stdin) == -1)
-			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-	}
-	value = value_finder(env_pack.original_env, "fd_stdout");
-	if (value && ft_atoi(value) >= 0)
-	{
-		fd_stdout = ft_atoi(value);
-		if (close(STDOUT_FILENO) == -1)
-			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-		if (dup(fd_stdout) == -1)
-			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-		if (close(fd_stdout) == -1)
-			clean_all(env_pack.env, env_pack.original_env, NULL, NULL);
-	}
 }

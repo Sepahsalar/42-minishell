@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_utils3.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 12:22:42 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 12:23:40 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/20 12:30:12 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,18 @@ char	*get_current_pid(t_env *original_env)
 	int			fd;
 	char		*pid_str;
 	t_env_pack	env_pack;
-	t_env		*cpy;	
+	t_env		*cpy;
+	int			fd_stderr;
+	int			fd_pid_error;
 
+	fd_stderr = dup(STDERR_FILENO);
+	if (fd_stderr == -1)
+		pid_str = ft_strdup("$$");
+	fd_pid_error = open(".pid2", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (fd_pid_error == -1)
+		pid_str = ft_strdup("$$");
+	if (dup2(fd_pid_error, STDERR_FILENO) == -1)
+	    pid_str = ft_strdup("$$");
 	raw_line = "ps|awk '$4==\"minishell\"'|tail -n 1|awk '{print $1}' >.pid";
 	cpy = cpy_env(original_env);
 	if (!cpy)
@@ -42,12 +52,20 @@ char	*get_current_pid(t_env *original_env)
 	env_pack.env = cpy;
 	env_pack.original_env = cpy;
 	execute_all(raw_line, env_pack);
+	if (close(STDERR_FILENO) == -1)
+		pid_str = ft_strdup("$$");;
+	if (dup(fd_stderr) == -1)
+		pid_str = ft_strdup("$$");
+	if (close(fd_stderr) == -1)
+	    pid_str = ft_strdup("$$");
 	fd = open(".pid", O_RDONLY);
 	pid_str = get_pid_from_file(fd);
 	clean_env_list(cpy);
 	if (close(fd) == -1)
-		exit(1);
+		pid_str = ft_strdup("$$");
+	if (unlink(".pid2") == -1)
+		pid_str = ft_strdup("$$");
 	if (unlink(".pid") == -1)
-		exit(1);
+		pid_str = ft_strdup("$$");
 	return (pid_str);
 }
