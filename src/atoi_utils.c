@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:03:14 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 16:47:10 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/20 13:58:46 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ long	atoi_file(char **input, int place, int def)
 		af.place++;
 	}
 	if (atoi_file_remove(input, af, part2, len))
-		return (-3);
+		return (-2);
 	return (a);
 }
 

@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:11:01 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 18:01:33 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/20 13:46:36 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	input_output_open_helper(t_cmd *cmd_start, t_file *temp_file)
 	else if (temp_file->append)
 		temp_file->fd = open(temp_file->address,
 				O_WRONLY | O_APPEND, 0644);
-	(void)cmd_start;
 	if (temp_file->fd == -1)
 		master_clean(NULL, cmd_start, EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:59:53 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 17:58:45 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/20 13:47:12 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,14 @@ void	child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 	if (cmd_execution->file_error)
 		exit(ft_atoi(env_pack.original_env->value));
 	if (is_builtin(cmd_execution) != -1)
-		builtin_child_execution(cmd_start, cmd_execution, env_pack);
+		builtin_child_execution(cmd_execution, env_pack);
 	else if (is_builtin(cmd_execution) == -1)
 		non_builtin_execution(cmd_start, cmd_execution);
 }
 
-void	builtin_child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
+void	builtin_child_execution(t_cmd *cmd_execution,
 	t_env_pack env_pack)
 {
-	(void)cmd_start;
 	cmd_execution->child_builtin = 1;
 	env_pack = run_builtin(cmd_execution);
 	exit(ft_atoi(env_pack.original_env->value));

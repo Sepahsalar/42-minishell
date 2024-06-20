@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:02:20 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:39:15 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/20 13:53:23 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_env_pack	execute_cmd(t_cmd *cmd_start, t_cmd *cmd_execution)
 	int			fd[2];
 	t_env_pack	env_pack;
 
-	env_pack = init_and_check(cmd_start, cmd_execution);
+	env_pack = init_and_check(cmd_execution);
 	if (should_execute_in_parent(cmd_start, cmd_execution))
 		env_pack = parent_execution(cmd_start, cmd_execution, env_pack);
 	else

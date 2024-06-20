@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/19 11:39:10 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/20 13:48:11 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,8 @@ t_env_pack	waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution,
 	return (env_pack);
 }
 
-t_env_pack	empty_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
-	t_env_pack env_pack)
+t_env_pack	empty_cmd_check(t_cmd *cmd_execution, t_env_pack env_pack)
 {
-	(void)cmd_start;
 	if (cmd_execution->cmd_name == NULL
 		|| (*cmd_execution->cmd_name == '\0' && cmd_execution->empty_cmd != 1))
 	{

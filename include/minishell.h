@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/20 10:47:21 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/06/20 13:57:53 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,16 +329,13 @@ int				len_quote(const char *s, char ch);
 int				len_quote_pipe(const char *s, char ch);
 t_hd_file		*remove_update(t_hd_file *hd, char *ch);
 t_hd_file		*remove_update_all(t_hd_file *hd);
-t_env_pack		cmd_dir(t_cmd *cmd_start, t_cmd *cmd_execution,
+t_env_pack		cmd_dir(t_cmd *cmd_execution, t_env_pack env_pack);
+t_env_pack		empty_cmd_check(t_cmd *cmd_execution, t_env_pack env_pack);
+t_env_pack		input_output_check_create(t_cmd *cmd_execution,
 					t_env_pack env_pack);
-t_env_pack		empty_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
-					t_env_pack env_pack);
-t_env_pack		input_output_check_create(t_cmd *cmd_start,
-					t_cmd *cmd_execution, t_env_pack env_pack);
 void			input_output_open(t_cmd *cmd_start, t_cmd *cmd_execution);
 void			input_output_open_helper(t_cmd *cmd_start, t_file *temp_file);
-t_env_pack		full_cmd_check(t_cmd *cmd_start, t_cmd *cmd_execution,
-					t_env_pack env_pack);
+t_env_pack		full_cmd_check(t_cmd *cmd_execution, t_env_pack env_pack);
 void			output_redirect_builtin(t_cmd *cmd_start,
 					t_cmd *cmd_execution);
 void			output_redirect(t_cmd *cmd_start,
@@ -350,7 +347,7 @@ void			output_redirect_helper(t_cmd *cmd_start,
 void			input_redirect(t_cmd *cmd_start, t_cmd *cmd_execution);
 t_env_pack		waiting_process(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
-t_env_pack		init_and_check(t_cmd *cmd_start, t_cmd *cmd_execution);
+t_env_pack		init_and_check(t_cmd *cmd_execution);
 t_env_pack		parent_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
 t_env_pack		after_child(t_cmd *cmd_start, t_cmd *cmd_execution,
@@ -359,7 +356,7 @@ void			input_output_redirect(t_cmd *cmd_start,
 					t_cmd *cmd_execution, int fd[2]);
 void			child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
 					t_env_pack env_pack);
-void			builtin_child_execution(t_cmd *cmd_start, t_cmd *cmd_execution,
+void			builtin_child_execution(t_cmd *cmd_execution,
 					t_env_pack env_pack);
 void			non_builtin_execution(t_cmd *cmd_start, t_cmd *cmd_execution);
 void			child_process(t_cmd *cmd_start, t_cmd *cmd_execution,
@@ -372,8 +369,7 @@ void			run_execve(char *cmd_address, char **cmd_args, char **cmd_env);
 void			handle_hd(t_cmd *cmd, t_handle_dollar *hd_pointer);
 int				handle_dollar_string(t_cmd *cmd, char **string);
 int				heredoc_actions(t_cmd *cmd, char **line, char **heredoc_text);
-int				create_heredoc_file(t_cmd *cmd,
-					t_file *temp_input);
+int				create_heredoc_file(t_cmd *cmd, t_file *temp_input);
 t_error_helper	init_error_helper(void);
 t_error			find_error_helper(char *line, char *token,
 					int index, t_env_pack env_pack);
@@ -395,16 +391,14 @@ void			update_sq_dq_file(char *str, t_file_helper *fh);
 int				need_update_sq_dq(char *str, t_file_helper fh);
 int				save_history(char *raw_line, char *root);
 int				load_history(char *root);
-t_env_pack		fd_operator_check(t_cmd *cmd_start, t_cmd *cmd_execution,
+t_env_pack		fd_operator_check(t_cmd *cmd_execution,
 					t_file *temp_file, t_env_pack env_pack);
-t_env_pack		input_check(t_cmd *cmd_start, t_cmd *cmd_execution,
+t_env_pack		input_check(t_cmd *cmd_execution,
 					t_file *temp_file, t_env_pack env_pack);
-t_env_pack		output_check_create(t_cmd *cmd_start, t_cmd *cmd_execution,
+t_env_pack		output_check_create(t_cmd *cmd_execution,
 					t_file *temp_file, t_env_pack env_pack);
-t_env_pack		cmd_permission(t_cmd *cmd_start, t_cmd *cmd_execution,
-					t_env_pack env_pack);
-t_env_pack		cmd_not_found(t_cmd *cmd_start, t_cmd *cmd_execution,
-					t_env_pack env_pack);
+t_env_pack		cmd_permission(t_cmd *cmd_execution, t_env_pack env_pack);
+t_env_pack		cmd_not_found(t_cmd *cmd_execution, t_env_pack env_pack);
 void			close_all(t_cmd *cmd);
 void			clean_all(t_env *env1, t_env *env2, char *str1, char *str2);
 int				clean_str(char *s1);

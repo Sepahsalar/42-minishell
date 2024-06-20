@@ -6,25 +6,13 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:42:44 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/20 13:02:44 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/20 14:02:11 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 volatile int	g_signal;
-
-// test this in bash macOS:
-// 1) > 2>>
-// 2) > 2a>> temp
-// 3) < 2a <<
-// 4) > & not_handling or unexpected token
-// 5) || has a leak                            done
-// 6) << hi cat -> has error                   done
-
-// search for all voids in functions ("(void)...") and delete them
-
-// delete .history in makefile
 
 void	clean_all(t_env *env1, t_env *env2, char *str1, char *str2)
 {
