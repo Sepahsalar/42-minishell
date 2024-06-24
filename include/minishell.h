@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/20 13:57:53 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/24 10:20:49 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,11 +301,9 @@ int				export_check(char *str);
 int				export_check_key(char *str);
 int				fill_files_all(t_cmd **cmd);
 char			*get_current_pid(t_env *original_env);
-// void			sig_handler(int sig);
 void			sig_handler_running_command(int sig);
 void			sig_handler_wait_for_command(int sig);
 void			sig_handler_heredoc(int sig);
-
 int				change_mode(int mode);
 t_env_pack		not_handling_error(t_env_pack env_pack, t_error error);
 int				print_error_before(t_error error, char *raw_line);
