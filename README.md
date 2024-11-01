@@ -1,5 +1,5 @@
 # 42-minishell
-A minimal shell implementation built for the 42 curriculum, providing basic Unix shell functionalities with custom command handling and process management. This project is built in C, focusing on replicating core behaviors of a typical Unix shell and enhancing understanding of process management, I/O handling, and system calls.
+A minimal shell implementation built for the `42` curriculum, providing basic Unix shell functionalities with custom command handling and process management. This project is built in `C`, focusing on replicating core behaviors of a typical Unix shell and enhancing understanding of process management, I/O handling, and system calls.
 
 This project is developed collaboratively by [Alireza Sohrabizadeh](https://github.com/Sepahsalar) and [Nima Nourinejad](https://github.com/nima-nourinejad).
 
@@ -37,7 +37,7 @@ You can exit the shell with the `exit` command.
 
 ## Description
 
-Minishell is a simple command-line interpreter that mimics the behavior of Unix shells. It was developed as a project for the 42 school curriculum to strengthen skills in process management, memory handling, and Unix system calls. The shell processes user input, executes commands, and supports features like redirection, piping, and signal handling, all while managing custom environment variables and built-in commands.
+Minishell is a simple command-line interpreter that mimics the behavior of Unix shells. It was developed as a project for the `42` school curriculum to strengthen skills in process management, memory handling, and Unix system calls. The shell processes user input, executes commands, and supports features like redirection, piping, and signal handling, all while managing custom environment variables and built-in commands.
 
 
 
