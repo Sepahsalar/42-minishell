@@ -12,6 +12,8 @@ This project is developed collaboratively by [Alireza Sohrabizadeh](https://gith
 3. [Algorithm](#algorithm)
 4. [Features](#features)
 5. [Supported Commands](#supported-commands)
+6. [Contributing](#contributing)
+7. [License](#license)
 
 </br>
 
@@ -33,13 +35,9 @@ After building, start the shell by running:
 
 You can exit the shell with the `exit` command.
 
-
-
 ## Description
 
 Minishell is a simple command-line interpreter that mimics the behavior of Unix shells. It was developed as a project for the `42` school curriculum to strengthen skills in process management, memory handling, and Unix system calls. The shell processes user input, executes commands, and supports features like redirection, piping, and signal handling, all while managing custom environment variables and built-in commands.
-
-
 
 ## Algorithm
 
@@ -55,8 +53,6 @@ The core algorithm for Minishell can be broken down into several key steps:
 6. **Cleanup**: Free allocated memory and reset states after each command.
 7. **Exit**: Terminate gracefully on `exit` command or `Ctrl+D`.
 
-
-
 ## Features
 
 - **Command Parsing**: Supports input parsing to identify commands and arguments.
@@ -65,8 +61,6 @@ The core algorithm for Minishell can be broken down into several key steps:
 - **Built-in Commands**: Includes several custom built-in commands (e.g., `cd`, `echo`, `exit`, etc.).
 - **Environment Variables**: Supports accessing and modifying environment variables.
 - **Signal Handling**: Gracefully handles `Ctrl+C` and `Ctrl+D` signals.
-
-
 
 ## Supported Commands
 
@@ -80,3 +74,9 @@ Minishell supports both built-in commands and external commands found in your sy
 - `env`: Print environment variables.
 - `export`: Set an environment variable.
 - `unset`: Remove an environment variable.
+
+## Contributing
+Feel free to submit issues and pull requests if you find any bugs or have suggestions for improvements.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
