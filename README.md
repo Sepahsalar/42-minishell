@@ -15,7 +15,7 @@ This project is developed collaboratively by [Alireza Sohrabizadeh](https://gith
 
 </br>
 
-# Usage
+## Usage
 
 To build and run the project, clone the repository and compile it:
 
@@ -33,15 +33,15 @@ After building, start the shell by running:
 
 You can exit the shell with the `exit` command.
 
-</br>
 
-# Description
+
+## Description
 
 Minishell is a simple command-line interpreter that mimics the behavior of Unix shells. It was developed as a project for the 42 school curriculum to strengthen skills in process management, memory handling, and Unix system calls. The shell processes user input, executes commands, and supports features like redirection, piping, and signal handling, all while managing custom environment variables and built-in commands.
 
-</br>
 
-# Algorithm
+
+## Algorithm
 
 The core algorithm for Minishell can be broken down into several key steps:
 
@@ -55,9 +55,9 @@ The core algorithm for Minishell can be broken down into several key steps:
 6. **Cleanup**: Free allocated memory and reset states after each command.
 7. **Exit**: Terminate gracefully on `exit` command or `Ctrl+D`.
 
-</br>
 
-# Features
+
+## Features
 
 - **Command Parsing**: Supports input parsing to identify commands and arguments.
 - **Execution**: Runs executables located in system paths.
@@ -66,9 +66,9 @@ The core algorithm for Minishell can be broken down into several key steps:
 - **Environment Variables**: Supports accessing and modifying environment variables.
 - **Signal Handling**: Gracefully handles `Ctrl+C` and `Ctrl+D` signals.
 
-</br>
 
-# Supported Commands
+
+## Supported Commands
 
 Minishell supports both built-in commands and external commands found in your system’s `PATH`.
 
